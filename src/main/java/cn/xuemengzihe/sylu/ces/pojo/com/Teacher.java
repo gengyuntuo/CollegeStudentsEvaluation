@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.pojo.com;
 
+import java.util.List;
+
 /**
  * <h1>老师</h1>
  * <p>
@@ -11,4 +13,22 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  * 
  */
 public class Teacher extends Persion {
+	private List<Clazz> clazzs;
+
+	public Teacher() {
+		super();
+	}
+
+	public List<Clazz> getClazzs() {
+		return clazzs;
+	}
+
+	public void setClazzs(List<Clazz> clazzs) {
+		this.clazzs = clazzs;
+	}
+
+	@Override
+	public String toString() {
+		return "Teacher [clazzs=" + clazzs + super.toString() + "]";
+	}
 }

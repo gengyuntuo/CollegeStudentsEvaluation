@@ -12,7 +12,7 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  */
 public class Student extends Persion {
 	private String sno;
-	private Integer classId;
+	private Integer clazzId;
 	private String dormno; // 寝室楼号
 	private String dormInfo; // 寝室号、床位号
 	private String politicalStatus; // 政治面貌
@@ -23,6 +23,8 @@ public class Student extends Persion {
 	private String fatherPhone; // 父亲电话
 	private String motherName; // 母亲姓名
 	private String motherPhone; // 母亲电话
+
+	private Clazz clazz;
 
 	public Student() {
 		super();
@@ -36,12 +38,12 @@ public class Student extends Persion {
 		this.sno = sno;
 	}
 
-	public Integer getClassId() {
-		return classId;
+	public Integer getClazzId() {
+		return clazzId;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setClazzId(Integer clazzId) {
+		this.clazzId = clazzId;
 	}
 
 	public String getDormno() {
@@ -124,14 +126,23 @@ public class Student extends Persion {
 		this.motherPhone = motherPhone;
 	}
 
+	public Clazz getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(Clazz clazz) {
+		this.clazz = clazz;
+	}
+
 	@Override
 	public String toString() {
-		return "Student [sno=" + sno + ", classId=" + classId + ", dormno="
+		return "Student [sno=" + sno + ", classId=" + clazzId + ", dormno="
 				+ dormno + ", dormInfo=" + dormInfo + ", politicalStatus="
 				+ politicalStatus + ", bankCard=" + bankCard + ", haveLoan="
 				+ haveLoan + ", havePovertyCertificate="
 				+ havePovertyCertificate + ", fatherName=" + fatherName
 				+ ", fatherPhone=" + fatherPhone + ", motherName=" + motherName
-				+ ", motherPhone=" + motherPhone + super.toString() + "]";
+				+ ", motherPhone=" + motherPhone + ", clazz=" + clazz
+				+ super.toString() + "]";
 	}
 }
