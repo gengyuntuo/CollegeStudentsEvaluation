@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `major_id` INT NOT NULL COMMENT '专业ID',
   `teacher_id` INT NOT NULL COMMENT '老师ID',
   `study_year` INT NOT NULL DEFAULT 4 COMMENT '学习年限',
-  `start_year` DATE NOT NULL COMMENT '入学日期',
+  `staryear` DATE NOT NULL COMMENT '入学日期',
   `stop_year` DATE NOT NULL COMMENT '学业结束日期',
   `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '该字段是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
@@ -97,11 +97,79 @@ CREATE TABLE IF NOT EXISTS `ces`.`setting` (
   PRIMARY KEY (`id`))
 COMMENT = '系统设置';
 
+CREATE TABLE IF NOT EXISTS `ces`.`term` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `c_time` DATE NULL,
+  `term` VARCHAR(45) UNIQUE NOT NULL,
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+);
 
 
+/* 综合测评统计表 */
+CREATE TABLE IF NOT EXISTS `ces`.`zonghecepingchengjitongji` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `sno` VARCHAR(45) NOT NULL COMMENT '该表对应的学生',
+  `xueqi` INT NOT NULL DEFAULT 0 COMMENT '评分表创建的学期',
+  `richangxingwei` INT NOT NULL DEFAULT 0 COMMENT '日常行为部分评分表',
+  `suzhihuodong` INT NOT NULL DEFAULT 0 COMMENT '素质活动评分',
+  `pingjunxuefenjidian` DOUBLE NOT NULL DEFAULT 0 COMMENT '平均学分绩点',
+  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+);
 
+/* 素质教育加分评分表 */
+CREATE TABLE IF NOT EXISTS `ces`.`suzhijiaoyujiafenpingfen` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `zonghe` INT NOT NULL DEFAULT 0,
+  `shehuifuwu` DOUBLE NOT NULL DEFAULT 0,
+  `shehuishijian` DOUBLE NOT NULL DEFAULT 0,
+  `bisaihuojiang` DOUBLE NOT NULL DEFAULT 0,
+  `xueshengganbu` DOUBLE NOT NULL DEFAULT 0,
+  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+);
 
+/* 加分申请表 */
+CREATE TABLE IF NOT EXISTS `ces`.`suzhijiafenshenqing` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `suzhi` INT NOT NULL DEFAULT 0,
+  `name` VARCHAR(200) NULL COMMENT '比赛获职务名称',
+  `type` VARCHAR(45) NULL,
+  `time` VARCHAR(45) NULL,
+  `level` VARCHAR(45) NULL,
+  `evidence` VARCHAR(200) NULL,
+  `filePath` VARCHAR(200) NULL,
+  `score` DOUBLE NULL DEFAULT 0,
+  `isvalid` INT NULL DEFAULT 0 COMMENT '检测该加分项是否通过认证',
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+);
 
+/* 素质学分日常行为部分评分表 */
+CREATE TABLE IF NOT EXISTS `ces`.`suzhixuefengrichangxingweibufenpingfen` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `zonghe` INT NOT NULL DEFAULT 0,
+  `shehuigongde` DOUBLE NOT NULL DEFAULT 0,
+  `wenmingjiaowang` DOUBLE NOT NULL DEFAULT 0,
+  `chengxinlishen` DOUBLE NOT NULL DEFAULT 0,
+  `tiyuduanlian` DOUBLE NOT NULL DEFAULT 0,
+  `aihugongwu` DOUBLE NOT NULL DEFAULT 0,
+  `xuexiaoguiding` DOUBLE NOT NULL DEFAULT 0,
+  `canjiahuodong` DOUBLE NOT NULL DEFAULT 0,
+  `tingkejilu` DOUBLE NOT NULL DEFAULT 0,
+  `gongyujiancha` DOUBLE NOT NULL DEFAULT 0,
+  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+);
 
 
 
