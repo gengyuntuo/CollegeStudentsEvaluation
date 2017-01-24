@@ -14,7 +14,9 @@ import java.util.List;
  */
 public class Institute {
 	private Integer id;
+	private String iNumb;
 	private String iName;
+	private String desc;
 
 	private Character isValid; // 有效？
 	private Date cTime;
@@ -34,12 +36,28 @@ public class Institute {
 		this.id = id;
 	}
 
+	public String getiNumb() {
+		return iNumb;
+	}
+
+	public void setiNumb(String iNumb) {
+		this.iNumb = iNumb;
+	}
+
 	public String getiName() {
 		return iName;
 	}
 
 	public void setiName(String iName) {
 		this.iName = iName;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public Character getIsValid() {
@@ -76,9 +94,9 @@ public class Institute {
 
 	@Override
 	public String toString() {
-		return "Institute [id=" + id + ", iName=" + iName + ", isValid="
-				+ isValid + ", cTime=" + cTime + ", uTime=" + uTime
-				+ ", majors=" + majors + "]";
+		return "Institute [id=" + id + ", iNumb=" + iNumb + ", iName=" + iName
+				+ ", desc=" + desc + ", isValid=" + isValid + ", cTime="
+				+ cTime + ", uTime=" + uTime + ", majors=" + majors + "]";
 	}
 
 }

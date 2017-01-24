@@ -17,6 +17,7 @@ public class Major {
 	private String mName; // 专业名称
 	private String mNumb; // 专业代码
 	private Integer instituteId; // 学院ID
+	private String desc;
 
 	private Character isValid; // 有效？
 	private Date cTime;
@@ -59,6 +60,14 @@ public class Major {
 
 	public void setInstituteId(Integer instituteId) {
 		this.instituteId = instituteId;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public Character getIsValid() {
@@ -104,9 +113,10 @@ public class Major {
 	@Override
 	public String toString() {
 		return "Major [id=" + id + ", mName=" + mName + ", mNumb=" + mNumb
-				+ ", instituteId=" + instituteId + ", isValid=" + isValid
-				+ ", cTime=" + cTime + ", uTime=" + uTime + ", institute="
-				+ institute + ", clazzs=" + clazzs + "]";
+				+ ", instituteId=" + instituteId + ", desc=" + desc
+				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
+				+ uTime + ", institute=" + institute + ", clazzs=" + clazzs
+				+ "]";
 	}
 
 }

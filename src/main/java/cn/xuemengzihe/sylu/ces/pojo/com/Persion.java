@@ -21,6 +21,7 @@ public class Persion {
 	private String gender; // 性别
 	private Date birthday; // 生日
 	private String portrait; // 头像
+	private String role; // 职位
 	private String email; // 邮箱账户
 	private String idCard; // 身份证号
 	private String weChat; // 微信账号
@@ -93,6 +94,14 @@ public class Persion {
 
 	public void setPortrait(String portrait) {
 		this.portrait = portrait;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getEmail() {
@@ -203,12 +212,13 @@ public class Persion {
 	public String toString() {
 		return "Persion [id=" + id + ", nick=" + nick + ", name=" + name
 				+ ", nation=" + nation + ", gender=" + gender + ", birthday="
-				+ birthday + ", portrait=" + portrait + ", email=" + email
-				+ ", idCard=" + idCard + ", weChat=" + weChat + ", qqNumb="
-				+ qqNumb + ", alipay=" + alipay + ", phone=" + phone
-				+ ", address=" + address + ", resident=" + resident
-				+ ", motto=" + motto + ", password=" + password + ", isValid="
-				+ isValid + ", cTime=" + cTime + ", uTime=" + uTime + "]";
+				+ birthday + ", portrait=" + portrait + ", role=" + role
+				+ ", email=" + email + ", idCard=" + idCard + ", weChat="
+				+ weChat + ", qqNumb=" + qqNumb + ", alipay=" + alipay
+				+ ", phone=" + phone + ", address=" + address + ", resident="
+				+ resident + ", motto=" + motto + ", password=" + password
+				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
+				+ uTime + "]";
 	}
 
 }
