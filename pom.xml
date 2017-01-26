@@ -7,6 +7,8 @@
 
 	<!-- 版本属性 -->
 	<properties>
+		<jstl.version>1.2</jstl.version>
+		<jstl-api.version>1.2.1</jstl-api.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
 		<servlet.version>2.5</servlet.version>
@@ -72,6 +74,16 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+			<version>${jstl-api.version}</version>
 		</dependency>
 
 	</dependencies>
