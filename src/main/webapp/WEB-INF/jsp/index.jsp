@@ -35,7 +35,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> Dashboard
+						<i class="im-screen"></i> 首页
 					</h1>
 					<!-- Start .bredcrumb -->
 					<ul id="crumb" class="breadcrumb">

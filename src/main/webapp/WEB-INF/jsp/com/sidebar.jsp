@@ -7,14 +7,14 @@
 		<ul id="sideNav" class="nav nav-pills nav-stacked">
 			<li class="top-search">
 				<form>
-					<input type="text" name="search" placeholder="Search ...">
-					<button type="submit">
+					<input type="text" name="search" placeholder="搜索 ...">
+					<button type="submit" onclick="return false;">
 						<i class="ec-search s20"></i>
 					</button>
 				</form>
 			</li>
-			<li><a href="index.html">Dashboard <i class="im-screen"></i></a></li>
-			<li><a href="charts.html">Charts <i class="st-chart"></i></a></li>
+			<li><a href="index.html">首页 <i class="im-screen"></i></a></li>
+			<li><a href="charts.html">图表 <i class="st-chart"></i></a></li>
 			<li><a href="#"> Forms <i class="im-paragraph-justify"></i></a>
 				<ul class="nav sub">
 					<li><a href="forms.html"><i class="ec-pencil2"></i> Form Stuff</a></li>
