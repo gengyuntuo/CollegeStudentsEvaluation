@@ -11,7 +11,7 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  */
 public class Setting {
 	private Integer id; // ID
-	private Character role; // 角色
+	private String type; // 设置类型
 	private Integer ownerId; // 拥有者
 	private String setting; // 设置名称
 	private String value; // 设置值
@@ -28,12 +28,12 @@ public class Setting {
 		this.id = id;
 	}
 
-	public Character getRole() {
-		return role;
+	public String getType() {
+		return type;
 	}
 
-	public void setRole(Character role) {
-		this.role = role;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Integer getOwnerId() {
@@ -62,7 +62,7 @@ public class Setting {
 
 	@Override
 	public String toString() {
-		return "Setting [id=" + id + ", role=" + role + ", ownerId=" + ownerId
+		return "Setting [id=" + id + ", type=" + type + ", ownerId=" + ownerId
 				+ ", setting=" + setting + ", value=" + value + "]";
 	}
 

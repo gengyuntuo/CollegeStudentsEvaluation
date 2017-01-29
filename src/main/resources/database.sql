@@ -90,7 +90,7 @@ COMMENT = '学生';
 
 CREATE TABLE IF NOT EXISTS `ces`.`setting` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `role` VARCHAR(1) NOT NULL COMMENT '角色',
+  `type` VARCHAR(45) NOT NULL COMMENT '类型',
   `owner_id` INT NOT NULL COMMENT '拥有者',
   `setting` VARCHAR(45) NOT NULL COMMENT '设置选项',
   `value` VARCHAR(45) NOT NULL COMMENT '选项值',

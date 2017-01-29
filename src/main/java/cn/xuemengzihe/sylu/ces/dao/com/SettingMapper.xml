@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.SettingDAO">
+	<insert id="insertSetting" parameterType="setting">
+
+	</insert>
+	<insert id="insertSettings" parameterType="setting">
+
+	</insert>
+	<delete id="deleteSettingById" parameterType="int">
+
+	</delete>
+	<delete id="deleteSettingsByIds" parameterType="int">
+
+	</delete>
+	<update id="updateSetting" parameterType="setting">
+
+	</update>
+	<select id="findSettingById" parameterType="int" resultType="setting">
+
+	</select>
+	<select id="findSettingsByType" parameterType="string" resultType="setting">
+
+	</select>
+	<select id="findSettingsByOwnerId" parameterType="int" resultType="setting">
+
+	</select>
+	<select id="findSettingsBySettingName" parameterType="string" resultType="setting">
+
+	</select>
+</mapper>
