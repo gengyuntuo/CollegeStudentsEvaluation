@@ -9,6 +9,11 @@
 
 <body>
 	This is my JSP page.
+	<br />
+	<c:forEach items="${list }" var="var">
+		<h3>${var.type }:${var.setting }-->${var.value }</h3>
+		<br />
+	</c:forEach>
 	<br>
 </body>
 </html>

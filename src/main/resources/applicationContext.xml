@@ -30,7 +30,7 @@
 	</bean>
 	<!-- Mapper文件扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="cn.xuemengzihe.sylu.ces.dao.com,cn.xuemengzihe.sylu.ces.dao.app,cn.xuemengzihe.sylu.ces.dao.web," />
+		<property name="basePackage" value="cn.xuemengzihe.sylu.ces.dao.com,cn.xuemengzihe.sylu.ces.dao.app,cn.xuemengzihe.sylu.ces.dao.web" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
