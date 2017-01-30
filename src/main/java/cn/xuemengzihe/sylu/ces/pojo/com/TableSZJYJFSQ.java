@@ -1,15 +1,17 @@
 package cn.xuemengzihe.sylu.ces.pojo.com;
 
+import java.util.Date;
+
 /**
  * 素质教育加分申请表
  * 
  * @author 李春
  * @time 2016年10月23日time上午10:30:24
  */
-public class TableSuZhiJiaoYuJiaFenShenQing {
+public class TableSZJYJFSQ {
 
 	private Integer id;
-	private Integer suzhi; // 该记录所依赖的素质加分测评表
+	private Integer suZhi; // 该记录所依赖的素质加分测评表
 	private String name; // 比赛或者职务名称
 	private String type; // 类型
 	private String time; // 时间
@@ -17,24 +19,13 @@ public class TableSuZhiJiaoYuJiaFenShenQing {
 	private String evidence; // 证据
 	private String filePath; // 证明文件的上传文件
 	private Double score; // 成绩
-	private String isvalid; // 是否有效
+	private String isValid; // 是否有效
+	private Date cTime;
+	private Date uTime;
 
-	public TableSuZhiJiaoYuJiaFenShenQing() {
-	}
-
-	public TableSuZhiJiaoYuJiaFenShenQing(Integer id, Integer suzhi,
-			String name, String type, String time, String level,
-			String evidence, String filePath, Double score, String isvalid) {
-		this.id = id;
-		this.setSuzhi(suzhi);
-		this.name = name;
-		this.type = type;
-		this.time = time;
-		this.level = level;
-		this.evidence = evidence;
-		this.filePath = filePath;
-		this.score = score;
-		this.isvalid = isvalid;
+	public TableSZJYJFSQ() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -45,20 +36,20 @@ public class TableSuZhiJiaoYuJiaFenShenQing {
 		this.id = id;
 	}
 
+	public Integer getSuZhi() {
+		return suZhi;
+	}
+
+	public void setSuZhi(Integer suZhi) {
+		this.suZhi = suZhi;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getSuzhi() {
-		return suzhi;
-	}
-
-	public void setSuzhi(Integer suzhi) {
-		this.suzhi = suzhi;
 	}
 
 	public String getType() {
@@ -109,20 +100,37 @@ public class TableSuZhiJiaoYuJiaFenShenQing {
 		this.score = score;
 	}
 
-	public String getIsvalid() {
-		return isvalid;
+	public String getIsValid() {
+		return isValid;
 	}
 
-	public void setIsvalid(String isvalid) {
-		this.isvalid = isvalid;
+	public void setIsValid(String isValid) {
+		this.isValid = isValid;
+	}
+
+	public Date getcTime() {
+		return cTime;
+	}
+
+	public void setcTime(Date cTime) {
+		this.cTime = cTime;
+	}
+
+	public Date getuTime() {
+		return uTime;
+	}
+
+	public void setuTime(Date uTime) {
+		this.uTime = uTime;
 	}
 
 	@Override
 	public String toString() {
-		return "TableSuZhiJiaoYuJiaFenShenQing [id=" + id + ", name=" + name
-				+ ", type=" + type + ", time=" + time + ", level=" + level
-				+ ", evidence=" + evidence + ", filePath=" + filePath
-				+ ", score=" + score + ", isvalid=" + isvalid + "]";
+		return "TableSZJYJFSQ [id=" + id + ", suZhi=" + suZhi + ", name="
+				+ name + ", type=" + type + ", time=" + time + ", level="
+				+ level + ", evidence=" + evidence + ", filePath=" + filePath
+				+ ", score=" + score + ", isValid=" + isValid + ", cTime="
+				+ cTime + ", uTime=" + uTime + "]";
 	}
 
 }
