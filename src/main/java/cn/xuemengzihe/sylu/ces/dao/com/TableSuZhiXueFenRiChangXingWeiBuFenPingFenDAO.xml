@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="cn.xmzh.ses.mapper.TableSuZhiXueFenRiChangXingWeiBuFenPingFenMapper">
+	<resultMap type="tableSuZhiXueFenRiChangXingWeiBuFenPingFen"
+		id="resultMap">
+		<id column="id" property="id" />
+		<result column="zonghe" property="zonghe" />
+		<result column="shehuigongde" property="shehuigongde" />
+		<result column="wenmingjiaowang" property="wenmingjiaowang" />
+		<result column="chengxinlishen" property="chengxinlishen" />
+		<result column="tiyuduanlian" property="tiyuduanlian" />
+		<result column="aihugongwu" property="aihugongwu" />
+		<result column="xuexiaoguiding" property="xuexiaoguiding" />
+		<result column="canjiahuodong" property="canjiahuodong" />
+		<result column="tingkejilu" property="tingkejilu" />
+		<result column="gongyujiancha" property="gongyujiancha" />
+		<result column="isvalid" property="isvalid" />
+	</resultMap>
+	<insert id="addToTable" parameterType="tableSuZhiXueFenRiChangXingWeiBuFenPingFen">
+		INSERT INTO
+		t_suzhixuefengrichangxingweibufenpingfenbiao(zonghe)
+		VALUES(#{zonghe})
+	</insert>
+	<delete id="deleteByID" parameterType="int">
+		DELETE FROM
+		t_suzhixuefengrichangxingweibufenpingfenbiao
+		WHERE id=#{value}
+	</delete>
+	<update id="updateTableByStudent" parameterType="tableSuZhiXueFenRiChangXingWeiBuFenPingFen">
+		UPDATE
+		t_suzhixuefengrichangxingweibufenpingfenbiao
+		SET
+		shehuigongde=#{shehuigongde},
+		wenmingjiaowang=#{wenmingjiaowang},
+		chengxinlishen=#{chengxinlishen},
+		tiyuduanlian=#{tiyuduanlian},
+		aihugongwu=#{aihugongwu},
+		xuexiaoguiding=#{xuexiaoguiding},
+		canjiahuodong=#{canjiahuodong}
+		WHERE id =
+		#{id}
+	</update>
+	<update id="updateTableByTeacher" parameterType="tableSuZhiXueFenRiChangXingWeiBuFenPingFen">
+		UPDATE
+		t_suzhixuefengrichangxingweibufenpingfenbiao
+		SET
+		shehuigongde=#{shehuigongde},
+		wenmingjiaowang=#{wenmingjiaowang},
+		chengxinlishen=#{chengxinlishen},
+		tiyuduanlian=#{tiyuduanlian},
+		aihugongwu=#{aihugongwu},
+		xuexiaoguiding=#{xuexiaoguiding},
+		canjiahuodong=#{canjiahuodong},
+		tingkejilu=#{tingkejilu},
+		gongyujiancha=#{gongyujiancha},
+		isvalid=#{isvalid}
+		WHERE id =
+		#{id}
+	</update>
+	<select id="findByID" parameterType="int" resultMap="resultMap">
+		SELECT *
+		FROM t_suzhixuefengrichangxingweibufenpingfenbiao
+		WHERE id=#{value}
+	</select>
+	<select id="findByZongHeTable" parameterType="int" resultMap="resultMap">
+		SELECT *
+		FROM t_suzhixuefengrichangxingweibufenpingfenbiao
+		WHERE
+		zonghe=#{value}
+	</select>
+	<select id="findAll" parameterType="int" resultMap="resultMap">
+		SELECT *
+		FROM
+		t_suzhixuefengrichangxingweibufenpingfenbiao
+	</select>
+
+</mapper>

@@ -11,6 +11,7 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  */
 public class Setting {
 	private Integer id; // ID
+	private Integer weight; // 权重，确定菜单显示的顺序
 	private String type; // 设置类型
 	private Integer ownerId; // 拥有者
 	private String setting; // 设置名称
@@ -22,6 +23,14 @@ public class Setting {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 
 	public void setId(Integer id) {
@@ -62,8 +71,9 @@ public class Setting {
 
 	@Override
 	public String toString() {
-		return "Setting [id=" + id + ", type=" + type + ", ownerId=" + ownerId
-				+ ", setting=" + setting + ", value=" + value + "]";
+		return "Setting [id=" + id + ", weight=" + weight + ", type=" + type
+				+ ", ownerId=" + ownerId + ", setting=" + setting + ", value="
+				+ value + "]";
 	}
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xmzh.ses.mapper.TableSuZhiJiaoYuJiaFenShenQingMapper">
+	<resultMap id="resultMap" type="tableSuZhiJiaoYuJiaFenShenQing">
+		<id column="id" property="id" />
+		<result column="suzhi" property="suzhi" />
+		<result column="name" property="name" />
+		<result column="type" property="type" />
+		<result column="time" property="time" />
+		<result column="level" property="level" />
+		<result column="evidence" property="evidence" />
+		<result column="filePath" property="filePath" />
+		<result column="score" property="score" />
+		<result column="isvalid" property="isvalid" />
+	</resultMap>
+	<insert id="addToTable">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		t_suzhijiafenshenqingbiao(`suzhi`)
+		VALUES(#{suzhi})
+	</insert>
+	<delete id="deleteByID" parameterType="int">
+		DELETE FROM
+		t_suzhijiafenshenqingbiao
+		WHERE id=#{id}
+	</delete>
+	<update id="updateTableData" parameterType="tableSuZhiJiaoYuJiaFenShenQing">
+		UPDATE
+		t_suzhijiafenshenqingbiao
+		SET
+		name=#{name},
+		type=#{type},
+		time=#{time},
+		level=#{level},
+		evidence=#{evidence},
+		filePath=#{filePath},
+		score=#{score},
+		isvalid=#{isvalid}
+		WHERE id=#{id}
+	</update>
+	<select id="findAll" resultMap="resultMap">
+		SELECT * FROM
+		t_suzhijiafenshenqingbiao
+	</select>
+	<select id="findByID" parameterType="int" resultMap="resultMap">
+		SELECT *
+		FROM
+		t_suzhijiafenshenqingbiao
+		WHERE id= #{id}
+	</select>
+	<select id="findBySno" parameterType="string" resultMap="resultMap">
+		SELECT *
+		FROM t_suzhijiafenshenqingbiao WHERE suzhi IN
+		(SELECT id FROM
+		t_suzhijiaoyujiafenpingfenbiao WHERE zonghe IN
+		(SELECT id FROM
+		t_zonghecepingchengjitongjibiao tab_zh WHERE tab_zh.sno=#{sno}))
+	</select>
+	<!-- 根据学生学号和学期查询素质教育加分表 【参数说明】 学生学号(sno)保存在TableSuZhiJiaoYuJiaFenShenQing对象中的name属性中， 
+		时间(学期xueqi) 保存在time属性中 -->
+	<select id="findBySnoAndXueQi" parameterType="tableSuZhiJiaoYuJiaFenShenQing"
+		resultMap="resultMap">
+		SELECT *
+		FROM t_suzhijiafenshenqingbiao WHERE suzhi =
+		(SELECT
+		id FROM
+		t_suzhijiaoyujiafenpingfenbiao WHERE zonghe =
+		(SELECT id FROM
+		t_zonghecepingchengjitongjibiao tab_zh WHERE tab_zh.sno=#{name}
+		AND
+		tab_zh.xueqi=#{time}))
+	</select>
+</mapper>

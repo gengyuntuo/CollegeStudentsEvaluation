@@ -11,8 +11,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.Setting;
 import cn.xuemengzihe.sylu.ces.service.web.SettingService;
 
 /**
- * 
- * <h1></h1>
+ * <h1>Setting Controller</h1>
  * <p>
  * </p>
  * 

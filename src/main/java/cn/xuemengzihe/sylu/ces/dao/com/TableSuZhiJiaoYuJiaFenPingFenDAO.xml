@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xmzh.ses.mapper.TableSuZhiJiaoYuJiaFenPingFenMapper">
+	<resultMap type="tableSuZhiJiaoYuJiaFenPingFen" id="resultMap">
+		<id column="id" property="id" />
+		<result column="zonghe" property="zonghe" />
+		<result column="shehuifuwu" property="shehuifuwu" />
+		<result column="shehuishijian" property="shehuishijian" />
+		<result column="bisaihuojiang" property="bisaihuojiang" />
+		<result column="xueshengganbu" property="xueshengganbu" />
+		<result column="isvalid" property="isvalid" />
+		<collection property="table">
+			<id column="id" property="id" />
+			<result column="suzhi" property="suzhi" />
+			<result column="name" property="name" />
+			<result column="type" property="type" />
+			<result column="time" property="time" />
+			<result column="level" property="level" />
+			<result column="evidence" property="evidence" />
+			<result column="filePath" property="filePath" />
+			<result column="score" property="score" />
+			<result column="isvalid" property="isvalid" />
+		</collection>
+	</resultMap>
+	<insert id="addToTable" parameterType="tableSuZhiJiaoYuJiaFenPingFen">
+		INSERT INTO
+		t_suzhijiaoyujiafenpingfenbiao(zonghe)
+		VALUES(#{zonghe})
+	</insert>
+	<delete id="deleteByID" parameterType="int">
+		DELETE FROM
+		t_suzhijiaoyujiafenpingfenbiao
+		WHERE id=#{id}
+	</delete>
+	<update id="updateTableData" parameterType="tableSuZhiJiaoYuJiaFenPingFen">
+		UPDATE
+		t_suzhijiaoyujiafenpingfenbiao
+		SET
+		shehuifuwu=#{shehuifuwu},
+		shehuishijian=#{shehuishijian},
+		bisaihuojiang=#{bisaihuojiang},
+		xueshengganbu=#{xueshengganbu},
+		isvalid=#{isvalid}
+		WHERE id=#{id}
+	</update>
+	<select id="findByID" parameterType="int"
+		resultType="tableSuZhiJiaoYuJiaFenPingFen">
+		SELECT *
+		FROM t_suzhijiaoyujiafenpingfenbiao
+		WHERE
+		id=#{value}
+	</select>
+	<select id="findByZongHe" parameterType="int"
+		resultType="tableSuZhiJiaoYuJiaFenPingFen">
+		SELECT *
+		FROM t_suzhijiaoyujiafenpingfenbiao
+		WHERE
+		zonghe=#{value}
+	</select>
+</mapper>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xmzh.ses.mapper.TableZongHeCePingChengJiTongJiMapper">
+	<resultMap type="tableZongHeCePingChengJiTongJi" id="resultMap">
+		<id column="mainTable_id" property="id" />
+		<result column="mainTable_sno" property="sno" />
+		<result column="xueqi" property="xueqi" />
+		<result column="richangxingwei" property="richangxingwei" />
+		<result column="suzhihuodong" property="suzhihuodong" />
+		<result column="pingjunxuefenjidian" property="pingjunxuefenjidian" />
+		<result column="mainTable_isvalid" property="isvalid" />
+	</resultMap>
+	<resultMap id="resultMapUpdate1" type="tableZongHeCePingChengJiTongJi">
+		<id column="mainTable_id" property="id" />
+		<result column="mainTable_sno" property="sno" />
+		<result column="xueqi" property="xueqi" />
+		<result column="richangxingwei" property="richangxingwei" />
+		<result column="suzhihuodong" property="suzhihuodong" />
+		<result column="pingjunxuefenjidian" property="pingjunxuefenjidian" />
+		<result column="mainTable_isvalid" property="isvalid" />
+		<association property="student" javaType="student">
+			<id column="tableStu_sno" property="sno" />
+			<result column="tableStu_classid" property="classid" />
+			<result column="name" property="name" />
+			<result column="gender" property="gender" />
+			<result column="dormno" property="dormno" />
+			<result column="dorminfo" property="dorminfo" />
+			<result column="nation" property="nation" />
+			<result column="politicalStatus" property="politicalStatus" />
+			<result column="phone" property="phone" />
+			<result column="haveLoan" property="haveLoan" />
+			<result column="havePovertyCertificate" property="havePovertyCertificate" />
+			<result column="idCard" property="idCard" />
+			<result column="bankcard" property="bankCard" />
+			<result column="address" property="address" />
+			<result column="residenceRegistrationAddress" property="residenceRegistrationAddress" />
+			<result column="qqNumb" property="qqNumb" />
+			<result column="fatherName" property="fatherName" />
+			<result column="motherName" property="motherName" />
+			<result column="fatherPhone" property="fatherPhone" />
+			<result column="motherPhone" property="motherPhone" />
+			<result column="photoPath" property="photoPath" />
+			<result column="password" property="password" />
+		</association>
+		<association property="tableSZXFXWBF"
+			javaType="tableSuZhiXueFenRiChangXingWeiBuFenPingFen">
+			<id column="tableSZXFXWBF_id" property="id" />
+			<result column="tableSZXFXWBF_zonghe" property="zonghe" />
+			<result column="shehuigongde" property="shehuigongde" />
+			<result column="wenmingjiaowang" property="wenmingjiaowang" />
+			<result column="chengxinlishen" property="chengxinlishen" />
+			<result column="tiyuduanlian" property="tiyuduanlian" />
+			<result column="aihugongwu" property="aihugongwu" />
+			<result column="xuexiaoguiding" property="xuexiaoguiding" />
+			<result column="canjiahuodong" property="canjiahuodong" />
+			<result column="tingkejilu" property="tingkejilu" />
+			<result column="gongyujiancha" property="gongyujiancha" />
+			<result column="tableSZXFXWBF_isvalid" property="isvalid" />
+		</association>
+		<association property="tableSZJYJF" javaType="tableSuZhiJiaoYuJiaFenPingFen">
+			<id column="tableSZJYJF_id" property="id" />
+			<result column="tableSZJYJF_zonghe" property="zonghe" />
+			<result column="shehuifuwu" property="shehuifuwu" />
+			<result column="shehuishijian" property="shehuishijian" />
+			<result column="bisaihuojiang" property="bisaihuojiang" />
+			<result column="xueshengganbu" property="xueshengganbu" />
+			<result column="tableSZJYJF_isvalid" property="isvalid" />
+			<collection property="tableSZJYJFSQ" javaType="tableSuZhiJiaoYuJiaFenShenQing">
+				<id column="tableSZJYJFSQ_id" property="id" />
+				<result column="tableSZJYJFSQ_suzhi" property="suzhi" />
+				<result column="tableSZJYJFSQ_name" property="name" />
+				<result column="tableSZJYJFSQ_type" property="type" />
+				<result column="tableSZJYJFSQ_time" property="time" />
+				<result column="tableSZJYJFSQ_level" property="level" />
+				<result column="tableSZJYJFSQ_evidence" property="evidence" />
+				<result column="tableSZJYJFSQ_filePath" property="filePath" />
+				<result column="tableSZJYJFSQ_score" property="score" />
+				<result column="tableSZJYJFSQ_isvalid" property="isvalid" />
+			</collection>
+		</association>
+	</resultMap>
+
+	<!-- 创建综合成绩统计表记录 这里必须具有两个参数（学生的SNO和统计的学期） -->
+	<insert id="addTable" parameterType="tableZongHeCePingChengJiTongJi">
+		<selectKey keyColumn="id" keyProperty="id" resultType="int"
+			order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		t_zonghecepingchengjitongjibiao(sno, xueqi)
+		VALUES(#{sno},
+		#{xueqi})
+	</insert>
+	<!-- 更新成绩评定表中的数据记录，这里必须的字段有（ID、日常行为得分、素质活动得分、素质学分绩点、平均学分绩点） -->
+	<update id="updateAlterTableData" parameterType="tableZongHeCePingChengJiTongJi">
+		UPDATE
+		t_zonghecepingchengjitongjibiao
+		SET
+		pingjunxuefenjidian=#{pingjunxuefenjidian}
+		WHERE id = #{id}
+	</update>
+	<!-- 更新表中记录的内容，这里必须的字段有（ID、是否有效） -->
+	<update id="updateSetTableValid" parameterType="tableZongHeCePingChengJiTongJi">
+		UPDATE
+		t_zonghecepingchengjitongjibiao
+		SET
+		isvalid=#{isvalid}
+		WHERE id=#{id}
+	</update>
+	<delete id="deleteTable" parameterType="int">
+		DELETE FROM
+		t_zonghecepingchengjitongjibiao
+		WHERE
+		id=#{id}
+	</delete>
+
+	<!-- 根据ID查询某一条记录 -->
+	<select id="findTableByID" parameterType="int" resultMap="resultMap">
+		SELECT
+		*,
+		mainTable.id as mainTable_id,
+		mainTable.isvalid as mainTable_isvalid,
+		tableSZXFXWBF.id as tableSZXFXWBF_id,
+		tableSZXFXWBF.zonghe as
+		tableSZXFXWBF_zonghe,
+		tableSZXFXWBF.isvalid as tableSZXFXWBF_isvalid,
+		tableSZJYJF.id as tableSZJYJF_id,
+		tableSZJYJF.zonghe as
+		tableSZJYJF_zonghe,
+		tableSZJYJF.isvalid as tableSZJYJF_isvalid
+		FROM
+		t_zonghecepingchengjitongjibiao mainTable
+		left join
+		t_suzhixuefengrichangxingweibufenpingfenbiao tableSZXFXWBF on
+		tableSZXFXWBF.zonghe
+		left join t_suzhijiaoyujiafenpingfenbiao
+		tableSZJYJF on tableSZJYJF.zonghe
+		WHERE
+		id=#{value}
+	</select>
+	<!-- 根据学生学号查询多条记录 -->
+	<select id="findTableBySNO" parameterType="string" resultMap="resultMap">
+		SELECT *,
+		mainTable.id as mainTable_id,
+		mainTable.sno as mainTable_s,
+		mainTable.isvalid as mainTable_isvalid,
+		tableStu.sno as tableStu_sno,
+		tableStu.classid as tableStu_classid,
+		tableSZXFXWBF.id as
+		tableSZXFXWBF_id,
+		tableSZXFXWBF.zonghe as tableSZXFXWBF_zonghe,
+		tableSZXFXWBF.isvalid as tableSZXFXWBF_isvalid,
+		tableSZJYJF.id as
+		tableSZJYJF_id,
+		tableSZJYJF.zonghe as tableSZJYJF_zonghe,
+		tableSZJYJF.isvalid as tableSZJYJF_isvalid
+		FROM
+		t_zonghecepingchengjitongjibiao mainTable, t_student tableStu,
+		t_suzhijiaoyujiafenpingfenbiao tableSZJYJF,
+		t_suzhixuefengrichangxingweibufenpingfenbiao tableSZXFXWBF WHERE
+		mainTable.sno = tableStu.sno AND mainTable.id = tableSZJYJF.zonghe
+		AND
+		mainTable.id = tableSZXFXWBF.zonghe
+		AND
+		tableStu.sno=#{sno}
+	</select>
+	<!-- 根据学号和学期查询单条记录 (学号和学期是必须具有的参数) -->
+	<select id="findTableBySNOAndXUEQI" parameterType="tableZongHeCePingChengJiTongJi"
+		resultType="tableZongHeCePingChengJiTongJi">
+		SELECT * FROM t_zonghecepingchengjitongjibiao WHERE
+		sno=#{sno} AND xueqi=#{xueqi}
+	</select>
+	<!-- 根据学期来查询所有学生 按照成绩排序 -->
+	<select id="findTableByXUEQI" parameterType="tableZongHeCePingChengJiTongJi"
+		resultMap="resultMapUpdate1">
+		SELECT *,
+		mainTable.id as mainTable_id,
+		mainTable.sno as
+		mainTable_s,
+		mainTable.isvalid as mainTable_isvalid,
+		tableStu.sno as
+		tableStu_sno,
+		tableStu.classid as tableStu_classid,
+		tableSZXFXWBF.id as
+		tableSZXFXWBF_id,
+		tableSZXFXWBF.zonghe as tableSZXFXWBF_zonghe,
+		tableSZXFXWBF.isvalid as tableSZXFXWBF_isvalid,
+		tableSZJYJF.id as
+		tableSZJYJF_id,
+		tableSZJYJF.zonghe as tableSZJYJF_zonghe,
+		tableSZJYJF.isvalid as tableSZJYJF_isvalid
+		FROM
+		t_zonghecepingchengjitongjibiao mainTable, t_student tableStu,
+		t_suzhijiaoyujiafenpingfenbiao tableSZJYJF,
+		t_suzhixuefengrichangxingweibufenpingfenbiao tableSZXFXWBF WHERE
+		mainTable.sno = tableStu.sno AND mainTable.id = tableSZJYJF.zonghe
+		AND
+		mainTable.id = tableSZXFXWBF.zonghe
+		AND mainTable.xueqi=#{xueqi}
+	</select>
+	<!-- 根据班级号和学期来查询某一个班级的所有学生，这里需要班级号字段，该字段存储在综合测评成绩统计表中的学号字段中 -->
+	<select id="findTableByClassIDAndXUEQI" parameterType="tableZongHeCePingChengJiTongJi"
+		resultType="tableZongHeCePingChengJiTongJi">
+		SELECT * FROM
+		t_zonghecepingchengjitongjibiao mainTable,
+		t_student stu
+		WHERE mainTable.sno = stu.sno AND
+		mainTable.xueqi=#{xueqi} AND
+		stu.classid=#{sno}<!-- 此处详看本节注释 -->
+	</select>
+	<!-- 根据班级号和学期来查询某一个班级的所有学生的详细信息，包括其相关的表记录，这里需要班级号字段，该字段存储在综合测评成绩统计表中的学号字段中 -->
+	<select id="findTableByClassIDAndXUEQIDESC" parameterType="tableZongHeCePingChengJiTongJi"
+		resultMap="resultMapUpdate1">
+		SELECT *,
+		mainTable.id as mainTable_id,
+		mainTable.sno as mainTable_s,
+		mainTable.isvalid as mainTable_isvalid,
+		tableStu.sno as tableStu_sno,
+		tableStu.classid as tableStu_classid,
+		tableSZXFXWBF.id as
+		tableSZXFXWBF_id,
+		tableSZXFXWBF.zonghe as tableSZXFXWBF_zonghe,
+		tableSZXFXWBF.isvalid as tableSZXFXWBF_isvalid,
+		tableSZJYJF.id as
+		tableSZJYJF_id,
+		tableSZJYJF.zonghe as tableSZJYJF_zonghe,
+		tableSZJYJF.isvalid as tableSZJYJF_isvalid
+		FROM
+		t_zonghecepingchengjitongjibiao mainTable, t_student tableStu,
+		t_suzhijiaoyujiafenpingfenbiao tableSZJYJF,
+		t_suzhixuefengrichangxingweibufenpingfenbiao tableSZXFXWBF WHERE
+		mainTable.sno = tableStu.sno AND mainTable.id = tableSZJYJF.zonghe
+		AND
+		mainTable.id = tableSZXFXWBF.zonghe
+		AND mainTable.xueqi=#{xueqi} AND
+		tableStu.classid=#{sno}<!-- 此处详看本节注释 -->
+	</select>
+</mapper>

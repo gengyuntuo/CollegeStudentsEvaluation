@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS `ces`.`institute`;
 DROP TABLE IF EXISTS `ces`.`major`;
 DROP TABLE IF EXISTS `ces`.`student`;
 DROP TABLE IF EXISTS `ces`.`setting`;
+DROP TABLE IF EXISTS `ces`.`menu`;
 
 /* 创建数据表 */
 CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
@@ -89,13 +90,26 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
 COMMENT = '学生';
 
 CREATE TABLE IF NOT EXISTS `ces`.`setting` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `weight` INT NOT NULL DEFAULT 0 COMMENT '权重，用于显示菜单的顺序',
   `type` VARCHAR(45) NOT NULL COMMENT '类型',
   `owner_id` INT NOT NULL COMMENT '拥有者',
   `setting` VARCHAR(45) NOT NULL COMMENT '设置选项',
   `value` VARCHAR(45) NOT NULL COMMENT '选项值',
   PRIMARY KEY (`id`))
 COMMENT = '系统设置';
+
+CREATE TABLE IF NOT EXISTS `ces`.`menu` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `url` VARCHAR(200) NOT NULL COMMENT '菜单指向的页面路径',
+  `title` VARCHAR(45) NOT NULL COMMENT '菜单标题',
+  `desc` VARCHAR(140) NOT NULL DEFAULT '菜单' COMMENT '菜单功能描述',
+  `image` VARCHAR(200) NOT NULL DEFAULT '无' COMMENT '菜单图标',
+  `role_id` INT NULL COMMENT '菜单拥有者ID',
+  `father_menu_id` INT NULL COMMENT '父菜单的ID',
+  `level` VARCHAR(1) NOT NULL DEFAULT 'U' COMMENT '菜单使用权限',
+  PRIMARY KEY (`id`))
+COMMENT = '用户菜单';
 
 CREATE TABLE IF NOT EXISTS `ces`.`term` (
   `id` INT NOT NULL AUTO_INCREMENT,

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.MenuDAO">
+	<insert id="insertMenu" parameterType="menu">
+		<selectKey order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		menu(
+		`url`,
+		`title`,
+		`desc`,
+		`image`,
+		`role_id`,
+		`father_menu_id`,
+		`level`
+		) VALUES(
+		#{url},
+		#{title},
+		#{desc},
+		#{image},
+		#{roleId},
+		#{fatherMenuId},
+		#{level}
+		)
+	</insert>
+	<delete id="deleteMenuById" parameterType="int">
+		DELETE FROM menu
+		WHERE id=#{id}
+	</delete>
+	<update id="updateMenu" parameterType="menu">
+		UPDATE menu
+		SET
+		`url`=#{url},
+		`title`=#{title},
+		`desc`=#{desc},
+		`image`=#{image},
+		`role_id`=#{roleId},
+		`father_menu_id`=#{fatherMenuId},
+		`level`=#{level},
+		WHERE
+		id=#{id}
+	</update>
+	<select id="findMenuById" parameterType="int" resultType="menu">
+		SELECT *
+		FROM menu
+		WHERE id = #{id}
+	</select>
+</mapper>

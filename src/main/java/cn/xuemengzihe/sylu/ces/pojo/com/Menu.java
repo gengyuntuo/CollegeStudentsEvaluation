@@ -2,7 +2,7 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
 
 import java.util.Date;
 
-public class UserMenu {
+public class Menu {
 	private Integer id; // ID
 	private String url; // 菜单请求路径
 	private String title; // 菜单选项名称
@@ -15,7 +15,7 @@ public class UserMenu {
 	private Date startDate; // 菜单启用日期
 	private Date stopDate; // 菜单停用日期
 
-	public UserMenu() {
+	public Menu() {
 		super();
 	}
 
@@ -101,7 +101,7 @@ public class UserMenu {
 
 	@Override
 	public String toString() {
-		return "UserMenu [id=" + id + ", url=" + url + ", title=" + title
+		return "Menu [id=" + id + ", url=" + url + ", title=" + title
 				+ ", desc=" + desc + ", image=" + image + ", roleId=" + roleId
 				+ ", fatherMenuId=" + fatherMenuId + ", level=" + level
 				+ ", startDate=" + startDate + ", stopDate=" + stopDate + "]";
