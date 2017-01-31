@@ -2,21 +2,20 @@ package cn.xuemengzihe.sylu.ces.service.web;
 
 import java.util.List;
 
-import cn.xuemengzihe.sylu.ces.pojo.com.TableSuZhiXueFenRiChangXingWeiBuFenPingFen;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZXFRCXWBFPF;
 
 /**
  * 
  * @author 李春
  * @time 2016年10月22日time下午6:47:34
  */
-public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
+public interface TableSZXFRCXWBFPFService {
 	/**
 	 * 
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSuZhiXueFenRiChangXingWeiBuFenPingFen record)
-			throws Exception;
+	public void addToTable(TableSZXFRCXWBFPF record) throws Exception;
 
 	/**
 	 * 根据ID删除记录
@@ -32,8 +31,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
 	 * @param record
 	 * @throws Exception
 	 */
-	public void updateTableByStudent(
-			TableSuZhiXueFenRiChangXingWeiBuFenPingFen record) throws Exception;
+	public void updateTableByStudent(TableSZXFRCXWBFPF record) throws Exception;
 
 	/**
 	 * 老师更新数据表的内容
@@ -41,8 +39,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
 	 * @param record
 	 * @throws Exception
 	 */
-	public void updateTableByTeacher(
-			TableSuZhiXueFenRiChangXingWeiBuFenPingFen record) throws Exception;
+	public void updateTableByTeacher(TableSZXFRCXWBFPF record) throws Exception;
 
 	/**
 	 * 根据记录ID查询单条记录
@@ -51,8 +48,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSuZhiXueFenRiChangXingWeiBuFenPingFen findByID(Integer id)
-			throws Exception;
+	public TableSZXFRCXWBFPF findByID(Integer id) throws Exception;
 
 	/**
 	 * 根据综合表的ID查询多条表记录
@@ -61,8 +57,8 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiXueFenRiChangXingWeiBuFenPingFen> findByZongHeTable(
-			Integer id) throws Exception;
+	public List<TableSZXFRCXWBFPF> findByZongHeTable(Integer id)
+			throws Exception;
 
 	/**
 	 * 查询所有的表
@@ -70,7 +66,6 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiXueFenRiChangXingWeiBuFenPingFen> findAll()
-			throws Exception;
+	public List<TableSZXFRCXWBFPF> findAll() throws Exception;
 
 }

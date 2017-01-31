@@ -11,7 +11,7 @@ import java.util.Date;
 public class TableSZJYJFSQ {
 
 	private Integer id;
-	private Integer suZhi; // 该记录所依赖的素质加分测评表
+	private Integer suZhiId; // 该记录所依赖的素质加分测评表
 	private String name; // 比赛或者职务名称
 	private String type; // 类型
 	private String time; // 时间
@@ -25,7 +25,6 @@ public class TableSZJYJFSQ {
 
 	public TableSZJYJFSQ() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -36,12 +35,12 @@ public class TableSZJYJFSQ {
 		this.id = id;
 	}
 
-	public Integer getSuZhi() {
-		return suZhi;
+	public Integer getSuZhiId() {
+		return suZhiId;
 	}
 
-	public void setSuZhi(Integer suZhi) {
-		this.suZhi = suZhi;
+	public void setSuZhiId(Integer suZhiId) {
+		this.suZhiId = suZhiId;
 	}
 
 	public String getName() {
@@ -126,7 +125,7 @@ public class TableSZJYJFSQ {
 
 	@Override
 	public String toString() {
-		return "TableSZJYJFSQ [id=" + id + ", suZhi=" + suZhi + ", name="
+		return "TableSZJYJFSQ [id=" + id + ", suZhiId=" + suZhiId + ", name="
 				+ name + ", type=" + type + ", time=" + time + ", level="
 				+ level + ", evidence=" + evidence + ", filePath=" + filePath
 				+ ", score=" + score + ", isValid=" + isValid + ", cTime="

@@ -125,68 +125,68 @@ CREATE TABLE IF NOT EXISTS `ces`.`term` (
 
 
 /* 综合测评统计表 */
-CREATE TABLE IF NOT EXISTS `ces`.`zong_he_ce_ping_cheng_ji_tong_ji` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ces`.`t_zhcpcjtj` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `sno` VARCHAR(45) NOT NULL COMMENT '该表对应的学生',
   `term_id` INT NOT NULL DEFAULT 0 COMMENT '评分表创建的学期',
-  `ri_chang_xing_wei` INT NOT NULL DEFAULT 0 COMMENT '日常行为部分评分表',
-  `su_zhi_huo_dong` INT NOT NULL DEFAULT 0 COMMENT '素质活动评分',
+  `ri_chang_xing_wei_id` INT NOT NULL DEFAULT 0 COMMENT '日常行为部分评分表ID',
+  `su_zhi_huo_dong_id` INT NOT NULL DEFAULT 0 COMMENT '素质活动评分表ID',
   `ping_jun_xue_fen_ji_dian` DOUBLE NOT NULL DEFAULT 0 COMMENT '平均学分绩点',
-  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+  `is_valid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '标志此表是否审核过',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) COMMENT '综合测评成绩统计表';
 
 /* 素质教育加分评分表 */
-CREATE TABLE IF NOT EXISTS `ces`.`su_zhi_jiao_yu_jia_fen_ping_fen` (
-  `id` INT NOT NULL AUTO_INCREMENT COMMENT '标志此表是否审核过',
-  `zonghe` INT NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `shehuifuwu` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `shehuishijian` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `bisaihuojiang` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `xueshengganbu` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfpf` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `zong_he_id` INT NOT NULL DEFAULT 0 COMMENT '综合测评表ID',
+  `she_hui_fu_wu` DOUBLE NOT NULL DEFAULT 0 COMMENT '社会服务',
+  `she_hui_shi_jian` DOUBLE NOT NULL DEFAULT 0 COMMENT '社会实践',
+  `bi_sai_huo_jiang` DOUBLE NOT NULL DEFAULT 0 COMMENT '比赛获奖',
+  `xue_sheng_gan_bu` DOUBLE NOT NULL DEFAULT 0 COMMENT ' 学生干部',
+  `is_valid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '标志此表是否审核过',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) COMMENT '标志此表是否审核过';
+) COMMENT '素质教育加分评分';
 
-/* 加分申请表 */
-CREATE TABLE IF NOT EXISTS `ces`.`su_zhi_jia_fen_shen_qing` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `suzhi` INT NOT NULL DEFAULT 0,
-  `name` VARCHAR(200) NULL COMMENT '比赛获职务名称',
-  `type` VARCHAR(45) NULL COMMENT '标志此表是否审核过',
-  `time` VARCHAR(45) NULL COMMENT '标志此表是否审核过',
-  `level` VARCHAR(45) NULL COMMENT '标志此表是否审核过',
-  `evidence` VARCHAR(200) NULL COMMENT '标志此表是否审核过',
-  `filePath` VARCHAR(200) NULL COMMENT '标志此表是否审核过',
-  `score` DOUBLE NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `isvalid` INT NULL DEFAULT 0 COMMENT '检测该加分项是否通过认证',
+/* 素质教育加分申请表 */
+CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfsq` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `suzhi` INT NOT NULL DEFAULT 0  COMMENT '素质加分测评表ID',
+  `name` VARCHAR(200) NULL COMMENT '比赛或者职务名称',
+  `type` VARCHAR(45) NULL COMMENT '类型',
+  `time` VARCHAR(45) NULL COMMENT '时间',
+  `level` VARCHAR(45) NULL COMMENT '等级',
+  `evidence` VARCHAR(200) NULL COMMENT '证据',
+  `filePath` VARCHAR(200) NULL COMMENT '证明文件的上传文件',
+  `score` DOUBLE NULL DEFAULT 0 COMMENT '成绩',
+  `isvalid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '检测该加分项是否通过认证',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) COMMENT '标志此表是否审核过';
+) COMMENT '素质教育加分申请表';
 
 /* 素质学分日常行为部分评分表 */
-CREATE TABLE IF NOT EXISTS `ces`.`su_zhi_xue_feng_ri_chang_xing_wei_bu_fen_ping_fen` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `zong_he` INT NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `she_hui_gong_de` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `wen_ming_jiao_wang` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `cheng_xin_li_shen` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `ti_yu_duan_lian` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `ai_hu_gong_wu` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `xue_xiao_gui_ding` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `can_jia_huo_dong` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `ting_ke_ji_lu` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `gong_yu_jian_cha` DOUBLE NOT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
-  `isvalid` INT NULL DEFAULT 0 COMMENT '标志此表是否审核过',
+CREATE TABLE IF NOT EXISTS `ces`.`t_szxfrcxwbfpf` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `zong_he_id` INT NOT NULL DEFAULT 0 COMMENT '综合测评表ID',
+  `she_hui_gong_de` DOUBLE NOT NULL DEFAULT 0 COMMENT '社会公德',
+  `wen_ming_jiao_wang` DOUBLE NOT NULL DEFAULT 0 COMMENT '文明交往',
+  `cheng_xin_li_shen` DOUBLE NOT NULL DEFAULT 0 COMMENT '诚信立身',
+  `ti_yu_duan_lian` DOUBLE NOT NULL DEFAULT 0 COMMENT '体育锻炼',
+  `ai_hu_gong_wu` DOUBLE NOT NULL DEFAULT 0 COMMENT '爱护公物',
+  `xue_xiao_gui_ding` DOUBLE NOT NULL DEFAULT 0 COMMENT '学校规定',
+  `can_jia_huo_dong` DOUBLE NOT NULL DEFAULT 0 COMMENT '参加活动',
+  `ting_ke_ji_lu` DOUBLE NOT NULL DEFAULT 0 COMMENT '听课记录',
+  `gong_yu_jian_cha` DOUBLE NOT NULL DEFAULT 0 COMMENT '公寓检查',
+  `is_valid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '标志此表是否审核过',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) COMMENT '标志此表是否审核过';
+) COMMENT '素质学分日常行为部分评分表';
 
 
 

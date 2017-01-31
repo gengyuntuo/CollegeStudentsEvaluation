@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class TableSZJYJFPF {
 	private Integer id;
-	private Integer zongHe; // 该表所依赖的综合测评表
+	private Integer zongHeId; // 该表所依赖的综合测评表
 	private Double sheHuiFuWu; // 社会服务
 	private Double sheHuiShiJian; // 社会实践
 	private Double biSaiHuoJiang; // 比赛获奖
 	private Double xueShengGanBu; // 学生干部
-	private Integer isValid; // 标志该表是否有效
+	private Character isValid; // 标志该表是否有效
 	private Date cTime;
 	private Date uTime;
 
@@ -37,12 +37,12 @@ public class TableSZJYJFPF {
 		this.id = id;
 	}
 
-	public Integer getZongHe() {
-		return zongHe;
+	public Integer getZongHeId() {
+		return zongHeId;
 	}
 
-	public void setZongHe(Integer zongHe) {
-		this.zongHe = zongHe;
+	public void setZongHeId(Integer zongHeId) {
+		this.zongHeId = zongHeId;
 	}
 
 	public Double getSheHuiFuWu() {
@@ -77,11 +77,11 @@ public class TableSZJYJFPF {
 		this.xueShengGanBu = xueShengGanBu;
 	}
 
-	public Integer getIsValid() {
+	public Character getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Integer isValid) {
+	public void setIsValid(Character isValid) {
 		this.isValid = isValid;
 	}
 
@@ -111,7 +111,7 @@ public class TableSZJYJFPF {
 
 	@Override
 	public String toString() {
-		return "TableSZJYJFPF [id=" + id + ", zongHe=" + zongHe
+		return "TableSZJYJFPF [id=" + id + ", zongHeId=" + zongHeId
 				+ ", sheHuiFuWu=" + sheHuiFuWu + ", sheHuiShiJian="
 				+ sheHuiShiJian + ", biSaiHuoJiang=" + biSaiHuoJiang
 				+ ", xueShengGanBu=" + xueShengGanBu + ", isValid=" + isValid

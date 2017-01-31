@@ -25,7 +25,7 @@ public class TableZHCPCJTJ {
 	private Integer suZhiHuoDongId; // 素质教育加分评分表
 	private Double pingJunXueFenJiDian; // 平均学分绩点
 
-	private Integer isValid;
+	private Character isValid;
 	private Date cTime;
 	private Date uTime;
 
@@ -85,11 +85,11 @@ public class TableZHCPCJTJ {
 		this.pingJunXueFenJiDian = pingJunXueFenJiDian;
 	}
 
-	public Integer getIsValid() {
+	public Character getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Integer isValid) {
+	public void setIsValid(Character isValid) {
 		this.isValid = isValid;
 	}
 

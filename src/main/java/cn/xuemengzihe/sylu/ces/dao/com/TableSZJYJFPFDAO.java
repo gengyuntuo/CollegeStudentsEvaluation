@@ -1,21 +1,21 @@
-package cn.xuemengzihe.sylu.ces.service.web;
+package cn.xuemengzihe.sylu.ces.dao.com;
 
-import cn.xuemengzihe.sylu.ces.pojo.com.TableSuZhiJiaoYuJiaFenPingFen;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFPF;
 
 /**
- * 
+ * 素质教育加分评分表
  * 
  * @author 李春
- * @time 2016年10月22日time下午4:02:28
+ * @time 2016年10月23日time上午11:24:15
  */
-public interface TableSuZhiJiaoYuJiaFenPingFenService {
+public interface TableSZJYJFPFDAO {
 	/**
 	 * 创建素质教育加分评分表
 	 * 
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSuZhiJiaoYuJiaFenPingFen record)
+	public void addToTable(TableSZJYJFPF record)
 			throws Exception;
 
 	/**
@@ -33,7 +33,7 @@ public interface TableSuZhiJiaoYuJiaFenPingFenService {
 	 * @throws Exception
 	 */
 
-	public void updateTableData(TableSuZhiJiaoYuJiaFenPingFen record)
+	public void updateTableData(TableSZJYJFPF record)
 			throws Exception;
 
 	/**
@@ -42,7 +42,7 @@ public interface TableSuZhiJiaoYuJiaFenPingFenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSuZhiJiaoYuJiaFenPingFen findByID(Integer id) throws Exception;
+	public TableSZJYJFPF findByID(Integer id) throws Exception;
 
 	/**
 	 * 根据综合素质测评表查询多条记录
@@ -51,7 +51,6 @@ public interface TableSuZhiJiaoYuJiaFenPingFenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSuZhiJiaoYuJiaFenPingFen findByZongHe(Integer id)
+	public TableSZJYJFPF findByZongHe(Integer id)
 			throws Exception;
-
 }

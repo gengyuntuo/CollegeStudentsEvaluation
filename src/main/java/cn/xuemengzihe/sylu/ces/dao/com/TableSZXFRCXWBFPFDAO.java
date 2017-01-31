@@ -2,7 +2,7 @@ package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
 
-import cn.xuemengzihe.sylu.ces.pojo.com.TableSuZhiXueFenRiChangXingWeiBuFenPingFen;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZXFRCXWBFPF;
 
 /**
  * 素质教育加分评分表
@@ -10,14 +10,14 @@ import cn.xuemengzihe.sylu.ces.pojo.com.TableSuZhiXueFenRiChangXingWeiBuFenPingF
  * @author 李春
  * @time 2016年10月23日time上午11:24:15
  */
-public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
+public interface TableSZXFRCXWBFPFDAO {
 	/**
 	 * 创建素质教育加分评分表
 	 * 
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSuZhiXueFenRiChangXingWeiBuFenPingFen record)
+	public void addToTable(TableSZXFRCXWBFPF record)
 			throws Exception;
 
 	/**
@@ -35,7 +35,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
 	 * @throws Exception
 	 */
 	public void updateTableByStudent(
-			TableSuZhiXueFenRiChangXingWeiBuFenPingFen record) throws Exception;
+			TableSZXFRCXWBFPF record) throws Exception;
 
 	/**
 	 * 老师更新数据表的内容
@@ -44,7 +44,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
 	 * @throws Exception
 	 */
 	public void updateTableByTeacher(
-			TableSuZhiXueFenRiChangXingWeiBuFenPingFen record) throws Exception;
+			TableSZXFRCXWBFPF record) throws Exception;
 
 	/**
 	 * 根据记录ID查询单条记录
@@ -53,7 +53,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSuZhiXueFenRiChangXingWeiBuFenPingFen findByID(Integer id)
+	public TableSZXFRCXWBFPF findByID(Integer id)
 			throws Exception;
 
 	/**
@@ -63,7 +63,7 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiXueFenRiChangXingWeiBuFenPingFen> findByZongHeTable(
+	public List<TableSZXFRCXWBFPF> findByZongHeTable(
 			Integer id) throws Exception;
 
 	/**
@@ -72,6 +72,6 @@ public interface TableSuZhiXueFenRiChangXingWeiBuFenPingFenDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiXueFenRiChangXingWeiBuFenPingFen> findAll()
+	public List<TableSZXFRCXWBFPF> findAll()
 			throws Exception;
 }

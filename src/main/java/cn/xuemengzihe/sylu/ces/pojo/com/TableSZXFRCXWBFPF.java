@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class TableSZXFRCXWBFPF {
 	private Integer id;
-	private Integer zongHe; // 综合测评表的ID
+	private Integer zongHeId; // 综合测评表ID
 	private Double sheHuiGongDe; // 社会公德
 	private Double wenMingJiaoWang; // 文明交往
 	private Double chengXinLiShen; // 诚信立身
@@ -20,13 +20,12 @@ public class TableSZXFRCXWBFPF {
 	private Double canJiaHuoDong; // 参加活动
 	private Double tingkejilu; // 听课记录
 	private Double gongYuJianCha; // 公寓检查
-	private Integer isValid;
+	private Character isValid;
 	private Date cTime;
 	private Date uTime;
 
 	public TableSZXFRCXWBFPF() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -37,12 +36,12 @@ public class TableSZXFRCXWBFPF {
 		this.id = id;
 	}
 
-	public Integer getZongHe() {
-		return zongHe;
+	public Integer getZongHeId() {
+		return zongHeId;
 	}
 
-	public void setZongHe(Integer zongHe) {
-		this.zongHe = zongHe;
+	public void setZongHeId(Integer zongHeId) {
+		this.zongHeId = zongHeId;
 	}
 
 	public Double getSheHuiGongDe() {
@@ -117,11 +116,11 @@ public class TableSZXFRCXWBFPF {
 		this.gongYuJianCha = gongYuJianCha;
 	}
 
-	public Integer getIsValid() {
+	public Character getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Integer isValid) {
+	public void setIsValid(Character isValid) {
 		this.isValid = isValid;
 	}
 
@@ -143,7 +142,7 @@ public class TableSZXFRCXWBFPF {
 
 	@Override
 	public String toString() {
-		return "TableSZXFRCXWBFPF [id=" + id + ", zongHe=" + zongHe
+		return "TableSZXFRCXWBFPF [id=" + id + ", zongHeId=" + zongHeId
 				+ ", sheHuiGongDe=" + sheHuiGongDe + ", wenMingJiaoWang="
 				+ wenMingJiaoWang + ", chengXinLiShen=" + chengXinLiShen
 				+ ", tiYuDuanLian=" + tiYuDuanLian + ", aiHuGongWu="

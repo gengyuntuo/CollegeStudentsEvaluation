@@ -1,23 +1,23 @@
-package cn.xuemengzihe.sylu.ces.service.web;
+package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
 
-import cn.xuemengzihe.sylu.ces.pojo.com.TableSuZhiJiaoYuJiaFenShenQing;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 
 /**
+ * 素质教育加分申请表
  * 
  * @author 李春
- * @time 2016年10月24日time下午4:07:54
+ * @time 2016年10月23日time上午11:24:15
  */
-public interface TableSuZhiJiaoYuJiaFenShenQingService {
+public interface TableSZJYJFSQDAO {
 	/**
 	 * 添加加分申请
 	 * 
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSuZhiJiaoYuJiaFenShenQing record)
-			throws Exception;
+	public void addToTable(TableSZJYJFSQ record) throws Exception;
 
 	/**
 	 * 根据ID删除记录
@@ -33,8 +33,7 @@ public interface TableSuZhiJiaoYuJiaFenShenQingService {
 	 * @param record
 	 * @throws Exception
 	 */
-	public void updateTableData(TableSuZhiJiaoYuJiaFenShenQing record)
-			throws Exception;
+	public void updateTableData(TableSZJYJFSQ record) throws Exception;
 
 	/**
 	 * 查询所有的加分申请表
@@ -42,7 +41,7 @@ public interface TableSuZhiJiaoYuJiaFenShenQingService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiJiaoYuJiaFenShenQing> findAll() throws Exception;
+	public List<TableSZJYJFSQ> findAll() throws Exception;
 
 	/**
 	 * 根据ID查询其中某一条记录
@@ -51,7 +50,7 @@ public interface TableSuZhiJiaoYuJiaFenShenQingService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSuZhiJiaoYuJiaFenShenQing findByID(Integer id) throws Exception;
+	public TableSZJYJFSQ findByID(Integer id) throws Exception;
 
 	/**
 	 * 根据学生的学号查询其所有的加分项
@@ -60,8 +59,7 @@ public interface TableSuZhiJiaoYuJiaFenShenQingService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiJiaoYuJiaFenShenQing> findBySno(String sno)
-			throws Exception;
+	public List<TableSZJYJFSQ> findBySno(String sno) throws Exception;
 
 	/**
 	 * 根据学生的学号和学期查询其所有的加分项
@@ -70,6 +68,6 @@ public interface TableSuZhiJiaoYuJiaFenShenQingService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSuZhiJiaoYuJiaFenShenQing> findBySnoAndXueQi(String sno)
-			throws Exception;
+	public List<TableSZJYJFSQ> findBySnoAndXueQi(String sno) throws Exception;
+
 }
