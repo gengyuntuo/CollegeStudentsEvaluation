@@ -15,7 +15,7 @@ public interface TableSZJYJFPFService {
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSZJYJFPF record) throws Exception;
+	public void addToTable(TableSZJYJFPF record);
 
 	/**
 	 * 根据ID删除记录
@@ -23,7 +23,7 @@ public interface TableSZJYJFPFService {
 	 * @param id
 	 * @throws Exception
 	 */
-	public void deleteByID(Integer id) throws Exception;
+	public void deleteByID(Integer id);
 
 	/**
 	 * 更新数据表中的记录
@@ -32,7 +32,7 @@ public interface TableSZJYJFPFService {
 	 * @throws Exception
 	 */
 
-	public void updateTableData(TableSZJYJFPF record) throws Exception;
+	public void updateTableData(TableSZJYJFPF record);
 
 	/**
 	 * 根据ID查询
@@ -40,7 +40,7 @@ public interface TableSZJYJFPFService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSZJYJFPF findByID(Integer id) throws Exception;
+	public TableSZJYJFPF findByID(Integer id);
 
 	/**
 	 * 根据综合素质测评表查询多条记录
@@ -49,6 +49,6 @@ public interface TableSZJYJFPFService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSZJYJFPF findByZongHe(Integer id) throws Exception;
+	public TableSZJYJFPF findByZongHe(Integer id);
 
 }

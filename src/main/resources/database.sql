@@ -95,7 +95,9 @@ CREATE TABLE IF NOT EXISTS `ces`.`setting` (
   `type` VARCHAR(45) NOT NULL COMMENT '类型',
   `owner_id` INT NOT NULL COMMENT '拥有者',
   `setting` VARCHAR(45) NOT NULL COMMENT '设置选项',
-  `value` VARCHAR(45) NOT NULL COMMENT '选项值',
+  `value` VARCHAR(45) NULL COMMENT '选项值',
+  `default_value` VARCHAR(45) NULL COMMENT '默认值',
+  `is_null` VARCHAR(45) NOT NULL COMMENT '是否可以为空',
   PRIMARY KEY (`id`))
 COMMENT = '系统设置';
 

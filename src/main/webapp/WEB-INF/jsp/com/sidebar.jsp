@@ -7,87 +7,75 @@
 		<ul id="sideNav" class="nav nav-pills nav-stacked">
 			<li class="top-search">
 				<form>
-					<input type="text" name="search" placeholder="搜索 ...">
+					<input type="text" name="search" placeholder="菜单搜索 ...">
 					<button type="submit" onclick="return false;">
 						<i class="ec-search s20"></i>
 					</button>
 				</form>
 			</li>
 			<li><a href="index.html">首页 <i class="im-screen"></i></a></li>
-			<li><a href="charts.html">图表 <i class="st-chart"></i></a></li>
-			<li><a href="#"> Forms <i class="im-paragraph-justify"></i></a>
+			<li><a href="#">学院管理<i class="im-paragraph-justify"></i></a>
 				<ul class="nav sub">
-					<li><a href="forms.html"><i class="ec-pencil2"></i> Form Stuff</a></li>
-					<li><a href="form-validation.html"><i class="im-checkbox-checked"></i> Form Validation</a></li>
-					<li><a href="form-wizard.html"><i class="im-wand"></i> Form Wizard</a></li>
+					<li><a href="instituteInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="instituteList.do"><i class="im-checkbox-checked"></i>学院列表</a></li>
+				</ul></li>
+			<li><a href="#">教师管理<i class="im-paragraph-justify"></i></a>
+				<ul class="nav sub">
+					<li><a href="forms.html"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="form-validation.html"><i class="im-checkbox-checked"></i>学院列表</a></li>
+					<li><a href="form-wizard.html"><i class="im-wand"></i>xxxxxxx</a></li>
 					<li><a href="wysiwyg.html"><i class="fa-pencil"></i> WYSIWYG editor</a></li>
 				</ul></li>
-			<li><a href="#"> Tables <i class="im-table2"></i></a>
+			<li><a href="#">班级管理<i class="im-paragraph-justify"></i></a>
 				<ul class="nav sub">
-					<li><a href="tables.html"><i class="en-arrow-right7"></i> Static tables</a></li>
-					<li><a href="data-tables.html"><i class="en-arrow-right7"></i> Data tables</a></li>
+					<li><a href="forms.html"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="form-validation.html"><i class="im-checkbox-checked"></i>学院列表</a></li>
+					<li><a href="form-wizard.html"><i class="im-wand"></i>xxxxxxx</a></li>
+					<li><a href="wysiwyg.html"><i class="fa-pencil"></i> WYSIWYG editor</a></li>
 				</ul></li>
-			<li><a href="#"> UI Elements <i class="st-lab"></i></a>
+			<li><a href="#">学生管理<i class="im-paragraph-justify"></i></a>
 				<ul class="nav sub">
-					<li><a href="notifications.html"><i class="fa-bell"></i> Notifications</a></li>
-					<li><a href="panels.html"><i class="br-window"></i> Panels</a></li>
-					<li><a href="tiles.html"><i class="im-windows8"></i> Tiles</a></li>
-					<li><a href="elements.html"><i class="st-cube"></i> Elements</a></li>
-					<li><a href="icons.html"><i class="im-stack"></i> Icons</a></li>
-					<li><a href="buttons.html"><i class="im-play2"></i> Buttons</a></li>
-					<li><a href="calendar.html"><i class="im-calendar2"></i> Calendar</a></li>
-					<li><a href="grid.html"><i class="st-grid"></i> Grid</a></li>
-					<li><a href="typo.html"><i class="im-font"></i> Typography</a></li>
-					<li><a href="list.html"><i class="fa-list"></i> Lists</a></li>
+					<li><a href="forms.html"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="form-validation.html"><i class="im-checkbox-checked"></i>学院列表</a></li>
+					<li><a href="form-wizard.html"><i class="im-wand"></i>xxxxxxx</a></li>
+					<li><a href="wysiwyg.html"><i class="fa-pencil"></i> WYSIWYG editor</a></li>
 				</ul></li>
-			<li><a href="#"><i class="ec-mail"></i> Email app</a>
+			<li><a href="#">成绩管理<i class="im-paragraph-justify"></i></a>
+				<ul class="nav sub">
+					<li><a href="forms.html"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="form-validation.html"><i class="im-checkbox-checked"></i>学院列表</a></li>
+					<li><a href="form-wizard.html"><i class="im-wand"></i>xxxxxxx</a></li>
+					<li><a href="wysiwyg.html"><i class="fa-pencil"></i> WYSIWYG editor</a></li>
+				</ul></li>
+			<li><a href="#"><i class="ec-mail"></i>消息管理</a>
 				<ul class="nav sub">
 					<li><a href="email-inbox.html"><i class="ec-archive"></i> Inbox</a></li>
 					<li><a href="email-read.html"><i class="br-eye"></i> Read email</a></li>
 					<li><a href="email-write.html"><i class="ec-pencil2"></i> Write email</a></li>
 				</ul></li>
-			<li><a href="file.html"><i class="en-upload"></i> File Manager</a></li>
-			<li><a href="gallery.html"><i class="im-images"></i> Gallery</a></li>
-			<li><a href="widgets.html"><i class="st-diamond"></i> Widgets </a></li>
-			<li><a href="#"><i class="ec-location"></i> Maps</a>
+			<li><a href="#"><i class="ec-mail"></i>资源管理</a>
 				<ul class="nav sub">
-					<li><a href="maps-google.html"><i class="im-map2"></i> Google maps</a></li>
-					<li><a href="maps-vector.html"><i class="en-location2"></i> Vector maps</a></li>
+					<li><a href="email-inbox.html"><i class="ec-archive"></i> Inbox</a></li>
+					<li><a href="email-read.html"><i class="br-eye"></i> Read email</a></li>
+					<li><a href="email-write.html"><i class="ec-pencil2"></i> Write email</a></li>
 				</ul></li>
-			<li><a href="#">Pages <i class="st-files"></i></a>
+			<li><a href="#"><i class="ec-mail"></i>系统管理</a>
 				<ul class="nav sub">
-					<li><a href="invoice.html"><i class="st-file"></i> Invoice</a></li>
-					<li><a href="profile.html"><i class="ec-user"></i> Profile page</a></li>
-					<li><a href="search.html"><i class="ec-search"></i> Search page</a></li>
-					<li><a href="blank.html"><i class="im-file4"></i> Blank page</a></li>
-					<li><a href="login.html"><i class="ec-locked"></i> Login page</a></li>
-					<li><a href="lockscreen.html"><i class="ec-locked"></i> Lock screen</a></li>
-					<li><a href="#"><i class="st-files"></i> Error pages</a>
-						<ul class="nav sub">
-							<li><a href="400.html"><i class="st-file-broken"></i> Error 400</a></li>
-							<li><a href="401.html"><i class="st-file-broken"></i> Error 401</a></li>
-							<li><a href="403.html"><i class="st-file-broken"></i> Error 403</a></li>
-							<li><a href="404.html"><i class="st-file-broken"></i> Error 404</a></li>
-							<li><a href="405.html"><i class="st-file-broken"></i> Error 405</a></li>
-							<li><a href="500.html"><i class="st-file-broken"></i> Error 500</a></li>
-							<li><a href="503.html"><i class="st-file-broken"></i> Error 503</a></li>
-							<li><a href="offline.html"><i class="st-window"></i> Offline</a></li>
-						</ul></li>
+					<li><a href="email-inbox.html"><i class="ec-archive"></i> Inbox</a></li>
+					<li><a href="email-read.html"><i class="br-eye"></i> Read email</a></li>
+					<li><a href="email-write.html"><i class="ec-pencil2"></i> Write email</a></li>
 				</ul></li>
-			<li><a href="#">Bonus <i class="im-gift"></i></a>
-				<ul class="nav sub">
-					<li><a href="landing.html"><i class="im-airplane"></i> Landing page</a></li>
-				</ul></li>
+			<li><a href="charts.html">系统设置<i class="st-chart"></i></a></li>
 		</ul>
 		<!-- End #sideNav -->
 		<!-- Start .sidebar-panel -->
 		<div class="sidebar-panel">
 			<h4 class="sidebar-panel-title">
-				<i class="im-fire"></i> Server usage
+				<i class="im-fire"></i> 服务器使用情况
 			</h4>
 			<div class="sidebar-panel-content">
 				<ul class="server-stats">
-					<li><span class="txt">Disk space</span> <span class="percent">78</span>
+					<li><span class="txt">磁盘空间</span> <span class="percent">78</span>
 						<div id="usage-sparkline" class="sparkline">Loading...</div>
 						<div class="pie-chart" data-percent="78"></div></li>
 				</ul>
@@ -97,7 +85,7 @@
 						<div class="pie-chart" data-percent="56"></div></li>
 				</ul>
 				<ul class="server-stats">
-					<li><span class="txt">Memory</span> <span class="percent">14</span>
+					<li><span class="txt">内存</span> <span class="percent">14</span>
 						<div id="ram-sparkline" class="sparkline">Loading...</div>
 						<div class="pie-chart" data-percent="14"></div></li>
 				</ul>

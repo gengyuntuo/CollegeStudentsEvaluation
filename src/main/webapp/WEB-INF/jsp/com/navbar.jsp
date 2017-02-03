@@ -73,7 +73,6 @@
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
-					<li><a href="#" id="toggle-header-area"><i class="ec-download"></i></a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
 						<ul class="dropdown-menu notification-menu right" role="menu">
 							<li class="clearfix"><i class="ec-chat"></i> <a href="#" class="notification-user"> Ric Jones </a> <span class="notification-action"> replied to your </span> <a href="#"
@@ -100,48 +99,6 @@
 			</nav>
 		</div>
 		<!-- Start #header-area -->
-		<div id="header-area" class="fadeInDown">
-			<div class="header-area-inner">
-				<ul class="list-unstyled list-inline">
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="im-pie"></i> <span>Earning Stats</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="ec-images color-dark"></i> <span>Gallery</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="en-light-bulb color-orange"></i> <span>Fresh ideas</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="ec-link color-blue"></i> <span>Links</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="ec-support color-red"></i> <span>Support</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="shortcut-button">
-							<a href="#"> <i class="st-lock color-teal"></i> <span>Lock area</span>
-							</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<!-- End #header-area -->
 	</div>
 	<!-- Start .header-inner -->

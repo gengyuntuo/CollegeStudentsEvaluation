@@ -15,7 +15,7 @@ public interface TableSZXFRCXWBFPFService {
 	 * @param table
 	 * @throws Exception
 	 */
-	public void addToTable(TableSZXFRCXWBFPF record) throws Exception;
+	public void addToTable(TableSZXFRCXWBFPF record);
 
 	/**
 	 * 根据ID删除记录
@@ -23,7 +23,7 @@ public interface TableSZXFRCXWBFPFService {
 	 * @param id
 	 * @throws Exception
 	 */
-	public void deleteByID(Integer id) throws Exception;
+	public void deleteByID(Integer id);
 
 	/**
 	 * 学生更新数据表的内容
@@ -31,7 +31,7 @@ public interface TableSZXFRCXWBFPFService {
 	 * @param record
 	 * @throws Exception
 	 */
-	public void updateTableByStudent(TableSZXFRCXWBFPF record) throws Exception;
+	public void updateTableByStudent(TableSZXFRCXWBFPF record);
 
 	/**
 	 * 老师更新数据表的内容
@@ -39,7 +39,7 @@ public interface TableSZXFRCXWBFPFService {
 	 * @param record
 	 * @throws Exception
 	 */
-	public void updateTableByTeacher(TableSZXFRCXWBFPF record) throws Exception;
+	public void updateTableByTeacher(TableSZXFRCXWBFPF record);
 
 	/**
 	 * 根据记录ID查询单条记录
@@ -48,7 +48,7 @@ public interface TableSZXFRCXWBFPFService {
 	 * @return
 	 * @throws Exception
 	 */
-	public TableSZXFRCXWBFPF findByID(Integer id) throws Exception;
+	public TableSZXFRCXWBFPF findByID(Integer id);
 
 	/**
 	 * 根据综合表的ID查询多条表记录
@@ -66,6 +66,6 @@ public interface TableSZXFRCXWBFPFService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableSZXFRCXWBFPF> findAll() throws Exception;
+	public List<TableSZXFRCXWBFPF> findAll();
 
 }

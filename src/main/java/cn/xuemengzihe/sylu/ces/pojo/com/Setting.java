@@ -16,6 +16,8 @@ public class Setting {
 	private Integer ownerId; // 拥有者
 	private String setting; // 设置名称
 	private String value; // 设置值
+	private String defaultValue; // 默认值
+	private Character isNull; // 判断该字段是否可以为空
 
 	public Setting() {
 		super();
@@ -69,11 +71,28 @@ public class Setting {
 		this.value = value;
 	}
 
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	public Character getIsNull() {
+		return isNull;
+	}
+
+	public void setIsNull(Character isNull) {
+		this.isNull = isNull;
+	}
+
 	@Override
 	public String toString() {
 		return "Setting [id=" + id + ", weight=" + weight + ", type=" + type
 				+ ", ownerId=" + ownerId + ", setting=" + setting + ", value="
-				+ value + "]";
+				+ value + ", defaultValue=" + defaultValue + ", isNull="
+				+ isNull + "]";
 	}
 
 }
