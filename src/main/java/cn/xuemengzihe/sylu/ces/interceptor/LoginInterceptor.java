@@ -2,9 +2,13 @@ package cn.xuemengzihe.sylu.ces.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 
 /**
  * <h1>登录拦截器</h1>
@@ -20,8 +24,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		HttpSession session = request.getSession();
+		Teacher teacher = (Teacher) session.getAttribute("teacher");
+		Student student = (Student) session.getAttribute("student");
+		if (teacher == null && student == null) {
+			// 未登录用户，跳转到登录页面
+			request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp")
+					.forward(request, response);
+			return false;
+		}
+		// TODO 页面权限验证
+		return true;
 	}
 
 	@Override

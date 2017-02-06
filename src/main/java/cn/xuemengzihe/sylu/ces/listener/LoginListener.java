@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.listener;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
@@ -19,7 +20,11 @@ public class LoginListener implements HttpSessionAttributeListener,
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent se) {
-		// TODO Auto-generated method stub
+		String attrName = se.getName();
+		if ("user".equals(attrName)) {
+			HttpSession session = se.getSession();
+			session.getAttribute("user");
+		}
 
 	}
 
