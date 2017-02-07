@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.InstituteDAO">
+	<insert id="insertInstitute" parameterType="institute">
+		<selectKey order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		institute(
+		`i_numb`,
+		`i_name`,
+		`desc`,
+		`is_valid`,
+		`c_time`,
+		`u_time`
+		) VALUES(
+		#{iNumb},
+		#{iName},
+		#{desc},
+		#{isValid},
+		#{cTime},
+		#{uTime}
+		)
+	</insert>
+	<delete id="deleteInstituteById" parameterType="int">
+		DELETE FROM institute
+		WHERE id=#{id}
+	</delete>
+	<update id="updateInstitute" parameterType="institute">
+		UPDATE institute
+		SET
+		`i_numb`=#{iNumb},
+		`i_name`=#{iName},
+		`desc`=#{desc},
+		`is_valid`=#{isValid},
+		WHERE
+		id=#{id}
+	</update>
+	<select id="findInstituteById" parameterType="int" resultType="institute">
+		SELECT *
+		FROM institute
+		WHERE id = #{id}
+	</select>
+	<select id="findInstitutesOfAll" parameterType="int" resultType="institute">
+		SELECT *
+		FROM institute
+	</select>
+</mapper>

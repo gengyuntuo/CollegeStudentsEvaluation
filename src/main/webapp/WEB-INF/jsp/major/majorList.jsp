@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>学院列表</title>
+<title>专业列表</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -35,7 +35,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-table2"></i> 学院列表
+						<i class="im-table2"></i> 专业列表
 					</h1>
 					<!-- Start .bredcrumb -->
 					<ul id="crumb" class="breadcrumb">
@@ -146,7 +146,7 @@
 						<div class="panel panel-default plain toggle panelClose panelRefresh">
 							<!-- Start .panel -->
 							<div class="panel-heading white-bg">
-								<h4 class="panel-title">学院</h4>
+								<h4 class="panel-title">专业</h4>
 							</div>
 							<div class="panel-body">
 								<table class="table">
@@ -331,24 +331,24 @@
 						<div class="panel panel-default plain toggle panelClose panelRefresh">
 							<!-- Start .panel -->
 							<div class="panel-heading white-bg">
-								<h4 class="panel-title">Table bordered</h4>
+								<h4 class="panel-title">专业列表</h4>
 							</div>
 							<div class="panel-body">
 								<table class="table table-bordered">
 									<thead>
 										<tr>
 											<th class="per5">序号</th>
-											<th class="per40">学院代码</th>
-											<th class="per40">学院名称</th>
-											<th class="per15">学院说明</th>
+											<th class="per40">专业代码</th>
+											<th class="per40">专业名称</th>
+											<th class="per15">专业说明</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="item" varStatus="index" items="${list.list }">
+										<c:forEach var="item" varStatus="index" items="${pageInfo.list }">
 											<tr>
 												<td>${index.count }</td>
-												<td>${item.iNumb }</td>
-												<td>${item.iName }</td>
+												<td>${item.mNumb }</td>
+												<td>${item.mName }</td>
 												<td>${item.desc }</td>
 											</tr>
 										</c:forEach>

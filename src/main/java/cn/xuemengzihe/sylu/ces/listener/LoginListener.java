@@ -30,25 +30,21 @@ public class LoginListener implements HttpSessionAttributeListener,
 
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent se) {
-		// TODO Auto-generated method stub
-
+		// 无操作
 	}
 
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent se) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		// TODO Auto-generated method stub
-
+		// 无操作
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 		// TODO Auto-generated method stub
-
 	}
 }

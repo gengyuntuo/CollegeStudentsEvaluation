@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.MajorDAO">
+	<insert id="insertMajor" parameterType="major">
+		<selectKey order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		major(
+		`m_numb`,
+		`m_name`,
+		`desc`,
+		`institute_id`,
+		`is_valid`,
+		`c_time`,
+		`u_time`
+		) VALUES(
+		#{mNumb},
+		#{mName},
+		#{desc},
+		#{instituteId},
+		#{isValid},
+		#{cTime},
+		#{uTime}
+		)
+	</insert>
+	<delete id="deleteMajorById" parameterType="int">
+		DELETE FROM major
+		WHERE id=#{id}
+	</delete>
+	<update id="updateMajor" parameterType="major">
+		UPDATE major
+		SET
+		`m_numb`=#{mNumb},
+		`m_name`=#{mName},
+		`desc`=#{desc},
+		`institute_id`=#{instituteId},
+		`is_valid`=#{isValid}
+		WHERE
+		id=#{id}
+	</update>
+	<select id="findMajorById" parameterType="int" resultType="major">
+		SELECT *
+		FROM major
+		WHERE id = #{id}
+	</select>
+	<select id="findMajorsOfAll" parameterType="int" resultType="major">
+		SELECT *
+		FROM major
+	</select>
+</mapper>

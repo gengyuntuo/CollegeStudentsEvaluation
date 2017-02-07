@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>学院概述</title>
+<title>专业概述</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -35,7 +35,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> 学院概述
+						<i class="im-screen"></i> 专业概述
 					</h1>
 					<!-- Start .bredcrumb -->
 					<ul id="crumb" class="breadcrumb">
@@ -151,8 +151,8 @@
 											<i class="br-cart s64"></i>
 										</div>
 										<div class="tile-content">
-											<div class="number">${list.total }</div>
-											<h3>学院数</h3>
+											<div class="number">${pageInfo.total }</div>
+											<h3>专业数</h3>
 										</div>
 									</div>
 								</div>
@@ -163,8 +163,8 @@
 											<i class="ec-cog s64"></i>
 										</div>
 										<div class="tile-content">
-											<div class="number">${list.total }</div>
-											<h3>学院数</h3>
+											<div class="number">${pageInfo.total }</div>
+											<h3>专业数</h3>
 										</div>
 									</div>
 								</div>

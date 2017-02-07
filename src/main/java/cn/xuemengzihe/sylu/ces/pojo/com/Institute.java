@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class Institute {
 	private Integer id;
-	private String iNumb;
-	private String iName;
-	private String desc;
+	private String iNumb; // 学院编号
+	private String iName; // 学院名称
+	private String desc; // 学院说明
 
 	private Character isValid; // 有效？
-	private Date cTime;
-	private Date uTime;
+	private Date cTime; // 创建时间
+	private Date uTime; // 更新时间
 
 	private List<Major> majors; // 专业
 
