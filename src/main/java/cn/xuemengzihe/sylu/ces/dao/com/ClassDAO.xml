@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.ClassDAO">
+	<insert id="insertClazz" parameterType="clazz">
+		<selectKey order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		class(
+		`class_id`,
+		`major_id`,
+		`teacher_id`,
+		`study_year`,
+		`start_year`,
+		`stop_year`,
+		`is_valid`,
+		`c_time`,
+		`u_time`
+		) VALUES(
+		#{classId},
+		#{majorId},
+		#{teacherId},
+		#{studyYear},
+		#{startYear},
+		#{stopYear},
+		#{isValid},
+		#{cTime},
+		#{uTime}
+		)
+	</insert>
+	<delete id="deleteClazzById" parameterType="int">
+		DELETE FROM class
+		WHERE id=#{id}
+	</delete>
+	<update id="updateClazz" parameterType="clazz">
+		UPDATE class
+		SET
+		`class_id`=#{classId},
+		`major_id`=#{majorId},
+		`teacher_id`=#{teacherId},
+		`study_year`=#{studyYear},
+		`start_year`=#{startYear},
+		`stop_year`=#{stopYear},
+		`is_valid`=#{isValid}
+		WHERE
+		id=#{id}
+	</update>
+	<select id="findClazzById" parameterType="int" resultType="clazz">
+		SELECT *
+		FROM class
+		WHERE id = #{id}
+	</select>
+	<select id="findClazzsOfAll" parameterType="int" resultType="clazz">
+		SELECT *
+		FROM class
+	</select>
+</mapper>

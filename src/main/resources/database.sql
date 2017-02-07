@@ -6,6 +6,7 @@ USE `ces` ;
 DROP TABLE IF EXISTS `ces`.`teacher`;
 DROP TABLE IF EXISTS `ces`.`institute`;
 DROP TABLE IF EXISTS `ces`.`major`;
+DROP TABLE IF EXISTS `ces`.`class`;
 DROP TABLE IF EXISTS `ces`.`student`;
 DROP TABLE IF EXISTS `ces`.`setting`;
 DROP TABLE IF EXISTS `ces`.`menu`;
@@ -58,6 +59,20 @@ CREATE TABLE IF NOT EXISTS `ces`.`major` (
   PRIMARY KEY (`id`))
 COMMENT = '专业';
 
+CREATE TABLE IF NOT EXISTS `ces`.`class` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `class_id` VARCHAR(45) NOT NULL COMMENT '班级号（名称）',
+  `major_id` INT NOT NULL COMMENT '专业ID',
+  `teacher_id` INT NOT NULL COMMENT '教师ID',
+  `study_year` INT NULL COMMENT '学制',
+  `start_year` DATE NOT NULL COMMENT '开始年月',
+  `stop_year` DATE NOT NULL COMMENT '毕业年月',
+  `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '是否有效',
+  `c_time` DATETIME NOT NULL COMMENT '创建时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`))
+COMMENT = '班级';
+
 CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `nick` VARCHAR(45) NOT NULL DEFAULT '昵称' COMMENT '昵称',
@@ -78,11 +93,11 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `motto` VARCHAR(140) NULL COMMENT '座右铭',
   `password` VARCHAR(32) NOT NULL COMMENT '密码',
   `class_id` INT NOT NULL COMMENT '班级的ID',
-  `major_id` INT NOT NULL COMMENT '专业ID',
-  `teacher_id` INT NOT NULL COMMENT '老师ID',
-  `study_year` INT NOT NULL DEFAULT 4 COMMENT '学习年限',
-  `staryear` DATE NOT NULL COMMENT '入学日期',
-  `stop_year` DATE NOT NULL COMMENT '学业结束日期',
+  `major_id` INT NULL COMMENT '专业ID[冗余字段]',
+  `teacher_id` INT NULL COMMENT '老师ID[冗余字段]',
+  `study_year` INT NULL DEFAULT 4 COMMENT '学习年限[冗余字段]',
+  `start_year` DATE NULL COMMENT '入学日期[冗余字段]',
+  `stop_year` DATE NULL COMMENT '学业结束日期[冗余字段]',
   `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '该字段是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

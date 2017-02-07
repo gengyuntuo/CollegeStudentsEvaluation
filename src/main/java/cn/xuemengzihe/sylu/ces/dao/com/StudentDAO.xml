@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.StudentDAO">
+	<insert id="insertStudent" parameterType="student">
+		<selectKey order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO
+		student(
+		`nick`,
+		`name`,
+		`nation`,
+		`gender`,
+		`birthday`,
+		`portrait`,
+		`role`,
+		`email`,
+		`id_card`,
+		`we_chat`,
+		`qq_numb`,
+		`alipay`,
+		`phone`,
+		`address`,
+		`resident`,
+		`motto`,
+		`password`,
+		`class_id`,
+		`major_id`,
+		`teacher_id`,
+		`study_year`,
+		`start_year`,
+		`stop_year`,
+		`is_valid`,
+		`c_time`,
+		`u_time`
+		) VALUES(
+		#{nick},
+		#{name},
+		#{nation},
+		#{gender},
+		#{birthday},
+		#{portrait},
+		#{role},
+		#{email},
+		#{idCard},
+		#{weChat},
+		#{qqNumb},
+		#{alipay},
+		#{phone},
+		#{address},
+		#{resident},
+		#{motto},
+		#{password},
+		#{classId},
+		#{majorId},
+		#{teacherId},
+		#{studyYear},
+		#{startYear},
+		#{stopYear},
+		#{isValid},
+		#{cTime},
+		#{uTime}
+		)
+	</insert>
+	<delete id="deleteStudentById" parameterType="int">
+		DELETE FROM student
+		WHERE id=#{id}
+	</delete>
+	<update id="updateStudent" parameterType="student">
+		UPDATE student
+		SET
+		`nick`=#{nick},
+		`name`=#{name},
+		`nation`=#{nation},
+		`gender`=#{gender},
+		`birthday`=#{birthday},
+		`portrait`=#{portrait},
+		`role`=#{role},
+		`email`=#{email},
+		`id_card`=#{idCard},
+		`we_chat`=#{weChat},
+		`qq_numb`=#{qqNumb},
+		`alipay`=#{alipay},
+		`phone`=#{phone},
+		`address`=#{address},
+		`resident`=#{resident},
+		`motto`=#{motto},
+		`password`=#{password},
+		`class_id`=#{classId},
+		`major_id`=#{majorId},
+		`teacher_id`=#{teacherId},
+		`study_year`=#{studyYear},
+		`start_year`=#{startYear},
+		`stop_year`=#{stopYear},
+		`is_valid`=#{isValid}
+		WHERE
+		id=#{id}
+	</update>
+	<select id="findStudentById" parameterType="int" resultType="student">
+		SELECT *
+		FROM student
+		WHERE id = #{id}
+	</select>
+	<select id="findStudentsOfAll" parameterType="int" resultType="student">
+		SELECT *
+		FROM student
+	</select>
+</mapper>

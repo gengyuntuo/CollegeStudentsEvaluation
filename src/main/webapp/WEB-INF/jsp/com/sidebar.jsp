@@ -31,7 +31,7 @@
 				</ul></li>
 			<li><a href="#">班级管理<i class="im-paragraph-justify"></i></a>
 				<ul class="nav sub">
-					<li><a href="classInfo"><i class="ec-pencil2"></i>信息概览</a></li>
+					<li><a href="classInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
 					<li><a href="classList.do"><i class="im-checkbox-checked"></i>班级列表</a></li>
 				</ul></li>
 			<li><a href="#">学生管理<i class="im-paragraph-justify"></i></a>

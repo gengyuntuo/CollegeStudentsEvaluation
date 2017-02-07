@@ -34,7 +34,7 @@
 		`i_numb`=#{iNumb},
 		`i_name`=#{iName},
 		`desc`=#{desc},
-		`is_valid`=#{isValid},
+		`is_valid`=#{isValid}
 		WHERE
 		id=#{id}
 	</update>
