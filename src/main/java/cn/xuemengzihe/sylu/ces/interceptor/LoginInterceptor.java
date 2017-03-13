@@ -7,8 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.xuemengzihe.sylu.ces.pojo.com.Student;
-import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
+import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 
 /**
  * <h1>登录拦截器</h1>
@@ -25,15 +24,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
-		Teacher teacher = (Teacher) session.getAttribute("teacher");
-		Student student = (Student) session.getAttribute("student");
-		if (teacher == null && student == null) {
+		Persion user = (Persion) session.getAttribute("user");
+		// TODO 重要BUG，测试阶段，正式上线需要删除改行内容
+		user = new Persion();
+		if (user == null) {
 			// 未登录用户，跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp")
 					.forward(request, response);
 			return false;
 		}
-		// TODO 页面权限验证
 		return true;
 	}
 
@@ -41,16 +40,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		// TODO Auto-generated method stub
-
+		// Do Nothing
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		// TODO Auto-generated method stub
-
+		// Do Nothing
 	}
 
 }
