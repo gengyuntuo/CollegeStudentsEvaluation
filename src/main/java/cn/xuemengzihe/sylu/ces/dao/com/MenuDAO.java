@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Menu;
@@ -46,4 +48,12 @@ public interface MenuDAO {
 	 */
 	public Menu findMenuById(Integer id);
 
+	/**
+	 * 获取个人菜单，根据不同的参数获取不同的菜单列表
+	 * 
+	 * @param level
+	 *            菜单等级（教师T，学生S，班委M，管理员A）
+	 * @return 个人菜单
+	 */
+	public List<Menu> findPersionMenu(String level);
 }

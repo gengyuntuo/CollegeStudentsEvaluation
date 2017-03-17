@@ -118,12 +118,13 @@ COMMENT = '系统设置';
 
 CREATE TABLE IF NOT EXISTS `ces`.`menu` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `order` INT NOT NULL UNIQUE DEFAULT '1' COMMENT '菜单显示的顺序',
   `url` VARCHAR(200) NOT NULL COMMENT '菜单指向的页面路径',
   `title` VARCHAR(45) NOT NULL COMMENT '菜单标题',
   `desc` VARCHAR(140) NOT NULL DEFAULT '菜单' COMMENT '菜单功能描述',
   `image` VARCHAR(200) NOT NULL DEFAULT '无' COMMENT '菜单图标',
-  `role_id` INT NULL COMMENT '菜单拥有者ID',
   `father_menu_id` INT NULL COMMENT '父菜单的ID',
+  `is_valid` BOOLEAN NOT NULL DEFAULT '1' COMMENT '父菜单的ID',
   `level` VARCHAR(1) NOT NULL DEFAULT 'U' COMMENT '菜单使用权限',
   PRIMARY KEY (`id`))
 COMMENT = '用户菜单';

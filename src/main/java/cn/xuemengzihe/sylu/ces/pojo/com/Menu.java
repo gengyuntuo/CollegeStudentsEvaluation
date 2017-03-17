@@ -1,19 +1,29 @@
 package cn.xuemengzihe.sylu.ces.pojo.com;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * <h1>页面上的菜单</h1>
+ * <p>
+ * </p>
+ * 
+ * @author 李春
+ * @time 2017年3月16日 下午2:57:12
+ */
 public class Menu {
 	private Integer id; // ID
+	private Integer order; // 菜单显示的顺序
 	private String url; // 菜单请求路径
 	private String title; // 菜单选项名称
 	private String desc; // 菜单功能描述
 	private String image; // 菜单展示图标
-	private Integer roleId; // 菜单拥有者ID
 	private Integer fatherMenuId; // 父菜单ID
-	private Character level; // 菜单使用权限等级
+	private String level; // 菜单使用权限等级
+	private Boolean isValid; // 菜单是否有效
 
-	private Date startDate; // 菜单启用日期
-	private Date stopDate; // 菜单停用日期
+	// 子菜单（二级菜单）
+	private List<Menu> menus;
 
 	public Menu() {
 		super();
@@ -25,6 +35,14 @@ public class Menu {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 	public String getTitle() {
@@ -47,14 +65,6 @@ public class Menu {
 		return image;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
 	public Integer getFatherMenuId() {
 		return fatherMenuId;
 	}
@@ -75,36 +85,39 @@ public class Menu {
 		this.url = url;
 	}
 
-	public Character getLevel() {
+	public String getLevel() {
 		return level;
 	}
 
-	public void setLevel(Character level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public Boolean getIsValid() {
+		return isValid;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setIsValid(Boolean isValid) {
+		this.isValid = isValid;
 	}
 
-	public Date getStopDate() {
-		return stopDate;
+	public List<Menu> getMenus() {
+		// System.out.println("调用了GetMenus方法");
+		if (this.menus == null)
+			this.menus = new ArrayList<>();
+		return menus;
 	}
 
-	public void setStopDate(Date stopDate) {
-		this.stopDate = stopDate;
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
 
 	@Override
 	public String toString() {
-		return "Menu [id=" + id + ", url=" + url + ", title=" + title
-				+ ", desc=" + desc + ", image=" + image + ", roleId=" + roleId
+		return "Menu [id=" + id + ", order=" + order + ", url=" + url
+				+ ", title=" + title + ", desc=" + desc + ", image=" + image
 				+ ", fatherMenuId=" + fatherMenuId + ", level=" + level
-				+ ", startDate=" + startDate + ", stopDate=" + stopDate + "]";
+				+ ", isValid=" + isValid + ", menus=" + menus + "]";
 	}
 
 }

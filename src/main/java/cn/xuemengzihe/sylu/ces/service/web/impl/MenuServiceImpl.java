@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import cn.xuemengzihe.sylu.ces.service.web.MenuService;
 /**
  * <h1>Menu Service</h1>
  * <p>
+ * Menu 业务
  * </p>
  * 
  * @author 李春
@@ -23,26 +26,27 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Integer insertMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		return null;
+		return menuDAO.insertMenu(menu);
 	}
 
 	@Override
 	public Integer deleteMenuById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return menuDAO.deleteMenuById(id);
 	}
 
 	@Override
 	public Integer updateMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		return null;
+		return menuDAO.updateMenu(menu);
 	}
 
 	@Override
 	public Menu findMenuById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return menuDAO.findMenuById(id);
+	}
+
+	@Override
+	public List<Menu> findPersionMenu(String level) {
+		return menuDAO.findPersionMenu(level);
 	}
 
 }

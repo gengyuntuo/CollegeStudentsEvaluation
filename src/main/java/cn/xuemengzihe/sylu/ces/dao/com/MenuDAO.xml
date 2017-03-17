@@ -3,27 +3,42 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.MenuDAO">
+	<resultMap type="menu" id="map" >
+		<id column="id" property="id" />
+		<result column="url" property="url" />
+		<result column="title" property="title" />
+		<result column="desc" property="desc" />
+		<result column="image" property="image" />
+		<collection property="menus" javaType="menu" >
+			<id column="_id" property="id" />
+			<result column="_url" property="url" />
+			<result column="_title" property="title" />
+			<result column="_desc" property="desc" />
+			<result column="_image" property="image" />
+		</collection>
+	</resultMap>
 	<insert id="insertMenu" parameterType="menu">
-		<selectKey order="AFTER" keyProperty="id">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO
-		menu(
-		`url`,
-		`title`,
-		`desc`,
-		`image`,
-		`role_id`,
-		`father_menu_id`,
-		`level`
+		INSERT INTO menu(
+			`order`,
+			`url`,
+			`title`,
+			`desc`,
+			`image`,
+			`father_menu_id`,
+			`is_valid`,
+			`level`
 		) VALUES(
-		#{url},
-		#{title},
-		#{desc},
-		#{image},
-		#{roleId},
-		#{fatherMenuId},
-		#{level}
+			#{order},
+			#{url},
+			#{title},
+			#{desc},
+			#{image},
+			#{fatherMenuId},
+			#{isValid},
+			#{level}
 		)
 	</insert>
 	<delete id="deleteMenuById" parameterType="int">
@@ -33,19 +48,26 @@
 	<update id="updateMenu" parameterType="menu">
 		UPDATE menu
 		SET
-		`url`=#{url},
-		`title`=#{title},
-		`desc`=#{desc},
-		`image`=#{image},
-		`role_id`=#{roleId},
-		`father_menu_id`=#{fatherMenuId},
-		`level`=#{level}
-		WHERE
-		id=#{id}
+			`order`=#{order},
+			`url`=#{url},
+			`title`=#{title},
+			`desc`=#{desc},
+			`image`=#{image},
+			`father_menu_id`=#{fatherMenuId},
+			`is_valid`=#{isValid},
+			`level`=#{level}
+		WHERE id=#{id}
 	</update>
 	<select id="findMenuById" parameterType="int" resultType="menu">
 		SELECT *
 		FROM menu
 		WHERE id = #{id}
+	</select>
+	<select id="findPersionMenu" parameterType="string" resultMap="map">
+		SELECT one.*, two.url _url,two.title _title,two.desc _desc,two.image _image FROM
+			(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one left join
+			(SELECT * FROM menu WHERE `is_valid` = '1' AND IFNULL(`father_menu_id`, NULL)) two
+		ON one.`id`=two.`father_menu_id` AND one.`level` = #{level}
+		ORDER BY one.order,two.order
 	</select>
 </mapper>
