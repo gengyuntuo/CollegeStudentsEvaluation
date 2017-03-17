@@ -1,7 +1,11 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +24,26 @@ import cn.xuemengzihe.sylu.ces.service.web.MenuService;
  */
 @Service
 public class MenuServiceImpl implements MenuService {
+	private final Logger logger = LoggerFactory
+			.getLogger(MenuServiceImpl.class);
+	/**
+	 * 教师
+	 */
+	public static final String TYPE_TEACHER = "T";
+	/**
+	 * 学生
+	 */
+	public static final String TYPE_STUDENT = "S";
+	/**
+	 * 班委
+	 */
+	public static final String TYPE_MONITOR = "M";
+	/**
+	 * 管理员
+	 */
+	public static final String TYPE_ADMIN = "A";
 
+	private Map<String, List<Menu>> menu;
 	@Autowired
 	private MenuDAO menuDAO;
 
@@ -47,6 +70,36 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public List<Menu> findPersionMenu(String level) {
 		return menuDAO.findPersionMenu(level);
+	}
+
+	@Override
+	public List<Menu> getMenu(String type) {
+		if (menu == null)
+			menu = new HashMap<String, List<Menu>>();
+		switch (type) {
+		case TYPE_TEACHER:
+			if (!menu.containsKey(TYPE_TEACHER))
+				menu.put(TYPE_TEACHER, menuDAO.findPersionMenu(TYPE_TEACHER));
+			return menu.get(TYPE_TEACHER);
+		case TYPE_MONITOR:
+			if (!menu.containsKey(TYPE_MONITOR))
+				menu.put(TYPE_MONITOR, menuDAO.findPersionMenu(TYPE_MONITOR));
+			return menu.get(TYPE_MONITOR);
+
+		case TYPE_STUDENT:
+			if (!menu.containsKey(TYPE_STUDENT))
+				menu.put(TYPE_STUDENT, menuDAO.findPersionMenu(TYPE_STUDENT));
+			return menu.get(TYPE_STUDENT);
+
+		case TYPE_ADMIN:
+			if (!menu.containsKey(TYPE_ADMIN))
+				menu.put(TYPE_ADMIN, menuDAO.findPersionMenu(TYPE_ADMIN));
+			return menu.get(TYPE_ADMIN);
+		default:
+			logger.info("can't find menu by type:" + type);
+			break;
+		}
+		return null;
 	}
 
 }

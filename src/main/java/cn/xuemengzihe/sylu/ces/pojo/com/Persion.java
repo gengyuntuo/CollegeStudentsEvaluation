@@ -32,6 +32,7 @@ public class Persion {
 	private String resident; // 居住地
 	private String motto; // 座右铭
 	private String password; // 密码
+	private String userType;// 账户类型,例如T：老师，S：学生，M：班委，A：管理员······
 
 	private Character isValid; // 该Persion是否有效
 	private Date cTime;
@@ -208,6 +209,14 @@ public class Persion {
 		this.isValid = isValid;
 	}
 
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		return "Persion [id=" + id + ", nick=" + nick + ", name=" + name
@@ -217,8 +226,8 @@ public class Persion {
 				+ weChat + ", qqNumb=" + qqNumb + ", alipay=" + alipay
 				+ ", phone=" + phone + ", address=" + address + ", resident="
 				+ resident + ", motto=" + motto + ", password=" + password
-				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
-				+ uTime + "]";
+				+ ", userType=" + userType + ", isValid=" + isValid
+				+ ", cTime=" + cTime + ", uTime=" + uTime + "]";
 	}
 
 }

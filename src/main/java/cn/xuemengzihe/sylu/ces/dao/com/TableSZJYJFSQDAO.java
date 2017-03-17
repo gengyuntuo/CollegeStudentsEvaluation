@@ -2,6 +2,8 @@ package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 
 /**
@@ -10,6 +12,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
  * @author 李春
  * @time 2016年10月23日time上午11:24:15
  */
+@Repository
 public interface TableSZJYJFSQDAO {
 	/**
 	 * 添加加分申请

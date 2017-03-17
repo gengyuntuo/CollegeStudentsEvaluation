@@ -25,8 +25,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
 		Persion user = (Persion) session.getAttribute("user");
-		// TODO 重要BUG，测试阶段，正式上线需要删除改行内容
-		user = new Persion();
+		// TODO 重要BUG，测试阶段，正式上线需要删除下面内容
+		if (user == null) {
+			user = new Persion();
+			user.setUserType("T");
+			session.setAttribute("user", user);
+		}
 		if (user == null) {
 			// 未登录用户，跳转到登录页面
 			request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp")

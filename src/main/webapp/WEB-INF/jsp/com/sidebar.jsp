@@ -13,55 +13,17 @@
 					</button>
 				</form>
 			</li>
-			<li><a href="index.html">首页 <i class="im-screen"></i></a></li>
-			<li><a href="#">学院管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="instituteInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
-					<li><a href="instituteList.do"><i class="im-checkbox-checked"></i>学院列表</a></li>
-				</ul></li>
-			<li><a href="#">专业管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="majorInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
-					<li><a href="majorList.do"><i class="im-checkbox-checked"></i>专业列表</a></li>
-				</ul></li>
-			<li><a href="#">教师管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="teacherInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
-					<li><a href="teacherList.do"><i class="im-checkbox-checked"></i>教师列表</a></li>
-				</ul></li>
-			<li><a href="#">班级管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="classInfo.do"><i class="ec-pencil2"></i>信息概览</a></li>
-					<li><a href="classList.do"><i class="im-checkbox-checked"></i>班级列表</a></li>
-				</ul></li>
-			<li><a href="#">学生管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="studentInfo.do"><i class="im-checkbox-checked"></i>信息概览</a></li>
-					<li><a href="studentList.do"><i class="fa-pencil"></i>学生列表</a></li>
-				</ul></li>
-			<li><a href="#">成绩管理<i class="im-paragraph-justify"></i></a>
-				<ul class="nav sub">
-					<li><a href="scoreInfo.do"><i class="im-wand"></i>信息概览</a></li>
-					<li><a href="scoreList.do"><i class="fa-pencil"></i> 成绩管理</a></li>
-				</ul></li>
-			<li><a href="#"><i class="ec-mail"></i>消息管理</a>
-				<ul class="nav sub">
-					<li><a href="inbox.do"><i class="ec-archive"></i> 收件箱</a></li>
-					<li><a href="outbox.do"><i class="br-eye"></i> 发件箱</a></li>
-					<li><a href="writeMessage.do"><i class="ec-pencil2"></i> 写邮件</a></li>
-				</ul></li>
-			<li><a href="#"><i class="ec-mail"></i>资源管理</a>
-				<ul class="nav sub">
-					<li><a href="resourceInfo.do"><i class="ec-archive"></i> 资源概述</a></li>
-					<li><a href="imageManage.do"><i class="br-eye"></i>图片管理</a></li>
-				</ul></li>
-			<li><a href="#"><i class="ec-mail"></i>系统管理</a>
-				<ul class="nav sub">
-					<li><a href="email-inbox.html"><i class="ec-archive"></i> Inbox</a></li>
-					<li><a href="email-read.html"><i class="br-eye"></i> Read email</a></li>
-					<li><a href="email-write.html"><i class="ec-pencil2"></i> Write email</a></li>
-				</ul></li>
-			<li><a href="systemSetting.do">系统设置<i class="st-chart"></i></a></li>
+			<c:forEach var="var" items="${menu }" varStatus="index">
+				<li><a href="${var.url }">${var.title } <i class="${var.image }"></i></a>
+				<c:if test="${var.menus.size() gt 0 }" >
+					<ul class="nav sub">
+						<c:forEach var="subVar" items="${var.menus }" >
+							<li><a href="${subVar.url }"><i class="${subVar.image }"></i>${subVar.title }</a></li>
+						</c:forEach>
+					</ul>
+				</c:if>
+				</li>
+			</c:forEach>
 		</ul>
 		<!-- End #sideNav -->
 		<!-- Start .sidebar-panel -->
