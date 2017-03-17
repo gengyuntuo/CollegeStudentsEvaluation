@@ -6,8 +6,7 @@ SELECT * FROM menu where `is_valid` = '1' and ISNULL(`father_menu_id`); /* 筛�
 SELECT * FROM menu where `is_valid` = '1' and IFNULL(`father_menu_id`, NULL); /* 筛选二级菜单 */
 /* 结果 */
 SELECT one.*, two.url _url,two.title _title,two.desc _desc,two.image _image FROM
-	(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one,
+	(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one left join
 	(SELECT * FROM menu WHERE `is_valid` = '1' AND IFNULL(`father_menu_id`, NULL)) two
-WHERE
-	one.`id`=two.`father_menu_id` AND one.`level` = 'T'
-ORDER BY one.order,two.order
+ON one.`id`=two.`father_menu_id` AND one.`level` = 'T'
+ORDER BY one.order,two.order;

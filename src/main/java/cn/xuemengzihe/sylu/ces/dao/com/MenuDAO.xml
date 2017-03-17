@@ -65,7 +65,7 @@
 	</select>
 	<select id="findPersionMenu" parameterType="string" resultMap="map">
 		SELECT one.*, two.url _url,two.title _title,two.desc _desc,two.image _image FROM
-			(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one left join
+			(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one LEFT JOIN
 			(SELECT * FROM menu WHERE `is_valid` = '1' AND IFNULL(`father_menu_id`, NULL)) two
 		ON one.`id`=two.`father_menu_id` AND one.`level` = #{level}
 		ORDER BY one.order,two.order
