@@ -29,6 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (user == null) {
 			user = new Persion();
 			user.setUserType("T");
+			user.setName("李春");
+			user.setNick("李春");
 			session.setAttribute("user", user);
 		}
 		if (user == null) {

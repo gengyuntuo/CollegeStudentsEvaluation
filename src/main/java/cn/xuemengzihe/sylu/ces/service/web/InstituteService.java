@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web;
 
+import java.util.Map;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.Institute;
 
 import com.github.pagehelper.PageInfo;
@@ -46,9 +48,17 @@ public interface InstituteService {
 	public Institute findInstituteById(Integer id);
 
 	/**
-	 * 分页查询学院
+	 * 分页查询学院[返回结果为List&lt;{@link Institute}&gt; 集合]
 	 * 
 	 * @return
 	 */
 	public PageInfo<Institute> findInstitutesOfPage(PageInfo<Institute> pageInfo);
+
+	/**
+	 * 分页查询学院[返回结果为List&lt;Map&lt;String,String&gt;&gt; 集合]
+	 * 
+	 * @return
+	 */
+	public PageInfo<Map<String, String>> findInstitutesOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo);
 }

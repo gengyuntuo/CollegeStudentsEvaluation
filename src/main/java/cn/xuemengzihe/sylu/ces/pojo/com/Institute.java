@@ -18,7 +18,7 @@ public class Institute {
 	private String iName; // 学院名称
 	private String desc; // 学院说明
 
-	private Character isValid; // 有效？
+	private String isValid; // 有效？
 	private Date cTime; // 创建时间
 	private Date uTime; // 更新时间
 
@@ -60,11 +60,11 @@ public class Institute {
 		this.desc = desc;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 

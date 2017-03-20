@@ -146,70 +146,10 @@
 						<div class="panel panel-default plain toggle panelClose panelRefresh">
 							<!-- Start .panel -->
 							<div class="panel-heading white-bg">
-								<h4 class="panel-title">学院</h4>
+								<h4 class="panel-title">本校学院</h4>
 							</div>
 							<div class="panel-body">
-								<table class="table">
-									<thead>
-										<tr>
-											<th class="per5"><label class="checkbox"> <input class="check-all" type="checkbox" id="inlineCheckbox1" value="option1">
-											</label></th>
-											<th class="per35">Employe</th>
-											<th class="per15">Position</th>
-											<th class="per15">Salary</th>
-											<th class="per35">Contract</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option2">
-											</label></td>
-											<td>Jacob Olsen</td>
-											<td>Developer</td>
-											<td>2530$</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar progress-bar-success animated-bar" role="progressbar" aria-valuenow="40" style="width: 40%;"></div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option3">
-											</label></td>
-											<td>Lara James</td>
-											<td>SEO</td>
-											<td>3700$</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar progress-bar-danger animated-bar" role="progressbar" aria-valuenow="89" style="width: 89%;"></div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option4">
-											</label></td>
-											<td>Steve Sidwell</td>
-											<td>Photographer</td>
-											<td>1340$</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar progress-bar-warning animated-bar" role="progressbar" aria-valuenow="67" style="width: 67%;"></div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option5">
-											</label></td>
-											<td>Elena Dobrev</td>
-											<td>Project manger</td>
-											<td>5600$</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar progress-bar-info animated-bar" role="progressbar" aria-valuenow="7" style="width: 7%;"></div>
-												</div>
-											</td>
-										</tr>
-									</tbody>
+								<table id="mytable" class="table table-bordered">
 								</table>
 							</div>
 						</div>
@@ -219,119 +159,12 @@
 				</div>
 				<div class="row">
 					<!-- Start .row -->
-					<div class="col-lg-6 col-md-6">
-						<!-- col-lg-6 start here -->
-						<div class="panel panel-default plain toggle panelClose panelRefresh">
-							<!-- Start .panel -->
-							<div class="panel-heading white-bg">
-								<h4 class="panel-title">Stripped table</h4>
-							</div>
-							<div class="panel-body">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th class="per5"><label class="checkbox"> <input class="check-all" type="checkbox" value="option1">
-											</label></th>
-											<th class="per40">Employe</th>
-											<th class="per40">Position</th>
-											<th class="per15">Salary</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option2">
-											</label></td>
-											<td>Jacob Olsen</td>
-											<td>Developer</td>
-											<td>2530$</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option3">
-											</label></td>
-											<td>Lara James</td>
-											<td>SEO</td>
-											<td>3700$</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option4">
-											</label></td>
-											<td>Steve Sidwell</td>
-											<td>Photographer</td>
-											<td>1340$</td>
-										</tr>
-										<tr>
-											<td><label class="checkbox"> <input class="check" type="checkbox" value="option5">
-											</label></td>
-											<td>Elena Dobrev</td>
-											<td>Project manger</td>
-											<td>5600$</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- End .panel -->
-					</div>
-					<!-- col-lg-6 end here -->
-					<div class="col-lg-6 col-md-6">
-						<!-- col-lg-6 start here -->
-						<div class="panel panel-default plain toggle panelClose panelRefresh">
-							<!-- Start .panel -->
-							<div class="panel-heading white-bg">
-								<h4 class="panel-title">Hover table</h4>
-							</div>
-							<div class="panel-body">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th class="per5">#</th>
-											<th class="per40">Employe</th>
-											<th class="per40">Position</th>
-											<th class="per15">Salary</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Jacob Olsen</td>
-											<td>Developer</td>
-											<td>2530$</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>Lara James</td>
-											<td>SEO</td>
-											<td>3700$</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>Steve Sidwell</td>
-											<td>Photographer</td>
-											<td>1340$</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>Elena Dobrev</td>
-											<td>Project manger</td>
-											<td>5600$</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- End .panel -->
-					</div>
-					<!-- col-lg-6 end here -->
-				</div>
-				<!-- End .row -->
-				<div class="row">
-					<!-- Start .row -->
 					<div class="col-lg-12">
 						<!-- col-lg-12 start here -->
 						<div class="panel panel-default plain toggle panelClose panelRefresh">
 							<!-- Start .panel -->
 							<div class="panel-heading white-bg">
-								<h4 class="panel-title">Table bordered</h4>
+								<h4 class="panel-title">所有院校</h4>
 							</div>
 							<div class="panel-body">
 								<table class="table table-bordered">
@@ -371,6 +204,8 @@
 	<!-- End #content -->
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
-	<script src="<c:url value="/assets/js/pages/tables.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
+	<script src="page.js"></script>
 </body>
 </html>

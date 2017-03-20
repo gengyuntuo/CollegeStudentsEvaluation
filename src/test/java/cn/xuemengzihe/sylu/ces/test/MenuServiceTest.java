@@ -16,7 +16,7 @@ import cn.xuemengzihe.sylu.ces.service.web.MenuService;
 @ContextConfiguration(locations = { "classpath:applicationContext.xml",
 		"classpath:spring-mvc.xml" })
 // 启动Spring容器
-public class MenuDAOTest {
+public class MenuServiceTest {
 	@Autowired
 	private MenuService menuService;
 

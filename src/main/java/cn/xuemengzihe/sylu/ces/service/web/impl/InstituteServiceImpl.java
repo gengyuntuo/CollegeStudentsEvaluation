@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,20 @@ public class InstituteServiceImpl implements InstituteService {
 			pageNum = pageInfo.getPageNum(); // 获取页码
 		PageHelper.startPage(pageNum, 15);
 		List<Institute> list = instituteDAO.findInstitutesOfAll();
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Map<String, String>> findInstitutesOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo) {
+		// 分页查询 每一页的记录数为15条
+		int pageNum = 1;
+		if (pageInfo != null)
+			pageNum = pageInfo.getPageNum(); // 获取页码
+		PageHelper.startPage(pageNum, 15);
+		List<Map<String, String>> list = instituteDAO
+				.findInstitutesOfAllWithMapSet();
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

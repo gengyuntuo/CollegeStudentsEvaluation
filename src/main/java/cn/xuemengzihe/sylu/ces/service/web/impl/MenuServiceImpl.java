@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.xuemengzihe.sylu.ces.dao.com.MenuDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.Menu;
@@ -48,16 +49,19 @@ public class MenuServiceImpl implements MenuService {
 	private MenuDAO menuDAO;
 
 	@Override
+	@Transactional
 	public Integer insertMenu(Menu menu) {
 		return menuDAO.insertMenu(menu);
 	}
 
 	@Override
+	@Transactional
 	public Integer deleteMenuById(Integer id) {
 		return menuDAO.deleteMenuById(id);
 	}
 
 	@Override
+	@Transactional
 	public Integer updateMenu(Menu menu) {
 		return menuDAO.updateMenu(menu);
 	}

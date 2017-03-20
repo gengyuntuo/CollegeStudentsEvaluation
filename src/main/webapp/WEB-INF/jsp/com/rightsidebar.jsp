@@ -36,19 +36,6 @@
 								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/53.jpg" alt="@derekebradley">Darek Bradly
 								</a> <span class="status online"><i class="en-dot"></i></span></li>
 							</ul></li>
-						<li><a href="#">Offline <span class="notification red">5</span><i class="en-arrow-down5"></i></a>
-							<ul>
-								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/56.jpg" alt="@laurengray">Lauren Grey
-								</a> <span class="status offline"><i class="en-dot"></i></span></li>
-								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/49.jpg" alt="@chadengle">Chad Engle
-								</a> <span class="status offline"><i class="en-dot"></i></span></li>
-								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/58.jpg" alt="@frankiefreesbie">Frankie Freesibie
-								</a> <span class="status offline"><i class="en-dot"></i></span></li>
-								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/57.jpg" alt="@joannefournier">Joane Fornier
-								</a> <span class="status offline"><i class="en-dot"></i></span></li>
-								<li><a href="#" class="chat-name"> <img class="chat-avatar" src="assets/img/avatars/59.jpg" alt="@aiiaiiaii">Alia Alien
-								</a> <span class="status offline"><i class="en-dot"></i></span></li>
-							</ul></li>
 					</ul>
 				</div>
 				<div class="chat-box">

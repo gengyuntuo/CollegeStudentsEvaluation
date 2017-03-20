@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="navbar">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html"> <i class="im-windows8 text-logo-element animated bounceIn"></i><span class="text-logo">spr</span><span class="text-slogan">flat</span>
+				<a class="navbar-brand" href="index.do"> <i class="im-windows8 text-logo-element animated bounceIn"></i><span class="text-logo">测评系统</span>
 				</a>
 			</div>
 			<nav class="top-nav" role="navigation">
@@ -31,7 +31,7 @@
 									<div class="pull-left">
 										<a href="email-inbox.html"><i class="ec-archive"></i></a>
 									</div>
-									<span>Inbox</span>
+									<span>收件箱</span>
 									<div class="pull-right">
 										<a href="email-inbox.html"><i class="st-pencil"></i></a>
 									</div>
@@ -39,7 +39,7 @@
 							</li>
 							<li class="search-email">
 								<form>
-									<input type="text" name="search" placeholder="Search for emails">
+									<input type="text" name="search" placeholder="搜索邮件...">
 									<button type="submit">
 										<i class="ec-search"></i>
 									</button>
@@ -51,48 +51,17 @@
 									</p>
 									<p class="msg">I contact you regarding my account please can you set up my pass ...</p>
 							</a></li>
-							<li class="mail-list clearfix"><a href="#"> <img src="assets/img/avatars/129.jpg" class="mail-avatar pull-left" alt="avatar">
-									<p class="name">
-										<span class="status off"><i class="en-dot"></i></span> Steeve Mclark <span class="notification">6</span> <span class="time">10:26 am</span>
-									</p>
-									<p class="msg">Good job dude awesome work here, please add theese features ...</p>
-							</a></li>
-							<li class="mail-list clearfix"><a href="#"> <img src="assets/img/avatars/130.jpg" class="mail-avatar pull-left" alt="avatar">
-									<p class="name">
-										<span class="status off"><i class="en-dot"></i></span> Fellix Jones <span class="notification">1</span> <span class="time">7:15 am</span>
-									</p>
-									<p class="msg">I have some issues when try to reach my product page can you ...</p>
-							</a></li>
-							<li class="mail-list clearfix"><a href="#"> <img src="assets/img/avatars/131.jpg" class="mail-avatar pull-left" alt="avatar">
-									<p class="name">
-										<span class="status"><i class="en-dot"></i></span> Tina Dowsen <span class="notification">5</span> <span class="time">03:46 am</span>
-									</p>
-									<p class="msg">Hello Sugge, i want to apply for your referal program , please ...</p>
-							</a></li>
 							<li class="mail-more"><a href="email-inbox.html">View all <i class="en-arrow-right7"></i></a></li>
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
-					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="br-alarm"></i> <span class="notification">5</span></a>
-						<ul class="dropdown-menu notification-menu right" role="menu">
-							<li class="clearfix"><i class="ec-chat"></i> <a href="#" class="notification-user"> Ric Jones </a> <span class="notification-action"> replied to your </span> <a href="#"
-								class="notification-link"> comment</a></li>
-							<li class="clearfix"><i class="st-pencil"></i> <a href="#" class="notification-user"> SuggeElson </a> <span class="notification-action"> just write a </span> <a href="#"
-								class="notification-link"> post</a></li>
-							<li class="clearfix"><i class="ec-trashcan"></i> <a href="#" class="notification-user"> SuperAdmin </a> <span class="notification-action"> just remove </span> <a href="#"
-								class="notification-link"> 12 files</a></li>
-							<li class="clearfix"><i class="st-paperclip"></i> <a href="#" class="notification-user"> C. Wiilde </a> <span class="notification-action"> attach </span> <a href="#"
-								class="notification-link"> 3 files</a></li>
-							<li class="clearfix"><i class="st-support"></i> <a href="#" class="notification-user"> John Simpson </a> <span class="notification-action"> add support </span> <a href="#"
-								class="notification-link"> ticket</a></li>
-						</ul></li>
-					<li class="dropdown"><a href="#" data-toggle="dropdown"> <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">SuggeElson
+					<li class="dropdown"><a href="#" data-toggle="dropdown"> <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">${user.name }
 					</a>
 						<ul class="dropdown-menu right" role="menu">
-							<li><a href="profile.html"><i class="st-user"></i> Profile</a></li>
-							<li><a href="file.html"><i class="st-cloud"></i> Files</a></li>
-							<li><a href="#"><i class="st-settings"></i> Settings</a></li>
-							<li><a href="login.html"><i class="im-exit"></i> Logout</a></li>
+							<li><a href="profile.html"><i class="st-user"></i> 个人中心 </a></li>
+							<li><a href="file.html"><i class="st-cloud"></i> 我的文件</a></li>
+							<li><a href="#"><i class="st-settings"></i> 系统设置 </a></li>
+							<li><a href="login.html"><i class="im-exit"></i> 注销登录</a></li>
 						</ul></li>
 					<li id="toggle-right-sidebar-li"><a href="#" id="toggle-right-sidebar"><i class="ec-users"></i> <span class="notification">3</span></a></li>
 				</ul>

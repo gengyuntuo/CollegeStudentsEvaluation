@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -54,4 +55,11 @@ public interface InstituteDAO {
 	 * @return
 	 */
 	public List<Institute> findInstitutesOfAll();
+
+	/**
+	 * 查询所有的学院，返回Map集合
+	 * 
+	 * @return
+	 */
+	public List<Map<String, String>> findInstitutesOfAllWithMapSet();
 }
