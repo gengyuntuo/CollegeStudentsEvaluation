@@ -139,6 +139,6 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="page.js"></script>
+	<script src="<c:url value="/assets/js/lc/pages/instituteList.js"/>"></script>
 </body>
 </html>
