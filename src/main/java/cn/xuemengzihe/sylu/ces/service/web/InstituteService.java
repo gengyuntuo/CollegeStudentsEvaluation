@@ -57,8 +57,10 @@ public interface InstituteService {
 	/**
 	 * 分页查询学院[返回结果为List&lt;Map&lt;String,String&gt;&gt; 集合]
 	 * 
+	 * @param condition
+	 *            搜素查询条件
 	 * @return
 	 */
 	public PageInfo<Map<String, String>> findInstitutesOfPageWithMapSet(
-			PageInfo<Map<String, String>> pageInfo);
+			PageInfo<Map<String, String>> pageInfo, String condition);
 }

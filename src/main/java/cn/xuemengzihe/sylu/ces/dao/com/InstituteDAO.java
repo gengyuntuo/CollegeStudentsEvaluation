@@ -59,7 +59,10 @@ public interface InstituteDAO {
 	/**
 	 * 查询所有的学院，返回Map集合
 	 * 
+	 * @param condition
+	 *            搜索条件
 	 * @return
 	 */
-	public List<Map<String, String>> findInstitutesOfAllWithMapSet();
+	public List<Map<String, String>> findInstitutesOfAllWithMapSet(
+			String condition);
 }

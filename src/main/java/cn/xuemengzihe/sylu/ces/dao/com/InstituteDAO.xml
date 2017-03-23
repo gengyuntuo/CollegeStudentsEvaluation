@@ -41,12 +41,19 @@
 		FROM institute
 		WHERE id = #{id}
 	</select>
-	<select id="findInstitutesOfAll" parameterType="int" resultType="institute">
+	<select id="findInstitutesOfAll"  resultType="institute">
 		SELECT *
 		FROM `institute` WHERE `is_valid`='Y'
 	</select>
-	<select id="findInstitutesOfAllWithMapSet" parameterType="int" resultType="map">
+	<select id="findInstitutesOfAllWithMapSet" parameterType="string" resultType="map">
 		SELECT `id` 'id', `i_numb` 'numb', `i_name` 'name', `desc` 'desc'
-		FROM `institute` WHERE `is_valid`='Y'
+		FROM `institute` WHERE `is_valid`='Y' 
+			<if test="value != null">
+				AND (
+						  `i_numb` LIKE '%${value}%'
+					OR `i_name` LIKE '%${value}%'
+				)
+			</if>
+		ORDER BY `c_time`
 	</select>
 </mapper>

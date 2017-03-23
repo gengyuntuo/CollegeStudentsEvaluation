@@ -11,4 +11,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<package name="cn.xuemengzihe.sylu.ces.pojo.web" />
 		<package name="cn.xuemengzihe.sylu.ces.pojo.app" />
 	</typeAliases>
+	<plugins>
+		<!-- PageHelper 分页工具插件 -->
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<property name="helperDialect" value="mysql" />
+		</plugin>
+	</plugins>
 </configuration>

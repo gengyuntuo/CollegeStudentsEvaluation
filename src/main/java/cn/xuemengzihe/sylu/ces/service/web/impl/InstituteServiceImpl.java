@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,10 @@ public class InstituteServiceImpl implements InstituteService {
 
 	@Override
 	public Integer insertInstitute(Institute institute) {
+		Date date = new Date(); // 创建时间、更新时间
+		institute.setcTime(date);
+		institute.setuTime(date);
+		institute.setIsValid("Y");
 		return instituteDAO.insertInstitute(institute);
 	}
 
@@ -38,6 +43,8 @@ public class InstituteServiceImpl implements InstituteService {
 
 	@Override
 	public Integer updateInstitute(Institute institute) {
+		// 更新修改时间
+		institute.setuTime(new Date());
 		return instituteDAO.updateInstitute(institute);
 	}
 
@@ -60,14 +67,11 @@ public class InstituteServiceImpl implements InstituteService {
 
 	@Override
 	public PageInfo<Map<String, String>> findInstitutesOfPageWithMapSet(
-			PageInfo<Map<String, String>> pageInfo) {
-		// 分页查询 每一页的记录数为15条
-		int pageNum = 1;
-		if (pageInfo != null)
-			pageNum = pageInfo.getPageNum(); // 获取页码
-		PageHelper.startPage(pageNum, 15);
+			PageInfo<Map<String, String>> pageInfo, String condition) {
+		// 分页查询
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = instituteDAO
-				.findInstitutesOfAllWithMapSet();
+				.findInstitutesOfAllWithMapSet(condition);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

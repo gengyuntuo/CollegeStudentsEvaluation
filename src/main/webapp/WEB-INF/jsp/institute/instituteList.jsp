@@ -8,13 +8,13 @@
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
-<!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+<!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" />
+<![endif]-->
 <jsp:include page="../com/metas.jsp" />
-<!-- Import google fonts - Heading first/ text second -->
-<link rel='stylesheet' type='text/css' />
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
+<link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
 </head>
 <body>
 	<!-- Start #header -->
@@ -26,6 +26,7 @@
 	<!-- Start #right-sidebar -->
 	<jsp:include page="../com/rightsidebar.jsp"></jsp:include>
 	<!-- End #right-sidebar -->
+
 	<!-- Start #content -->
 	<div id="content">
 		<!-- Start .content-wrapper -->
@@ -37,105 +38,9 @@
 					<h1 class="page-header">
 						<i class="im-table2"></i> 学院列表
 					</h1>
-					<!-- Start .bredcrumb -->
-					<ul id="crumb" class="breadcrumb">
-					</ul>
-					<!-- End .breadcrumb -->
-					<!-- Start .option-buttons -->
-					<div class="option-buttons">
-						<div class="btn-toolbar" role="toolbar">
-							<div class="btn-group">
-								<a id="clear-localstorage" class="btn tip" title="Reset panels position"> <i class="ec-refresh color-red s24"></i>
-								</a>
-							</div>
-							<div class="btn-group dropdown">
-								<a class="btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1"><i class="br-grid s24"></i></a>
-								<div class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-									<div class="option-dropdown">
-										<div class="shortcut-button">
-											<a href="#"> <i class="im-pie"></i> <span>Earning Stats</span>
-											</a>
-										</div>
-										<div class="shortcut-button">
-											<a href="#"> <i class="ec-images color-dark"></i> <span>Gallery</span>
-											</a>
-										</div>
-										<div class="shortcut-button">
-											<a href="#"> <i class="en-light-bulb color-orange"></i> <span>Fresh ideas</span>
-											</a>
-										</div>
-										<div class="shortcut-button">
-											<a href="#"> <i class="ec-link color-blue"></i> <span>Links</span>
-											</a>
-										</div>
-										<div class="shortcut-button">
-											<a href="#"> <i class="ec-support color-red"></i> <span>Support</span>
-											</a>
-										</div>
-										<div class="shortcut-button">
-											<a href="#"> <i class="st-lock color-teal"></i> <span>Lock area</span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="btn-group dropdown">
-								<a class="btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenu2"><i class="ec-pencil s24"></i></a>
-								<div class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu2">
-									<div class="option-dropdown">
-										<div class="row">
-											<p class="col-lg-12">Quick post</p>
-											<form class="form-horizontal" role="form">
-												<div class="form-group">
-													<div class="col-lg-12">
-														<input type="text" class="form-control" placeholder="Enter title">
-													</div>
-												</div>
-												<!-- End .form-group  -->
-												<div class="form-group">
-													<div class="col-lg-12">
-														<textarea class="form-control wysiwyg" placeholder="Enter text"></textarea>
-													</div>
-												</div>
-												<!-- End .form-group  -->
-												<div class="form-group">
-													<div class="col-lg-12">
-														<input type="text" class="form-control tags1" placeholder="Enter tags">
-													</div>
-												</div>
-												<!-- End .form-group  -->
-												<div class="form-group">
-													<div class="col-lg-12">
-														<button class="btn btn-default btn-xs">Save Draft</button>
-														<button class="btn btn-success btn-xs pull-right">Publish</button>
-													</div>
-												</div>
-												<!-- End .form-group  -->
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="btn-group">
-								<a class="btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3"><i class="ec-help s24"></i></a>
-								<div class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu3">
-									<div class="option-dropdown">
-										<p>
-											First time visitor ? <a href="#" id="app-tour" class="btn btn-success ml15">Take app tour</a>
-										</p>
-										<hr>
-										<p>
-											Or check the <a href="#" class="btn btn-danger ml15">FAQ</a>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End .option-buttons -->
 				</div>
-				<!-- End .page-header -->
 			</div>
+			<!-- End .page-header -->
 			<!-- End .row -->
 			<div class="outlet">
 				<!-- Start .outlet -->
@@ -143,65 +48,93 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<!-- col-lg-12 start here -->
-						<div class="panel panel-default plain toggle panelClose panelRefresh">
-							<!-- Start .panel -->
-							<div class="panel-heading white-bg">
-								<h4 class="panel-title">本校学院</h4>
+						<div class="panel-body">
+							<div class="input-group" style="float:left;width:300px">
+								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
+									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
+								</span>
 							</div>
-							<div class="panel-body">
+							<div style="float: right">
+								<button id="btn_refresh" type="button" class="btn btn-default">
+									<span class="fa-refresh"></span> 刷新
+								</button>
+								<button id="btn_add" type="button" class="btn btn-primary">
+									<span class="st-file-add"></span> 新增
+								</button>
+								<button id="btn_update" type="button" class="btn btn-success">
+									<span class="fa-edit"></span> 修改
+								</button>
+								<button id="btn_delete" type="button" class="btn btn-danger">
+									<span class="im-remove2"></span> 删除
+								</button>
+								<p></p>
+							</div>
+							<div>
 								<table id="mytable" class="table table-bordered">
 								</table>
 							</div>
 						</div>
-						<!-- End .panel -->
 					</div>
 					<!-- col-lg-12 end here -->
 				</div>
-				<div class="row">
-					<!-- Start .row -->
-					<div class="col-lg-12">
-						<!-- col-lg-12 start here -->
-						<div class="panel panel-default plain toggle panelClose panelRefresh">
-							<!-- Start .panel -->
-							<div class="panel-heading white-bg">
-								<h4 class="panel-title">所有院校</h4>
-							</div>
-							<div class="panel-body">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th class="per5">序号</th>
-											<th class="per40">学院代码</th>
-											<th class="per40">学院名称</th>
-											<th class="per15">学院说明</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="item" varStatus="index" items="${list.list }">
-											<tr>
-												<td>${index.count }</td>
-												<td>${item.iNumb }</td>
-												<td>${item.iName }</td>
-												<td>${item.desc }</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- End .panel -->
-					</div>
-					<!-- col-lg-12 end here -->
-				</div>
-				<!-- End .row -->
 				<!-- Page End here -->
 			</div>
 			<!-- End .outlet -->
 		</div>
 		<!-- End .content-wrapper -->
 		<div class="clearfix"></div>
+		<!-- End #content -->
 	</div>
-	<!-- End #content -->
+
+	<!-- 对话框 开始 -->
+	<div id="dialog-add">
+		<form id="form" class="form-horizontal group-border hover-stripped">
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="numb" name="numb" type="text" class="form-control" placeholder="学院代码">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<textarea id="desc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="dialog-update">
+		<form id="dialog-update" class="form-horizontal group-border hover-stripped">
+			<input id="uid" hidden="hidden" />
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="unumb" name="numb" type="text" class="form-control" placeholder="学院代码">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="uname" name="name" type="text" class="form-control" placeholder="学院名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<textarea id="udesc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="dialog-delete">确认删除！</div>
+	<!-- 对话框 结束 -->
+
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
