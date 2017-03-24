@@ -23,9 +23,6 @@
 	<!-- Start #sidebar -->
 	<jsp:include page="../com/sidebar.jsp"></jsp:include>
 	<!-- End #sidebar -->
-	<!-- Start #right-sidebar -->
-	<jsp:include page="../com/rightsidebar.jsp"></jsp:include>
-	<!-- End #right-sidebar -->
 	<!-- Start #content -->
 	<div id="content">
 		<!-- Start .content-wrapper -->

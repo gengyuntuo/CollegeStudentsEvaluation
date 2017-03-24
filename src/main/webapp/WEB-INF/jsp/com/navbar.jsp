@@ -8,7 +8,7 @@
 				</a>
 			</div>
 			<nav class="top-nav" role="navigation">
-				<ul class="nav navbar-nav pull-left">
+				<ul class="nav navbar-nav pull-right">
 					<li id="toggle-sidebar-li"><a href="#" id="toggle-sidebar"><i class="en-arrow-left2"></i> </a></li>
 					<li><a href="#" class="full-screen"><i class="fa-fullscreen"></i></a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-cog"></i><span class="notification">10</span></a>
@@ -53,8 +53,6 @@
 							</a></li>
 							<li class="mail-more"><a href="email-inbox.html">View all <i class="en-arrow-right7"></i></a></li>
 						</ul></li>
-				</ul>
-				<ul class="nav navbar-nav pull-right">
 					<li class="dropdown"><a href="#" data-toggle="dropdown"> <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">${user.name }
 					</a>
 						<ul class="dropdown-menu right" role="menu">
@@ -63,7 +61,6 @@
 							<li><a href="#"><i class="st-settings"></i> 系统设置 </a></li>
 							<li><a href="login.html"><i class="im-exit"></i> 注销登录</a></li>
 						</ul></li>
-					<li id="toggle-right-sidebar-li"><a href="#" id="toggle-right-sidebar"><i class="ec-users"></i> <span class="notification">3</span></a></li>
 				</ul>
 			</nav>
 		</div>

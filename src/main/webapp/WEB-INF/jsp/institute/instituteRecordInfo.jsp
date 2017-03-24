@@ -49,11 +49,23 @@
 								<div class="item active">
 									<div class="tile red">
 										<div class="tile-icon">
-											<i class="fa-tasks s64"></i>
+											<i class="br-cart s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">${list.total }</div>
-											<h3>专业个数</h3>
+											<h3>学院数</h3>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="tile orange">
+										<!-- tile start here -->
+										<div class="tile-icon">
+											<i class="ec-cog s64"></i>
+										</div>
+										<div class="tile-content">
+											<div class="number">${list.total }</div>
+											<h3>学院数</h3>
 										</div>
 									</div>
 								</div>
@@ -67,11 +79,23 @@
 								<div class="item active">
 									<div class="tile blue">
 										<div class="tile-icon">
-											<i class="im-office s64"></i>
+											<i class="st-chat s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">24</div>
-											<h3>班级个数</h3>
+											<h3>New Comments</h3>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="tile brown">
+										<!-- tile start here -->
+										<div class="tile-icon">
+											<i class="ec-mail s64"></i>
+										</div>
+										<div class="tile-content">
+											<div class="number">17</div>
+											<h3>New emails</h3>
 										</div>
 									</div>
 								</div>
@@ -85,11 +109,23 @@
 								<div class="item active">
 									<div class="tile green">
 										<div class="tile-icon">
-											<i class="im-users s64"></i>
+											<i class="ec-users s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">325</div>
-											<h3>学生人数</h3>
+											<h3>New users</h3>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="tile purple">
+										<!-- tile start here -->
+										<div class="tile-icon">
+											<i class="ec-search s64"></i>
+										</div>
+										<div class="tile-content">
+											<div class="number">2540</div>
+											<h3>Searches</h3>
 										</div>
 									</div>
 								</div>
@@ -100,27 +136,27 @@
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="carousel-tile carousel slide">
 							<div class="carousel-inner">
-								<div class="item active" onclick="javascript:window.location.href='index.do'">
+								<div class="item active">
 									<div class="tile teal">
 										<!-- tile start here -->
 										<div class="tile-icon">
-											<i class="im-office s64"></i>
+											<i class="ec-images s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">45</div>
-											<h3>历史班级数</h3>
+											<h3>New images</h3>
 										</div>
 									</div>
 								</div>
 								<div class="item">
-									<div class="tile brown">
+									<div class="tile magenta">
 										<!-- tile start here -->
 										<div class="tile-icon">
-											<i class="im-users s64"></i>
+											<i class="ec-share s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">3548</div>
-											<h3>历史学生数</h3>
+											<h3>Posts shared</h3>
 										</div>
 									</div>
 								</div>
