@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,18 +32,8 @@ public class SettingServiceImpl implements SettingService {
 	}
 
 	@Override
-	public Integer insertSettings(List<Setting> settings) {
-		return settingDAO.insertSettings(settings);
-	}
-
-	@Override
 	public Integer deleteSettingById(Integer id) {
 		return settingDAO.deleteSettingById(id);
-	}
-
-	@Override
-	public Integer deleteSettingsByIds(List<Integer> ids) {
-		return settingDAO.deleteSettingsByIds(ids);
 	}
 
 	@Override
@@ -56,18 +47,7 @@ public class SettingServiceImpl implements SettingService {
 	}
 
 	@Override
-	public List<Setting> findSettingsByType(String type) {
-		return settingDAO.findSettingsByType(type);
+	public List<Setting> findSettings(Map<String, String> conditions) {
+		return settingDAO.findSettings(conditions);
 	}
-
-	@Override
-	public List<Setting> findSettingsByOwnerId(Integer id) {
-		return settingDAO.findSettingsByOwnerId(id);
-	}
-
-	@Override
-	public List<Setting> findSettingsBySettingName(String name) {
-		return settingDAO.findSettingsBySettingName(name);
-	}
-
 }

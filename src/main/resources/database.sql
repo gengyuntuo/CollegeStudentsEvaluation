@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `ces`.`class`;
 DROP TABLE IF EXISTS `ces`.`student`;
 DROP TABLE IF EXISTS `ces`.`setting`;
 DROP TABLE IF EXISTS `ces`.`menu`;
+DROP TABLE IF EXISTS `ces`.`setting`;
 
 /* 创建数据表 */
 CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
@@ -102,15 +103,17 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   PRIMARY KEY (`id`))
 COMMENT = '学生';
 
+DROP TABLE IF EXISTS `ces`.`setting`;
 CREATE TABLE IF NOT EXISTS `ces`.`setting` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `weight` INT NOT NULL DEFAULT 0 COMMENT '权重，用于显示菜单的顺序',
-  `type` VARCHAR(45) NOT NULL COMMENT '类型',
-  `owner_id` INT NOT NULL COMMENT '拥有者',
-  `setting` VARCHAR(45) NOT NULL COMMENT '设置选项',
+  `type` VARCHAR(45) NOT NULL COMMENT '设置类型',
+  `owner_type` VARCHAR(10) NOT NULL COMMENT '拥有类型,组成：修饰符+角色类型，（修饰符 C公有 P私有）（角色类型T 老师 A管理员 S 学生 C 公有） 例如 TP为老师私有',
+  `owner_id` INT NULL COMMENT '拥有者ID',
+  `group` VARCHAR(45) NOT NULL DEFAULT 0 COMMENT '设置组名',
+  `setting` VARCHAR(45) NOT NULL COMMENT '选项名称',
   `value` VARCHAR(45) NULL COMMENT '选项值',
-  `default_value` VARCHAR(45) NULL COMMENT '默认值',
-  `is_null` VARCHAR(45) NOT NULL COMMENT '是否可以为空',
+  `default_value` VARCHAR(45) NOT NULL COMMENT '设置项的默认值',
+  `is_null` VARCHAR(45) NOT NULL DEFAULT 'N' COMMENT '是否可以为空',
   PRIMARY KEY (`id`))
 COMMENT = '系统设置';
 

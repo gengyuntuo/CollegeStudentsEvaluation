@@ -4,54 +4,63 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.SettingDAO">
 	<insert id="insertSetting" parameterType="setting">
-		<selectKey order="AFTER" keyProperty="id">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO
-		setting(
-		`type`,
-		`owner_id`,
-		`setting`,
-		`value`
+		INSERT INTO setting(
+			`type`,
+			`owner_type`,
+			`owner_id`,
+			`group`,
+			`setting`,
+			`value`,
+			`default_value`,
+			`is_null`
 		) VALUES(
-		#{type},
-		#{ownerId},
-		#{setting},
-		#{value}
+			#{type},
+			#{ownerType},
+			#{ownerId},
+			#{group},
+			#{setting},
+			#{value},
+			#{defaultValue},
+			#{isNull}
 		)
 	</insert>
-	<insert id="insertSettings" parameterType="setting">
-	</insert>
-	<delete id="deleteSettingById" parameterType="int">
+	<delete id="deleteSettingById" parameterType="int" >
 		DELETE FROM setting WHERE id=#{id}
 	</delete>
-	<delete id="deleteSettingsByIds" parameterType="int">
-	</delete>
 	<update id="updateSetting" parameterType="setting">
-		UPDATE setting
-		SET
-		name=#{name},
-		value=#{value}
+		UPDATE setting SET
+			`type` = #{type},
+			`owner_type` = #{ownerType},
+			`owner_id` = #{ownerId},
+			`group` = #{group},
+			`setting` = #{setting},
+			`value` = #{value},
+			`default_value` = #{defaultValue},
+			`is_null` = #{isNull}
 		WHERE id=#{id}
 	</update>
-	<select id="findSettingById" parameterType="int" resultType="setting">
+	<!-- 多条件查询 -->
+	<select id="findSettings" parameterType="map" resultType="setting">
 		SELECT *
 		FROM setting
-		WHERE id = #{id}
-	</select>
-	<select id="findSettingsByType" parameterType="string" resultType="setting">
-		SELECT *
-		FROM setting
-		WHERE type=#{value}
-	</select>
-	<select id="findSettingsByOwnerId" parameterType="int" resultType="setting">
-		SELECT *
-		FROM setting
-		WHERE owner_id=#{value}
-	</select>
-	<select id="findSettingsBySettingName" parameterType="string" resultType="setting">
-		SELECT *
-		FROM setting
-		WHERE name=#{value}
+		WHERE 1=1
+		<if test="type != '' and type != null">
+			AND type = #{type}
+		</if>
+		<if test="owner_type != '' and owner_type != null">
+			AND owner_type = #{owner_type}
+		</if>
+		<if test="owner_id != '' and owner_id != null">
+			AND owner_id = #{owner_id}
+		<if test="group != '' and group != null">
+			AND group = #{group}
+		</if>
+		</if>
+		<if test="setting != '' and setting != null">
+			AND group = #{group}
+		</if>
 	</select>
 </mapper>

@@ -11,9 +11,10 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  */
 public class Setting {
 	private Integer id; // ID
-	private Integer weight; // 权重，确定菜单显示的顺序
 	private String type; // 设置类型
+	private String Ownerype; // 设置类型
 	private Integer ownerId; // 拥有者
+	private String group; // 设置名称
 	private String setting; // 设置名称
 	private String value; // 设置值
 	private String defaultValue; // 默认值
@@ -25,14 +26,6 @@ public class Setting {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Integer getWeight() {
-		return weight;
-	}
-
-	public void setWeight(Integer weight) {
-		this.weight = weight;
 	}
 
 	public void setId(Integer id) {
@@ -47,8 +40,24 @@ public class Setting {
 		this.type = type;
 	}
 
+	public String getOwnerype() {
+		return Ownerype;
+	}
+
+	public void setOwnerype(String ownerype) {
+		Ownerype = ownerype;
+	}
+
 	public Integer getOwnerId() {
 		return ownerId;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
 	public void setOwnerId(Integer ownerId) {
@@ -89,10 +98,10 @@ public class Setting {
 
 	@Override
 	public String toString() {
-		return "Setting [id=" + id + ", weight=" + weight + ", type=" + type
-				+ ", ownerId=" + ownerId + ", setting=" + setting + ", value="
-				+ value + ", defaultValue=" + defaultValue + ", isNull="
-				+ isNull + "]";
+		return "Setting [id=" + id + ", type=" + type + ", Ownerype="
+				+ Ownerype + ", ownerId=" + ownerId + ", group=" + group
+				+ ", setting=" + setting + ", value=" + value
+				+ ", defaultValue=" + defaultValue + ", isNull=" + isNull + "]";
 	}
 
 }
