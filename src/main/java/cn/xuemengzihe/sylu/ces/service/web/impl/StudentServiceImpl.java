@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,16 @@ public class StudentServiceImpl implements StudentService {
 		List<Student> list = studentDAO.findStudentsOfAll();
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Map<String, String>> findStudentsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String condition) {
+		// 分页查询
+				PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+				List<Map<String, String>> list = studentDAO
+						.findInstitutesOfAllWithMapSet(condition);
+				pageInfo = new PageInfo<>(list);
+				return pageInfo;
 	}
 }

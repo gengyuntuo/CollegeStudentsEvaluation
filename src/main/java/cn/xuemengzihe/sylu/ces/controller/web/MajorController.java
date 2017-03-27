@@ -98,7 +98,6 @@ public class MajorController {
 	 * @param model
 	 * @return
 	 */
-	@Deprecated
 	@RequestMapping("/majorList")
 	public String majorList(Model model) {
 		return "/major/majorList";

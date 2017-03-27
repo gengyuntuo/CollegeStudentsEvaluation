@@ -106,7 +106,6 @@ public class InstituteController {
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	@RequestMapping("/instituteList")
 	public String instituteList() {
 		// 分页查询记录

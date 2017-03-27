@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web;
 
+import java.util.Map;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 
 import com.github.pagehelper.PageInfo;
@@ -51,4 +53,15 @@ public interface StudentService {
 	 * @return
 	 */
 	public PageInfo<Student> findStudentsOfPage(PageInfo<Student> pageInfo);
+
+	/**
+	 * 分页查询学生，支持条件查询
+	 * 
+	 * @param pageInfo
+	 * @param condition
+	 *            查询条件
+	 * @return
+	 */
+	public PageInfo<Map<String, String>> findStudentsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String condition);
 }

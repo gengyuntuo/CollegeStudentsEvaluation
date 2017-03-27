@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -54,4 +55,13 @@ public interface StudentDAO {
 	 * @return
 	 */
 	public List<Student> findStudentsOfAll();
+
+	/**
+	 * 查询所有学生的信息，返回Map结果集
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	public List<Map<String, String>> findInstitutesOfAllWithMapSet(
+			String condition);
 }

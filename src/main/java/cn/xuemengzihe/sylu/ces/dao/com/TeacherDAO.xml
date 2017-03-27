@@ -7,49 +7,48 @@
 		<selectKey order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO
-		teacher(
-		`nick`,
-		`name`,
-		`nation`,
-		`gender`,
-		`birthday`,
-		`portrait`,
-		`role`,
-		`email`,
-		`id_card`,
-		`we_chat`,
-		`qq_numb`,
-		`alipay`,
-		`phone`,
-		`address`,
-		`resident`,
-		`motto`,
-		`password`,
-		`is_valid`,
-		`c_time`,
-		`u_time`
+		INSERT INTO teacher(
+			`nick`,
+			`name`,
+			`nation`,
+			`gender`,
+			`birthday`,
+			`portrait`,
+			`role`,
+			`email`,
+			`id_card`,
+			`we_chat`,
+			`qq_numb`,
+			`alipay`,
+			`phone`,
+			`address`,
+			`resident`,
+			`motto`,
+			`password`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
 		) VALUES(
-		#{nick},
-		#{name},
-		#{nation},
-		#{gender},
-		#{birthday},
-		#{portrait},
-		#{role},
-		#{email},
-		#{idCard},
-		#{weChat},
-		#{qqNumb},
-		#{alipay},
-		#{phone},
-		#{address},
-		#{resident},
-		#{motto},
-		#{password},
-		#{isValid},
-		#{cTime},
-		#{uTime}
+			#{nick},
+			#{name},
+			#{nation},
+			#{gender},
+			#{birthday},
+			#{portrait},
+			#{role},
+			#{email},
+			#{idCard},
+			#{weChat},
+			#{qqNumb},
+			#{alipay},
+			#{phone},
+			#{address},
+			#{resident},
+			#{motto},
+			#{password},
+			#{isValid},
+			#{cTime},
+			#{uTime}
 		)
 	</insert>
 	<delete id="deleteTeacherById" parameterType="int">
@@ -57,28 +56,27 @@
 		WHERE id=#{id}
 	</delete>
 	<update id="updateTeacher" parameterType="teacher">
-		UPDATE teacher
-		SET
-		`nick`=#{nick},
-		`name`=#{name},
-		`nation`=#{nation},
-		`gender`=#{gender},
-		`birthday`=#{birthday},
-		`portrait`=#{portrait},
-		`role`=#{role},
-		`email`=#{email},
-		`id_card`=#{idCard},
-		`we_chat`=#{weChat},
-		`qq_numb`=#{qqNumb},
-		`alipay`=#{alipay},
-		`phone`=#{phone},
-		`address`=#{address},
-		`resident`=#{resident},
-		`motto`=#{motto},
-		`password`=#{password},
-		`is_valid`=#{isValid}
+		UPDATE teacher SET
+			`nick`=#{nick},
+			`name`=#{name},
+			`nation`=#{nation},
+			`gender`=#{gender},
+			`birthday`=#{birthday},
+			`portrait`=#{portrait},
+			`role`=#{role},
+			`email`=#{email},
+			`id_card`=#{idCard},
+			`we_chat`=#{weChat},
+			`qq_numb`=#{qqNumb},
+			`alipay`=#{alipay},
+			`phone`=#{phone},
+			`address`=#{address},
+			`resident`=#{resident},
+			`motto`=#{motto},
+			`password`=#{password},
+			`is_valid`=#{isValid}
 		WHERE
-		id=#{id}
+			id=#{id}
 	</update>
 	<select id="findTeacherById" parameterType="int" resultType="teacher">
 		SELECT *
@@ -86,6 +84,10 @@
 		WHERE id = #{id}
 	</select>
 	<select id="findTeachersOfAll" parameterType="int" resultType="teacher">
+		SELECT *
+		FROM teacher
+	</select>
+	<select id="findInstitutesOfAllWithMapSet" parameterType="int" resultType="teacher">
 		SELECT *
 		FROM teacher
 	</select>

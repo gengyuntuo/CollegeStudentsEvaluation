@@ -34,7 +34,7 @@ public class Persion {
 	private String password; // 密码
 	private String userType;// 账户类型,例如T：老师，S：学生，M：班委，A：管理员······
 
-	private Character isValid; // 该Persion是否有效
+	private String isValid; // 该Persion是否有效
 	private Date cTime;
 	private Date uTime;
 
@@ -201,11 +201,11 @@ public class Persion {
 		this.alipay = alipay;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 
