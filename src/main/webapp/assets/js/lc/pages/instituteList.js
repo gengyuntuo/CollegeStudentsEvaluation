@@ -24,7 +24,7 @@ $(function() {
 				// pagination='True'
 				pageNumber : 1, // 如果设置了分页，首页页码
 				pageSize : 10, // 如果设置了分页，页面数据条数
-				pageList : [ 5, 10, 15, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
+				pageList : [ 5, 10, 15, 20, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
 				// 则显示所有记录。
 				showPaginationSwitch : false, // 是否显示 数据条数选择框
 				clickToSelect : true, // 设置true 将在点击行时，自动选择rediobox 和 checkbox

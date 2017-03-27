@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>学院概述</title>
+<title>学院</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -49,23 +49,11 @@
 								<div class="item active">
 									<div class="tile red">
 										<div class="tile-icon">
-											<i class="br-cart s64"></i>
+											<i class="fa-tasks s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">${list.total }</div>
-											<h3>学院数</h3>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="tile orange">
-										<!-- tile start here -->
-										<div class="tile-icon">
-											<i class="ec-cog s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">${list.total }</div>
-											<h3>学院数</h3>
+											<h3>专业个数</h3>
 										</div>
 									</div>
 								</div>
@@ -79,23 +67,11 @@
 								<div class="item active">
 									<div class="tile blue">
 										<div class="tile-icon">
-											<i class="st-chat s64"></i>
+											<i class="im-office s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">24</div>
-											<h3>New Comments</h3>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="tile brown">
-										<!-- tile start here -->
-										<div class="tile-icon">
-											<i class="ec-mail s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">17</div>
-											<h3>New emails</h3>
+											<h3>班级个数</h3>
 										</div>
 									</div>
 								</div>
@@ -109,23 +85,11 @@
 								<div class="item active">
 									<div class="tile green">
 										<div class="tile-icon">
-											<i class="ec-users s64"></i>
+											<i class="im-users s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">325</div>
-											<h3>New users</h3>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="tile purple">
-										<!-- tile start here -->
-										<div class="tile-icon">
-											<i class="ec-search s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">2540</div>
-											<h3>Searches</h3>
+											<h3>学生人数</h3>
 										</div>
 									</div>
 								</div>
@@ -136,27 +100,27 @@
 					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div class="carousel-tile carousel slide">
 							<div class="carousel-inner">
-								<div class="item active">
+								<div class="item active" onclick="javascript:window.location.href='index.do'">
 									<div class="tile teal">
 										<!-- tile start here -->
 										<div class="tile-icon">
-											<i class="ec-images s64"></i>
+											<i class="im-office s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">45</div>
-											<h3>New images</h3>
+											<h3>历史班级数</h3>
 										</div>
 									</div>
 								</div>
 								<div class="item">
-									<div class="tile magenta">
+									<div class="tile brown">
 										<!-- tile start here -->
 										<div class="tile-icon">
-											<i class="ec-share s64"></i>
+											<i class="im-users s64"></i>
 										</div>
 										<div class="tile-content">
 											<div class="number">3548</div>
-											<h3>Posts shared</h3>
+											<h3>历史学生数</h3>
 										</div>
 									</div>
 								</div>
@@ -167,7 +131,19 @@
 				</div>
 				<!-- End .row -->
 				<!-- Start .row -->
-				<div class="row"></div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="page-header">
+							<h4>学院简介</h4>
+						</div>
+						<div class="panel panel-primary">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, suscipit, autem sit natus deserunt officia error odit ea minima soluta ratione maxime molestias fugit explicabo
+								aspernatur praesentium quisquam voluptatum fuga delectus quidem quas aliquam minus at corporis libero? Modi, aperiam, pariatur, sequi illum dolore consequuntur aspernatur eos hic officia
+								doloribus magnam impedit autem maiores alias consectetur tempore explicabo. Ducimus, minima, suscipit unde harum numquam ipsa laboriosam cupiditate nemo repellendus at? Dolorum dicta nemo
+								quaerat iusto.</p>
+						</div>
+					</div>
+				</div>
 				<!-- End .row -->
 				<!-- Page End here -->
 			</div>

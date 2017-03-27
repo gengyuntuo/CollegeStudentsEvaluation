@@ -1,6 +1,8 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * <h1>Major Service实现</h1>
  * <p>
+ * 专业
  * </p>
  * 
  * @author 李春
@@ -27,6 +30,11 @@ public class MajorServiceImpl implements MajorService {
 
 	@Override
 	public Integer insertMajor(Major major) {
+		Date date = new Date();
+		major.setcTime(date);
+		major.setuTime(date);
+		major.setIsValid("Y");
+		major.setInstituteId(1);
 		return majorDAO.insertMajor(major);
 	}
 
@@ -47,12 +55,18 @@ public class MajorServiceImpl implements MajorService {
 
 	@Override
 	public PageInfo<Major> findMajorsOfPage(PageInfo<Major> pageInfo) {
-		// 分页查询 每一页的记录数为15条
-		int pageNum = 1;
-		if (pageInfo != null)
-			pageNum = pageInfo.getPageNum(); // 获取页码
-		PageHelper.startPage(pageNum, 15);
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Major> list = majorDAO.findMajorsOfAll();
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Map<String, String>> findMajorsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String condition) {
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		List<Map<String, String>> list = majorDAO
+				.findMajorsOfAllWithMapSet(condition);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

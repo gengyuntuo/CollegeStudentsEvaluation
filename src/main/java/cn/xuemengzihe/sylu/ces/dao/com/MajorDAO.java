@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -54,4 +55,13 @@ public interface MajorDAO {
 	 * @return
 	 */
 	public List<Major> findMajorsOfAll();
+
+	/**
+	 * 查询专业所有的内容,返回Map结果集集合
+	 * 
+	 * @param condition
+	 *            查询条件
+	 * @return
+	 */
+	public List<Map<String, String>> findMajorsOfAllWithMapSet(String condition);
 }

@@ -19,7 +19,7 @@ public class Major {
 	private Integer instituteId; // 学院ID
 	private String desc;
 
-	private Character isValid; // 有效？
+	private String isValid; // 有效？
 	private Date cTime;
 	private Date uTime;
 
@@ -70,11 +70,11 @@ public class Major {
 		this.desc = desc;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 

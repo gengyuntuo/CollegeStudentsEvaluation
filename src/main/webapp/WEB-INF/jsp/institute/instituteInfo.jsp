@@ -32,7 +32,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> 学院概述
+						<i class="im-screen"></i> 沈阳理工大学
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -131,7 +131,21 @@
 				</div>
 				<!-- End .row -->
 				<!-- Start .row -->
-				<div class="row"></div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="page-header">
+							<h4>沈阳理工大学简介</h4>
+						</div>
+						<div class="panel panel-primary">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, suscipit, autem sit natus deserunt officia error odit ea minima soluta ratione maxime molestias fugit explicabo
+								aspernatur praesentium quisquam voluptatum fuga delectus quidem quas aliquam minus at corporis libero? Modi, aperiam, pariatur, sequi illum dolore consequuntur aspernatur eos hic officia
+								doloribus magnam impedit autem maiores alias consectetur tempore explicabo. Ducimus, minima, suscipit unde harum numquam ipsa laboriosam cupiditate nemo repellendus at? Dolorum dicta nemo
+								quaerat iusto.</p>
+							<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+							<div id="main" class="col-lg-12 col-md-12" style="height:600px"></div>
+						</div>
+					</div>
+				</div>
 				<!-- End .row -->
 				<!-- Page End here -->
 			</div>
@@ -143,6 +157,7 @@
 	<!-- End #content -->
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
-	<script src="assets/js/pages/dashboard.js"></script>
+	<script src="<c:url value="/assets/js/lc/echart/echarts.min.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/pages/instituteInfo.js" />"></script>
 </body>
 </html>

@@ -28,17 +28,6 @@
 <script src="<c:url value="/assets/plugins/forms/autosize/jquery.autosize.js"/>"></script>
 <!-- Proivde quick search for many widgets -->
 <script src="<c:url value="/assets/plugins/core/quicksearch/jquery.quicksearch.js"/>"></script>
-<!-- Bootbox confirm dialog for reset postion on panels -->
-<script src="<c:url value="/assets/plugins/ui/bootbox/bootbox.js"/>"></script>
-<!-- Other plugins ( load only nessesary plugins for every page) -->
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.pie.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.resize.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.time.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.growraf.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.categories.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.stack.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/jquery.flot.tooltip.min.js"/>"></script>
 <script src="<c:url value="/assets/plugins/charts/flot/date.js"/>"></script>
 <script src="<c:url value="/assets/plugins/charts/sparklines/jquery.sparkline.js"/>"></script>
 <script src="<c:url value="/assets/plugins/charts/pie-chart/jquery.easy-pie-chart.js"/>"></script>

@@ -101,10 +101,12 @@ public class InstituteController {
 	}
 
 	/**
-	 * 查询所有当前的所有学院，其内容将使用{@link #instituteData(Model) }方式获取（JSON格式）
+	 * 查询所有当前的所有学院，其内容将使用{@link #instituteData(String, Integer, Integer) }
+	 * 方式获取（JSON格式）
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	@RequestMapping("/instituteList")
 	public String instituteList() {
 		// 分页查询记录
@@ -119,7 +121,13 @@ public class InstituteController {
 	/**
 	 * 学院列表，以分页形式返回JSON数据
 	 * 
-	 * @return
+	 * @param search
+	 *            检索条件
+	 * @param offset
+	 *            偏移量
+	 * @param limit
+	 *            每页的数据量
+	 * @return JSON数据
 	 */
 	@ResponseBody
 	// produces 参数的目的是解决中文乱码问题
@@ -131,8 +139,6 @@ public class InstituteController {
 		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);
-		// System.out.println("limit" + limit + "offset" + offset);
-		// System.out.println("搜索条件：" + search);
 		if (search != null) // 防止SQL注入攻击
 			search = search.trim().replace("'", "");
 		// 分页查询记录

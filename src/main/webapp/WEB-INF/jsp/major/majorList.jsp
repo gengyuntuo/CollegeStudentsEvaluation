@@ -86,15 +86,26 @@
 	<div id="dialog-add">
 		<form id="form" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学院：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<select id="institute" class="form-control">
+						<option value="1">信息学院</option>
+						<option value="2">经济管理</option>
+						<option value="3">自动化</option>
+						<option value="4">车辆工程</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="学院代码">
+					<input id="numb" name="numb" type="text" class="form-control" placeholder="专业代码">
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
+					<input id="name" name="name" type="text" class="form-control" placeholder="专业名称">
 				</div>
 			</div>
 			<div class="form-group">
@@ -109,15 +120,26 @@
 		<form id="dialog-update" class="form-horizontal group-border hover-stripped">
 			<input id="uid" hidden="hidden" />
 			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学院：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<select id="uinstitute" class="form-control">
+						<option value="1">信息学院</option>
+						<option value="2">经济管理</option>
+						<option value="3">自动化</option>
+						<option value="4">车辆工程</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="unumb" name="numb" type="text" class="form-control" placeholder="学院代码">
+					<input id="unumb" name="numb" type="text" class="form-control" placeholder="专业代码">
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="uname" name="name" type="text" class="form-control" placeholder="学院名称">
+					<input id="uname" name="name" type="text" class="form-control" placeholder="专业名称">
 				</div>
 			</div>
 			<div class="form-group">

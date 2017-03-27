@@ -3,27 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.MajorDAO">
+	<resultMap type="major" id="map">
+		<id column="id" property="id"/>
+		<result column="m_numb" property="mNumb"/>
+		<result column="m_name" property="mName"/>
+		<result column="desc" property="desc"/>
+		<association property="institute" javaType="major">
+			<id column="id" property="iid"/>
+			<result column="i_numb" property="iNumb"/>
+			<result column="i_name" property="iName"/>
+			<result column="desc" property="idesc"/>
+		</association>
+	</resultMap>
 	<insert id="insertMajor" parameterType="major">
-		<selectKey order="AFTER" keyProperty="id">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO
-		major(
-		`m_numb`,
-		`m_name`,
-		`desc`,
-		`institute_id`,
-		`is_valid`,
-		`c_time`,
-		`u_time`
+		INSERT INTO major(
+			`m_numb`,
+			`m_name`,
+			`desc`,
+			`institute_id`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
 		) VALUES(
-		#{mNumb},
-		#{mName},
-		#{desc},
-		#{instituteId},
-		#{isValid},
-		#{cTime},
-		#{uTime}
+			#{mNumb},
+			#{mName},
+			#{desc},
+			#{instituteId},
+			#{isValid},
+			#{cTime},
+			#{uTime}
 		)
 	</insert>
 	<delete id="deleteMajorById" parameterType="int">
@@ -31,23 +42,46 @@
 		WHERE id=#{id}
 	</delete>
 	<update id="updateMajor" parameterType="major">
-		UPDATE major
-		SET
-		`m_numb`=#{mNumb},
-		`m_name`=#{mName},
-		`desc`=#{desc},
-		`institute_id`=#{instituteId},
-		`is_valid`=#{isValid}
+		UPDATE major SET
+			`m_numb`=#{mNumb},
+			`m_name`=#{mName},
+			`desc`=#{desc},
+			`institute_id`=#{instituteId},
+			`is_valid`=#{isValid}
 		WHERE
-		id=#{id}
+			id=#{id}
 	</update>
 	<select id="findMajorById" parameterType="int" resultType="major">
 		SELECT *
 		FROM major
 		WHERE id = #{id}
 	</select>
-	<select id="findMajorsOfAll" parameterType="int" resultType="major">
-		SELECT *
-		FROM major
+	<select id="findMajorsOfAll" resultMap="map">
+		SELECT
+			m.*, i.`id`AS iid, i.`i_numb` AS inumb, i.`i_name` AS iname, i.`desc` idesc
+		FROM `major` m LEFT JOIN `institute` i ON m.`institute_id` = i.`id`
+		WHERE
+			m.`is_valid` = 'Y' AND i.`is_valid` = 'Y'
+		ORDER BY m.`c_time`, i.`c_time`
+	</select>
+	<select id="findMajorsOfAllWithMapSet" parameterType="string" resultType="map">
+		SELECT
+			m.`id` AS id,
+			m.`m_numb` AS numb,
+			m.`m_name` AS name,
+			m.`desc` AS `desc`,
+			m.`institute_id` AS institute,
+			i.`i_name` AS iname
+		FROM `major` m LEFT JOIN `institute` i ON m.`institute_id` = i.`id`
+		WHERE
+			m.`is_valid` = 'Y'
+			AND i.`is_valid` = 'Y'
+			<if test="value != null">
+				AND (
+					`m_numb` LIKE '%${value}%'
+					OR `m_name` LIKE '%${value}%'
+				)
+			</if>
+		ORDER BY m.`c_time`, i.`c_time`
 	</select>
 </mapper>

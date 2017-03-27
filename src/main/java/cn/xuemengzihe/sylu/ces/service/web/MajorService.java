@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web;
 
+import java.util.Map;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.Major;
 
 import com.github.pagehelper.PageInfo;
@@ -7,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * <h1>Major Service</h1>
  * <p>
+ * 专业
  * </p>
  * 
  * @author 李春
@@ -51,4 +54,16 @@ public interface MajorService {
 	 * @return
 	 */
 	public PageInfo<Major> findMajorsOfPage(PageInfo<Major> pageInfo);
+
+	/**
+	 * 分页查询，返回Map集合
+	 * 
+	 * @param pageInfo
+	 *            封装页码、页面记录数等参数
+	 * @param condition
+	 *            查询条件
+	 * @return
+	 */
+	public PageInfo<Map<String, String>> findMajorsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String condition);
 }

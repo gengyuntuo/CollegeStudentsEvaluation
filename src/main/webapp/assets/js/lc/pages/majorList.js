@@ -4,7 +4,7 @@ $(function() {
 		// 初始化Table
 		oTableInit.Init = function() {
 			$('#mytable').bootstrapTable({
-				url : 'instituteData.do',
+				url : 'majorData.do',
 				method : 'GET',
 				queryParams : function(params) {
 					params["search"] = checkSearchText(); // 如果有内容，则带搜索参数请求页面
@@ -24,7 +24,7 @@ $(function() {
 				// pagination='True'
 				pageNumber : 1, // 如果设置了分页，首页页码
 				pageSize : 10, // 如果设置了分页，页面数据条数
-				pageList : [ 5, 10, 15, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
+				pageList : [ 5, 10, 15, 20, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
 				// 则显示所有记录。
 				showPaginationSwitch : false, // 是否显示 数据条数选择框
 				clickToSelect : true, // 设置true 将在点击行时，自动选择rediobox 和 checkbox
@@ -44,22 +44,32 @@ $(function() {
 					title : 'id'
 				}, {
 					field : "numb",
-					title : '学院代码',
+					title : '专业代码',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
 					field : 'name',
-					title : '学院名称',
+					title : '专业名称',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
+				}, {
+					field : 'iname',
+					title : '所属学院',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'institute',
+					title : '学院ID',
+					visible : false
 				}, {
 					field : 'desc',
-					title : '学院简介',
+					title : '专业简介',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				} ]
 			});
 		};
@@ -75,7 +85,7 @@ $(function() {
 	// 添加对话框
 	dialog_add = $("#dialog-add").dialog({
 		autoOpen : false,
-		title : '添加学院',
+		title : '添加专业',
 		height : 600,
 		width : 500,
 		modal : true,
@@ -97,14 +107,16 @@ $(function() {
 				var numb = $("#numb").val();
 				var name = $("#name").val();
 				var desc = $("#desc").val();
+				var institute = $("#institute").val();
 				// TODO 数据合法性校验
 				$.ajax({
-					url : 'instituteAdd.do',
+					url : 'majorAdd.do',
 					type : 'POST',
 					data : {
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"mNumb" : numb,
+						"mName" : name,
+						"desc" : desc,
+						"instituteId":institute
 					},
 					success : function(data) {
 						var result = eval(data);
@@ -130,7 +142,7 @@ $(function() {
 	// 修改对话框
 	dialog_update = $("#dialog-update").dialog({
 		autoOpen : false,
-		title : '修改学院',
+		title : '修改专业',
 		height : 600,
 		width : 500,
 		modal : true,
@@ -152,15 +164,17 @@ $(function() {
 				var numb = $('#unumb').val();
 				var name = $('#uname').val();
 				var desc = $('#udesc').val();
+				var institute = $("#uinstitute").val();
 				// TODO 数据合法性校验
 				$.ajax({
-					url : 'instituteUpdate.do',
+					url : 'majorUpdate.do',
 					type : 'POST',
 					data : {
 						"id" : id,
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"mNumb" : numb,
+						"mName" : name,
+						"desc" : desc,
+						"instituteId": institute
 					},
 					success : function(data) {
 						var result = eval(data);
@@ -206,7 +220,7 @@ $(function() {
 			"删除" : function() {
 				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
 				$.ajax({
-					url : 'instituteDelete.do',
+					url : 'majorDelete.do',
 					type : 'POST',
 					data : {
 						"id" : obj["id"]
@@ -249,6 +263,7 @@ $(function() {
 		$('#unumb').val(obj['numb']);
 		$('#uname').val(obj['name']);
 		$('#udesc').val(obj['desc']);
+		$("#uinstitute").val(obj['institute']);
 		// console.info(obj);
 		dialog_update.dialog("open");
 	});
