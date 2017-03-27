@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TeacherDAO">
 	<insert id="insertTeacher" parameterType="teacher">
-		<selectKey order="AFTER" keyProperty="id">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		INSERT INTO teacher(
@@ -83,12 +83,24 @@
 		FROM teacher
 		WHERE id = #{id}
 	</select>
-	<select id="findTeachersOfAll" parameterType="int" resultType="teacher">
+	<select id="findTeachersOfAll"  resultType="teacher">
 		SELECT *
 		FROM teacher
 	</select>
-	<select id="findInstitutesOfAllWithMapSet" parameterType="int" resultType="teacher">
-		SELECT *
-		FROM teacher
+	<select id="findInstitutesOfAllWithMapSet" parameterType="int" resultType="map">
+		SELECT t.id id, t.name name, t.gender gender, t.email email, t.phone phone
+		FROM teacher t
+		WHERE
+			is_valid = 'Y'
+			<if test="value != null">
+					AND (
+						`name` LIKE '%${value}%'
+						OR `nation` LIKE '%${value}%'
+						OR `phone` LIKE '%${value}%'
+						OR `email` LIKE '%${value}%'
+						OR `gender` = #{value}
+					)
+			</if>
+		ORDER BY t.c_time, t.u_time
 	</select>
 </mapper>

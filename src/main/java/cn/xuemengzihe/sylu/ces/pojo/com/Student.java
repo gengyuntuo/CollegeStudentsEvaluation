@@ -11,8 +11,8 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  * 
  */
 public class Student extends Persion {
-	private String sno;
-	private Integer clazzId;
+	private String sno; // 班级学号
+	private Integer clazzId; // 班级ID
 	private String dormno; // 寝室楼号
 	private String dormInfo; // 寝室号、床位号
 	private String politicalStatus; // 政治面貌

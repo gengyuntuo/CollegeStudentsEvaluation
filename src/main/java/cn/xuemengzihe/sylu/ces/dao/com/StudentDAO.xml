@@ -10,8 +10,8 @@
 		INSERT INTO student(
 			`nick`,
 			`name`,
-			`nation`,
 			`gender`,
+			`nation`,
 			`birthday`,
 			`portrait`,
 			`role`,
@@ -25,20 +25,18 @@
 			`resident`,
 			`motto`,
 			`password`,
+			`sno`,
 			`class_id`,
 			`major_id`,
 			`teacher_id`,
-			`study_year`,
-			`start_year`,
-			`stop_year`,
 			`is_valid`,
 			`c_time`,
 			`u_time`
 		) VALUES(
 			#{nick},
 			#{name},
-			#{nation},
 			#{gender},
+			#{nation},
 			#{birthday},
 			#{portrait},
 			#{role},
@@ -52,12 +50,10 @@
 			#{resident},
 			#{motto},
 			#{password},
+			#{sno},
 			#{classId},
 			#{majorId},
 			#{teacherId},
-			#{studyYear},
-			#{startYear},
-			#{stopYear},
 			#{isValid},
 			#{cTime},
 			#{uTime}
@@ -86,12 +82,10 @@
 			`resident`=#{resident},
 			`motto`=#{motto},
 			`password`=#{password},
+			`sno`=#{sno},
 			`class_id`=#{classId},
 			`major_id`=#{majorId},
 			`teacher_id`=#{teacherId},
-			`study_year`=#{studyYear},
-			`start_year`=#{startYear},
-			`stop_year`=#{stopYear},
 			`is_valid`=#{isValid}
 		WHERE
 			id=#{id}
@@ -105,8 +99,28 @@
 		SELECT *
 		FROM student
 	</select>
-	<select id="findInstitutesOfAllWithMapSet" parameterType="string" resultType="student">
-		SELECT *
-		FROM student
+	<select id="findInstitutesOfAllWithMapSet" parameterType="string" resultType="map">
+		SELECT
+			s.id id,
+			s.sno sno,
+			s.name name,
+			s.nation nation,
+			s.gender gender,
+			s.phone phone,
+			s.email email
+		FROM student s
+		WHERE
+			is_valid = 'Y'
+			<if test="value != null">
+					AND (
+						`name` LIKE '%${value}%'
+						OR `nation` LIKE '%${value}%'
+						OR `sno` LIKE '%${sno}%'
+						OR `phone` LIKE '%${value}%'
+						OR `email` LIKE '%${value}%'
+						OR `gender` = #{value}
+					)
+			</if>
+		ORDER BY s.c_time, s.u_time
 	</select>
 </mapper>

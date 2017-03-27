@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>专业概述</title>
+<title>老师概述</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
