@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS `ces`.`class` (
   `teacher_id` INT NOT NULL COMMENT '教师ID',
   `study_year` INT NULL COMMENT '学制',
   `start_year` DATE NOT NULL COMMENT '开始年月',
-  `stop_year` DATE NOT NULL COMMENT '毕业年月',
   `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

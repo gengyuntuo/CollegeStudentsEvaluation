@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,17 @@ public class ClassServiceImpl implements ClassService {
 			pageNum = pageInfo.getPageNum(); // 获取页码
 		PageHelper.startPage(pageNum, 15);
 		List<Clazz> list = clazzDAO.findClazzsOfAll();
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Map<String, String>> findClazzsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String condition) {
+		// 分页查询
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		List<Map<String, String>> list = clazzDAO
+				.findInstitutesOfAllWithMapSet(condition);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -54,4 +55,13 @@ public interface ClassDAO {
 	 * @return
 	 */
 	public List<Clazz> findClazzsOfAll();
+
+	/**
+	 * 查询所有的班级，支持分页和条件查询
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	public List<Map<String, String>> findInstitutesOfAllWithMapSet(
+			String condition);
 }

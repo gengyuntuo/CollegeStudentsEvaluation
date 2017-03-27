@@ -7,27 +7,24 @@
 		<selectKey order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO
-		class(
-		`class_id`,
-		`major_id`,
-		`teacher_id`,
-		`study_year`,
-		`start_year`,
-		`stop_year`,
-		`is_valid`,
-		`c_time`,
-		`u_time`
+		INSERT INTO class(
+			`class_id`,
+			`major_id`,
+			`teacher_id`,
+			`study_year`,
+			`start_year`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
 		) VALUES(
-		#{classId},
-		#{majorId},
-		#{teacherId},
-		#{studyYear},
-		#{startYear},
-		#{stopYear},
-		#{isValid},
-		#{cTime},
-		#{uTime}
+			#{classId},
+			#{majorId},
+			#{teacherId},
+			#{studyYear},
+			#{startYear},
+			#{isValid},
+			#{cTime},
+			#{uTime}
 		)
 	</insert>
 	<delete id="deleteClazzById" parameterType="int">
@@ -42,7 +39,6 @@
 		`teacher_id`=#{teacherId},
 		`study_year`=#{studyYear},
 		`start_year`=#{startYear},
-		`stop_year`=#{stopYear},
 		`is_valid`=#{isValid}
 		WHERE
 		id=#{id}
@@ -52,8 +48,33 @@
 		FROM class
 		WHERE id = #{id}
 	</select>
-	<select id="findClazzsOfAll" parameterType="int" resultType="clazz">
+	<select id="findClazzsOfAll"  resultType="clazz">
 		SELECT *
 		FROM class
+	</select>
+	<select id="findInstitutesOfAllWithMapSet" parameterType="string" resultType="map">
+		SELECT 
+		    cm.*, t.name tname
+		FROM
+		    (SELECT 
+		        c.id id,c.class_id className,
+		            c.major_id majorId,
+		            c.teacher_id teacherId,
+		            study_year study_year,
+		            m.m_name mname,
+		            c.c_time, c.u_time
+		    FROM
+		        class c
+		    LEFT JOIN major m ON c.major_id = m.id
+		    WHERE
+		        c.is_valid = 'Y' AND m.is_valid = 'Y') cm
+		        LEFT JOIN
+		    teacher t ON cm.teacherId = t.id
+			<if test="value != null">
+					AND (
+						`class_id` LIKE '%${value}%'
+					)
+			</if>
+		ORDER BY cm.c_time, cm.u_time
 	</select>
 </mapper>

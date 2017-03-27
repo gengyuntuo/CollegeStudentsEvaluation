@@ -19,9 +19,8 @@ public class Clazz {
 	private Integer teacherId; // 负责老师ID
 	private Integer studyYear; // 学制
 	private Date startYear; // 入学年份
-	private Date stopYear; // 毕业年份
 
-	private Character isValid; // 有效？
+	private String isValid; // 有效？
 	private Date cTime;
 	private Date uTime;
 
@@ -80,19 +79,11 @@ public class Clazz {
 		this.startYear = startYear;
 	}
 
-	public Date getStopYear() {
-		return stopYear;
-	}
-
-	public void setStopYear(Date stopYear) {
-		this.stopYear = stopYear;
-	}
-
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 
@@ -132,10 +123,9 @@ public class Clazz {
 	public String toString() {
 		return "Clazz [id=" + id + ", classId=" + classId + ", major=" + major
 				+ ", teacherId=" + teacherId + ", studyYear=" + studyYear
-				+ ", startYear=" + startYear + ", stopYear=" + stopYear
-				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
-				+ uTime + ", teacher=" + teacher + ", students=" + students
-				+ "]";
+				+ ", startYear=" + startYear + ", isValid=" + isValid
+				+ ", cTime=" + cTime + ", uTime=" + uTime + ", teacher="
+				+ teacher + ", students=" + students + "]";
 	}
 
 }

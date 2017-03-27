@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web;
 
+import java.util.Map;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 
 import com.github.pagehelper.PageInfo;
@@ -51,4 +53,14 @@ public interface ClassService {
 	 * @return
 	 */
 	public PageInfo<Clazz> findClazzsOfPage(PageInfo<Clazz> pageInfo);
+
+	/**
+	 * 分页查询班级，返回Map集合，支持条件查询
+	 * 
+	 * @param pageInfo
+	 * @param search
+	 * @return
+	 */
+	public PageInfo<Map<String, String>> findClazzsOfPageWithMapSet(
+			PageInfo<Map<String, String>> pageInfo, String search);
 }
