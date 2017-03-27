@@ -116,5 +116,17 @@
 			<artifactId>gson</artifactId>
 			<version>${gson.version}</version>
 		</dependency>
+		<!-- 使用Excel项目支持 -->
+		<dependency>
+			<groupId>cn.xuemengzihe.util</groupId>
+			<artifactId>excel</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	<!-- 使用WebParse项目支持 -->
+		<dependency>
+			<groupId>cn.xuemengzihe.util</groupId>
+			<artifactId>webparse</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

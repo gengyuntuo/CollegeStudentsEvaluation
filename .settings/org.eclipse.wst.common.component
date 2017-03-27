@@ -4,6 +4,12 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-jee/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <dependent-module archiveName="excel-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/excel/excel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="webparse-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/webparse/webparse">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="CollegeStudentsEvaluation"/>
         <property name="java-output-path" value="/CollegeStudentsEvaluation/WebRoot/WEB-INF/classes"/>
     </wb-module>
