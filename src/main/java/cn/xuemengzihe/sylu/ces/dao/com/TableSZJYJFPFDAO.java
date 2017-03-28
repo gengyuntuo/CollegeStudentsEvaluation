@@ -1,56 +1,64 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFPF;
 
 /**
- * 素质教育加分评分表
+ * <h1>素质教育加分评分表</h1>
+ * <p>
+ * </p>
  * 
  * @author 李春
- * @time 2016年10月23日time上午11:24:15
+ * @time 2017年3月28日 下午6:30:47
  */
+@Repository
 public interface TableSZJYJFPFDAO {
 	/**
-	 * 创建素质教育加分评分表
-	 * 
-	 * @param table
-	 * @throws Exception
-	 */
-	public void addToTable(TableSZJYJFPF record)
-			throws Exception;
-
-	/**
-	 * 根据ID删除记录
-	 * 
-	 * @param id
-	 * @throws Exception
-	 */
-	public void deleteByID(Integer id) throws Exception;
-
-	/**
-	 * 更新数据表中的记录
+	 * 插入记录
 	 * 
 	 * @param record
-	 * @throws Exception
+	 *            记录
+	 * @return 添加的行数
 	 */
-
-	public void updateTableData(TableSZJYJFPF record)
-			throws Exception;
-
-	/**
-	 * 根据ID查询
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public TableSZJYJFPF findByID(Integer id) throws Exception;
+	public Integer insertRecord(TableSZJYJFPF record);
 
 	/**
-	 * 根据综合素质测评表查询多条记录
+	 * 更新记录
 	 * 
-	 * @param sno
-	 * @return
-	 * @throws Exception
+	 * @param record
+	 *            记录
+	 * @return 更新的记录数
 	 */
-	public TableSZJYJFPF findByZongHe(Integer id)
-			throws Exception;
+	public Integer updateRecord(TableSZJYJFPF record);
+
+	/**
+	 * 删除记录
+	 * 
+	 * @param id
+	 *            记录ID
+	 * @return 删除的记录数
+	 */
+	public Integer deleteRecord(Integer id);
+
+	/**
+	 * 根据ID获取记录
+	 * 
+	 * @param id
+	 *            记录ID
+	 * @return 记录
+	 */
+	public TableSZJYJFPF getRecordById(Integer id);
+
+	/**
+	 * 获取所有的记录，返回Map集合，支持条件查询
+	 * 
+	 * @param conditions
+	 *            查询条件
+	 * @return 记录
+	 */
+	public List<Map<String, String>> getRecordWithMap(String conditions);
 }

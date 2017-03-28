@@ -3,10 +3,12 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
 import java.util.Date;
 
 /**
- * 素质学分日常行为部分评分表
- * 
+ * <h1>素质学分日常行为部分评分表</h1>
+ * <p>
+ * </p>
+ *
  * @author 李春
- * @time 2016年10月23日time上午10:41:55
+ * @time 2017年3月28日 下午6:36:12
  */
 public class TableSZXFRCXWBFPF {
 	private Integer id;

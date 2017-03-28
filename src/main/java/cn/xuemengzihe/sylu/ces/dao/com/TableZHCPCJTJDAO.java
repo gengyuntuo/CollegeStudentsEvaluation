@@ -1,106 +1,64 @@
 package cn.xuemengzihe.sylu.ces.dao.com;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 
 /**
- * 综合测评成绩统计表
+ * <h1>综合测评成绩统计表</h1>
+ * <p>
+ * </p>
  * 
  * @author 李春
- * @time 2016年10月23日time上午11:24:15
+ * @time 2017年3月28日 下午6:30:28
  */
+@Repository
 public interface TableZHCPCJTJDAO {
-
 	/**
-	 * 创建综合成绩统计表记录
+	 * 插入记录
 	 * 
-	 * @param table
-	 *            这里必须具有两个参数（学生的SNO和统计的学期）
-	 * @throws Exception
+	 * @param record
+	 *            记录
+	 * @return 添加的行数
 	 */
-	public void addTable(TableZHCPCJTJ table) throws Exception;
+	public Integer insertRecord(TableZHCPCJTJ record);
 
 	/**
-	 * 更新成绩评定表中的数据记录
+	 * 更新记录
 	 * 
-	 * @param table
-	 *            更新表中记录的内容，这里必须的字段有（ID、日常行为得分、素质活动得分、素质学分绩点、平均学分绩点）
-	 * @throws Exception
+	 * @param record
+	 *            记录
+	 * @return 更新的记录数
 	 */
-	public void updateAlterTableData(TableZHCPCJTJ table) throws Exception;
+	public Integer updateRecord(TableZHCPCJTJ record);
 
 	/**
-	 * 数据表被默认创建的时候是无效的记录，需要将该字段设置为有效才可以
-	 * 
-	 * @param table
-	 *            更新表中记录的内容，这里必须的字段有（ID、是否有效）
-	 * @throws Exception
-	 */
-	public void updateSetTableValid(TableZHCPCJTJ record) throws Exception;
-
-	/**
-	 * 根据记录的ID删除表中数据
+	 * 删除记录
 	 * 
 	 * @param id
-	 * @throws Exception
+	 *            记录ID
+	 * @return 删除的记录数
 	 */
-	public void deleteTable(Integer id) throws Exception;
+	public Integer deleteRecord(Integer id);
 
 	/**
-	 * 根据ID查询某一条记录
+	 * 根据ID获取记录
 	 * 
 	 * @param id
-	 * @return
-	 * @throws Exception
+	 *            记录ID
+	 * @return 记录
 	 */
-	public TableZHCPCJTJ findTableByID(Integer id) throws Exception;
+	public TableZHCPCJTJ getRecordById(Integer id);
 
 	/**
-	 * 根据学生学号查询多条记录
+	 * 获取所有的记录，返回Map集合，支持条件查询
 	 * 
-	 * @param sno
-	 * @return
-	 * @throws Exception
+	 * @param conditions
+	 *            查询条件
+	 * @return 记录
 	 */
-	public List<TableZHCPCJTJ> findTableBySNO(String sno) throws Exception;
-
-	/**
-	 * 根据学号和学期查询单条记录 (学号和学期是必须具有的参数)
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public TableZHCPCJTJ findTableBySNOAndXUEQI(TableZHCPCJTJ record)
-			throws Exception;
-
-	/**
-	 * 根据学期查询所有学生
-	 * 
-	 * @param record
-	 * @return
-	 * @throws Exception
-	 */
-	public List<TableZHCPCJTJ> findTableByXUEQI(TableZHCPCJTJ record)
-			throws Exception;
-
-	/**
-	 * 根据班级和学期查询多条记录
-	 * 
-	 * @param record
-	 * @return
-	 * @throws Exception
-	 */
-	public List<TableZHCPCJTJ> findTableByClassIDAndXUEQI(TableZHCPCJTJ record)
-			throws Exception;
-
-	/**
-	 * 根据班级号和学期来查询某一个班级的所有学生的详细信息，包括其相关的表记录， 这里需要班级号字段，该字段存储在综合测评成绩统计表中的学号字段中
-	 * 
-	 * @param record
-	 * @return
-	 * @throws Exception
-	 */
-	public List<TableZHCPCJTJ> findTableByClassIDAndXUEQIDESC(
-			TableZHCPCJTJ record) throws Exception;
+	public List<Map<String, String>> getRecordWithMap(String conditions);
 }
