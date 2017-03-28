@@ -82,6 +82,7 @@ public class ExcelServiceImpl implements ExcelService {
 							+ "，该标题格式不合法或者是该班级还没有创建！");
 					continue; // 该工作表无法继续解析，进入下一张工作表的解析
 				}
+				classId = clazz.getId() + "";
 
 				// 校验Excel列中是否缺少某些必须的字段;(这里的必需的含义
 				// 是Excel表中必需包括的列，并不是数据库中NOTNULL字段
@@ -91,7 +92,7 @@ public class ExcelServiceImpl implements ExcelService {
 						excelToDBMap.put(set.getSetting(), set.getValue());
 					} else {
 						// 若列不存在，则判断该列是否为必需，若为必需则抛出异常，否则忽略
-						if ("Y".equals(set.getIsNull())) {
+						if ("N".equals(set.getIsNull())) {
 							throw new RuntimeException("Excel中缺少必需的列[工作表序号:"
 									+ (i + 1) + ",缺少列:" + set.getSetting()
 									+ "]");

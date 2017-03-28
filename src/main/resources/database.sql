@@ -93,10 +93,18 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `motto` VARCHAR(140) NULL COMMENT '座右铭',
   `password` VARCHAR(32) NOT NULL COMMENT '密码',
   # 学生特有的字段
-  `sno` INT NOT NULL COMMENT '学生学号',
+  `sno` INT UNIQUE NOT NULL COMMENT '学生学号',
   `class_id` INT NOT NULL COMMENT '班级的ID',
-  `major_id` INT NULL COMMENT '专业ID[冗余字段]',
-  `teacher_id` INT NULL COMMENT '老师ID[冗余字段]',
+  `dormno` VARCHAR(45) NULL DEFAULT '' COMMENT '寝室楼号',
+  `dorm_info` VARCHAR(45) NULL DEFAULT '' COMMENT '寝室号、床号',
+  `political_status` VARCHAR(45) DEFAULT '群众' NULL COMMENT '政治面貌',
+  `bank_card` VARCHAR(45) NULL DEFAULT '' COMMENT '银行卡号',
+  `have_loan` VARCHAR(1) NULL DEFAULT 'N' COMMENT '是否生源地贷款',
+  `have_poverty_certificate` VARCHAR(1) DEFAULT 'N' NULL COMMENT '是否有贫困证明',
+  `father_name` VARCHAR(45) NULL DEFAULT '' COMMENT '父亲姓名',
+  `father_phone` VARCHAR(45) NULL DEFAULT '' COMMENT '父亲电话',
+  `mother_name` VARCHAR(45) NULL DEFAULT '' COMMENT '母亲姓名',
+  `mother_phone` VARCHAR(45) NULL DEFAULT '' COMMENT '母亲电话',
   `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '该字段是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -113,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`setting` (
   `setting` VARCHAR(45) NOT NULL COMMENT '选项名称',
   `value` VARCHAR(45) NULL COMMENT '选项值',
   `default_value` VARCHAR(45) NOT NULL COMMENT '设置项的默认值',
-  `is_null` VARCHAR(45) NOT NULL DEFAULT 'N' COMMENT '是否可以为空',
+  `is_null` VARCHAR(45) NOT NULL DEFAULT 'N' COMMENT '是否可以为空 N 不可以为空, Y 可以为空',
   PRIMARY KEY (`id`))
 COMMENT = '系统设置';
 
