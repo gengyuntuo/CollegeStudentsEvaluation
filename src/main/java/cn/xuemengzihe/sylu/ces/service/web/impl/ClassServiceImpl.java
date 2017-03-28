@@ -47,6 +47,11 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
+	public Clazz findClazzByClassId(String classId) {
+		return clazzDAO.findClazzByClassId(classId);
+	}
+
+	@Override
 	public PageInfo<Clazz> findClazzsOfPage(PageInfo<Clazz> pageInfo) {
 		// 分页查询 每一页的记录数为15条
 		int pageNum = 1;

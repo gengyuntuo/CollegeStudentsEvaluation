@@ -48,6 +48,11 @@
 		FROM class
 		WHERE id = #{id}
 	</select>
+	<select id="findClazzByClassId" parameterType="string" resultType="clazz">
+		SELECT *
+		FROM class
+		WHERE class_id = #{value}
+	</select>
 	<select id="findClazzsOfAll"  resultType="clazz">
 		SELECT *
 		FROM class

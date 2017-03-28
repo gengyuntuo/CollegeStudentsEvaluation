@@ -50,6 +50,14 @@ public interface ClassDAO {
 	public Clazz findClazzById(Integer id);
 
 	/**
+	 * 查找班级，根据班级编码名称
+	 * 
+	 * @param classId
+	 * @return
+	 */
+	public Clazz findClazzByClassId(String classId);
+
+	/**
 	 * 查询所有班级
 	 * 
 	 * @return

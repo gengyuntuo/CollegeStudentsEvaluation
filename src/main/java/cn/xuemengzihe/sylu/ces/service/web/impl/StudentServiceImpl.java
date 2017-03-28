@@ -32,6 +32,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public Integer insertStudent(Map<String, String> student) {
+		return studentDAO.insertStudentUseMap(student);
+	}
+
+	@Override
 	public Integer deleteStudentById(Integer id) {
 		return studentDAO.deleteStudentById(id);
 	}
@@ -62,10 +67,10 @@ public class StudentServiceImpl implements StudentService {
 	public PageInfo<Map<String, String>> findStudentsOfPageWithMapSet(
 			PageInfo<Map<String, String>> pageInfo, String condition) {
 		// 分页查询
-				PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
-				List<Map<String, String>> list = studentDAO
-						.findInstitutesOfAllWithMapSet(condition);
-				pageInfo = new PageInfo<>(list);
-				return pageInfo;
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		List<Map<String, String>> list = studentDAO
+				.findInstitutesOfAllWithMapSet(condition);
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 }

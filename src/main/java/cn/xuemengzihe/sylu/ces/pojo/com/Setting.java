@@ -18,7 +18,7 @@ public class Setting {
 	private String setting; // 设置名称
 	private String value; // 设置值
 	private String defaultValue; // 默认值
-	private Character isNull; // 判断该字段是否可以为空
+	private String isNull; // 判断该字段是否可以为空
 
 	public Setting() {
 		super();
@@ -88,11 +88,11 @@ public class Setting {
 		this.defaultValue = defaultValue;
 	}
 
-	public Character getIsNull() {
+	public String getIsNull() {
 		return isNull;
 	}
 
-	public void setIsNull(Character isNull) {
+	public void setIsNull(String isNull) {
 		this.isNull = isNull;
 	}
 

@@ -48,6 +48,14 @@ public interface ClassService {
 	public Clazz findClazzById(Integer id);
 
 	/**
+	 * 查找班级，根据班级编码名称
+	 * 
+	 * @param classId
+	 * @return
+	 */
+	public Clazz findClazzByClassId(String classId);
+
+	/**
 	 * 分页查询班级
 	 * 
 	 * @return

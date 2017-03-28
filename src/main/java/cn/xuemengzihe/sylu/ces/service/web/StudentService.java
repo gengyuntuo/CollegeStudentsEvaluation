@@ -24,6 +24,14 @@ public interface StudentService {
 	public Integer insertStudent(Student student);
 
 	/**
+	 * 新建学生
+	 * 
+	 * @param student
+	 * @return
+	 */
+	public Integer insertStudent(Map<String, String> student);
+
+	/**
 	 * 删除学生
 	 * 
 	 * @param id

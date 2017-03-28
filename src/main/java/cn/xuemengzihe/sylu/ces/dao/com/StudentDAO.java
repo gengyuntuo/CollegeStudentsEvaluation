@@ -26,6 +26,14 @@ public interface StudentDAO {
 	public Integer insertStudent(Student student);
 
 	/**
+	 * 使用Map集合插入学生信息
+	 * 
+	 * @param student
+	 * @return
+	 */
+	public Integer insertStudentUseMap(Map<String, String> student);
+
+	/**
 	 * 删除学生
 	 * 
 	 * @param id

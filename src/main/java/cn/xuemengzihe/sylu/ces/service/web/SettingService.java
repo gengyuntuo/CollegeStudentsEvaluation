@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Setting;
+import cn.xuemengzihe.sylu.ces.service.web.impl.SettingServiceImpl;
 
 /**
  * <h1>Setting Service</h1>
  * <p>
  * </p>
  * 
+ * @see SettingServiceImpl
  * @author 李春
  * @time 2017年1月29日time下午3:33:13
  */

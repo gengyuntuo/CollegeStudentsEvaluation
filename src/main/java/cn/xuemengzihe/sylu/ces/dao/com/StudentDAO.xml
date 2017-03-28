@@ -59,6 +59,57 @@
 			#{uTime}
 		)
 	</insert>
+	<insert id="insertStudentUseMap" parameterType="map">
+		INSERT INTO student(
+			`nick`,
+			`name`,
+			`gender`,
+			`nation`,
+			`birthday`,
+			`portrait`,
+			`role`,
+			`email`,
+			`id_card`,
+			`we_chat`,
+			`qq_numb`,
+			`alipay`,
+			`phone`,
+			`address`,
+			`resident`,
+			`motto`,
+			`password`,
+			`sno`,
+			`class_id`,
+			`major_id`,
+			`teacher_id`,
+			`is_valid`,
+			`c_time`
+		) VALUES(
+			#{nick},
+			#{name},
+			#{gender},
+			#{nation},
+			#{birthday},
+			#{portrait},
+			#{role},
+			#{email},
+			#{idCard},
+			#{weChat},
+			#{qqNumb},
+			#{alipay},
+			#{phone},
+			#{address},
+			#{resident},
+			#{motto},
+			'123456',
+			#{sno},
+			#{classId},
+			#{majorId},
+			#{teacherId},
+			'Y',
+			NOW()
+		)
+	</insert>
 	<delete id="deleteStudentById" parameterType="int">
 		DELETE FROM student
 		WHERE id=#{id}

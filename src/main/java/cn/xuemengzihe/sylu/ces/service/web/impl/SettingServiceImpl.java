@@ -16,6 +16,7 @@ import cn.xuemengzihe.sylu.ces.service.web.SettingService;
  * <p>
  * </p>
  * 
+ * @see SettingService
  * @author 李春
  * @time 2017年1月29日time下午3:34:36
  */
@@ -27,16 +28,19 @@ public class SettingServiceImpl implements SettingService {
 	private SettingDAO settingDAO;
 
 	@Override
+	@Transactional
 	public Integer insertSetting(Setting setting) {
 		return settingDAO.insertSetting(setting);
 	}
 
 	@Override
+	@Transactional
 	public Integer deleteSettingById(Integer id) {
 		return settingDAO.deleteSettingById(id);
 	}
 
 	@Override
+	@Transactional
 	public Integer updateSetting(Setting setting) {
 		return settingDAO.updateSetting(setting);
 	}
