@@ -8,6 +8,7 @@
 	<!-- 版本属性 -->
 	<properties>
 		<jstl.version>1.2</jstl.version>
+		<mail.version>1.4.7</mail.version>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<gson.version>2.8.0</gson.version>
@@ -38,6 +39,8 @@
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Spring框架支持 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -64,7 +67,13 @@
 			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 
+		<!-- 添加MyBatis支持 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -75,11 +84,19 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis.spring.version}</version>
 		</dependency>
+
+		<!-- 添加Logger支持 -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- 添加JSTL支持 -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -90,43 +107,55 @@
 			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
 			<version>${jstl-api.version}</version>
 		</dependency>
+
+		<!-- 添加C3P0支持 -->
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>${c3p0.version}</version>
 		</dependency>
+
+		<!-- 添加MySQL支持 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+
+		<!-- 添加分页支持 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>${pagehelper.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+
 		<!-- JSON-解析工具 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>${gson.version}</version>
 		</dependency>
+
+		<!-- Java邮件支持 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${mail.version}</version>
+		</dependency>
+
 		<!-- 使用Excel项目支持 -->
 		<dependency>
 			<groupId>cn.xuemengzihe.util</groupId>
 			<artifactId>excel</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	<!-- 使用WebParse项目支持 -->
+
+		<!-- 使用WebParse项目支持 -->
 		<dependency>
 			<groupId>cn.xuemengzihe.util</groupId>
 			<artifactId>webparse</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
 	</dependencies>
 </project>

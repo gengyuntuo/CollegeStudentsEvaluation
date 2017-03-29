@@ -9,12 +9,14 @@ import javax.servlet.http.HttpSessionListener;
 /**
  * <h1>Session 监听器</h1>
  * <p>
- * Session状态监听，记录在线用户
+ * Session状态监听，记录在线用户<br/>
+ * 该功能已经废弃
  * </p>
  * 
  * @author 李春
  * @time 2017年1月27日 上午10:03:25
  */
+@Deprecated
 public class LoginListener implements HttpSessionAttributeListener,
 		HttpSessionListener {
 
@@ -35,7 +37,7 @@ public class LoginListener implements HttpSessionAttributeListener,
 
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent se) {
-		// TODO Auto-generated method stub
+		// 无操作
 	}
 
 	@Override
@@ -45,6 +47,6 @@ public class LoginListener implements HttpSessionAttributeListener,
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		// TODO Auto-generated method stub
+		// 无操作
 	}
 }

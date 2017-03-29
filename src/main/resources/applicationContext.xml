@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
-	<context:property-placeholder location="classpath:database.properties" />
+	<context:property-placeholder location="classpath:mail.properties,classpath:database.properties" />
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.xuemengzihe"></context:component-scan>
 	<!-- 数据源 -->
@@ -37,4 +37,22 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager" />
+	<!-- Spring Mail邮件配置 -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- 服务器 -->
+		<property name="host" value="${mail.host}" />
+		<!-- 端口号 -->
+		<property name="port" value="${mail.port}" />
+		<!-- 用户名 -->
+		<property name="username" value="${mail.username}" />
+		<!-- 密码 -->
+		<property name="password" value="${mail.password}" />
+		<!-- SMTP服务器验证 -->
+		<property name="javaMailProperties">
+			<props>
+				<!-- 验证身份 -->
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+			</props>
+		</property>
+	</bean>
 </beans>
