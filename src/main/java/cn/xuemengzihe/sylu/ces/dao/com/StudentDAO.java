@@ -58,6 +58,14 @@ public interface StudentDAO {
 	public Student findStudentById(Integer id);
 
 	/**
+	 * 登录
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public Student findStudentByUserNameAndPassword(Map<String, String> params);
+
+	/**
 	 * 查询所有学生
 	 * 
 	 * @return

@@ -83,6 +83,14 @@
 		FROM teacher
 		WHERE id = #{id}
 	</select>
+	<select id="findTeacherByUserNameAndPassword" parameterType="map" resultType="teacher">
+		SELECT *
+		FROM teacher
+		WHERE
+			email = #{userName}
+			AND password = #{password}
+			AND is_valid = 'Y'
+	</select>
 	<select id="findTeachersOfAll"  resultType="teacher">
 		SELECT *
 		FROM teacher

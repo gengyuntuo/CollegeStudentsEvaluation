@@ -48,6 +48,17 @@ public interface TeacherService {
 	public Teacher findTeacherById(Integer id);
 
 	/**
+	 * 登录验证
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return
+	 */
+	public Teacher loginVerify(String userName, String password);
+
+	/**
 	 * 分页查询老师
 	 * 
 	 * @return
@@ -56,8 +67,10 @@ public interface TeacherService {
 
 	/**
 	 * 分页查询教师[返回结果为List&lt;Map&lt;String,String&gt;&gt; 集合]
+	 * 
 	 * @param pageInfo
-	 * @param condition 查询条件
+	 * @param condition
+	 *            查询条件
 	 * @return
 	 */
 	public PageInfo<Map<String, String>> findTeachersOfPageWithMapSet(

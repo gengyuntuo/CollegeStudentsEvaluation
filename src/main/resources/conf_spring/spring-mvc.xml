@@ -23,7 +23,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/login.do" />
-			<mvc:exclude-mapping path="/loginPage.do" />
+			<mvc:exclude-mapping path="/checkCookie.do" />
 			<bean class="cn.xuemengzihe.sylu.ces.interceptor.AuthorityInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

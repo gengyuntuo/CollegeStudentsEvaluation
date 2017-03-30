@@ -2,7 +2,6 @@ package cn.xuemengzihe.sylu.ces.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,20 +22,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession();
-		Persion user = (Persion) session.getAttribute("user");
-		// TODO 重要BUG，测试阶段，正式上线需要删除下面内容
-		if (user == null) {
-			user = new Persion();
-			user.setUserType("T");
-			user.setName("李春");
-			user.setNick("李春");
-			session.setAttribute("user", user);
-		}
+		Persion user = (Persion) request.getSession(true).getAttribute("user");
 		if (user == null) {
 			// 未登录用户，跳转到登录页面
-			request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("/checkCookie.do").forward(request,
+					response);
 			return false;
 		}
 		return true;

@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,14 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public Teacher findTeacherById(Integer id) {
 		return teacherDAO.findTeacherById(id);
+	}
+
+	@Override
+	public Teacher loginVerify(String userName, String password) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userName", userName);
+		params.put("password", password);
+		return teacherDAO.findTeacherByUserNameAndPassword(params);
 	}
 
 	@Override

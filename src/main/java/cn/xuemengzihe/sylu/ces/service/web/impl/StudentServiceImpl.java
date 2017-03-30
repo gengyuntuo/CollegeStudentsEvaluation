@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,14 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student findStudentById(Integer id) {
 		return studentDAO.findStudentById(id);
+	}
+
+	@Override
+	public Student loginVerify(String userName, String password) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userName", userName);
+		params.put("password", password);
+		return studentDAO.findStudentByUserNameAndPassword(params);
 	}
 
 	@Override

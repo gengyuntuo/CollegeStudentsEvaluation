@@ -186,6 +186,14 @@
 		FROM student
 		WHERE id = #{id}
 	</select>
+	<select id="findStudentByUserNameAndPassword" parameterType="map" resultType="student">
+		SELECT *
+		FROM student
+		WHERE
+			`email` = #{userName}
+			AND `password` = #{password}
+			AND `is_valid` = 'Y'
+	</select>
 	<select id="findStudentsOfAll" resultType="student">
 		SELECT *
 		FROM student

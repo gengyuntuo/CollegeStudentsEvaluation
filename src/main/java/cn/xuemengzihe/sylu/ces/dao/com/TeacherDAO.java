@@ -50,6 +50,14 @@ public interface TeacherDAO {
 	public Teacher findTeacherById(Integer id);
 
 	/**
+	 * 登录
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public Teacher findTeacherByUserNameAndPassword(Map<String, String> params);
+
+	/**
 	 * 查询所有老师
 	 * 
 	 * @return
@@ -58,7 +66,9 @@ public interface TeacherDAO {
 
 	/**
 	 * 查询所有的教师并返回Map集合，支持条件查询
-	 * @param condition 查询条件
+	 * 
+	 * @param condition
+	 *            查询条件
 	 * @return
 	 */
 	public List<Map<String, String>> findInstitutesOfAllWithMapSet(

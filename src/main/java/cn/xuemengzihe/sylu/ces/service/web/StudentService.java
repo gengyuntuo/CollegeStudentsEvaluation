@@ -55,6 +55,17 @@ public interface StudentService {
 	 */
 	public Student findStudentById(Integer id);
 
+	/***
+	 * 登录
+	 * 
+	 * @param userName
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return
+	 */
+	public Student loginVerify(String userName, String password);
+
 	/**
 	 * 分页查询学生
 	 * 

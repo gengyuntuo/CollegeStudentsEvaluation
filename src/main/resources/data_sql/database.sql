@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
   `nation` VARCHAR(5) NULL DEFAULT '汉' COMMENT '民族',
   `birthday` DATE NULL COMMENT '生日',
   `portrait` VARCHAR(140) NULL COMMENT '头像',
-  `email` VARCHAR(45) NULL COMMENT '邮件',
+  `email` VARCHAR(45) UNIQUE NOT NULL COMMENT '邮件',
   `id_card` VARCHAR(45) NULL COMMENT '身份证',
   `we_chat` VARCHAR(45) NULL COMMENT '微信',
   `qq_numb` VARCHAR(45) NULL COMMENT 'QQ号',
