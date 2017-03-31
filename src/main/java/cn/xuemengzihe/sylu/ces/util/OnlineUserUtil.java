@@ -14,6 +14,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
  * @author 李春
  * @time 2017年2月6日 下午2:44:16
  */
+@Deprecated
 public class OnlineUserUtil {
 	/**
 	 * 在线学生

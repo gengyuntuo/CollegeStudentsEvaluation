@@ -8,5 +8,6 @@ SELECT * FROM menu where `is_valid` = '1' and IFNULL(`father_menu_id`, NULL); /*
 SELECT one.*, two.url _url,two.title _title,two.desc _desc,two.image _image FROM
 	(SELECT * FROM menu WHERE `is_valid` = '1' AND ISNULL(`father_menu_id`)) one LEFT JOIN
 	(SELECT * FROM menu WHERE `is_valid` = '1' AND IFNULL(`father_menu_id`, NULL)) two
-ON one.`id`=two.`father_menu_id` AND one.`level` = 'T'
+ON one.`id`=two.`father_menu_id`
+WHERE one.`level` = 'T'
 ORDER BY one.order,two.order;

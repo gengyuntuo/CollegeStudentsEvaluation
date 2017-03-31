@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:applicationContext.xml",
-		"classpath:spring-mvc.xml" })
+@ContextConfiguration(locations = { "classpath:conf_spring/applicationContext.xml",
+		"classpath:conf_spring/spring-mvc.xml" })
 public class ExcelServiceImplTest {
 
 	@Autowired

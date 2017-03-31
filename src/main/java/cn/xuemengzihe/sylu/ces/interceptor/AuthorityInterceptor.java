@@ -31,15 +31,35 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		// 从Session中获取用户对象
 		HttpSession session = request.getSession();
 		Persion persion = (Persion) session.getAttribute("user");
-		// 如果Perison对象非空，则查询用户菜单
-		if (persion != null) {
-			request.setAttribute("menu",
-					menuService.getMenu(persion.getUserType()));
-			logger.debug("this user get the menu!");
+
+		if (persion == null) { // 如果Perison对象为空，则出现重大异常，抛出异常
+			logger.error("Anthority Intercepter: Persion Object is Null!");
+			throw new Exception("权限验证拦截器：Persion 对象为空！");
 		}
-		// TODO 该类的功能并没有完成，JSON请求的判断和 用户安全访问
+		// System.out.println("###################################");
+		// System.out.println("request.getContextPath()" +
+		// request.getContextPath());
+		// System.out.println("request.getPathInfo()" + request.getPathInfo());
+		// System.out.println("request.getRequestURL()" +
+		// request.getRequestURL());
+		// System.out.println("request.getServletPath()" +
+		// request.getServletPath());
+		// System.out.println("request.getRequestURI()" +
+		// request.getRequestURI());
+		// System.out.println("###################################");
+		// TODO 用户访问页面的权限验证
+
+		// 目前采用的方式是将读取的菜单保存到Service方法中，避免重复从数据库中读取
+		// 如果遇到菜单更新必须重启Tomcat才可以重新加载菜单
+		// 【解决方案】：
+		// --> 1.使用Redis的TTL机制来解决
+		// --> 2.使用AOP，如果有菜单更新操作，就刷新Service中的缓存数据
+		request.setAttribute("menu", menuService.getMenu(persion.getUserType()));
+		logger.debug("this user get the menu!");
+		// TODO 该类的功能并没有完成，JSON请求的判断和用户安全访问
 		return true;
 	}
 

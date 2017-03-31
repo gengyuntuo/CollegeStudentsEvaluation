@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `ces`.`menu`;
 DROP TABLE IF EXISTS `ces`.`setting`;
 
 /* 创建数据表 */
+DROP TABLE IF EXISTS `ces`.`teacher`;
 CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `nick` VARCHAR(45) NOT NULL DEFAULT '昵称' COMMENT '昵称',
@@ -21,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
   `nation` VARCHAR(5) NULL DEFAULT '汉' COMMENT '民族',
   `birthday` DATE NULL COMMENT '生日',
   `portrait` VARCHAR(140) NULL COMMENT '头像',
+  `role` VARCHAR(45) NULL COMMENT '职务',
   `email` VARCHAR(45) UNIQUE NOT NULL COMMENT '邮件',
   `id_card` VARCHAR(45) NULL COMMENT '身份证',
   `we_chat` VARCHAR(45) NULL COMMENT '微信',
@@ -31,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`teacher` (
   `resident` VARCHAR(140) NULL COMMENT '居住地',
   `motto` VARCHAR(140) NULL COMMENT '座右铭',
   `password` VARCHAR(32) NOT NULL COMMENT '密码',
+  `user_type` VARCHAR(1) NOT NULL COMMENT '用户类型 例如T：老师，S：学生，M：班委，A：管理员',
   `is_valid` VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT '当前账户是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -73,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `ces`.`class` (
   PRIMARY KEY (`id`))
 COMMENT = '班级';
 
+/* 学生 */
+DROP TABLE IF EXISTS `ces`.`student`;
 CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `nick` VARCHAR(45) NOT NULL DEFAULT '昵称' COMMENT '昵称',
@@ -92,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `resident` VARCHAR(140) NULL COMMENT '居住地',
   `motto` VARCHAR(140) NULL COMMENT '座右铭',
   `password` VARCHAR(32) NOT NULL COMMENT '密码',
+  `user_type` VARCHAR(1) NOT NULL COMMENT '用户类型 例如T：老师，S：学生，M：班委，A：管理员',
   # 学生特有的字段
   `sno` INT UNIQUE NOT NULL COMMENT '学生学号',
   `class_id` INT NOT NULL COMMENT '班级的ID',

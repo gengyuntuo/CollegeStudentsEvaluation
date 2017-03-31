@@ -25,6 +25,7 @@
 			`resident`,
 			`motto`,
 			`password`,
+			`user_type`,
 			`is_valid`,
 			`c_time`,
 			`u_time`
@@ -46,6 +47,7 @@
 			#{resident},
 			#{motto},
 			#{password},
+			#{userType},
 			#{isValid},
 			#{cTime},
 			#{uTime}
@@ -74,6 +76,7 @@
 			`resident`=#{resident},
 			`motto`=#{motto},
 			`password`=#{password},
+			`user_type` = #{userType},
 			`is_valid`=#{isValid}
 		WHERE
 			id=#{id}

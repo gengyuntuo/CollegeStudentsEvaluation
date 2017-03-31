@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
@@ -45,12 +44,12 @@ public class LoginController {
 	/**
 	 * Cookie名称：记住登录状态的ID（构成：用户 id）
 	 */
-	private final String REMEMBERID_TAG_NAME = "rememberId";
+	public static final String REMEMBERID_TAG_NAME = "rememberId";
 	/**
 	 * Cookie名称：记住登录状态的角色其取值（{@link #ROLE_ADMIN},{@link #ROLE_STUDENT},
 	 * {@link #ROLE_TEACHER}）
 	 */
-	private final String REMEMBERROLE_TAG_NAME = "rememberRole";
+	public static final String REMEMBERROLE_TAG_NAME = "rememberRole";
 
 	@Autowired
 	private TeacherService teacherService;
@@ -78,13 +77,13 @@ public class LoginController {
 	 *            在登录前请求的页面，登录后自动跳转到该页面
 	 * @return
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = "login")
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, String userName, String password,
-			String remember, int role, String page) {
+			String remember, Integer role, String page) {
 		if (userName == null || password == null || userName.trim().isEmpty()
 				|| password.trim().isEmpty()) // 如果请求参数不完整将直接返回登录页面
-			return "/login/login.jsp";
+			return "/login/login";
 		HttpSession session = request.getSession(true);
 		Persion user = null; // 登录的用户
 		Cookie cookie = null; // Cookie
@@ -104,20 +103,20 @@ public class LoginController {
 		if (user != null) {
 			session.setAttribute("user", user);
 			if ("true".equals(remember)) { // 用户选择了记住登录状态
-				cookie = new Cookie(this.REMEMBERID_TAG_NAME, user.getId() + "");
+				cookie = new Cookie(REMEMBERID_TAG_NAME, user.getId() + "");
 				cookie.setMaxAge(3600 * 24 * 10); // 设置10天免登录
 				cookie.setPath("/");
 				response.addCookie(cookie);
-				cookie = new Cookie(this.REMEMBERROLE_TAG_NAME, role + "");
+				cookie = new Cookie(REMEMBERROLE_TAG_NAME, role + "");
 				cookie.setMaxAge(3600 * 24 * 10); // 设置10天免登录
 				cookie.setPath("/");
 				response.addCookie(cookie);
 			} else {
-				cookie = new Cookie(this.REMEMBERID_TAG_NAME, user.getId() + "");
+				cookie = new Cookie(REMEMBERID_TAG_NAME, user.getId() + "");
 				cookie.setMaxAge(0); // 删除Cookie
 				cookie.setPath("/");
 				response.addCookie(cookie);
-				cookie = new Cookie(this.REMEMBERROLE_TAG_NAME, role + "");
+				cookie = new Cookie(REMEMBERROLE_TAG_NAME, role + "");
 				cookie.setMaxAge(0); // 删除Cookie
 				cookie.setPath("/");
 				response.addCookie(cookie);
@@ -127,55 +126,7 @@ public class LoginController {
 		}
 		request.setAttribute("tip", "登录失败，用户名或者密码错误！");
 		logger.info("Login failed because of userName or password error!");
-		return "/login/login.jsp";
-	}
-
-	/**
-	 * 检查Cookie
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("checkCookie")
-	public String checkCookie(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		// 检查Cookie，查询浏览器之间是否设置过保存登录状态
-		String cookieId = null;
-		String cookieRole = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (cookieId == null
-					&& this.REMEMBERID_TAG_NAME.equals(cookie.getName())) {
-				cookieId = cookie.getValue();
-				continue;
-			}
-			if (cookieRole == null
-					&& this.REMEMBERROLE_TAG_NAME.equals(cookie.getName())) {
-				cookieRole = cookie.getValue();
-				continue;
-			}
-		}
-
-		Persion user = null;
-		switch (Integer.parseInt(cookieRole)) {
-		case ROLE_ADMIN:
-			user = teacherService.findTeacherById(Integer.parseInt(cookieId));
-			break;
-		case ROLE_TEACHER:
-			user = teacherService.findTeacherById((Integer.parseInt(cookieId)));
-			break;
-		case ROLE_STUDENT:
-			user = studentService.findStudentById((Integer.parseInt(cookieId)));
-			break;
-		}
-
-		if (user != null) {
-			session.setAttribute("user", user);
-			logger.info("Login success by cookie!");
-			return "/index.do";
-		} else {
-			logger.info("Login failed because of error cookie!");
-			return "/login/login.jsp";
-		}
+		return "/login/login";
 	}
 
 	/**
