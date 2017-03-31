@@ -36,10 +36,10 @@ $(document).ready(function() {
 		},
 		messages: {
 			password: {
-				required: "Please provide a password",
-				minlength: "Your password must be at least 5 characters long"
+				required: "请输入密码",
+				minlength: "您的密码长度不足5位！"
 			},
-			email: "Please type your email",
+			email: "请输入用户名",
 		},
 		highlight: function(element) {
 			if ($(element).offsetParent().parent().hasClass('form-group')) {

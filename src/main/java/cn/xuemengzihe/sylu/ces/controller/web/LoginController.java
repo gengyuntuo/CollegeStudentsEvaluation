@@ -87,6 +87,9 @@ public class LoginController {
 		HttpSession session = request.getSession(true);
 		Persion user = null; // 登录的用户
 		Cookie cookie = null; // Cookie
+
+		// TODO 对密码进行验证前需要对密码进行加密，保证用户信息的安全
+
 		switch (role) {
 		case ROLE_ADMIN:
 			user = teacherService.loginVerify(userName, password);

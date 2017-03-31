@@ -12,7 +12,7 @@
 					<li id="toggle-sidebar-li"><a href="#" id="toggle-sidebar"><i class="en-arrow-left2"></i> </a></li>
 					<li><a href="#" class="full-screen"><i class="fa-fullscreen"></i></a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-cog"></i><span class="notification">10</span></a>
-						<ul class="dropdown-menu" role="menu">
+						<ul class="dropdown-menu right" role="menu">
 							<li><a href="#"><i class="en-database"></i> Database <span class="notification">3</span></a></li>
 							<li><a href="#"><i class="st-cube"></i> Packages <span class="notification blue">17</span></a></li>
 							<li><a href="#"><i class="st-health"></i> Disconnects <span class="notification yellow">1</span></a></li>
@@ -25,7 +25,7 @@
 							<li><a href="#"><i class="ec-contract"></i> Contracts <span class="notification dark">7</span></a></li>
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-mail"></i><span class="notification">4</span></a>
-						<ul class="dropdown-menu email" role="menu">
+						<ul class="dropdown-menu email right" role="menu">
 							<li class="mail-head">
 								<div class="clearfix">
 									<div class="pull-left">
@@ -59,7 +59,7 @@
 							<li><a href="profile.html"><i class="st-user"></i> 个人中心 </a></li>
 							<li><a href="file.html"><i class="st-cloud"></i> 我的文件</a></li>
 							<li><a href="#"><i class="st-settings"></i> 系统设置 </a></li>
-							<li><a href="login.html"><i class="im-exit"></i> 注销登录</a></li>
+							<li><a href="logout.do"><i class="im-exit"></i> 注销登录</a></li>
 						</ul></li>
 				</ul>
 			</nav>

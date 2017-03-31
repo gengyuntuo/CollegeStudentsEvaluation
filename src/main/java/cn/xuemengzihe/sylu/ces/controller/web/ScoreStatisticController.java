@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <h1>Score Statistic Controller</h1>
@@ -13,5 +14,15 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class ScoreStatisticController {
+
+	@RequestMapping("scoreInfo")
+	public String scoreInfo() {
+		return "/score/scoreInfo";
+	}
+
+	@RequestMapping("scoreList")
+	public String scoreList() {
+		return "/score/scoreList";
+	}
 
 }
