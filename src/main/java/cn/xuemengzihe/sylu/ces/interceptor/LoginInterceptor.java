@@ -45,7 +45,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			// 检查Cookie，查询浏览器之间是否设置过保存登录状态
 			String cookieId = null;
 			String cookieRole = null;
-			if (request != null)
+			if (request.getCookies() != null)
 				for (Cookie cookie : request.getCookies()) {
 					if (cookieId == null
 							&& LoginController.REMEMBERID_TAG_NAME
