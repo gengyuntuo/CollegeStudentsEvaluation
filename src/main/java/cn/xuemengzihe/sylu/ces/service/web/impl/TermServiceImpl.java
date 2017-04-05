@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.xuemengzihe.sylu.ces.dao.com.TermDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
@@ -26,6 +27,7 @@ import com.github.pagehelper.PageInfo;
  * 
  * @time 2017年4月3日 下午2:47:47
  */
+@Service
 public class TermServiceImpl implements TermService {
 
 	private final Logger logger = LoggerFactory
