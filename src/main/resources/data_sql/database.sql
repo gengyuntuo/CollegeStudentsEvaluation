@@ -144,18 +144,20 @@ CREATE TABLE IF NOT EXISTS `ces`.`menu` (
   PRIMARY KEY (`id`))
 COMMENT = '用户菜单';
 
-/* 统计学期 */
+/* 统计学期,改表是在原有的项目上改进而来的，该表的每一条记录对应一个班级的一个学期的统计 */
 DROP TABLE IF EXISTS `ces`.`term`;
 CREATE TABLE IF NOT EXISTS `ces`.`term` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` VARCHAR(45) UNIQUE NOT NULL COMMENT '学期名称',
+  `name` VARCHAR(45) NOT NULL COMMENT '学期名称',
+  `class_id` INT NOT NULL COMMENT '班级ID',
   `desc` VARCHAR(140) NULL COMMENT '学期描述',
   `start_date` DATE NOT NULL COMMENT '统计开始日期',
   `stop_date` DATE NOT NULL COMMENT '统计结束日期',
   `is_valid` VARCHAR(1) NOT NULL COMMENT '是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE(`name`,`class_id`)
 ) COMMENT '学期';
 
 

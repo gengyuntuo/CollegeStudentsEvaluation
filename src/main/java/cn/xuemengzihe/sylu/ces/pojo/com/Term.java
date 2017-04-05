@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * <h1>学期</h1>
  * <p>
+ * 成绩统计学期，每个班级每个学期对应一条记录
  * </p>
  * 
  * @author 李春
@@ -13,16 +14,16 @@ import java.util.Date;
 public class Term {
 	private Integer id; // ID
 	private String name; // 学期名称
+	private Integer classId; // 班级ID
 	private String desc; // 学期说明
-	private Date startDate; // 学期开始日期
-	private Date stopDate; // 学期结束日期
+	private Date startDate; // 成绩统计开始日期
+	private Date stopDate; // 成绩统计结束日期
 
-	private Character isValid; // 有效？
+	private String isValid; // 有效？
 	private Date cTime;
 	private Date uTime;
 
 	public Term() {
-		super();
 	}
 
 	public Integer getId() {
@@ -33,20 +34,28 @@ public class Term {
 		this.id = id;
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getClassId() {
+		return classId;
+	}
+
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public Date getStartDate() {
@@ -65,11 +74,11 @@ public class Term {
 		this.stopDate = stopDate;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 
@@ -91,9 +100,10 @@ public class Term {
 
 	@Override
 	public String toString() {
-		return "Term [id=" + id + ", name=" + name + ", startDate=" + startDate
-				+ ", stopDate=" + stopDate + ", isValid=" + isValid
-				+ ", cTime=" + cTime + ", uTime=" + uTime + "]";
+		return "Term [id=" + id + ", name=" + name + ", classId=" + classId
+				+ ", desc=" + desc + ", startDate=" + startDate + ", stopDate="
+				+ stopDate + ", isValid=" + isValid + ", cTime=" + cTime
+				+ ", uTime=" + uTime + "]";
 	}
 
 }
