@@ -86,21 +86,27 @@
 	<div id="dialog-add">
 		<form id="form" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学期：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="班级代码">
+					<input id="numb" name="numb" type="text" class="form-control" placeholder="统计学期">
 				</div>
 			</div>
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">班级:</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<input id="name" name="name" type="text" class="form-control" placeholder="班级名称">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">开始：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="desc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+					<textarea id="startDate" name="startDate" class="form-control" rows="6" style="resize: none">2017-4-5</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">结束：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<textarea id="stopDate" name="stopDate" class="form-control" rows="6" style="resize: none">2017-7-1</textarea>
 				</div>
 			</div>
 		</form>

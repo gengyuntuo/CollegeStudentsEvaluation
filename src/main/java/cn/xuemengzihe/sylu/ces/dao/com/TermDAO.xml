@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TermDAO">
+	<insert id="insert" parameterType="term">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO term(
+			`name`,
+			`class_id`,
+			`desc`,
+			`start_date`,
+			`stop_date`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
+		) VALUES (
+			#{name},
+			#{classId},
+			#{desc},
+			#{startDate},
+			#{stopDate},
+			#{isValid},
+			#{cTime},
+			#{uTime}
+		)
+	</insert>
+	<delete id="delete" parameterType="int">
+		DELETE FROM term
+		WHERE id=#{id}
+	</delete>
+	<update id="update" parameterType="term">
+		UPDATE term SET
+			`name` = #{name},
+			`class_id` = #{classId},
+			`desc` = #{desc},
+			`start_date` = #{startDate},
+			`stop_date` = #{stopDate},
+			`is_valid` = #{isValid},
+			`c_time` = #{cTime},
+			`u_time` = #{uTime}
+		WHERE
+			id=#{id}
+	</update>
+	<select id="findById" parameterType="int" resultType="term">
+		SELECT *
+		FROM term
+		WHERE id = #{id}
+	</select>
+	<select id="findAll" parameterType="string" resultType="map">
+		SELECT 
+		    t.id AS id,
+		    t.name AS name,
+		    DATE_FORMAT(t.start_date, '%Y-%m-%d') AS startDate,
+		    DATE_FORMAT(t.stop_date, '%Y-%m-%d') AS stopDate,
+		    c.class_id AS classId,
+		    c.major AS major
+		FROM
+		    term t
+		        LEFT JOIN
+		    (SELECT 
+		        class.id AS id, class.class_id AS class_id, major.m_name AS major
+		    FROM
+		        class
+		    LEFT JOIN major ON class.major_id = major.id
+		    WHERE
+		        class.is_valid = 'Y'
+		            AND major.is_valid = 'Y') c ON t.class_id = c.id
+		WHERE t.is_valid = 'Y'
+			<if test="value != null">
+					AND (
+						`name` LIKE '%${value}%'
+						OR `major` LIKE '%${value}%'
+						OR `classId` LIKE '%${value}%'
+						OR `startDate` LIKE '%${value}%'
+						OR `stopDate` LIKE '%${value}%'
+					)
+			</if>
+		ORDER BY t.stop_date , t.start_date
+	</select>
+</mapper>
