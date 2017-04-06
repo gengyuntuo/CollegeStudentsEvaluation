@@ -3,14 +3,22 @@ package cn.xuemengzihe.sylu.ces.controller.web;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
+import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
+import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
+import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
@@ -29,6 +37,10 @@ import com.github.pagehelper.PageInfo;
 public class ScoreStatisticController {
 	@Autowired
 	private TermService termService;
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private StudentService studentServcice;
 
 	@RequestMapping("scoreInfo")
 	public String scoreInfo() {
@@ -134,5 +146,30 @@ public class ScoreStatisticController {
 		// 将数据分装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	@RequestMapping("/scoreStaticDetail")
+	public String scoreStaticDetail(HttpServletRequest request, Model model,
+			Integer item) {
+		// 变量定义
+		Term term = null; // 测评班级的学期信息
+		Clazz clazz = null; // 班级
+
+		// 参数合法性校验
+		if (item == null)
+			throw new MissingParameterException();
+
+		// 参数有效性校验
+		term = termService.getTermById(item);
+		if (term == null) {
+			throw new InvalidParameterException();
+		}
+		model.addAttribute("term", term); // 添加到模型中
+
+		// 业务
+		clazz = classService.findClazzById(term.getClassId());
+		model.addAttribute("clazz", clazz);
+
+		return "/score/scoreStaticDetail";
 	}
 }
