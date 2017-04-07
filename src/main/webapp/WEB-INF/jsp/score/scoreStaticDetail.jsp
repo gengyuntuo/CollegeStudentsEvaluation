@@ -41,106 +41,42 @@
 			<!-- Start .outlet -->
 			<div class="outlet">
 				<!-- Page start here ( usual with .row ) -->
-				<div class="row">
-					<!-- Start .row -->
-					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<div class="carousel-tile carousel vertical slide">
-							<div class="carousel-inner">
-								<div class="item active">
-									<div class="tile red">
-										<div class="tile-icon">
-											<i class="fa-tasks s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">${list.total }</div>
-											<h3>专业个数</h3>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End Carousel -->
-					</div>
-					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<div class="carousel-tile carousel slide">
-							<div class="carousel-inner">
-								<div class="item active">
-									<div class="tile blue">
-										<div class="tile-icon">
-											<i class="im-office s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">24</div>
-											<h3>班级个数</h3>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End Carousel -->
-					</div>
-					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<div class="carousel-tile carousel vertical slide">
-							<div class="carousel-inner">
-								<div class="item active">
-									<div class="tile green">
-										<div class="tile-icon">
-											<i class="im-users s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">325</div>
-											<h3>学生人数</h3>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End Carousel -->
-					</div>
-					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<div class="carousel-tile carousel slide">
-							<div class="carousel-inner">
-								<div class="item active" onclick="javascript:window.location.href='index.do'">
-									<div class="tile teal">
-										<!-- tile start here -->
-										<div class="tile-icon">
-											<i class="im-office s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">45</div>
-											<h3>历史班级数</h3>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="tile brown">
-										<!-- tile start here -->
-										<div class="tile-icon">
-											<i class="im-users s64"></i>
-										</div>
-										<div class="tile-content">
-											<div class="number">3548</div>
-											<h3>历史学生数</h3>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End Carousel -->
-					</div>
-				</div>
-				<!-- End .row -->
 				<!-- Start .row -->
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="page-header">
-							<h4>沈阳理工大学简介</h4>
+							<h3>评测状态</h3>
 						</div>
 						<div class="panel panel-primary">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, suscipit, autem sit natus deserunt officia error odit ea minima soluta ratione maxime molestias fugit explicabo
-								aspernatur praesentium quisquam voluptatum fuga delectus quidem quas aliquam minus at corporis libero? Modi, aperiam, pariatur, sequi illum dolore consequuntur aspernatur eos hic officia
-								doloribus magnam impedit autem maiores alias consectetur tempore explicabo. Ducimus, minima, suscipit unde harum numquam ipsa laboriosam cupiditate nemo repellendus at? Dolorum dicta nemo
-								quaerat iusto.</p>
+							<div class="form-group">
+                                            <label class="col-lg-2 control-label">Basic progressbar</label>
+                                            <div class="col-lg-10">
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">30%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End .form-group  -->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Success progressbar</label>
+                                            <div class="col-lg-10">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End .form-group  -->
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Danger progressbar</label>
+                                            <div class="col-lg-10">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">70%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End .form-group  -->
+                                        
+                                        
 							<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 							<div id="main" class="col-lg-12 col-md-12" style="height:600px"></div>
 						</div>
