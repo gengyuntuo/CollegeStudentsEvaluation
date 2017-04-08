@@ -6,8 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * <h1>文件工具类</h1>
@@ -18,7 +23,24 @@ import java.util.zip.ZipOutputStream;
  * @time 2017年4月8日 下午2:09:49
  */
 public class FileUtil {
+	/**
+	 * 项目中文件存放的路径
+	 */
+	// 上传文件的文件夹
+	public static final String DIRECTORY_UPLOAD_FILE = "WEB-INF"
+			+ File.separator + "file" + File.separator + "upload"
+			+ File.separator;
+	// 临时文件的文件夹（供下载使用）
+	public static final String DIRECTROY_TEMP_FILE = "WEB-INF" + File.separator
+			+ "file" + File.separator + "temp" + File.separator;
+	// 用户头像文件夹
+	public static final String DIRECTROY_AVATAR_FILE = "WEB-INF"
+			+ File.separator + "file" + File.separator + "avatar"
+			+ File.separator;
 
+	/**
+	 * Content Type
+	 */
 	public static final String CONTENT_TYPE_DOC = "application/msword";
 	public static final String CONTENT_TYPE_JPEG = "image/jpeg";
 	public static final String CONTENT_TYPE_JPG = "image/jpeg";
@@ -71,6 +93,41 @@ public class FileUtil {
 			break;
 		}
 		return contentType;
+	}
+
+	/**
+	 * 获取上传文件的路径及文件名，根据当前的年/月生成不易被理解的路径，然后根据时间和UUID生成文件名
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public static String getUploadFilePathAndName(String fileName) {
+		String filePathAndName = null;
+		String temp = null;
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		filePathAndName = DigestUtils.md5Hex(sdf.format(date)).substring(0, 10);
+		sdf = new SimpleDateFormat("MM");
+		filePathAndName += File.separator
+				+ DigestUtils.md5Hex(sdf.format(date)).substring(0, 10);
+		temp = UUID.randomUUID().toString().replace("-", "");
+		sdf = new SimpleDateFormat("HHmmSS");
+		filePathAndName += File.separator + temp.substring(temp.length() >> 1)
+				+ sdf.format(date);
+		temp = getFileExtension(fileName);
+		filePathAndName += temp != null ? temp : "";
+		return filePathAndName;
+	}
+
+	/**
+	 * 为需要存储的文件创建其文件夹
+	 * 
+	 * @param filePathAndName
+	 * @return
+	 */
+	public static boolean mkdirsForFile(String filePathAndName) {
+		return new File(filePathAndName.substring(0,
+				filePathAndName.lastIndexOf(File.separator))).mkdirs();
 	}
 
 	/**

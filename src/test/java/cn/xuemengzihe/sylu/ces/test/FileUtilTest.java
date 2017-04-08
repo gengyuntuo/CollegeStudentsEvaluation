@@ -1,4 +1,6 @@
-package cn.xuemengzihe.sylu.ces.test.util;
+package cn.xuemengzihe.sylu.ces.test;
+
+import java.io.File;
 
 import org.junit.Test;
 
@@ -36,5 +38,30 @@ public class FileUtilTest {
 						"C:\\Users\\Lenovo\\Desktop\\bootstrap-table-develop.zip",
 						"C:\\Users\\Lenovo\\Desktop\\金融事业部_金融大数据部-李春_018058_工作内容日报汇总.xlsx",
 						"", "" });
+	}
+
+	@Test
+	public void testgetUploadFilePathAndName() {
+		String temp = FileUtil.getUploadFilePathAndName("123.jpg");
+		System.out.println("123.jpg上传到服务器的文件名称为：" + temp);
+		System.out.println("123.jpg上传到服务器的文件名称为："
+				+ FileUtil.getUploadFilePathAndName("123.jpg"));
+		System.out.println("123.jpg上传到服务器的文件名称为："
+				+ FileUtil.getUploadFilePathAndName("123.jpg"));
+		System.out.println("123.jpg上传到服务器的文件名称为："
+				+ FileUtil.getUploadFilePathAndName("123.jpg"));
+		System.out.println("123.jpg上传到服务器的文件名称为："
+				+ FileUtil.getUploadFilePathAndName("123.jpg"));
+		System.out.println("123.jpg上传到服务器的文件名称为："
+				+ FileUtil.getUploadFilePathAndName("123.jpg"));
+	}
+
+	@Test
+	public void test() {
+		File file = new File("C:\\Users\\Lenovo\\Desktop\\a\\b\\b\\a.jps\\1234");
+		System.out.println(file.getAbsolutePath());
+		System.out.println(file.getAbsolutePath().substring(0,
+				file.getAbsolutePath().lastIndexOf(File.separator)));
+		System.out.println(file.mkdirs());
 	}
 }
