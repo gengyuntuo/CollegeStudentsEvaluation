@@ -195,7 +195,7 @@
 		SELECT *
 		FROM student
 		WHERE
-			`email` = #{userName}
+			`sno` = #{userName}
 			AND `password` = #{password}
 			AND `is_valid` = 'Y'
 	</select>

@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
@@ -41,6 +44,8 @@ public class ScoreStatisticController {
 	private ClassService classService;
 	@Autowired
 	private StudentService studentServcice;
+	@Autowired
+	private TableSZJYJFSQService tableSZJYJFSQServcie;
 
 	@RequestMapping("scoreInfo")
 	public String scoreInfo() {
@@ -148,6 +153,14 @@ public class ScoreStatisticController {
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 
+	/**
+	 * 查看某个班级某一学期测评的详细信息
+	 * 
+	 * @param request
+	 * @param model
+	 * @param item
+	 * @return
+	 */
 	@RequestMapping("/scoreStaticDetail")
 	public String scoreStaticDetail(HttpServletRequest request, Model model,
 			Integer item) {
@@ -171,5 +184,57 @@ public class ScoreStatisticController {
 		model.addAttribute("clazz", clazz);
 
 		return "/score/scoreStaticDetail";
+	}
+
+	/**
+	 * 学生，创建素质加分申请表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("createSZJYJFSQ")
+	public String createSZJYJFSQ(HttpServletRequest request, Model model,
+			TableSZJYJFSQ record) {
+		// TODO 表单参数合法性校验
+
+		// TODO 获取Session中Student对象，校验该身份的有效性，是否有权限添加记录
+		Student student = (Student) request.getSession().getAttribute("user");
+
+		// TODO 添加
+		if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
+			return "创建失败！";
+		}
+		return "创建成功！";
+	}
+
+	/**
+	 * 学生：显示学生测评的页面
+	 * 
+	 * @param request
+	 * @param model
+	 * @param item
+	 *            测评的ID
+	 * @return
+	 */
+	@RequestMapping("studentScoreStaticDetail")
+	public String studentScoreStaticDetail(HttpServletRequest request,
+			Model model, Integer item) {
+		// 变量定义
+		Student student = (Student) request.getSession().getAttribute("user");
+		Term term = null; // 测评班级的学期信息
+
+		// 参数合法性校验
+		if (item == null)
+			throw new MissingParameterException();
+
+		// 参数有效性校验
+		term = termService.getTermById(item);
+		if (term == null) {
+			throw new InvalidParameterException();
+		}
+
+		// TODO 业务
+		model.addAttribute("term", term);
+
+		return "/score/studentScoreStaticDetail";
 	}
 }

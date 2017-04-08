@@ -14,7 +14,7 @@ public class TableSZJYJFSQ {
 	private Integer suZhiId; // 该记录所依赖的素质加分测评表
 	private String name; // 比赛或者职务名称
 	private String type; // 类型
-	private String time; // 时间
+	private Date time; // 时间
 	private String level; // 等级
 	private String evidence; // 证据
 	private String filePath; // 证明文件的上传文件
@@ -59,11 +59,11 @@ public class TableSZJYJFSQ {
 		this.type = type;
 	}
 
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 

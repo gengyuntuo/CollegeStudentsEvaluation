@@ -275,7 +275,10 @@ $(function() {
 	});
 
 });
-// 搜索按钮事件
+
+/**
+ * 搜索按钮事件
+ */ 
 function btn_search() {
 	$('#mytable').bootstrapTable('refresh', { // 更新数据
 		query : { // 在搜索时设置记录偏移量为0，也就是从第一条记录开始
@@ -283,7 +286,10 @@ function btn_search() {
 		}
 	});
 }
-// 查询搜索框的输入，如果有输入则返回输入的内容，没有输入则返回undefined
+
+/**
+ * 查询搜索框的输入，如果有输入则返回输入的内容，没有输入则返回undefined
+ */ 
 function checkSearchText() {
 	// console.info("checkSearchText() function Run!");
 	var search = $("#search-input").val();
