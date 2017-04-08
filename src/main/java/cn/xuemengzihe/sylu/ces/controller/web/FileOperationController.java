@@ -1,6 +1,8 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.xuemengzihe.sylu.ces.util.Base64Util;
 import cn.xuemengzihe.sylu.ces.util.FileUtil;
 
 /**
@@ -67,6 +70,48 @@ public class FileOperationController {
 	public void downloadFile(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(required = true, defaultValue = "") String fileName) {
-		response.setContentType("");
+		// 获取项目所在的绝对路径
+		String fileLocation = request.getSession().getServletContext()
+				.getRealPath("/");
+
+		// 获取文件相对项目存在的位置的路径及文件名
+		fileName = Base64Util.decode(fileName); // 将参数解码
+
+		FileInputStream fileIn = null;
+
+		System.out.println(fileLocation + fileName);
+		File file = new File(fileLocation + fileName);
+
+		if (file.exists()) {
+			try {
+				response.setContentType(FileUtil.getContentType(FileUtil
+						.getFileExtension(fileName)));
+				fileIn = new FileInputStream(file);
+				BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
+				byte[] buffer = new byte[1024 * 100];
+				int pointer = 0;
+				while ((pointer = bufferIn.read(buffer)) != -1) {
+					response.getOutputStream().write(buffer, 0, pointer);
+				}
+				bufferIn.close();
+				response.flushBuffer();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (fileIn != null)
+						fileIn.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			// throw new FileNotFoundException();
+			try {
+				response.sendError(404);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

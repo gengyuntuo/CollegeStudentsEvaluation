@@ -57,8 +57,8 @@ public class FileUtil {
 	 */
 	public static String getFileExtension(String fileName) {
 		String extName = null;
-		if (fileName != null && fileName.contains(".")) {
-			extName = fileName.substring(fileName.lastIndexOf("."));
+		if (fileName != null && fileName.contains(File.separator)) {
+			extName = fileName.substring(fileName.lastIndexOf(File.separator));
 			// 获取的扩展名的长度为[2,4]，否则为非法
 			if (extName.length() < 2 || extName.length() > 5)
 				extName = null;
@@ -75,6 +75,8 @@ public class FileUtil {
 	 */
 	public static String getContentType(String extName) {
 		String contentType = null;
+		if (extName == null)
+			return null;
 		switch (extName) {
 		case ".doc":
 			contentType = FileUtil.CONTENT_TYPE_DOC;
