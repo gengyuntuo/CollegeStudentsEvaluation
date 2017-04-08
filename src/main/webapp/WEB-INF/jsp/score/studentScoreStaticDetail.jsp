@@ -210,10 +210,11 @@
 		<div class="clearfix"></div>
 	</div>
 	<!-- End #content -->
-	
+
 	<!-- 对话框 开始-->
+	<!-- 创建素质教育加分申请表 -->
 	<div id="dialog-add">
-		<form id="form" class="form-horizontal group-border hover-stripped">
+		<form id="form" action="createSZJYJFSQ.do" target="result_iframe" method="post" enctype="multipart/form-data" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">比赛或者职务名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -226,17 +227,15 @@
 					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="desc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
-				</div>
-			</div>
 		</form>
 	</div>
-	
+	<!-- 创建素质教育加分申请表结果 -->
+	<div id="result_iframe_div" hidden="hidden">
+		<iframe id="result_iframe" name="result_iframe">对不起，您的浏览器不支持内置框架</iframe>
+	</div>
+
 	<!-- 对话框 结束-->
-	
+
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>

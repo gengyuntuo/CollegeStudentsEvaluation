@@ -6,8 +6,7 @@ $(document).ready(function() {
 	var dialog_add = null;
 	// 表单
 	var form = $("form");
-	
-	
+
 	/**
 	 * 初始化表格
 	 */
@@ -106,7 +105,7 @@ $(document).ready(function() {
 		// 使用刚指定的配置项和数据显示图表。
 		myChart.setOption(option);
 	}
-	
+
 	/**
 	 * 自定义函数
 	 */
@@ -146,6 +145,7 @@ $(document).ready(function() {
 			"添加" : function() {
 				// 获取并验证表单内容
 				// TODO 数据合法性校验
+				$("#form").submit();
 			},
 			"取消" : function() {
 				dialog_add.dialog("close");
@@ -155,7 +155,7 @@ $(document).ready(function() {
 			form[0].reset();
 		}
 	});
-	
+
 	/**
 	 * 按钮事件绑定
 	 */
@@ -163,7 +163,7 @@ $(document).ready(function() {
 	$('#btn_add').click(function() {
 		dialog_add.dialog("open");
 	});
-	
+
 	/**
 	 * 执行
 	 */
@@ -173,3 +173,12 @@ $(document).ready(function() {
 	// 2. 绘条形图
 	plotChartDemo();
 });
+
+/**
+ * 自定义的函数
+ */
+// 结果窗口的回调函数
+function resultCallback() {
+	$("#result_iframe_div").removeAttr("hidden");
+	$("#result_iframe_div").modal("show");
+}

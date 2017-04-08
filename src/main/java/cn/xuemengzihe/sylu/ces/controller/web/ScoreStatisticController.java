@@ -200,10 +200,16 @@ public class ScoreStatisticController {
 		Student student = (Student) request.getSession().getAttribute("user");
 
 		// TODO 添加
-		if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
-			return "创建失败！";
+		try {
+			if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
+				throw new Exception();
+			}
+			model.addAttribute("tip", "创建成功！");
+		} catch (Exception e) {
+			model.addAttribute("tip", "创建失败！");
+			e.printStackTrace();
 		}
-		return "创建成功！";
+		return "/other/result";
 	}
 
 	/**
