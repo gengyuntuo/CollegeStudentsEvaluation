@@ -15,7 +15,7 @@ public class TableSZJYJFPF {
 	private Double sheHuiFuWu; // 社会服务
 	private Double sheHuiShiJian; // 社会实践
 	private Double biSaiHuoJiang; // 比赛获奖
-	private Double xueShengGanBu; // 学生干部
+	private Double xueShengGanBu; // 学生干部 
 	private Character isValid; // 标志该表是否有效
 	private Date cTime;
 	private Date uTime;

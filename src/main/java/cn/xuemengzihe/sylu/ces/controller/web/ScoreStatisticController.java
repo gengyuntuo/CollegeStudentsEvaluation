@@ -243,4 +243,59 @@ public class ScoreStatisticController {
 
 		return "/score/studentScoreStaticDetail";
 	}
+
+	/**
+	 * 班委：测评工作
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("monitorScoreStaticWork")
+	public String monitorScoreStaticWork(HttpServletRequest request, Model model, Integer item) {
+		Term term = null; // 测评班级的学期信息
+
+		// 参数合法性校验
+		if (item == null)
+			throw new MissingParameterException();
+
+		// 参数有效性校验
+		term = termService.getTermById(item);
+		if (term == null) {
+			throw new InvalidParameterException();
+		}
+
+		// TODO 业务
+		model.addAttribute("term", term);
+		
+		
+		
+		return "/score/monitorScoreStaticWork";
+	}
+
+	/**
+	 * 老师：测评工作
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("teacherScoreStaticWork")
+	public String teacherScoreStaticWork(HttpServletRequest request, Model model, Integer item) {
+		Term term = null; // 测评班级的学期信息
+
+		// 参数合法性校验
+		if (item == null)
+			throw new MissingParameterException();
+
+		// 参数有效性校验
+		term = termService.getTermById(item);
+		if (term == null) {
+			throw new InvalidParameterException();
+		}
+
+		// TODO 业务
+		model.addAttribute("term", term);
+		return "/score/teacherScoreStaticWork";
+	}
 }
