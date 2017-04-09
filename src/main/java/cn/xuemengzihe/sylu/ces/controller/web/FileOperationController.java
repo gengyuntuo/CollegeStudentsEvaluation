@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.xuemengzihe.sylu.ces.exception.FileNotFoundException;
 import cn.xuemengzihe.sylu.ces.util.Base64Util;
 import cn.xuemengzihe.sylu.ces.util.FileUtil;
 
@@ -78,37 +79,36 @@ public class FileOperationController {
 		fileName = Base64Util.decode(fileName); // 将参数解码
 
 		FileInputStream fileIn = null;
-
-		System.out.println(fileLocation + fileName);
 		File file = new File(fileLocation + fileName);
-
-		if (file.exists()) {
-			try {
-				response.setContentType(FileUtil.getContentType(FileUtil
-						.getFileExtension(fileName)));
-				fileIn = new FileInputStream(file);
-				BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
-				byte[] buffer = new byte[1024 * 100];
-				int pointer = 0;
-				while ((pointer = bufferIn.read(buffer)) != -1) {
-					response.getOutputStream().write(buffer, 0, pointer);
-				}
-				bufferIn.close();
-				response.flushBuffer();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (fileIn != null)
-						fileIn.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		try {
+			// 判断文件存在，且文件可以被用户访问
+			if (!file.exists()
+					|| !FileUtil.verifyFile(fileLocation,
+							file.getAbsolutePath())) {
+				throw new FileNotFoundException();
 			}
-		} else {
-			// throw new FileNotFoundException();
+			response.setContentType(FileUtil.getContentType(FileUtil
+					.getFileExtension(fileName)));
+			fileIn = new FileInputStream(file);
+			BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
+			byte[] buffer = new byte[1024 * 100];
+			int pointer = 0;
+			while ((pointer = bufferIn.read(buffer)) != -1) {
+				response.getOutputStream().write(buffer, 0, pointer);
+			}
+			bufferIn.close();
+			response.flushBuffer();
+		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				response.sendError(404);
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (fileIn != null)
+					fileIn.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

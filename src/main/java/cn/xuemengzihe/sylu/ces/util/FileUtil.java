@@ -26,17 +26,18 @@ public class FileUtil {
 	/**
 	 * 项目中文件存放的路径
 	 */
+	// 项目中用户上传文件的目录
+	private static final String DIRECTORY_ACCESS_FILE_PATH = "WEB-INF"
+			+ File.separator + "file" + File.separator;
 	// 上传文件的文件夹
-	public static final String DIRECTORY_UPLOAD_FILE = "WEB-INF"
-			+ File.separator + "file" + File.separator + "upload"
-			+ File.separator;
-	// 临时文件的文件夹（供下载使用）
-	public static final String DIRECTROY_TEMP_FILE = "WEB-INF" + File.separator
-			+ "file" + File.separator + "temp" + File.separator;
+	public static final String DIRECTORY_UPLOAD_FILE = DIRECTORY_ACCESS_FILE_PATH
+			+ "upload" + File.separator;
+	// 临时文件的文件夹（供生成Excel文件并下载使用）
+	public static final String DIRECTROY_TEMP_FILE = DIRECTORY_ACCESS_FILE_PATH
+			+ "temp" + File.separator;
 	// 用户头像文件夹
-	public static final String DIRECTROY_AVATAR_FILE = "WEB-INF"
-			+ File.separator + "file" + File.separator + "avatar"
-			+ File.separator;
+	public static final String DIRECTROY_AVATAR_FILE = DIRECTORY_ACCESS_FILE_PATH
+			+ "avatar" + File.separator;
 
 	/**
 	 * Content Type
@@ -189,5 +190,26 @@ public class FileUtil {
 			}
 		}
 		return zipFileName;
+	}
+
+	/**
+	 * 验证将要下载的文件在项目中安全的文件目录中（只有{@link #DIRECTORY_ACCESS_FILE_PATH}
+	 * 目录中的文件才可以被下载，否则会造成服务器的文件安全问题） <br/>
+	 * 校验方式：被请求的文件的绝对路径中包含允许被下载的目录，且绝对路径中不允许包含切换目录的符号（..）
+	 * 
+	 * @param serverRunningPath
+	 *            项目在服务器中的运行目录
+	 * @param fileRelativePath
+	 *            请求文件的绝对路径
+	 * @return 是否合法
+	 */
+	public static boolean verifyFile(String serverRunningPath,
+			String fileAbsolutePath) {
+		if (fileAbsolutePath.contains(serverRunningPath
+				+ DIRECTORY_ACCESS_FILE_PATH)
+				&& !fileAbsolutePath.contains("..")) {
+			return true;
+		}
+		return false;
 	}
 }
