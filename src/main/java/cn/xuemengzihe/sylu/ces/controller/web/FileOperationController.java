@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,22 +65,25 @@ public class FileOperationController {
 	 * 
 	 * @param request
 	 * @param response
+	 * @param path
+	 *            下载文件的路径
 	 * @param fileName
-	 *            下载的文件名称
+	 *            下载文件的文件名
 	 */
 	@RequestMapping("/downloadFile")
 	public void downloadFile(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam(required = true, defaultValue = "") String fileName) {
+			@RequestParam(required = true, defaultValue = "") String path,
+			String fileName) {
 		// 获取项目所在的绝对路径
 		String fileLocation = request.getSession().getServletContext()
 				.getRealPath("/");
 
 		// 获取文件相对项目存在的位置的路径及文件名
-		fileName = Base64Util.decode(fileName); // 将参数解码
+		path = Base64Util.decode(path); // 将参数解码
 
 		FileInputStream fileIn = null;
-		File file = new File(fileLocation + fileName);
+		File file = new File(fileLocation + path);
 		try {
 			// 判断文件存在，且文件可以被用户访问
 			if (!file.exists()
@@ -87,8 +91,25 @@ public class FileOperationController {
 							file.getAbsolutePath())) {
 				throw new FileNotFoundException();
 			}
-			response.setContentType(FileUtil.getContentType(FileUtil
-					.getFileExtension(fileName)));
+
+			// 设置Content Type
+			String fileExtension = FileUtil.getFileExtension(path);
+			String contentType = FileUtil.getContentType(fileExtension);
+			response.setContentType(contentType);
+			// 设置Content-Length
+			response.setContentLength((int) file.length());
+
+			// 判断是文件下载还是图片等资源的获取,若果是文件下载，则设置下载的文件名
+			if (FileUtil.CONTENT_TYPE_ZIP.equals(contentType)
+					&& fileName != null && fileName.length() > 0) {
+				// 设置如下Header会使浏览器弹出下载提示框
+				response.setHeader(
+						"Content-Disposition",
+						"attachment;filename="
+								+ URLEncoder.encode(fileName + fileExtension,
+										"UTF-8"));
+			}
+
 			fileIn = new FileInputStream(file);
 			BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
 			byte[] buffer = new byte[1024 * 100];

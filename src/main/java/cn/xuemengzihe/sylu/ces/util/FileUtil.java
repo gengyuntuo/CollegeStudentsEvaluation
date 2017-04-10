@@ -47,7 +47,7 @@ public class FileUtil {
 	public static final String CONTENT_TYPE_JPG = "image/jpeg";
 	public static final String CONTENT_TYPE_PDF = "application/pdf";
 	public static final String CONTENT_TYPE_XLS = "application/-excel";
-	public static final String CONTENT_TYPE_ZIP = "";
+	public static final String CONTENT_TYPE_ZIP = "application/octet-stream";
 
 	/**
 	 * 获取文件扩展名，如果扩展名合法则返回扩展名（例如：.xls, .jpg, .zip)，非法则返回null
@@ -58,8 +58,8 @@ public class FileUtil {
 	 */
 	public static String getFileExtension(String fileName) {
 		String extName = null;
-		if (fileName != null && fileName.contains(File.separator)) {
-			extName = fileName.substring(fileName.lastIndexOf(File.separator));
+		if (fileName != null && fileName.contains(".")) {
+			extName = fileName.substring(fileName.lastIndexOf("."));
 			// 获取的扩展名的长度为[2,4]，否则为非法
 			if (extName.length() < 2 || extName.length() > 5)
 				extName = null;
@@ -92,6 +92,9 @@ public class FileUtil {
 			contentType = FileUtil.CONTENT_TYPE_XLS;
 			break;
 		case ".zip":
+			contentType = FileUtil.CONTENT_TYPE_ZIP;
+			break;
+		default:
 			contentType = FileUtil.CONTENT_TYPE_ZIP;
 			break;
 		}
