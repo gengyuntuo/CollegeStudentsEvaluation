@@ -1,5 +1,4 @@
-![沈阳理工大学校徽](http://www.sylu.edu.cn/image/xbs.jpg)
-# CollegeStudentsEvaluation
+# ![沈阳理工大学校徽](http://www.sylu.edu.cn/image/xbs.jpg) CollegeStudentsEvaluation
 > CollegeStudentsEvaluation为毕业设计项目
 
 ## 项目简介
