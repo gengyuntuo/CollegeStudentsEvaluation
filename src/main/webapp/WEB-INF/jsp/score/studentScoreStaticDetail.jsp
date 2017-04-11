@@ -15,6 +15,7 @@
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
 </head>
 <body>
 	<!-- Start #header -->
@@ -56,6 +57,17 @@
 								<h4 class="panel-title">测评进度</h4>
 							</div>
 							<div class="panel-body">
+								<div class="form-group">
+									<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+									<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+										<select name="name2">
+											<option>qrqwerqwerqwerqwe</option>
+											<option>rqwerqwerqwerqwerqw</option>
+											<option>qwerqwerqwerqwer</option>
+											<option>qwerqwerqwerqwerqwrqwrw</option>
+										</select>
+									</div>
+								</div>
 								<div class="form-group">
 									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6 control-label">素质教育加分</label>
 									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
@@ -216,6 +228,19 @@
 	<div id="dialog-add">
 		<form id="form" action="createSZJYJFSQ.do" target="result_iframe" method="post" enctype="multipart/form-data" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<select name="name2" class="select2">
+						<option></option>
+						<!-- 只有添加了空的option才可以使清除按钮生效 -->
+						<option>qrqwerqwerqwerqwe</option>
+						<option>rqwerqwerqwerqwerqw</option>
+						<option>qwerqwerqwerqwer</option>
+						<option>qwerqwerqwerqwerqwrqwrw</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">比赛或者职务名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<input id="numb" name="numb" type="text" class="form-control" placeholder="学院代码">
@@ -240,6 +265,8 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/echart/echarts.min.js" />"></script>
 	<script src="<c:url value="/assets/js/lc/pages/studentScoreStaticDetail.js" />"></script>
 </body>
