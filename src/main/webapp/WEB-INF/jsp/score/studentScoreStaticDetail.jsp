@@ -230,26 +230,57 @@
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<select id="select_id1" name="name2" class="form-control">
+					<select id="select_type" name="type" class="form-control">
 						<option></option>
 						<!-- 只有添加了空的option才可以使清除按钮生效 -->
-						<option>qrqwerqwerqwerqwe</option>
-						<option>rqwerqwerqwerqwerqw</option>
-						<option>qwerqwerqwerqwer</option>
-						<option>qwerqwerqwerqwerqwrqwrw</option>
+						<option value="game">比赛</option>
+						<option value="cadre">干部</option>
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">比赛或者职务名称：</label>
+			<div id="div_level" class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">等级：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="学院代码">
+					<select id="select_level" name="level" class="form-control">
+						<option></option>
+						<!-- 只有添加了空的option才可以使清除按钮生效 -->
+						<option value="cadre">社团</option>
+						<option value="cadre">院级</option>
+						<option value="cadre">校级</option>
+						<option value="cadre">市级</option>
+						<option value="cadre">省级</option>
+						<option value="game">国家级</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
+					<input id="input_name" name="name" type="text" class="form-control" placeholder="名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">时间：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="input_date" name="date" type="text" class="form-control" placeholder="时间">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">依据：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="input_evidence" name="evidence" type="text" class="form-control" placeholder="依据">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">凭证：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="input_file" name="file" type="file" class="form-control" placeholder="凭证">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">分数：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="input_score" name="score" type="number" class="form-control" placeholder="分数">
 				</div>
 			</div>
 		</form>

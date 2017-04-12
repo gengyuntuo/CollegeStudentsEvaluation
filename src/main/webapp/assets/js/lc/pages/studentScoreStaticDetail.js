@@ -194,12 +194,33 @@ $(document).ready(function() {
 	// 2. 绘条形图
 	plotChartDemo();
 	// 3.绑定select2控件
-	$("#select_id1").select2({
+	$("#select_type").select2({
 		width : "100%",
 		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
-		placeholder : "请选择类型",
+		placeholder : "请选择加分类型",
 		allowClear : true,
 		language : "zh-CN"
+	});
+	$("#select_level").select2({
+		width : "100%",
+		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
+		placeholder : "请选择比赛等级",
+		allowClear : true,
+		language : "zh-CN"
+	});
+	$("#select_type").on("change", function(e) {
+		if ("game" == $(this).val()) {
+			$("#input_name").attr("placeholder","请输入比赛名称");
+			$("#div_level").removeAttr("hidden");
+		} else if ("cadre" == $(this).val()) {
+			$("#div_level").attr("hidden","hidden");
+			$("#input_name").attr("placeholder","请输入职务名称");
+		} else if ("" == $(this).val()) {
+			// $("#div_level").remove("hidden");
+			$("#input_name").attr("placeholder","请输入名称");
+			console.info("什么都没选！");
+		}
+		console.info($(this).val());
 	});
 });
 
