@@ -194,7 +194,9 @@ $(document).ready(function() {
 	// 2. 绘条形图
 	plotChartDemo();
 	// 3.绑定select2控件
-	$(".select2").select2({
+	$("#select_id1").select2({
+		width : "100%",
+		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
 		placeholder : "请选择类型",
 		allowClear : true,
 		language : "zh-CN"

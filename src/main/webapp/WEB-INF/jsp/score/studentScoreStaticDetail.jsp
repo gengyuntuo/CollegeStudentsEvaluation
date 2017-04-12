@@ -60,7 +60,7 @@
 								<div class="form-group">
 									<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 									<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-										<select name="name2">
+										<select name="name2" class="form-control">
 											<option>qrqwerqwerqwerqwe</option>
 											<option>rqwerqwerqwerqwerqw</option>
 											<option>qwerqwerqwerqwer</option>
@@ -230,7 +230,7 @@
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<select name="name2" class="select2">
+					<select id="select_id1" name="name2" class="form-control">
 						<option></option>
 						<!-- 只有添加了空的option才可以使清除按钮生效 -->
 						<option>qrqwerqwerqwerqwe</option>
