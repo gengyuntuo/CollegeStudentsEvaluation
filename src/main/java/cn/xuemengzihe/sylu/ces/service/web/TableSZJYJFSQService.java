@@ -52,14 +52,16 @@ public interface TableSZJYJFSQService {
 	public TableSZJYJFSQ getRecordById(Integer id);
 
 	/**
-	 * 分页查询记录，支持条件查询
+	 * 分页查询记录
 	 * 
 	 * @param pageInfo
 	 *            页面信息
-	 * @param conditions
-	 *            查询条件
+	 * @param termId
+	 *            学期Id
+	 * @param sno
+	 *            学号
 	 * @return 结果集
 	 */
 	public PageInfo<Map<String, String>> getRecordWithMap(
-			PageInfo<Map<String, String>> pageInfo, String conditions);
+			PageInfo<Map<String, String>> pageInfo, String termId, String sno);
 }

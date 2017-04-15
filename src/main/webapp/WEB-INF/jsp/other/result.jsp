@@ -13,11 +13,11 @@
 </style>
 
 <script type="text/javascript">
-	window.parent.resultCallback();
+	window.parent.resultCallback(${result });
 </script>
 </head>
 <body>
-	<h1 class="content">This is my JSP page.${tip }</h1>
+	<h1 class="content">${tip }</h1>
 	<br>
 </body>
 </html>

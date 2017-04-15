@@ -57,8 +57,9 @@ public interface TableSZJYJFSQDAO {
 	 * 获取所有的记录，返回Map集合，支持条件查询
 	 * 
 	 * @param conditions
-	 *            查询条件
+	 *            查询条件(term.id 和 student.sno)(key:id,key:sno)
 	 * @return 记录
 	 */
-	public List<Map<String, String>> getRecordWithMap(String conditions);
+	public List<Map<String, String>> getRecordWithMap(
+			Map<String, String> conditions);
 }

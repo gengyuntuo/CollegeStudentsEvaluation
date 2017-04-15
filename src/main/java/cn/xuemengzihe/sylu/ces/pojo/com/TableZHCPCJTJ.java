@@ -15,17 +15,9 @@ public class TableZHCPCJTJ {
 	 * @see Term
 	 */
 	private Integer termId; // 该评测表属于的学期
-	/**
-	 * @see TableSZXFRCXWBFPF
-	 */
-	private Integer riChangXingWeiId; // 素质学分日常行为部分评分表
-	/**
-	 * @see TableSZJYJFPF
-	 */
-	private Integer suZhiHuoDongId; // 素质教育加分评分表
 	private Double pingJunXueFenJiDian; // 平均学分绩点
 
-	private Character isValid;
+	private String isValid;
 	private Date cTime;
 	private Date uTime;
 
@@ -61,22 +53,6 @@ public class TableZHCPCJTJ {
 		this.termId = termId;
 	}
 
-	public Integer getRiChangXingWeiId() {
-		return riChangXingWeiId;
-	}
-
-	public void setRiChangXingWeiId(Integer riChangXingWeiId) {
-		this.riChangXingWeiId = riChangXingWeiId;
-	}
-
-	public Integer getSuZhiHuoDongId() {
-		return suZhiHuoDongId;
-	}
-
-	public void setSuZhiHuoDongId(Integer suZhiHuoDongId) {
-		this.suZhiHuoDongId = suZhiHuoDongId;
-	}
-
 	public Double getPingJunXueFenJiDian() {
 		return pingJunXueFenJiDian;
 	}
@@ -85,11 +61,11 @@ public class TableZHCPCJTJ {
 		this.pingJunXueFenJiDian = pingJunXueFenJiDian;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 
@@ -136,12 +112,10 @@ public class TableZHCPCJTJ {
 	@Override
 	public String toString() {
 		return "TableZHCPCJTJ [id=" + id + ", sno=" + sno + ", termId="
-				+ termId + ", riChangXingWeiId=" + riChangXingWeiId
-				+ ", suZhiHuoDongId=" + suZhiHuoDongId
-				+ ", pingJunXueFenJiDian=" + pingJunXueFenJiDian + ", isValid="
-				+ isValid + ", cTime=" + cTime + ", uTime=" + uTime
-				+ ", student=" + student + ", tableSZXFXWBF=" + tableSZXFXWBF
-				+ ", tableSZJYJF=" + tableSZJYJF + "]";
+				+ termId + ", pingJunXueFenJiDian=" + pingJunXueFenJiDian
+				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
+				+ uTime + ", student=" + student + ", tableSZXFXWBF="
+				+ tableSZXFXWBF + ", tableSZJYJF=" + tableSZJYJF + "]";
 	}
 
 }

@@ -143,7 +143,7 @@ public class InstituteController {
 		// 分页查询记录
 		pageInfo = instituteService.findInstitutesOfPageWithMapSet(pageInfo,
 				search);
-		// 将数据分装的模型中
+		// 将数据封装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}

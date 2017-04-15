@@ -4,19 +4,79 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TableSZJYJFSQDAO">
 	<insert id="insertRecord" parameterType="tableSZJYJFSQ" useGeneratedKeys="true">
-		insert into
+		INSERT INTO `t_szjyjfsq` (
+			`su_zhi_id`,
+			`name`,
+			`type`,
+			`time`,
+			`level`, 
+			`evidence`,
+			`file_path`,
+			`score`,
+			`is_valid`,
+			`c_time`, 
+			`u_time`
+		) VALUES (
+			#{suZhiId},
+			#{name},
+			#{type},
+			#{time},
+			#{level}, 
+			#{evidence},
+			#{filePath},
+			#{score},
+			#{isValid},
+			#{cTime}, 
+			#{uTime}
+		)
 	</insert>
 	<delete id="deleteRecord" parameterType="int">
-		delete from
+		DELETE FROM `t_szjyjfsq` 
+		WHERE id = #{value}
 	</delete>
 	<update id="updateRecord" parameterType="tableSZJYJFSQ">
-		update
+		update `t_szjyjfsq` SET
+			`su_zhi_id` = #{suZhiId},
+			`name` = #{name},
+			`type` = #{type},
+			`time` = #{time},
+			`level` = #{level}, 
+			`evidence` = #{evidence},
+			`file_path` = #{filePath},
+			`score` = #{score},
+			`is_valid` = #{isValid},
+		WHERE id = #{id}
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableSZJYJFSQ">
-		select * from
-		where id = #{value}
+		SELECT * FROM `t_szjyjfsq`
+		WHERE id = #{value}
 	</select>
-	<select id="getRecordWithMap" parameterType="string" resultType="map">
-		select * from
+	<!-- 获取素质教育加分申请表，需要提供学期和学号这两个参数 -->
+	<select id="getRecordWithMap" parameterType="map" resultType="map">
+		SELECT 
+		    t.id AS id,
+		    t.name AS name,
+		    t.type AS type,
+		    DATE_FORMAT(t.time, '%Y-%m-%d') AS time,
+		    t.level AS level,
+		    t.evidence AS evidence,
+		    t.file_path AS filePath,
+		    t.score AS score,
+		    t.is_valid AS state
+		FROM
+		    (SELECT 
+		        t_szjyjfpf.id AS id
+		    FROM
+		        (SELECT 
+		        t_zhcpcjtj.id AS id
+		    FROM
+		        term
+		    JOIN t_zhcpcjtj ON term.id = t_zhcpcjtj.term_id
+		    WHERE
+		        term.is_valid = 'Y' AND term.id = #{id}
+		            AND t_zhcpcjtj.sno = #{sno}) zh
+		    JOIN t_szjyjfpf ON zh.id = t_szjyjfpf.zong_he_id) sz
+		        JOIN
+		    t_szjyjfsq t ON sz.id = t.su_zhi_id
 	</select>
 </mapper>

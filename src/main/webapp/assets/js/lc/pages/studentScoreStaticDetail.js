@@ -11,15 +11,15 @@ $.widget("ui.dialog", $.ui.dialog, {
 	}
 });
 
-$(document).ready(function() {
-	/**
-	 * 变量初始化
-	 */
-	// 对话框、弹出框、提示框
-	var dialog_add = null;
-	// 表单
-	var form = $("form");
+/**
+ * 变量初始化
+ */
+// 对话框、弹出框、提示框
+var dialog_add = null;
+// 表单
+var form = $("form");
 
+$(document).ready(function() {
 	/**
 	 * 初始化表格
 	 */
@@ -28,11 +28,10 @@ $(document).ready(function() {
 		// 初始化Table
 		oTableInit.Init = function() {
 			$('#mytable').bootstrapTable({
-				url : 'instituteData.do',
+				url : 'listSZJYJFSQ.do',
 				method : 'GET',
 				queryParams : function(params) {
-					params["search"] = checkSearchText(); // 如果有内容，则带搜索参数请求页面
-					// console.info(params);
+					params["termId"] = 1;
 					return params;
 				}, // 请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
 				// queryParamsType = 'limit' ,返回参数必须包含limit, offset,
@@ -74,20 +73,42 @@ $(document).ready(function() {
 					visible : false,
 					title : 'id'
 				}, {
-					field : "numb",
-					title : '学院代码',
+					field : "name",
+					title : '名称',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
-					field : 'name',
-					title : '学院名称',
+					field : 'type',
+					title : '类型',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
-					field : 'desc',
-					title : '学院简介',
+					field : 'time',
+					title : '时间',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+				}, {
+					field : 'level',
+					title : '等级',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+				}, {
+					field : 'evidence',
+					title : '证明',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"downloadFile.do?path=" //
+								+ row["filePath"] + "\">" + value + "</a>";
+					}
+				}, {
+					field : 'score',
+					title : '分数',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -96,48 +117,6 @@ $(document).ready(function() {
 		};
 		return oTableInit;
 	};
-
-	/**
-	 * 绘制条形图
-	 */
-	function plotChartDemo() {
-		// 基于准备好的dom，初始化echarts实例
-		var myChart = echarts.init(document.getElementById('main'));
-		// 指定图表的配置项和数据
-		var option = {
-			title : {
-				text : '各学院在校生信息'
-			},
-			tooltip : {},
-			legend : {
-				data : [ '学生数' ]
-			},
-			xAxis : {
-				data : [ "信息学院", "经济管理", "电气自动化", "艺术", "车辆", "兵器" ]
-			},
-			yAxis : {},
-			series : [ {
-				name : '学生数',
-				type : 'bar',
-				data : [ 5, 20, 36, 10, 10, 20 ]
-			} ]
-		};
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-	}
-
-	/**
-	 * 自定义函数
-	 */
-	// 查询搜索框的输入，如果有输入则返回输入的内容，没有输入则返回undefined
-	function checkSearchText() {
-		// console.info("checkSearchText() function Run!");
-		var search = $("#search-input").val();
-		// console.info("search=>" + search);
-		if (search.trim() == "")
-			search = undefined;
-		return search;
-	}
 
 	/**
 	 * 创建素质教育加分申请表
@@ -184,6 +163,12 @@ $(document).ready(function() {
 	$('#btn_add').click(function() {
 		dialog_add.dialog("open");
 	});
+	// 绑定单击事件到添加按钮，打开窗口
+	$('#btn_update').click(function() {
+	});
+	// 绑定单击事件到添加按钮，打开窗口
+	$('#btn_delete').click(function() {
+	});
 
 	/**
 	 * 执行
@@ -191,9 +176,7 @@ $(document).ready(function() {
 	// 1. 初始化Table
 	var oTable = new TableInit();
 	oTable.Init();
-	// 2. 绘条形图
-	plotChartDemo();
-	// 3.绑定select2控件
+	// 2.绑定select2控件
 	$("#select_type").select2({
 		width : "100%",
 		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
@@ -210,17 +193,28 @@ $(document).ready(function() {
 	});
 	$("#select_type").on("change", function(e) {
 		if ("game" == $(this).val()) {
-			$("#input_name").attr("placeholder","请输入比赛名称");
+			$("#input_name").attr("placeholder", "请输入比赛名称");
 			$("#div_level").removeAttr("hidden");
 		} else if ("cadre" == $(this).val()) {
-			$("#div_level").attr("hidden","hidden");
-			$("#input_name").attr("placeholder","请输入职务名称");
+			$("#div_level").attr("hidden", "hidden");
+			$("#input_name").attr("placeholder", "请输入职务名称");
 		} else if ("" == $(this).val()) {
 			// $("#div_level").remove("hidden");
-			$("#input_name").attr("placeholder","请输入名称");
+			$("#input_name").attr("placeholder", "请输入名称");
 			console.info("什么都没选！");
 		}
-		console.info($(this).val());
+		// console.info($(this).val());
+	});
+	// DataPicker
+	$(function() {
+		$("#input_date").datepicker({
+			dateFormat : "yy-mm-dd",
+			changeMonth : true,
+			changeYear : true,
+			dayNamesMin : [ '日', '一', '二', '三', '四', '五', '六' ],
+			monthNamesShort : [ '一月', '二月', '三月', '四月', '五月', //
+			'六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ]
+		});
 	});
 });
 
@@ -228,7 +222,12 @@ $(document).ready(function() {
  * 自定义的函数
  */
 // 结果窗口的回调函数
-function resultCallback() {
-	$("#result_iframe_div").removeAttr("hidden");
-	$("#result_iframe_div").modal("show");
+function resultCallback(result) {
+	if (result) {
+		// 添加成功
+		$("#form")[0].reset(); // 清空表单
+		dialog_add.dialog("close"); // 关闭对话框
+		$("#mytable").bootstrapTable('refresh');
+	}
+	$("#result_iframe_div").modal();
 }

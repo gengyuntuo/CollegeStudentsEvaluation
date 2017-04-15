@@ -162,12 +162,11 @@ CREATE TABLE IF NOT EXISTS `ces`.`term` (
 
 
 /* 综合测评统计表 */
+DROP TABLE IF EXISTS `ces`.`t_zhcpcjtj`;
 CREATE TABLE IF NOT EXISTS `ces`.`t_zhcpcjtj` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `sno` VARCHAR(45) NOT NULL COMMENT '该表对应的学生',
   `term_id` INT NOT NULL DEFAULT 0 COMMENT '评分表创建的学期',
-  `ri_chang_xing_wei_id` INT NOT NULL DEFAULT 0 COMMENT '日常行为部分评分表ID',
-  `su_zhi_huo_dong_id` INT NOT NULL DEFAULT 0 COMMENT '素质活动评分表ID',
   `ping_jun_xue_fen_ji_dian` DOUBLE NOT NULL DEFAULT 0 COMMENT '平均学分绩点',
   `is_valid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '标志此表是否审核过',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
@@ -193,15 +192,15 @@ CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfpf` (
 DROP TABLE IF EXISTS `ces`.`t_szjyjfsq`;
 CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfsq` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `suzhi` INT NOT NULL DEFAULT 0  COMMENT '素质加分测评表ID',
+  `su_zhi_id` INT NOT NULL DEFAULT 0  COMMENT '素质加分测评表ID',
   `name` VARCHAR(200) NULL COMMENT '比赛或者职务名称',
   `type` VARCHAR(45) NULL COMMENT '类型',
   `time` DATE NULL COMMENT '时间',
   `level` VARCHAR(45) NULL COMMENT '等级',
   `evidence` VARCHAR(2000) NULL COMMENT '证据',
-  `filePath` VARCHAR(200) NULL COMMENT '证明文件的上传文件',
+  `file_path` VARCHAR(200) NULL COMMENT '证明文件的上传文件',
   `score` DOUBLE NULL DEFAULT 0 COMMENT '成绩',
-  `isvalid` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '检测该加分项是否通过认证',
+  `is_valid` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '检测该加分项是否通过认证',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

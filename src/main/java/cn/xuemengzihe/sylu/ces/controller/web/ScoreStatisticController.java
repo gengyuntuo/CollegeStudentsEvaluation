@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
@@ -23,6 +26,8 @@ import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
+import cn.xuemengzihe.sylu.ces.util.Base64Util;
+import cn.xuemengzihe.sylu.ces.util.FileUtil;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
 import com.github.pagehelper.PageInfo;
@@ -187,32 +192,6 @@ public class ScoreStatisticController {
 	}
 
 	/**
-	 * 学生，创建素质加分申请表
-	 * 
-	 * @return
-	 */
-	@RequestMapping("createSZJYJFSQ")
-	public String createSZJYJFSQ(HttpServletRequest request, Model model,
-			TableSZJYJFSQ record) {
-		// TODO 表单参数合法性校验
-
-		// TODO 获取Session中Student对象，校验该身份的有效性，是否有权限添加记录
-		Student student = (Student) request.getSession().getAttribute("user");
-
-		// TODO 添加
-		try {
-			if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
-				throw new Exception();
-			}
-			model.addAttribute("tip", "创建成功！");
-		} catch (Exception e) {
-			model.addAttribute("tip", "创建失败！");
-			e.printStackTrace();
-		}
-		return "/other/result";
-	}
-
-	/**
 	 * 学生：显示学生测评的页面
 	 * 
 	 * @param request
@@ -252,7 +231,8 @@ public class ScoreStatisticController {
 	 * @return
 	 */
 	@RequestMapping("monitorScoreStaticWork")
-	public String monitorScoreStaticWork(HttpServletRequest request, Model model, Integer item) {
+	public String monitorScoreStaticWork(HttpServletRequest request,
+			Model model, Integer item) {
 		Term term = null; // 测评班级的学期信息
 
 		// 参数合法性校验
@@ -267,9 +247,7 @@ public class ScoreStatisticController {
 
 		// TODO 业务
 		model.addAttribute("term", term);
-		
-		
-		
+
 		return "/score/monitorScoreStaticWork";
 	}
 
@@ -281,7 +259,8 @@ public class ScoreStatisticController {
 	 * @return
 	 */
 	@RequestMapping("teacherScoreStaticWork")
-	public String teacherScoreStaticWork(HttpServletRequest request, Model model, Integer item) {
+	public String teacherScoreStaticWork(HttpServletRequest request,
+			Model model, Integer item) {
 		Term term = null; // 测评班级的学期信息
 
 		// 参数合法性校验
@@ -297,5 +276,84 @@ public class ScoreStatisticController {
 		// TODO 业务
 		model.addAttribute("term", term);
 		return "/score/teacherScoreStaticWork";
+	}
+
+	/**
+	 * 学生：创建素质加分申请表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("createSZJYJFSQ")
+	public String createSZJYJFSQ(HttpServletRequest request, Model model,
+			TableSZJYJFSQ record, String id, MultipartFile file) {
+		// TODO 表单参数合法性校验
+
+		// TODO 获取Session中Student对象，校验该身份的有效性，是否有权限添加记录
+		Student student = (Student) request.getSession().getAttribute("user");
+		record.setSuZhiId(1);// TODO
+		student.getAddress();
+
+		// 获取项目中储存文件的文件夹的绝对路径
+		String fileLocation = request.getSession().getServletContext()
+				.getRealPath("/");
+		try {
+			String filePathAndName = FileUtil.DIRECTORY_UPLOAD_FILE
+					+ FileUtil.getUploadFilePathAndName(file
+							.getOriginalFilename());
+			FileUtil.mkdirsForFile(fileLocation + filePathAndName);
+			file.transferTo(new File(fileLocation + filePathAndName));
+			record.setFilePath(Base64Util.encode(filePathAndName)); // Base64编码后存入数据库
+		} catch (IOException e) {
+			e.printStackTrace();
+			model.addAttribute("result", "false");
+			model.addAttribute("tip", "创建失败！");
+			return "/other/result";
+		}
+
+		// TODO 添加
+		try {
+
+			if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
+				throw new Exception();
+			}
+			model.addAttribute("result", "true");
+			model.addAttribute("tip", "创建成功！");
+		} catch (Exception e) {
+			model.addAttribute("result", "false");
+			model.addAttribute("tip", "创建失败！");
+			e.printStackTrace();
+		}
+		return "/other/result";
+	}
+
+	/**
+	 * 学生,班委,教师：显示学生个人的素质教育加分申请表
+	 * 
+	 * @param request
+	 * @param termId
+	 *            学期
+	 * @param offset
+	 *            页面记录偏移量
+	 * @param limit
+	 *            每页的数量
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listSZJYJFSQ", produces = "application/json; charset=utf-8")
+	public String listSZJYJFSQ(
+			HttpServletRequest request,
+			String termId,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		Student student = (Student) request.getSession().getAttribute("user");
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		pageInfo = tableSZJYJFSQServcie.getRecordWithMap(pageInfo, termId,
+				student.getSno());
+		// 将数据封装的模型中
+		// 返回页面
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 }
