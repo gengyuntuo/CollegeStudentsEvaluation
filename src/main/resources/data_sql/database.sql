@@ -149,16 +149,24 @@ DROP TABLE IF EXISTS `ces`.`term`;
 CREATE TABLE IF NOT EXISTS `ces`.`term` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` VARCHAR(45) NOT NULL COMMENT '学期名称',
-  `class_id` INT NOT NULL COMMENT '班级ID',
+  `teacher_id` INT NOT NULL COMMENT '负责统计的教师ID',
   `desc` VARCHAR(140) NULL COMMENT '学期描述',
   `start_date` DATE NOT NULL COMMENT '统计开始日期',
   `stop_date` DATE NOT NULL COMMENT '统计结束日期',
   `is_valid` VARCHAR(1) NOT NULL COMMENT '是否有效',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE(`name`,`class_id`)
+  PRIMARY KEY (`id`)
 ) COMMENT '学期';
+
+/* 统计学期中包含的班级 */
+DROP TABLE IF EXISTS `ces`.`term_class`;
+CREATE TABLE IF NOT EXISTS `ces`.`term_class` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `term_id` INT NOT NULL COMMENT '统计学期ID',
+  `class_id` INT NOT NULL COMMENT '班级ID',
+  PRIMARY KEY (`id`)
+) COMMENT '统计学期的班级';
 
 
 /* 综合测评统计表 */

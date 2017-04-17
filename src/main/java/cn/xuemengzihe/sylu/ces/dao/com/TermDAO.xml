@@ -9,7 +9,7 @@
 		</selectKey>
 		INSERT INTO term(
 			`name`,
-			`class_id`,
+			`teacher_id`,
 			`desc`,
 			`start_date`,
 			`stop_date`,
@@ -18,7 +18,7 @@
 			`u_time`
 		) VALUES (
 			#{name},
-			#{classId},
+			#{teacherId},
 			#{desc},
 			#{startDate},
 			#{stopDate},
@@ -34,13 +34,11 @@
 	<update id="update" parameterType="term">
 		UPDATE term SET
 			`name` = #{name},
-			`class_id` = #{classId},
+			`teacher_id` = #{teacherId},
 			`desc` = #{desc},
 			`start_date` = #{startDate},
 			`stop_date` = #{stopDate},
-			`is_valid` = #{isValid},
-			`c_time` = #{cTime},
-			`u_time` = #{uTime}
+			`is_valid` = #{isValid}
 		WHERE
 			id=#{id}
 	</update>
@@ -49,31 +47,31 @@
 		FROM term
 		WHERE id = #{id}
 	</select>
-	<select id="findAll" parameterType="string" resultType="map">
+	<select id="findAll" parameterType="map" resultType="map">
 		SELECT 
 		    t.id AS id,
 		    t.name AS name,
 		    DATE_FORMAT(t.start_date, '%Y-%m-%d') AS startDate,
 		    DATE_FORMAT(t.stop_date, '%Y-%m-%d') AS stopDate,
-		    c.class_id AS classId,
+		    c.teacher_id AS teacherId,
 		    c.major AS major
 		FROM
 		    term t
 		        LEFT JOIN
 		    (SELECT 
-		        class.id AS id, class.class_id AS class_id, major.m_name AS major
+		        class.id AS id, class.teacher_id AS teacher_id, major.m_name AS major
 		    FROM
 		        class
 		    LEFT JOIN major ON class.major_id = major.id
 		    WHERE
 		        class.is_valid = 'Y'
-		            AND major.is_valid = 'Y') c ON t.class_id = c.id
+		            AND major.is_valid = 'Y') c ON t.teacher_id = c.id
 		WHERE t.is_valid = 'Y'
 			<if test="value != null">
 					AND (
 						`name` LIKE '%${value}%'
 						OR `major` LIKE '%${value}%'
-						OR `classId` LIKE '%${value}%'
+						OR `teacherId` LIKE '%${value}%'
 						OR `startDate` LIKE '%${value}%'
 						OR `stopDate` LIKE '%${value}%'
 					)

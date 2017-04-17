@@ -6,7 +6,7 @@ import java.util.Map;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 
 /**
- * <h1></h1>
+ * <h1>TermDAO</h1>
  * <p>
  * </p>
  * 
