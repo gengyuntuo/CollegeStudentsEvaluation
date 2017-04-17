@@ -60,5 +60,6 @@ public interface TableZHCPCJTJDAO {
 	 *            查询条件
 	 * @return 记录
 	 */
-	public List<Map<String, String>> getRecordWithMap(String conditions);
+	public List<Map<String, String>> getRecordWithMap(
+			Map<String, String> conditions);
 }

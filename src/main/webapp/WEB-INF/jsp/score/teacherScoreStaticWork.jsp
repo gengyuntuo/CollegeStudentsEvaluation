@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>${term.name }年度${clazz.classId }班测评详情</title>
+<title>${term.name }年度${clazz.classId }班测评工作</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -49,158 +49,35 @@
 							<h3>评测信息</h3>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
-						<div class="panel panel-primary">
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
 							<!-- Start .panel -->
 							<div class="panel-heading">
-								<h4 class="panel-title">测评进度</h4>
+								<h4 class="panel-title">综合测评成绩</h4>
 							</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6 control-label">素质教育加分</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-										<div class="progress progress-striped">
-											<div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">30%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">日常行为得分</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">学科成绩绩点</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">70%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">综合测评得分</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">70%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-							</div>
+							<div class="panel-body"></div>
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-						<div class="panel panel-primary">
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
 							<!-- Start .panel -->
 							<div class="panel-heading">
-								<h4 class="panel-title">任务统计</h4>
+								<h4 class="panel-title">日常行为得分</h4>
 							</div>
-							<div class="panel-body">
-								<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-								<div id="main" style="height:300px"></div>
+							<div class="panel-body"></div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h4 class="panel-title">素质教育得分</h4>
 							</div>
+							<div class="panel-body"></div>
 						</div>
 					</div>
 				</div>
 				<!-- End .row -->
-
-				<!-- Start .row -->
-				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="page-header">
-							<h3>素质加分申请</h3>
-						</div>
-					</div>
-					<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<!-- col-lg-12 start here -->
-						<div class="panel-body">
-							<div class="input-group" style="float:left;width:300px">
-								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
-									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
-								</span>
-							</div>
-							<div style="float: right">
-								<button id="btn_refresh" type="button" class="btn btn-default">
-									<span class="fa-refresh"></span> 刷新
-								</button>
-								<button id="btn_add" type="button" class="btn btn-primary">
-									<span class="st-file-add"></span> 新增
-								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
-									<span class="fa-edit"></span> 修改
-								</button>
-								<button id="btn_delete" type="button" class="btn btn-danger">
-									<span class="im-remove2"></span> 删除
-								</button>
-								<p></p>
-							</div>
-							<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-								<table id="mytable" class="table table-bordered">
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- col-lg-12 end here -->
-				</div>
-				<!-- Stop .row -->
-
-				<!-- Start .row -->
-				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="page-header">
-							<h3>个人学科成绩</h3>
-						</div>
-					</div>
-					<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<!-- col-lg-12 start here -->
-						<div class="panel-body">
-							<div class="input-group" style="float:left;width:300px">
-								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
-									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
-								</span>
-							</div>
-							<div style="float: right">
-								<button id="btn_refresh" type="button" class="btn btn-default">
-									<span class="fa-refresh"></span> 刷新
-								</button>
-								<button id="btn_add2" type="button" class="btn btn-primary">
-									<span class="st-file-add"></span> 新增
-								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
-									<span class="fa-edit"></span> 修改
-								</button>
-								<button id="btn_delete" type="button" class="btn btn-danger">
-									<span class="im-remove2"></span> 删除
-								</button>
-								<p></p>
-							</div>
-							<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-								<table id="mytable2" class="table table-bordered">
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- col-lg-12 end here -->
-				</div>
-				<!-- Stop row -->
 
 				<!-- Page End here -->
 			</div>
@@ -211,36 +88,10 @@
 	</div>
 	<!-- End #content -->
 
-	<!-- 对话框 开始-->
-	<!-- 创建素质教育加分申请表 -->
-	<div id="dialog-add">
-		<form id="form" action="createSZJYJFSQ.do" target="result_iframe" method="post" enctype="multipart/form-data" class="form-horizontal group-border hover-stripped">
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">比赛或者职务名称：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="学院代码">
-				</div>
-			</div>
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
-				</div>
-			</div>
-		</form>
-	</div>
-	<!-- 创建素质教育加分申请表结果 -->
-	<div id="result_iframe_div" hidden="hidden">
-		<iframe id="result_iframe" name="result_iframe">对不起，您的浏览器不支持内置框架</iframe>
-	</div>
-
-	<!-- 对话框 结束-->
-
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/echart/echarts.min.js" />"></script>
-	<script src="<c:url value="/assets/js/lc/pages/studentScoreStaticDetail.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/pages/monitorScoreStaticDetail.js" />"></script>
 </body>
 </html>

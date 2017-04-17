@@ -54,6 +54,18 @@
 						<div class="panel panel-primary">
 							<!-- Start .panel -->
 							<div class="panel-heading">
+								<h2 class="panel-title">详情</h2>
+							</div>
+							<div class="panel-body">
+								<h5>${user.name }同学您好</h5>
+								<b>绩点：</b><span>4.5</span><br /> <b>排名：</b><span>1</span><br /> <b>素质教育加分：</b><span>30</span><br />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 ">
+						<div class="panel panel-primary">
+							<!-- Start .panel -->
+							<div class="panel-heading">
 								<h2 class="panel-title">素质加分申请表列表</h2>
 								<div class="panel-heading-content" style="text-align: right;float: right">
 									<button id="btn_add" type="button" class="btn btn-xs btn-primary">
@@ -75,50 +87,30 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 ">
+						<div class="panel panel-primary">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h2 class="panel-title">
+									个人业务课绩点：<span style="color:red;">4.5</span>
+								</h2>
+								<div class="panel-heading-content" style="text-align: right;float: right">
+									<button id="btn_update_score" type="button" class="btn btn-xs btn-success">
+										<span class="fa-edit"></span> 更新数据
+									</button>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
+									<table id="myscoretable" class="table table-bordered">
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
 					<!-- col-lg-12 end here -->
 				</div>
 				<!-- Stop .row -->
-
-				<!-- Start .row -->
-				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="page-header">
-							<h3>个人学科成绩</h3>
-						</div>
-					</div>
-					<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<!-- col-lg-12 start here -->
-						<div class="panel-body">
-							<div class="input-group" style="float:left;width:300px">
-								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
-									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
-								</span>
-							</div>
-							<div style="float: right">
-								<button id="btn_refresh" type="button" class="btn btn-default">
-									<span class="fa-refresh"></span> 刷新
-								</button>
-								<button id="btn_add2" type="button" class="btn btn-primary">
-									<span class="st-file-add"></span> 新增
-								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
-									<span class="fa-edit"></span> 修改
-								</button>
-								<button id="btn_delete" type="button" class="btn btn-danger">
-									<span class="im-remove2"></span> 删除
-								</button>
-								<p></p>
-							</div>
-							<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-								<table id="mytable2" class="table table-bordered">
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- col-lg-12 end here -->
-				</div>
-				<!-- Stop row -->
-
 				<!-- Page End here -->
 			</div>
 			<!-- End .outlet -->
@@ -210,7 +202,20 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 密码输入对话框 -->
+	<div id="dialog_update_score">
+		<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">密码</label>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				<input id="jxwPassword" name="password" type="password" class="form-control" placeholder="请输入教学网密码"> <span class="help-block">查询个人成绩需要连接至教学网，请输入您的教学网密码，站点不会保存您的密码！</span>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+			<div class="mr20 mb15">
+				<img src="assets/img/svg/loading-spokes.svg" class="col-xs-4 col-sm-4 col-md-4 col-lg-4" alt="loading">
+			</div>
+		</div>
+	</div>
+	<div id="dialog-delete">确认删除！</div>
 	<!-- 对话框 结束-->
 
 	<!-- Javascripts -->

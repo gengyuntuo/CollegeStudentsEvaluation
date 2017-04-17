@@ -43,75 +43,37 @@
 				<!-- Page start here ( usual with .row ) -->
 
 				<!-- Start .row -->
-				<div class="row col-xs-6 col-sm-12 col-lg-12 col-md-12">
+				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
 					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
 						<div class="page-header">
 							<h3>评测信息</h3>
 						</div>
 					</div>
-					<div class="col-xs-6 col-sm-12 col-lg-12 col-md-12">
-						<div class="panel panel-primary plain toggle">
-							<!-- Start .panel -->
-							<div class="panel-heading">
-								<h4 class="panel-title">素质加分申请</h4>
-								<div class="panel-heading-content">
-									<div class="progress white-bg">
-										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">（30）完成</div>
-									</div>
-								</div>
-							</div>
-							<div class="panel-body">
-								<iframe src="index.do" height="600px" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-									<p>对不起，你的浏览器不支持内联框架，请选用其它浏览器！</p>
-								</iframe>
-							</div>
-						</div>
-					</div>
 					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="panel panel-primary plain toggle">
-							<!-- Start .panel -->
-							<div class="panel-heading">
-								<h4 class="panel-title">日常行为得分</h4>
-							</div>
-							<div class="panel-body">
-								<iframe src="index.do" height="600px" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-									<p>对不起，你的浏览器不支持内联框架，请选用其它浏览器！</p>
-								</iframe>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="panel panel-primary plain toggle">
+						<div class="panel panel-primary plain">
 							<!-- Start .panel -->
 							<div class="panel-heading">
 								<h4 class="panel-title">综合测评成绩</h4>
 							</div>
-							<div class="panel-body">
-								<div class="input-group" style="float:left;width:300px">
-									<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
-										<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
-									</span>
-								</div>
-								<div style="float: right">
-									<button id="btn_refresh" type="button" class="btn btn-default">
-										<span class="fa-refresh"></span> 刷新
-									</button>
-									<button id="btn_add" type="button" class="btn btn-primary">
-										<span class="st-file-add"></span> 新增
-									</button>
-									<button id="btn_update" type="button" class="btn btn-success">
-										<span class="fa-edit"></span> 修改
-									</button>
-									<button id="btn_delete" type="button" class="btn btn-danger">
-										<span class="im-remove2"></span> 删除
-									</button>
-									<p></p>
-								</div>
-								<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-									<table id="mytable" class="table table-bordered">
-									</table>
-								</div>
+							<div class="panel-body"></div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h4 class="panel-title">日常行为得分</h4>
 							</div>
+							<div class="panel-body"></div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h4 class="panel-title">素质教育得分</h4>
+							</div>
+							<div class="panel-body"></div>
 						</div>
 					</div>
 				</div>
@@ -130,7 +92,6 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/echart/echarts.min.js" />"></script>
-	<script src="<c:url value="/assets/js/lc/pages/studentScoreStaticDetail.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/pages/monitorScoreStaticDetail.js" />"></script>
 </body>
 </html>

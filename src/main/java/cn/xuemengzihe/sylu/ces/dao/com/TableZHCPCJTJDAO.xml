@@ -16,7 +16,7 @@
 		select * from
 		where id = #{value}
 	</select>
-	<select id="getRecordWithMap" parameterType="string" resultType="map">
+	<select id="getRecordWithMap" parameterType="map" resultType="map">
 		select * from
 	</select>
 </mapper>

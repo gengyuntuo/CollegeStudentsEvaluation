@@ -15,7 +15,7 @@ $.widget("ui.dialog", $.ui.dialog, {
  * 变量初始化
  */
 // 对话框、弹出框、提示框
-var dialog_add = null;
+var dialog_add = null, dialog_delete = null, dialog_update_score = null;
 // 表单
 var form = $("form");
 
@@ -77,25 +77,25 @@ $(document).ready(function() {
 					title : '名称',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
 					field : 'type',
 					title : '类型',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
 					field : 'time',
 					title : '时间',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
 					field : 'level',
 					title : '等级',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
 					field : 'evidence',
 					title : '证明',
@@ -111,7 +111,33 @@ $(document).ready(function() {
 					title : '分数',
 					halign : "center",
 					align : "center",
+					valign : "middle"
+				}, {
+					field : 'state',
+					title : '状态',
+					halign : "center",
+					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						if ("M" == value) { // 
+							return "<span class=\"" + // 
+							"label label-default mr10" + // 
+							"\">待审</span>"; // 
+						} else if ("T" == value) { // 
+							return "<span class=\"" + // 
+							"label label-info mr10" + // 
+							"\">待审</span>"; // 
+						} else if ("Y" == value) { // 
+							return "<span class=\"" + // 
+							"label label-success mr10" + //
+							"\">通过</span>"; // 
+						} else if ("N" == value) { // 
+							return "<span class=\"" + // 
+							"label label-danger mr10" + // 
+							"\">无效</span>"; //
+						}
+						return "";
+					}
 				} ]
 			});
 		};
@@ -155,6 +181,94 @@ $(document).ready(function() {
 			form[0].reset();
 		}
 	});
+	// 删除对话框
+	dialog_delete = $("#dialog-delete").dialog({
+		autoOpen : false,
+		title : '删除提醒',
+		modal : true,
+		resizable : false, // 窗口大小不可调
+		show : { // 窗口显示
+			effect : "blind",
+			duration : 100
+		},
+		hide : { // 窗口隐藏
+			effect : "explode",
+			duration : 500
+		},
+		overlay : {
+			opacity : 0.5
+		},
+		buttons : {
+			"删除" : function() {
+				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+				$.ajax({
+					url : 'deleteById.do',
+					type : 'POST',
+					data : {
+						"id" : obj["id"],
+						"type" : "SZJYJFSQ"
+					},
+					success : function(data) {
+						var result = eval(data);
+						if (result["tip"] != undefined) {
+							alert("删除失败！" + result["tip"]);
+							return;
+						}
+						// 删除成功，同时更新数据
+						$('#mytable').bootstrapTable('refresh');
+						dialog_delete.dialog("close");
+					},
+					error : function(data) {
+						alert("删除失败！");
+					}
+				});
+			},
+			"取消" : function() {
+				dialog_delete.dialog("close");
+			}
+		},
+		close : function() { // 关闭窗口
+		}
+	});
+	// 密码输入对话框
+	dialog_update_score = $("#dialog_update_score").dialog({
+		autoOpen : false,
+		title : '更新成绩',
+		width : 500,
+		modal : true,
+		draggable : false, // 拖动
+		resizable : false, // 窗口大小不可调
+		show : { // 窗口显示
+			effect : "blind",
+			duration : 100
+		},
+		hide : { // 窗口隐藏
+			effect : "explode",
+			duration : 500
+		},
+		overlay : {
+			opacity : 0.5
+		},
+		buttons : {
+			"查询" : function() {
+				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+				$.ajax({
+					url : '',
+					type : 'POST',
+					data : {
+					},
+					success : function(data) {
+					},
+					error : function(data) {
+						alert("删除失败！");
+					}
+				});
+			},
+			"取消" : function() {
+				dialog_update_score.dialog("close");
+			}
+		}
+	});
 
 	/**
 	 * 按钮事件绑定
@@ -166,8 +280,21 @@ $(document).ready(function() {
 	// 绑定单击事件到添加按钮，打开窗口
 	$('#btn_update').click(function() {
 	});
-	// 绑定单击事件到添加按钮，打开窗口
+	// 绑定单击事件到删除按钮，打开窗口
 	$('#btn_delete').click(function() {
+		var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+		if (obj == undefined) {
+			alert("请选择一行！");
+			return;
+		}
+		dialog_delete.dialog("open");
+		// console.info($('#mytable').bootstrapTable('getSelections')); //
+		// 获取选择的行，获得是数组
+		// $('#mytable').bootstrapTable('refresh');更新数据
+	});
+	// 绑定单击事件到更新成绩按钮，打开窗口
+	$('#btn_update_score').click(function() {
+		dialog_update_score.dialog("open");
 	});
 
 	/**

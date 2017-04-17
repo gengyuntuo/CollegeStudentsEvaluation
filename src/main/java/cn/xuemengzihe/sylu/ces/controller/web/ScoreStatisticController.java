@@ -19,12 +19,16 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
+import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZXFRCXWBFPFService;
+import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
 import cn.xuemengzihe.sylu.ces.util.Base64Util;
 import cn.xuemengzihe.sylu.ces.util.FileUtil;
@@ -51,6 +55,12 @@ public class ScoreStatisticController {
 	private StudentService studentServcice;
 	@Autowired
 	private TableSZJYJFSQService tableSZJYJFSQServcie;
+	@Autowired
+	private TableSZJYJFPFService tableSZJYJFPFService;
+	@Autowired
+	private TableZHCPCJTJService tableZHCPCJTJServcie;
+	@Autowired
+	private TableSZXFRCXWBFPFService tableSZXFRCXWBFPFService;
 
 	@RequestMapping("scoreInfo")
 	public String scoreInfo() {
@@ -355,5 +365,54 @@ public class ScoreStatisticController {
 		// 将数据封装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/listZHCPCJTJ", produces = "application/json; charset=utf-8")
+	public String listZHCPCJTJ(
+			HttpServletRequest request,
+			String termId,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		Student student = (Student) request.getSession().getAttribute("user");
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		// pageInfo = tableZHCPCJTJServcie; // TODO
+		// 将数据封装的模型中
+		// 返回页面
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
+	 * 根据ID删除
+	 * 
+	 * @param request
+	 * @param type
+	 *            删除的种类
+	 * @param id
+	 *            被删除的ID
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteById", produces = "application/json; charset=utf-8")
+	public String deleteById(HttpServletRequest request, String type, Integer id) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		// TODO 执行删除前需要查询被删除的记录是否存在，同时需要判断当前用户是否可以删除该条记录
+		persion.getId();
+		try {
+			switch (type.toUpperCase()) {
+			case "SZJYJFSQ":
+				tableSZJYJFSQServcie.deleteRecord(id);
+				break;
+			default:
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{\"tip\":\"删除失败！\"}";
+		}
+		return "{\"good\":\"删除成功！\"}";
 	}
 }
