@@ -57,9 +57,6 @@
 								<button id="btn_add" type="button" class="btn btn-primary">
 									<span class="st-file-add"></span> 新增
 								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
-									<span class="fa-edit"></span> 修改
-								</button>
 								<button id="btn_delete" type="button" class="btn btn-danger">
 									<span class="im-remove2"></span> 删除
 								</button>
@@ -88,48 +85,37 @@
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学期：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="统计学期">
+					<select id="term" name="term" class="select2 form-control">
+						<option></option>
+						<option>2013-2014</option>
+						<option>2014-2015</option>
+						<option>2015-2016</option>
+						<option>2016-2017</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">班级:</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学期：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="班级名称">
+					<select id="classes" name="classes" class="select2 form-control">
+						<option></option>
+						<option>13030504</option>
+						<option>13030503</option>
+						<option>13030502</option>
+						<option>13030501</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">开始：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">开始：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="startDate" name="startDate" class="form-control" rows="6" style="resize: none">2017-4-5</textarea>
+					<input id="startDate" name="startDate" type="text" class="form-control" placeholder="请选择开始日期">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">结束：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">截止：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="stopDate" name="stopDate" class="form-control" rows="6" style="resize: none">2017-7-1</textarea>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div id="dialog-update">
-		<form id="dialog-update" class="form-horizontal group-border hover-stripped">
-			<input id="uid" hidden="hidden" />
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="unumb" name="numb" type="text" class="form-control" placeholder="班级代码">
-				</div>
-			</div>
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="uname" name="name" type="text" class="form-control" placeholder="班级名称">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="udesc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+					<input id="stopDate" name="stopDate" type="text" class="form-control" placeholder="请选择截止日期">
 				</div>
 			</div>
 		</form>
@@ -141,6 +127,8 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/pages/scoreList.js"/>"></script>
 </body>
 </html>

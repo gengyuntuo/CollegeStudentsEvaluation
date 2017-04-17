@@ -61,11 +61,14 @@ public interface TermService {
 	 * 分页查询
 	 * 
 	 * @param pageInfo
-	 *            请求分页信息
-	 * @param condition
-	 *            分页条件
-	 * @return 查询结果
+	 *            分页信息
+	 * @param search
+	 *            过滤条件
+	 * @param teacherId
+	 *            教师ID
+	 * @return
 	 */
 	public PageInfo<Map<String, String>> getTermWithPageSize(
-			PageInfo<Map<String, String>> pageInfo, String condition);
+			PageInfo<Map<String, String>> pageInfo, String search,
+			String teacherId);
 }

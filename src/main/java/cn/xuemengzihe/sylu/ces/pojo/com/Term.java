@@ -23,6 +23,9 @@ public class Term {
 	private Date cTime;
 	private Date uTime;
 
+	// 集合
+	private TermClass classes;
+
 	public Term() {
 	}
 
@@ -98,12 +101,20 @@ public class Term {
 		this.uTime = uTime;
 	}
 
+	public TermClass getClasses() {
+		return classes;
+	}
+
+	public void setClasses(TermClass classes) {
+		this.classes = classes;
+	}
+
 	@Override
 	public String toString() {
 		return "Term [id=" + id + ", name=" + name + ", classId=" + classId
 				+ ", desc=" + desc + ", startDate=" + startDate + ", stopDate="
 				+ stopDate + ", isValid=" + isValid + ", cTime=" + cTime
-				+ ", uTime=" + uTime + "]";
+				+ ", uTime=" + uTime + ", classes=" + classes + "]";
 	}
 
 }

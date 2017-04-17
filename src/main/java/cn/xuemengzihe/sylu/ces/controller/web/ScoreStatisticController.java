@@ -22,6 +22,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
+import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
@@ -141,6 +142,8 @@ public class ScoreStatisticController {
 	/**
 	 * 成绩测评列表，以分页形式返回JSON数据
 	 * 
+	 * @param request
+	 *            request
 	 * @param search
 	 *            检索条件
 	 * @param offset
@@ -153,6 +156,7 @@ public class ScoreStatisticController {
 	// produces 参数的目的是解决中文乱码问题
 	@RequestMapping(value = "/scoreStaticData", produces = "application/json; charset=utf-8")
 	public String scoreStaticData(
+			HttpServletRequest request,
 			String search,
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
@@ -161,8 +165,17 @@ public class ScoreStatisticController {
 		pageInfo.setPageNum(offset / limit + 1);
 		if (search != null) // 防止SQL注入攻击
 			search = search.trim().replace("'", "");
+
+		// 判断当前 用户是否为教师，如果是教师，则只查询教师的相关内容
+		String teacherId = null;
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		if (persion instanceof Teacher
+				&& "T".equals(((Teacher) persion).getRole())) {
+			teacherId = persion.getId() + "";
+		}
+
 		// 分页查询记录
-		pageInfo = termService.getTermWithPageSize(pageInfo, search);
+		pageInfo = termService.getTermWithPageSize(pageInfo, search, teacherId);
 		// 将数据分装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
@@ -214,7 +227,7 @@ public class ScoreStatisticController {
 	public String studentScoreStaticDetail(HttpServletRequest request,
 			Model model, Integer item) {
 		// 变量定义
-		Student student = (Student) request.getSession().getAttribute("user");
+		// Student student = (Student) request.getSession().getAttribute("user");
 		Term term = null; // 测评班级的学期信息
 
 		// 参数合法性校验
@@ -374,7 +387,7 @@ public class ScoreStatisticController {
 			String termId,
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
-		Student student = (Student) request.getSession().getAttribute("user");
+		// Student student = (Student) request.getSession().getAttribute("user");
 		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);

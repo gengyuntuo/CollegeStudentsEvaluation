@@ -3,6 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TermDAO">
+	<resultMap type="term" id="myResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="teacher_id" property="teacherId"/>
+		<result column="desc" property="desc"/>
+		<result column="start_date" property="startDate"/>
+		<result column="stop_date" property="stopDate"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="c_time" property="cTime"/>
+		<result column="u_time" property="uTime"/>
+		<collection property="classes" javaType="termClass" >
+			<id column="id" property="id"/>
+			<result column="term_id" property="termId"/>
+			<result column="class_id" property="classId"/>
+		</collection>
+	</resultMap>
 	<insert id="insert" parameterType="term">
 		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
@@ -42,40 +58,35 @@
 		WHERE
 			id=#{id}
 	</update>
-	<select id="findById" parameterType="int" resultType="term">
+	<select id="findById" parameterType="int" resultMap="myResultMap">
 		SELECT *
 		FROM term
 		WHERE id = #{id}
 	</select>
-	<select id="findAll" parameterType="map" resultType="map">
+	<select id="findTermsWithMap" parameterType="map" resultType="map">
 		SELECT 
-		    t.id AS id,
-		    t.name AS name,
-		    DATE_FORMAT(t.start_date, '%Y-%m-%d') AS startDate,
-		    DATE_FORMAT(t.stop_date, '%Y-%m-%d') AS stopDate,
-		    c.teacher_id AS teacherId,
-		    c.major AS major
+		    `t`.`id` AS `termId`,
+		    `t`.`name` AS `name`,
+		    DATE_FORMAT(`t`.`start_date`, '%Y-%m-%d') AS `startDate`,
+		    DATE_FORMAT(`t`.`stop_date`, '%Y-%m-%d') AS `stopDate`,
+		    `t`.`teacher_id` AS `teacherId`,
+		    `teacher`.`name` AS `teacherName`
 		FROM
-		    term t
+		    (SELECT  * FROM `term` WHERE
+		        `term`.`is_valid` = 'Y'
+		        <if test="teacherId != null">
+		        	AND `term`.`teacher_id` = #{teacherId}
+		        </if>
+		    ) `t`
 		        LEFT JOIN
-		    (SELECT 
-		        class.id AS id, class.teacher_id AS teacher_id, major.m_name AS major
-		    FROM
-		        class
-		    LEFT JOIN major ON class.major_id = major.id
-		    WHERE
-		        class.is_valid = 'Y'
-		            AND major.is_valid = 'Y') c ON t.teacher_id = c.id
-		WHERE t.is_valid = 'Y'
-			<if test="value != null">
-					AND (
-						`name` LIKE '%${value}%'
-						OR `major` LIKE '%${value}%'
-						OR `teacherId` LIKE '%${value}%'
-						OR `startDate` LIKE '%${value}%'
-						OR `stopDate` LIKE '%${value}%'
-					)
+		    `teacher` ON `t`.`teacher_id` = `teacher`.`id`
+			<if test="search != null">
+			WHERE 
+				`t`.`name` LIKE '%${search}%'
+				OR `teacher`.`name` LIKE '%${search}%'
+				OR `t`.`start_date` LIKE '%${search}%'
+				OR `t`.`stop_date` LIKE '%${search}%'
 			</if>
-		ORDER BY t.stop_date , t.start_date
+		ORDER BY `t`.`stop_date`, `t`.`start_date`,`t`.`id`
 	</select>
 </mapper>

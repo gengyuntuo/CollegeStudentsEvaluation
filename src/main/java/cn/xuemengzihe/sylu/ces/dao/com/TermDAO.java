@@ -50,8 +50,9 @@ public interface TermDAO {
 	 * 查询所有
 	 * 
 	 * @param condition
-	 *            查询条件
+	 *            查询条件（search：搜索条件，teacherId：教师ID)
 	 * @return
 	 */
-	public List<Map<String, String>> findAll(String condition);
+	public List<Map<String, String>> findTermsWithMap(
+			Map<String, String> conditions);
 }

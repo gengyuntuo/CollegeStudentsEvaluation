@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,10 +99,14 @@ public class TermServiceImpl implements TermService {
 
 	@Override
 	public PageInfo<Map<String, String>> getTermWithPageSize(
-			PageInfo<Map<String, String>> pageInfo, String condition) {
+			PageInfo<Map<String, String>> pageInfo, String search,
+			String teacherId) {
+		Map<String, String> conditions = new HashMap<>();
+		conditions.put("teacherId", teacherId);
+		conditions.put("search", search);
 		// 分页查询
 		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
-		List<Map<String, String>> list = termDAO.findAll(condition);
+		List<Map<String, String>> list = termDAO.findTermsWithMap(conditions);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}
