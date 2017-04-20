@@ -15,6 +15,7 @@
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
+<link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
 <link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
 </head>
 <body>

@@ -14,7 +14,7 @@ import java.util.Date;
 public class Term {
 	private Integer id; // ID
 	private String name; // 学期名称
-	private Integer classId; // 班级ID
+	private Integer teacherId; // 教师的ID
 	private String desc; // 学期说明
 	private Date startDate; // 成绩统计开始日期
 	private Date stopDate; // 成绩统计结束日期
@@ -45,12 +45,12 @@ public class Term {
 		this.name = name;
 	}
 
-	public Integer getClassId() {
-		return classId;
+	public Integer getTeacherId() {
+		return teacherId;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setTeacherId(Integer teacherId) {
+		this.teacherId = teacherId;
 	}
 
 	public String getDesc() {
@@ -111,7 +111,7 @@ public class Term {
 
 	@Override
 	public String toString() {
-		return "Term [id=" + id + ", name=" + name + ", classId=" + classId
+		return "Term [id=" + id + ", name=" + name + ", teacherId=" + teacherId
 				+ ", desc=" + desc + ", startDate=" + startDate + ", stopDate="
 				+ stopDate + ", isValid=" + isValid + ", cTime=" + cTime
 				+ ", uTime=" + uTime + ", classes=" + classes + "]";

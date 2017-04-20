@@ -2,7 +2,10 @@ package cn.xuemengzihe.sylu.ces.controller.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
+import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
@@ -62,6 +67,10 @@ public class ScoreStatisticController {
 	private TableZHCPCJTJService tableZHCPCJTJServcie;
 	@Autowired
 	private TableSZXFRCXWBFPFService tableSZXFRCXWBFPFService;
+	@Autowired
+	private ComplexFunction compexFunction;
+	@Autowired
+	private TermClassDAO termClassDAO;
 
 	@RequestMapping("scoreInfo")
 	public String scoreInfo() {
@@ -69,74 +78,58 @@ public class ScoreStatisticController {
 	}
 
 	@RequestMapping("scoreList")
-	public String scoreList() {
+	public String scoreList(HttpServletRequest request, Model model) {
+		// 获取创建学期时的列表
+		List<String> terms = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		terms.add(year + "-" + (year + 1));
+		for (int i = 0; i < 5; i++) {
+			terms.add(--year + "-" + (year + 1));
+		}
+		model.addAttribute("terms", terms);
+
+		// 获取创建学期时该教师管理的班级
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		List<Map<String, String>> classes = compexFunction
+				.getClassesOfTeacherSelect(teacher.getId());
+		model.addAttribute("classes", classes);
+
 		return "/score/scoreList";
 	}
 
 	/**
 	 * 创建成绩统计
 	 * 
-	 * @param term
-	 *            统计学期
+	 * @param request
+	 * @param name
+	 *            学期名称
 	 * @param classes
-	 *            班级
-	 * @param startDat
-	 *            开始日期
+	 *            班级ID（逗号分隔）
+	 * @param startDate
+	 *            统计开始日期
 	 * @param stopDate
-	 *            结束日期
+	 *            统计截止日期
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "createScoreStatic", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String createScoreStatic(String term, String[] classes,
+	public String createScoreStatic(
+			HttpServletRequest request,
+			String name,
+			@RequestParam(value = "classes[]", required = true) String classes[],
 			Date startDate, Date stopDate) {
 		// TODO 服务器端参数校验
 
-		if (classes != null && classes.length > 0) {
-			String tip = termService.createScoreStaticTerm(term, classes,
+		// 获取当前的老师
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		try {
+			termService.createScoreStaticTerm(name, teacher.getId(), classes,
 					startDate, stopDate);
-			return "{\"tip\":\"" + tip + "\"}"; // 返回tip，包含添加结果
-		} else {
+			return "{}";
+		} catch (Exception e) {
 			return "{\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 		}
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "termUpdate", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String termUpdate(Term term) {
-		// TODO 数据完整性校验
-		Term oldTerm = termService.getTermById(term.getId());
-		if (oldTerm == null) {
-			return "{\"tip\":\"您要修改的记录不存在！\"}";
-		}
-		// 赋值
-		oldTerm.setStartDate(term.getStartDate());
-		oldTerm.setStopDate(term.getStopDate());
-		oldTerm.setDesc(term.getDesc());
-		oldTerm.setuTime(new Date());
-
-		// 更新
-		if (termService.updateScoreStaticTerm(oldTerm)) {
-			return "{}"; // 修改成功！
-		}
-		return "{\"tip\":\"修改失败！\"}";
-	}
-
-	/**
-	 * 删除记录
-	 * 
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "termDelete", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String termDelete(Integer id) {
-		Term oldTerm = termService.getTermById(id);
-		if (oldTerm == null || "N".equals(oldTerm.getIsValid())) {
-			return "{\"tip\":\"您要删除的记录不存在或者已经删除！\"}";
-		}
-		oldTerm.setIsValid("N"); // 设置删除标记
-		oldTerm.setName(oldTerm.getName() + "delete at " + new Date()); // 由于该字段与class_id联合为UNIQUE，为避免影响添加操作，所以该字段需要修改
-		termService.updateScoreStaticTerm(oldTerm); // 做假删除
-		return "{}";
 	}
 
 	/**
@@ -207,8 +200,7 @@ public class ScoreStatisticController {
 		}
 		model.addAttribute("term", term); // 添加到模型中
 
-		// TODO 业务
-		clazz = classService.findClazzById(term.getClassId());
+		// TODO 重大问题，业务未完成
 		model.addAttribute("clazz", clazz);
 
 		return "/score/scoreStaticDetail";
@@ -227,7 +219,8 @@ public class ScoreStatisticController {
 	public String studentScoreStaticDetail(HttpServletRequest request,
 			Model model, Integer item) {
 		// 变量定义
-		// Student student = (Student) request.getSession().getAttribute("user");
+		// Student student = (Student)
+		// request.getSession().getAttribute("user");
 		Term term = null; // 测评班级的学期信息
 
 		// 参数合法性校验
@@ -387,7 +380,8 @@ public class ScoreStatisticController {
 			String termId,
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
-		// Student student = (Student) request.getSession().getAttribute("user");
+		// Student student = (Student)
+		// request.getSession().getAttribute("user");
 		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);
@@ -412,15 +406,38 @@ public class ScoreStatisticController {
 	@RequestMapping(value = "/deleteById", produces = "application/json; charset=utf-8")
 	public String deleteById(HttpServletRequest request, String type, Integer id) {
 		Persion persion = (Persion) request.getSession().getAttribute("user");
-		// TODO 执行删除前需要查询被删除的记录是否存在，同时需要判断当前用户是否可以删除该条记录
+		// TODO 执行删除前需要查询被删除的记录是否存在，
+		// 同时需要判断当前用户是否可以删除该条记录
 		persion.getId();
 		try {
-			switch (type.toUpperCase()) {
-			case "SZJYJFSQ":
-				tableSZJYJFSQServcie.deleteRecord(id);
-				break;
-			default:
-				break;
+			tag: {
+				// 所有用户都可以执行的
+				switch (type.toUpperCase()) {
+				case "SZJYJFSQ":
+					tableSZJYJFSQServcie.deleteRecord(id);
+					break;
+				}
+				// 判断用户的类型
+				if (persion instanceof Teacher) {
+					// 教师执行的
+					switch (type.toUpperCase()) {
+					case "TERM":
+						Term oldTerm = termService.getTermById(id);
+						if (oldTerm == null || "N".equals(oldTerm.getIsValid())) {
+							throw new Exception();
+						}
+						termService.deleteScoreStaticTerm(id);
+						termClassDAO.deleteByTermId(id);
+						// TODO 删除相关的测评表
+						break tag;
+					}
+				} else if (persion instanceof Student) {
+					// 学生执行的
+					switch (type.toUpperCase()) {
+					}
+				}
+				// 如果上面的情况都没有执行，这里就抛异常
+				throw new Exception();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

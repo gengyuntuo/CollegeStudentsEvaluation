@@ -20,18 +20,20 @@ public interface TermService {
 	/**
 	 * 创建成绩统计学期
 	 * 
-	 * @param term
+	 * @param name
 	 *            学期
+	 * @param teacherId
+	 *            教师Id
 	 * @param classes
-	 *            班级（所有班级号的数组）
+	 *            班级（所有班级的ID，用,号隔开）
 	 * @param startDate
 	 *            开始日期
 	 * @param stopDate
 	 *            结束日期
 	 * @return 创建的结果（字符串形式）
 	 */
-	public String createScoreStaticTerm(String term, String[] classes,
-			Date startDate, Date stopDate);
+	public String createScoreStaticTerm(String name, Integer teacherId,
+			String classes[], Date startDate, Date stopDate);
 
 	/**
 	 * 删除学期

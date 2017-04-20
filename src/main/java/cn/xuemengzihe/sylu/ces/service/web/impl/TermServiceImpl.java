@@ -9,10 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.dao.com.TermDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
+import cn.xuemengzihe.sylu.ces.pojo.com.TermClass;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
 
@@ -38,41 +41,42 @@ public class TermServiceImpl implements TermService {
 	private TermDAO termDAO;
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	private TermClassDAO termClassDAO;
 
 	@Override
-	public String createScoreStaticTerm(String term, String[] classes,
-			Date startDate, Date stopDate) {
+	@Transactional
+	public String createScoreStaticTerm(String name, Integer teacherId,
+			String classes[], Date startDate, Date stopDate) {
+		// 创建学期
 		String result = "";
 		Clazz clazz = null;
 		Term termObj = new Term();
-		termObj.setcTime(new Date());
-		termObj.setIsValid("Y");
+		termObj.setName(name);
+		termObj.setTeacherId(teacherId);
+		termObj.setDesc(name);
 		termObj.setStartDate(startDate);
 		termObj.setStopDate(stopDate);
-		termObj.setuTime(new Date());
+		termObj.setIsValid("Y");
+		termObj.setcTime(new Date());
 		termObj.setuTime(new Date());
 
+		// 创建学期
+		termObj.setName(name);
+		termObj.setDesc(name);
+		termDAO.insert(termObj);
 		for (String var : classes) {
-			// 1. 查询班级是否存在
-			clazz = classService.findClazzByClassId(var);
+			// 查询班级是否存在并添加
+			if (var != null && "".equals(var.trim()))
+				continue;
+			clazz = classService.findClazzById(Integer.parseInt(var));
 			if (clazz == null) {
-				result += var + "班级不存在,添加失败！\n";
-				continue;
+				throw new RuntimeException("Class not found");
 			}
-			// 2. 创建学期
-			try {
-				termObj.setName(term);
-				termObj.setDesc(term + " " + var);
-				termObj.setClassId(clazz.getId());
-				termDAO.insert(termObj);
-				result += var + "班级创建成功！\n";
-			} catch (Exception e) {
-				logger.info("Insert Term into databases failed!");
-				result += var + "班级创建失败！可能该记录已经存在！\n";
-				e.printStackTrace();
-				continue;
-			}
+			termClassDAO.insert(new TermClass(null, termObj.getId(), clazz
+					.getId()));
 		}
+
 		return result;
 	}
 
@@ -108,6 +112,7 @@ public class TermServiceImpl implements TermService {
 		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = termDAO.findTermsWithMap(conditions);
 		pageInfo = new PageInfo<>(list);
+		logger.debug(pageInfo.toString());
 		return pageInfo;
 	}
 

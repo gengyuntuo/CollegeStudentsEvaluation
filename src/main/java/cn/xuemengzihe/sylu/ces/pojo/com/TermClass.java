@@ -13,6 +13,16 @@ public class TermClass {
 	private Integer termId;
 	private Integer classId;
 
+	public TermClass() {
+		super();
+	}
+
+	public TermClass(Integer id, Integer termId, Integer classId) {
+		this.id = id;
+		this.termId = termId;
+		this.classId = classId;
+	}
+
 	public Integer getId() {
 		return id;
 	}

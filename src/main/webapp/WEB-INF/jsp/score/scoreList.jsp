@@ -15,6 +15,7 @@
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
 <link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
 </head>
 <body>
 	<!-- Start #header -->
@@ -81,28 +82,25 @@
 
 	<!-- 对话框 开始 -->
 	<div id="dialog-add">
-		<form id="form" class="form-horizontal group-border hover-stripped">
+		<form id="form" action=“” method="post" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学期：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<select id="term" name="term" class="select2 form-control">
+					<select id="term" name="term" class="form-control">
 						<option></option>
-						<option>2013-2014</option>
-						<option>2014-2015</option>
-						<option>2015-2016</option>
-						<option>2016-2017</option>
+						<c:forEach var="item" items="${terms }">
+							<option value="${item }">${item } 学期</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学期：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">班级：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<select id="classes" name="classes" class="select2 form-control">
-						<option></option>
-						<option>13030504</option>
-						<option>13030503</option>
-						<option>13030502</option>
-						<option>13030501</option>
+					<select id="classes" name="classes" class="form-control" multiple="multiple">
+						<c:forEach var="item" items="${classes }">
+							<option value="${item.id }">${item.name }</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

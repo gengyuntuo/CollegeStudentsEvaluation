@@ -64,9 +64,9 @@ $(function() {
 									checkbox : true
 								},
 								{
-									field : 'id',
+									field : 'termId',
 									visible : false,
-									title : 'id'
+									title : 'termId'
 								},
 								{
 									field : 'teacherId',
@@ -82,7 +82,7 @@ $(function() {
 									formatter : function(value, row, index) {
 										return "<a href=\""
 												+ "scoreStaticDetail.do?item="
-												+ row["id"] + "\">" + value
+												+ row["termId"] + "\">" + value
 												+ "</a>";
 									}
 								}, {
@@ -137,22 +137,26 @@ $(function() {
 		buttons : {
 			"添加" : function() {
 				// 获取并验证表单内容
-				var numb = $("#numb").val();
-				var name = $("#name").val();
-				var desc = $("#desc").val();
+				var name = $("#term").val();
+				var classes = $("#classes").val();
+				var startDate = $("#startDate").val();
+				var stopDate = $("#stopDate").val();
 				// TODO 数据合法性校验
+				console.info("name" + name);
+				console.info("classes" + classes);
 				$.ajax({
-					url : 'instituteAdd.do',
+					url : 'createScoreStatic.do',
 					type : 'POST',
 					data : {
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"name" : name,
+						"classes" : classes,
+						"startDate" : startDate,
+						"stopDate" : stopDate
 					},
-					success : function(data) {
-						var result = eval(data);
+					dataType : "json",
+					success : function(result) {
 						if (result["tip"] != undefined)
-							alert("添加失败！" + result["tip"]);
+							alert(result["tip"]);
 						// 添加成功，同时更新数据
 						$('#mytable').bootstrapTable('refresh');
 						dialog_add.dialog("close");
@@ -175,6 +179,7 @@ $(function() {
 		autoOpen : false,
 		title : '删除提醒',
 		modal : true,
+		draggable : false, // 拖动
 		resizable : false, // 窗口大小不可调
 		show : { // 窗口显示
 			effect : "blind",
@@ -190,11 +195,13 @@ $(function() {
 		buttons : {
 			"删除" : function() {
 				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+				// console.info(obj);
 				$.ajax({
-					url : 'instituteDelete.do',
+					url : 'deleteById.do',
 					type : 'POST',
 					data : {
-						"id" : obj["id"]
+						"id" : obj["termId"],
+						"type" : "TERM"
 					},
 					success : function(data) {
 						var result = eval(data);
@@ -249,9 +256,15 @@ $(function() {
 	$("#term").select2({
 		width : "100%",
 		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
-		placeholder : "请选择统计学期",
+		placeholder : "请选择学期",
 		allowClear : true,
 		language : "zh-CN"
+	});
+	$("#classes").select2({
+		width : "100%",
+		placeholder : "请选择班级",
+		allowClear : true,
+		language : "zh-CN",
 	});
 	$("#startDate,#stopDate").datepicker({
 		dateFormat : "yy-mm-dd",
@@ -281,3 +294,24 @@ function checkSearchText() {
 		search = undefined;
 	return search;
 }
+
+/**
+ * 获取班级信息
+ */
+// function getClassesAndFillSelect() {
+// $.ajax({
+// async : true, // 异步处理
+// type : "POST",
+// url : "getClassData.do",
+// // data : {},
+// dataType : "json",
+// // contentType : "application/json",
+// success : function(result, status, xhr) {
+// $.each(result, function(index, item) {
+// $("#classes").append("<option value=\"" //
+// + item.id + "\">" + item.name + "</option");
+// });
+// // console.info(result);
+// },
+// });
+// }
