@@ -4,17 +4,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TableSZXFRCXWBFPFDAO">
 	<insert id="insertRecord" parameterType="tableSZXFRCXWBFPF" useGeneratedKeys="true">
-		insert into
+		INSERT INTO `t_szxfrcxwbfpf` (
+			`zong_he_id`,
+			`she_hui_gong_de`,
+			`wen_ming_jiao_wang`,
+			`cheng_xin_li_shen`,
+			`ti_yu_duan_lian`,
+			`ai_hu_gong_wu`,
+			`xue_xiao_gui_ding`,
+			`can_jia_huo_dong`,
+			`ting_ke_ji_lu`,
+			`gong_yu_jian_cha`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
+		) VALUES (
+			#{zongHeId},
+			#{sheHuiGongDe},
+			#{wenMingJiaoWang},
+			#{chengXinLiShen},
+			#{tiYuDuanLian},
+			#{aiHuGongWu},
+			#{xueXiaoGuiDing},
+			#{canJiaHuoDong},
+			#{tingKeJiLu},
+			#{gongYuJianCha},
+			#{isValid},
+			#{cTime}, 
+			#{uTime}
+		)
 	</insert>
 	<delete id="deleteRecord" parameterType="int">
-		delete from
+		DELETE FROM `t_szxfrcxwbfpf` WHERE `id` = #{value}
 	</delete>
 	<update id="updateRecord" parameterType="tableSZXFRCXWBFPF">
-		update
+		UPDATE `t_szxfrcxwbfpf` SET
+			`zong_he_id`=#{zongHeId},
+			`she_hui_gong_de`=#{sheHuiGongDe},
+			`wen_ming_jiao_wang`=#{wenMingJiaoWang},
+			`cheng_xin_li_shen`=#{chengXinLiShen},
+			`ti_yu_duan_lian`=#{tiYuDuanLian},
+			`ai_hu_gong_wu`=#{aiHuGongWu},
+			`xue_xiao_gui_ding`=#{xueXiaoGuiDing},
+			`can_jia_huo_dong`=#{canJiaHuoDong},
+			`ting_ke_ji_lu`=#{tingKeJiLu},
+			`gong_yu_jian_cha`=#{gongYuJianCha},
+			`is_valid`=#{isValid}
+		WHERE `id`=#{id}
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableSZXFRCXWBFPF">
-		select * from
-		where id = #{value}
+		SELECT * FROM
+		WHERE id = #{value}
 	</select>
 	<select id="getRecordWithMap" parameterType="string" resultType="map">
 		select * from

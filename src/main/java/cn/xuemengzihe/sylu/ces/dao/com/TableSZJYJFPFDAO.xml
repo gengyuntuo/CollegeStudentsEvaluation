@@ -4,17 +4,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TableSZJYJFPFDAO">
 	<insert id="insertRecord" parameterType="tableSZJYJFPF" useGeneratedKeys="true">
-		insert into
+		INSERT INTO `t_szjyjfpf` (
+			`zong_he_id`,
+			`she_hui_fu_wu`,
+			`she_hui_shi_jian`,
+			`bi_sai_huo_jiang`,
+			`xue_sheng_gan_bu`,
+			`is_valid`,
+			`c_time`,
+			`u_time`
+		) VALUES (
+			#{zongHeId},
+			#{sheHuiFuWu},
+			#{sheHuiShiJian},
+			#{biSaiHuoJiang},
+			#{xueShengGanBu},
+			#{isValid},
+			#{cTime},
+			#{uTime}
+		)
 	</insert>
 	<delete id="deleteRecord" parameterType="int">
-		delete from
+		DELETE FROM `t_szjyjfpf`
+		WHERE `id` = #{value}
 	</delete>
 	<update id="updateRecord" parameterType="tableSZJYJFPF">
-		update
+		UPDATE `t_szjyjfpf` SET
+			`zong_he_id` = #{zongHeId},
+			`she_hui_fu_wu` = #{sheHuiFuWu},
+			`she_hui_shi_jian` = #{sheHuiShiJian},
+			`bi_sai_huo_jiang` = #{biSaiHuoJiang},
+			`xue_sheng_gan_bu` = #{xueShengGanBu},
+			`is_valid` = #{isValid}
+		WHERE `id`=#{id};
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableSZJYJFPF">
-		select * from
-		where id = #{value}
+		SELECT * FROM
+		WHERE id = #{value}
 	</select>
 	<select id="getRecordWithMap" parameterType="string" resultType="map">
 		select * from

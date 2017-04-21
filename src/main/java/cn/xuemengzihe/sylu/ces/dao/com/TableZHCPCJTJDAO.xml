@@ -4,19 +4,101 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TableZHCPCJTJDAO">
 	<insert id="insertRecord" parameterType="tableZHCPCJTJ" useGeneratedKeys="true">
-		insert into
+		INSERT INTO `t_zhcpcjtj` (
+			`sno`, 
+			`term_id`, 
+			`ping_jun_xue_fen_ji_dian`, 
+			`is_valid`, 
+			`c_time`, 
+			`u_time`
+		) VALUES (
+			#{sno},
+			#{termId},
+			#{pingJunXueFenJiDian},
+			#{isValid},
+			#{cTime},
+			#{uTime}
+		)
 	</insert>
 	<delete id="deleteRecord" parameterType="int">
-		delete from
+		DELETE FROM `t_zhcpcjtj`
+		WHERE `id` = #{value}
 	</delete>
 	<update id="updateRecord" parameterType="tableZHCPCJTJ">
-		update
+		UPDATE `t_zhcpcjtj` SET
+			`sno` = #{sno},
+			`term_id` = #{termId},
+			`ping_jun_xue_fen_ji_dian` = #{pingJunXueFenJiDian},
+			`is_valid` = #{isValid}
+		WHERE `id` = #{id}
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableZHCPCJTJ">
-		select * from
-		where id = #{value}
+		SELECT 
+		    *
+		FROM
+		    (SELECT 
+		        zhstu.id
+		    FROM
+		        (SELECT 
+		        zh.id
+		    FROM
+		        t_zhcpcjtj zh
+		    LEFT JOIN student stu ON zh.sno = stu.sno
+		    WHERE
+		        zh.id = '1') zhstu
+		    LEFT JOIN t_szxfrcxwbfpf rcxw ON zhstu.id = rcxw.zong_he_id) zsr
+		        LEFT JOIN
+		    t_szjyjfpf szjf ON zsr.id = szjf.zong_he_id
 	</select>
 	<select id="getRecordWithMap" parameterType="map" resultType="map">
-		select * from
+		SELECT 
+		    `zsr`.*,
+		    `szjf`.`id` AS `szjfId`,
+		    `szjf`.`zong_he_id`+
+			`szjf`.`she_hui_fu_wu`+
+			`szjf`.`she_hui_shi_jian`+
+			`szjf`.`bi_sai_huo_jiang`+
+			`szjf`.`xue_sheng_gan_bu` AS `szjfScore`,
+		    `szjf`.`is_valid` AS `szjfState`
+		    
+		FROM
+		    (SELECT 
+		        `zhstu`.*,
+		        `rcxw`.`id` AS `rcxwId`,
+		        `rcxw`.`she_hui_gong_de`+
+				`rcxw`.`wen_ming_jiao_wang`+
+				`rcxw`.`cheng_xin_li_shen`+
+				`rcxw`.`ti_yu_duan_lian`+
+				`rcxw`.`ai_hu_gong_wu`+
+				`rcxw`.`xue_xiao_gui_ding`+
+				`rcxw`.`can_jia_huo_dong`+
+				`rcxw`.`ting_ke_ji_lu`+
+				`rcxw`.`gong_yu_jian_cha` AS `rcxwScore`,
+		        `rcxw`.`is_valid` AS `rcxwState`
+		    FROM
+		        (SELECT 
+		        	`stu`.`id` AS `stuId`,
+		        	`stu`.`sno` AS `sno`,
+		        	`stu`.`name` AS `name`,
+					`zh`.`id` AS `id`,
+					`zh`.`term_id` AS `termId`,
+		            `zh`.`id` AS `zhId`,
+		            `zh`.`ping_jun_xue_fen_ji_dian` AS `xfjd`,
+		            `zh`.`is_valid` AS `zhState`
+				FROM
+					`t_zhcpcjtj` `zh`
+				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
+				WHERE
+					<if test="zhId != null">
+						`zh`.`id` = #{zhId}
+					</if>
+					<if test="termId != null">
+						AND `zh`.`term_id` = #{termId}
+					</if>
+				) `zhstu`
+		    LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`id` = `rcxw`.`zong_he_id`
+		) `zsr`
+		LEFT JOIN `t_szjyjfpf` `szjf` ON `zsr`.`id` = `szjf`.`zong_he_id`
+		ORDER BY `sno`
 	</select>
 </mapper>
