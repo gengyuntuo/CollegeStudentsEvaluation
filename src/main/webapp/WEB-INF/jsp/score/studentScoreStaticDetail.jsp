@@ -32,7 +32,7 @@
 			<div class="row">
 				<!-- Start .row -->
 				<!-- Start .page-header -->
-				<div class="col-lg-12 heading">
+				<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 heading">
 					<h1 class="page-header">
 						<i class="im-screen"></i> ${term.name }年度${user.sno }-${user.name }同学测评详情
 					</h1>

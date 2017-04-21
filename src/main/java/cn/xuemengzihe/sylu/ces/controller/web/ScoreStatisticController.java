@@ -23,7 +23,6 @@ import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
 import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
-import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
@@ -187,21 +186,19 @@ public class ScoreStatisticController {
 			Integer item) {
 		// 变量定义
 		Term term = null; // 测评班级的学期信息
-		Clazz clazz = null; // 班级
+		Teacher teacher = null; // 访问当前页面的教师
 
-		// 参数合法性校验
+		teacher = (Teacher) request.getSession().getAttribute("user");
+
+		// 判断item参数是否为空
 		if (item == null)
 			throw new MissingParameterException();
-
-		// 参数有效性校验
+		// 判断item参数是否可以对应term，且输入当前老师
 		term = termService.getTermById(item);
-		if (term == null) {
+		if (term == null || teacher.getId() != term.getTeacherId()) {
 			throw new InvalidParameterException();
 		}
 		model.addAttribute("term", term); // 添加到模型中
-
-		// TODO 重大问题，业务未完成
-		model.addAttribute("clazz", clazz);
 
 		return "/score/scoreStaticDetail";
 	}

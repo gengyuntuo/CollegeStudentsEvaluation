@@ -75,9 +75,10 @@ public interface StudentDAO {
 	/**
 	 * 查询所有学生的信息，返回Map结果集
 	 * 
-	 * @param condition
+	 * @param conditions
+	 *            (classId:班级ID, search搜索条件)
 	 * @return
 	 */
 	public List<Map<String, String>> findInstitutesOfAllWithMapSet(
-			String condition);
+			Map<String, String> conditions);
 }

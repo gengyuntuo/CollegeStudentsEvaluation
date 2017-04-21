@@ -23,7 +23,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 /**
- * <h1></h1>
+ * <h1>Term Service</h1>
  * <p>
  * </p>
  * 

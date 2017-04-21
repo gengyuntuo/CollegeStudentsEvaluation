@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>${term.name }年度${clazz.classId }班测评详情</title>
+<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
+</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -32,7 +33,9 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> ${term.name }年度${clazz.classId }班测评详情
+						<i class="im-screen"></i> ${term.name }学年
+						<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach>
+						班测评详情
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -166,6 +169,10 @@
 		<div class="clearfix"></div>
 	</div>
 	<!-- End #content -->
+	<div hidden="hidden">
+		<input id="termId" name="termId" value="${term.id }">
+	</div>
+
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>

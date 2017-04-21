@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.StudentDAO">
+	<!-- SQL 语句 -->
+	<sql id="getClassIdByTermId">
+		SELECT 
+		    term_class.class_id
+		FROM
+		    term
+		        JOIN
+		    term_class ON term.id = term_class.term_id
+		WHERE
+		    term.is_valid = 'Y' AND term_id = #{termId}
+	</sql>
 	<insert id="insertStudent" parameterType="student">
 		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
@@ -203,7 +214,7 @@
 		SELECT *
 		FROM student
 	</select>
-	<select id="findInstitutesOfAllWithMapSet" parameterType="string" resultType="map">
+	<select id="findInstitutesOfAllWithMapSet" parameterType="map" resultType="map">
 		SELECT
 			s.id id,
 			s.sno sno,
@@ -215,16 +226,22 @@
 		FROM student s
 		WHERE
 			is_valid = 'Y'
-			<if test="value != null">
-					AND (
-						`name` LIKE '%${value}%'
-						OR `nation` LIKE '%${value}%'
-						OR `sno` LIKE '%${sno}%'
-						OR `phone` LIKE '%${value}%'
-						OR `email` LIKE '%${value}%'
-						OR `gender` = #{value}
-					)
+			<if test="classId != null">
+				AND `class_id` = #{classId}
 			</if>
-		ORDER BY s.c_time, s.u_time
+			<if test="termId != null">
+				AND `class_id` IN (<include refid="getClassIdByTermId"/>)
+			</if>
+			<if test="search != null">
+				AND (
+					`name` LIKE '%${search}%'
+					OR `nation` LIKE '%${search}%'
+					OR `sno` LIKE '%${search}%'
+					OR `phone` LIKE '%${search}%'
+					OR `email` LIKE '%${search}%'
+					OR `gender` = #{search}
+				)
+			</if>
+		ORDER BY s.sno, s.c_time, s.u_time
 	</select>
 </mapper>

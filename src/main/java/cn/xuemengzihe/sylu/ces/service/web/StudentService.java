@@ -77,10 +77,11 @@ public interface StudentService {
 	 * 分页查询学生，支持条件查询
 	 * 
 	 * @param pageInfo
-	 * @param condition
+	 * @param conditions
 	 *            查询条件
 	 * @return
 	 */
 	public PageInfo<Map<String, String>> findStudentsOfPageWithMapSet(
-			PageInfo<Map<String, String>> pageInfo, String condition);
+			PageInfo<Map<String, String>> pageInfo,
+			Map<String, String> conditions);
 }

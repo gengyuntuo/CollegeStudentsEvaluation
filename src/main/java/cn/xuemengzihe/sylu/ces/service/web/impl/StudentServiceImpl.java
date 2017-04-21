@@ -74,11 +74,12 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public PageInfo<Map<String, String>> findStudentsOfPageWithMapSet(
-			PageInfo<Map<String, String>> pageInfo, String condition) {
+			PageInfo<Map<String, String>> pageInfo,
+			Map<String, String> conditions) {
 		// 分页查询
 		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = studentDAO
-				.findInstitutesOfAllWithMapSet(condition);
+				.findInstitutesOfAllWithMapSet(conditions);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

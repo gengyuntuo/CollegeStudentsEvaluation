@@ -1,6 +1,7 @@
 package cn.xuemengzihe.sylu.ces.pojo.com;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <h1>学期</h1>
@@ -24,7 +25,8 @@ public class Term {
 	private Date uTime;
 
 	// 集合
-	private TermClass classes;
+	private List<TermClass> classes;
+	private List<Clazz> clazzes;
 
 	public Term() {
 	}
@@ -101,12 +103,20 @@ public class Term {
 		this.uTime = uTime;
 	}
 
-	public TermClass getClasses() {
+	public List<TermClass> getClasses() {
 		return classes;
 	}
 
-	public void setClasses(TermClass classes) {
+	public void setClasses(List<TermClass> classes) {
 		this.classes = classes;
+	}
+
+	public List<Clazz> getClazzes() {
+		return clazzes;
+	}
+
+	public void setClazzes(List<Clazz> clazzes) {
+		this.clazzes = clazzes;
 	}
 
 	@Override
@@ -114,7 +124,8 @@ public class Term {
 		return "Term [id=" + id + ", name=" + name + ", teacherId=" + teacherId
 				+ ", desc=" + desc + ", startDate=" + startDate + ", stopDate="
 				+ stopDate + ", isValid=" + isValid + ", cTime=" + cTime
-				+ ", uTime=" + uTime + ", classes=" + classes + "]";
+				+ ", uTime=" + uTime + ", classes=" + classes + ", clazzes="
+				+ clazzes + "]";
 	}
 
 }

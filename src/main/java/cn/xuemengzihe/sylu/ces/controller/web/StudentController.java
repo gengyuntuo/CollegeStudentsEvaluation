@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +139,9 @@ public class StudentController {
 	// produces 参数的目的是解决中文乱码问题
 	@RequestMapping(value = "/studentData", produces = "application/json; charset=utf-8")
 	public String studentData(
-			String search,
+			String classId, // 班级ID
+			String termId, // 测评统计的ID
+			String search, // 搜索条件
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
 		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
@@ -146,9 +149,14 @@ public class StudentController {
 		pageInfo.setPageNum(offset / limit + 1);
 		if (search != null) // 防止SQL注入攻击
 			search = search.trim().replace("'", "");
+
+		Map<String, String> conditions = new HashMap<>();
+		conditions.put("search", search);
+		conditions.put("termId", termId);
+		conditions.put("classId", classId);
 		// 分页查询记录
-		pageInfo = studentService
-				.findStudentsOfPageWithMapSet(pageInfo, search);
+		pageInfo = studentService.findStudentsOfPageWithMapSet(pageInfo,
+				conditions);
 		// 将数据分装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);

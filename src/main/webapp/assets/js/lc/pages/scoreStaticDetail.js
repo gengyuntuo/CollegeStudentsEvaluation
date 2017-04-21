@@ -7,9 +7,10 @@ $(document).ready(function() {
 		// 初始化Table
 		oTableInit.Init = function() {
 			$('#mytable').bootstrapTable({
-				url : 'instituteData.do',
+				url : 'studentData.do',
 				method : 'GET',
 				queryParams : function(params) {
+					params["termId"] = $("#termId").val();
 					params["search"] = checkSearchText(); // 如果有内容，则带搜索参数请求页面
 					// console.info(params);
 					return params;
@@ -42,27 +43,41 @@ $(document).ready(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
-					field : "numb",
-					title : '学院代码',
+					field : "sno",
+					title : '学号',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
-					field : 'name',
-					title : '学院名称',
+					field : "name",
+					title : '姓名',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
-					field : 'desc',
-					title : '学院简介',
+					field : 'nation',
+					title : '民族',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
+				}, {
+					field : 'gender',
+					title : '性别',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'email',
+					title : '邮箱',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'phone',
+					title : '手机',
+					halign : "center",
+					align : "center",
+					valign : "middle"
 				} ]
 			});
 		};
@@ -97,7 +112,7 @@ $(document).ready(function() {
 		// 使用刚指定的配置项和数据显示图表。
 		myChart.setOption(option);
 	}
-	
+
 	/**
 	 * 自定义函数
 	 */

@@ -15,7 +15,7 @@ import java.util.List;
 public class Clazz {
 	private Integer id;
 	private String classId; // 班级号
-	private Integer major; // 专业
+	private Integer majorId; // 专业
 	private Integer teacherId; // 负责老师ID
 	private Integer studyYear; // 学制
 	private Date startYear; // 入学年份
@@ -48,11 +48,11 @@ public class Clazz {
 	}
 
 	public Integer getMajor() {
-		return major;
+		return majorId;
 	}
 
-	public void setMajor(Integer major) {
-		this.major = major;
+	public void setMajor(Integer majorId) {
+		this.majorId = majorId;
 	}
 
 	public Integer getTeacherId() {
@@ -121,7 +121,7 @@ public class Clazz {
 
 	@Override
 	public String toString() {
-		return "Clazz [id=" + id + ", classId=" + classId + ", major=" + major
+		return "Clazz [id=" + id + ", classId=" + classId + ", majorId=" + majorId
 				+ ", teacherId=" + teacherId + ", studyYear=" + studyYear
 				+ ", startYear=" + startYear + ", isValid=" + isValid
 				+ ", cTime=" + cTime + ", uTime=" + uTime + ", teacher="
