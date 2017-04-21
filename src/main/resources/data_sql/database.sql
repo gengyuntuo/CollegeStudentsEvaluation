@@ -233,6 +233,22 @@ CREATE TABLE IF NOT EXISTS `ces`.`t_szxfrcxwbfpf` (
   PRIMARY KEY (`id`)
 ) COMMENT '素质学分日常行为部分评分表';
 
+/* 消息表 */
+DROP TABLE IF EXISTS `ces`.`message`;
+CREATE TABLE IF NOT EXISTS `ces`.`message` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `type` VARCHAR(10) NOT NULL COMMENT '消息类型（TTS->老师发送给学生）、（TTT->老师发送给老师）、（STT->学生发送给老师）、（STS->学生发送给学生）',
+  `sender_id` INT NOT NULL COMMENT '发送者ID',
+  `receiver_id` INT NOT NULL COMMENT '接收者ID',
+  `content` VARCHAR(10000) NOT NULL COMMENT '内容',
+  `state` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '消息状态，是否已读等',
+  `with_mail` VARCHAR(1) NULL DEFAULT 'N' COMMENT '是否有邮件通知',
+  `is_valid` VARCHAR(1) NOT NULL COMMENT '消息是否有效',
+  `c_time` DATETIME NOT NULL COMMENT '发送时间',
+  `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`))
+COMMENT = '消息表';
+
 
 
 
