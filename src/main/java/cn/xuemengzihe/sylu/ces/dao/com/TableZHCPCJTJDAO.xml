@@ -54,13 +54,11 @@
 		SELECT 
 		    `zsr`.*,
 		    `szjf`.`id` AS `szjfId`,
-		    `szjf`.`zong_he_id`+
 			`szjf`.`she_hui_fu_wu`+
 			`szjf`.`she_hui_shi_jian`+
 			`szjf`.`bi_sai_huo_jiang`+
 			`szjf`.`xue_sheng_gan_bu` AS `szjfScore`,
 		    `szjf`.`is_valid` AS `szjfState`
-		    
 		FROM
 		    (SELECT 
 		        `zhstu`.*,
@@ -89,16 +87,29 @@
 					`t_zhcpcjtj` `zh`
 				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
 				WHERE
-					<if test="zhId != null">
-						`zh`.`id` = #{zhId}
-					</if>
 					<if test="termId != null">
-						AND `zh`.`term_id` = #{termId}
+						`zh`.`term_id` = #{termId}
+					</if>
+					<if test="zhId != null">
+						AND `zh`.`id` = #{zhId}
+					</if>
+					<if test="classId != null">
+						AND `stu`.`class_id` = #{classId}
 					</if>
 				) `zhstu`
 		    LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`id` = `rcxw`.`zong_he_id`
 		) `zsr`
 		LEFT JOIN `t_szjyjfpf` `szjf` ON `zsr`.`id` = `szjf`.`zong_he_id`
-		ORDER BY `sno`
+		ORDER BY 
+		<choose>
+			<!-- 根据成绩降序排列 -->
+			<when test="order = 'score'">
+				(`szjfScore`+`rcxwScore`-50)/10*0.02 + `xfjd`*0.8 DESC, `sno` ASC
+			</when>
+			<!-- 默认为按照学号排序 -->
+			<otherwise>
+				`sno`
+			</otherwise>
+		</choose>
 	</select>
 </mapper>

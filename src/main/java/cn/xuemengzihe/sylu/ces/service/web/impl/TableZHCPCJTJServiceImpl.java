@@ -1,16 +1,21 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.github.pagehelper.PageInfo;
-
+import cn.xuemengzihe.sylu.ces.dao.com.TableZHCPCJTJDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 /**
- * <h1></h1>
+ * <h1>综合成绩统计表</h1>
  * <p>
  * </p>
  * 
@@ -20,35 +25,44 @@ import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
 @Repository
 public class TableZHCPCJTJServiceImpl implements TableZHCPCJTJService {
 
+	@Autowired
+	private TableZHCPCJTJDAO tableZHCPCJTJDAO;
+
 	@Override
 	public Integer insertRecord(TableZHCPCJTJ record) {
-		// TODO Auto-generated method stub
-		return null;
+		return tableZHCPCJTJDAO.insertRecord(record);
 	}
 
 	@Override
 	public Integer updateRecord(TableZHCPCJTJ record) {
-		// TODO Auto-generated method stub
-		return null;
+		return tableZHCPCJTJDAO.updateRecord(record);
 	}
 
 	@Override
 	public Integer deleteRecord(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tableZHCPCJTJDAO.deleteRecord(id);
 	}
 
 	@Override
 	public TableZHCPCJTJ getRecordById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tableZHCPCJTJDAO.getRecordById(id);
 	}
 
 	@Override
 	public PageInfo<Map<String, String>> getRecordWithMap(
-			PageInfo<Map<String, String>> pageInfo, String termId, String sno) {
-		// TODO Auto-generated method stub
-		return null;
+			PageInfo<Map<String, String>> pageInfo, String termId,
+			String classId, String sno, String order) {
+		Map<String, String> conditions = new HashMap<>();
+		conditions.put("termId", termId);
+		conditions.put("classId", classId);
+		conditions.put("sno", sno);
+		conditions.put("order", order);
+		// 分页查询
+		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		List<Map<String, String>> list = tableZHCPCJTJDAO
+				.getRecordWithMap(conditions);
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 
 }

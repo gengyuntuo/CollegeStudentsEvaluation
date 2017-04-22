@@ -32,7 +32,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> ${term.name }年度${user.sno }-${user.name }同学测评详情
+						<i class="im-screen"></i> ${term.name }年度测评详情
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -55,7 +55,10 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">综合测评成绩</h4>
 							</div>
-							<div class="panel-body"></div>
+							<div class="panel-body">
+								<table id="tableZHCP" class="table table-bordered">
+								</table>
+							</div>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
@@ -92,6 +95,6 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/pages/monitorScoreStaticDetail.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/pages/teacherScoreStaticWork.js" />"></script>
 </body>
 </html>

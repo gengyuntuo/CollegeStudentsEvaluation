@@ -45,6 +45,6 @@
 		SELECT * FROM `message` WHERE `id` = #{id}
 	</select>
 	<select id="findMessage">
-
+ 
 	</select>
 </mapper>

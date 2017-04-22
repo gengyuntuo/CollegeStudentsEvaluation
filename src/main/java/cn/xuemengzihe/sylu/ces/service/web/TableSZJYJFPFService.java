@@ -58,12 +58,17 @@ public interface TableSZJYJFPFService {
 	 * @param pageInfo
 	 *            页面信息
 	 * @param termId
-	 *            学期Id
+	 *            学期ID(非空）
+	 * @param classId
+	 *            班级ID
 	 * @param sno
 	 *            学号
+	 * @param order
+	 *            排序
 	 * @return 结果集
 	 */
 	public PageInfo<Map<String, String>> getRecordWithMap(
-			PageInfo<Map<String, String>> pageInfo, String termId, String sno);
+			PageInfo<Map<String, String>> pageInfo, String termId,
+			String classId, String sno, String order);
 
 }

@@ -43,6 +43,52 @@
 		WHERE id = #{value}
 	</select>
 	<select id="getRecordWithMap" parameterType="string" resultType="map">
-		select * from
+SELECT 
+		    `zhstu`.*,
+		    `szjf`.`id` AS `szjfId`,
+			`szjf`.`she_hui_fu_wu` AS `shfw`,
+			`szjf`.`she_hui_shi_jian` AS `shsj`,
+			`szjf`.`bi_sai_huo_jiang` AS `bshj`,
+			`szjf`.`xue_sheng_gan_bu` AS `xsgb`,
+			`szjf`.`she_hui_fu_wu`+
+			`szjf`.`she_hui_shi_jian`+
+			`szjf`.`bi_sai_huo_jiang`+
+			`szjf`.`xue_sheng_gan_bu` AS `szjfScore`,
+		    `szjf`.`is_valid` AS `szjfState`
+		FROM
+	        (SELECT 
+	        	`stu`.`id` AS `stuId`,
+	        	`stu`.`sno` AS `sno`,
+	        	`stu`.`name` AS `name`,
+				`zh`.`term_id` AS `termId`,
+	            `zh`.`id` AS `zhId`,
+	            `zh`.`ping_jun_xue_fen_ji_dian` AS `xfjd`,
+	            `zh`.`is_valid` AS `zhState`
+			FROM
+				`t_zhcpcjtj` `zh`
+			LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
+			WHERE
+				<if test="termId != null">
+					`zh`.`term_id` = #{termId}
+				</if>
+				<if test="zhId != null">
+					AND `zh`.`id` = #{zhId}
+				</if>
+				<if test="classId != null">
+					AND `stu`.`class_id` = #{classId}
+				</if>
+			) `zhstu`
+		LEFT JOIN `t_szjyjfpf` `szjf` ON `zhstu`.`zhId` = `szjf`.`zong_he_id`
+		ORDER BY
+		<choose>
+			<!-- 根据成绩降序排列 -->
+			<when test="order = 'score'">
+				`szjfScore` DESC, `sno` ASC
+			</when>
+			<!-- 默认为按照学号排序 -->
+			<otherwise>
+				`sno`
+			</otherwise>
+		</choose>
 	</select>
 </mapper>

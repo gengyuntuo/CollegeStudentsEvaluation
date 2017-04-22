@@ -6,25 +6,18 @@ $(document).ready(function() {
 		var oTableInit = new Object();
 		// 初始化Table
 		oTableInit.Init = function() {
-			$('#mytable').bootstrapTable({
-				url : 'instituteData.do',
+			$('#tableZHCP').bootstrapTable({
+				url : 'listZHCPCJTJ.do',
 				method : 'GET',
 				queryParams : function(params) {
-					params["search"] = checkSearchText(); // 如果有内容，则带搜索参数请求页面
-					// console.info(params);
+					params["termId"] = 18;
 					return params;
-				}, // 请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
-				// queryParamsType = 'limit' ,返回参数必须包含limit, offset, search,
-				// sort, order 否则, 需要包含: pageSize, pageNumber, searchText,
-				// sortName, sortOrder. 返回false将会终止请求
+				},
 				cache : true, // 禁用ajax缓存数据
 				striped : true, // 设置为 true 会有隔行变色效果
 				sidePagination : 'server', // 设置在哪里进行分页，可选值为 'client' 或者
-				// 'server'。设置 'server'时，必须设置
-				// 服务器数据地址（url）或者重写ajax方法
 				pagination : true, // 在表格底部显示分页条
 				onlyInfoPagination : false, // 设置为 true 只显示总数据数，而不显示分页按钮。需要
-				// pagination='True'
 				pageNumber : 1, // 如果设置了分页，首页页码
 				pageSize : 10, // 如果设置了分页，页面数据条数
 				pageList : [ 5, 10, 15, 20, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
@@ -42,27 +35,75 @@ $(document).ready(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
-					field : "numb",
-					title : '学院代码',
+					field : "sno",
+					title : '学号',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
 					field : 'name',
-					title : '学院名称',
+					title : '姓名',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+				}, {
+					field : 'rcxwScore',
+					title : '①日常行为得分',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+				}, {
+					field : 'szjfScore',
+					title : '②素质活动得分',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
 					field : 'desc',
-					title : '学院简介',
+					title : '③素质学分合计   ③=①+②',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return row["rcxwScore"] + row["szjfScore"];
+					}
+				}, {
+					field : 'desc',
+					title : '④素质学分绩点',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return (row["rcxwScore"] + row["szjfScore"] - 50) / 10;
+					}
+				}, {
+					field : 'xfjd',
+					title : '⑤平均学分绩点',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'desc',
+					title : '⑥综合测评成绩     ⑥=⑤×80%+④×20%',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						var sz = row["rcxwScore"] + row["szjfScore"] - 50;
+						return sz * 0.02 + row["xfjd"] * 0.8;
+					}
+				}, {
+					field : 'zhState',
+					title : '状态',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						switch (value) {
+						case "Y":
+							return "正常";
+						}
+					}
 				} ]
 			});
 		};
@@ -70,53 +111,9 @@ $(document).ready(function() {
 	};
 
 	/**
-	 * 绘制条形图
-	 */
-	function plotChartDemo() {
-		// 基于准备好的dom，初始化echarts实例
-		var myChart = echarts.init(document.getElementById('main'));
-		// 指定图表的配置项和数据
-		var option = {
-			title : {
-				text : '各学院在校生信息'
-			},
-			tooltip : {},
-			legend : {
-				data : [ '学生数' ]
-			},
-			xAxis : {
-				data : [ "信息学院", "经济管理", "电气自动化", "艺术", "车辆", "兵器" ]
-			},
-			yAxis : {},
-			series : [ {
-				name : '学生数',
-				type : 'bar',
-				data : [ 5, 20, 36, 10, 10, 20 ]
-			} ]
-		};
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-	}
-	
-	/**
-	 * 自定义函数
-	 */
-	// 查询搜索框的输入，如果有输入则返回输入的内容，没有输入则返回undefined
-	function checkSearchText() {
-		// console.info("checkSearchText() function Run!");
-		var search = $("#search-input").val();
-		// console.info("search=>" + search);
-		if (search.trim() == "")
-			search = undefined;
-		return search;
-	}
-
-	/**
 	 * 执行
 	 */
 	// 1. 初始化Table
 	var oTable = new TableInit();
 	oTable.Init();
-	// 2. 绘条形图
-	plotChartDemo();
 });

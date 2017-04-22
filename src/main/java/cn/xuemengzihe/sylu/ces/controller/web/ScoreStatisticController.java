@@ -370,22 +370,103 @@ public class ScoreStatisticController {
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 
+	/**
+	 * 显示表格：综合测评表的数据
+	 * 
+	 * @param request
+	 * @param termId
+	 *            测评ID
+	 * @param classId
+	 *            班级ID
+	 * @param order
+	 *            排序
+	 * @param offset
+	 *            偏移量
+	 * @param limit
+	 *            每页数量
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/listZHCPCJTJ", produces = "application/json; charset=utf-8")
 	public String listZHCPCJTJ(
 			HttpServletRequest request,
 			String termId,
+			String classId,
+			String order,
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
-		// Student student = (Student)
-		// request.getSession().getAttribute("user");
 		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);
 		// 分页查询记录
-		// pageInfo = tableZHCPCJTJServcie; // TODO
-		// 将数据封装的模型中
-		// 返回页面
+		pageInfo = tableZHCPCJTJServcie.getRecordWithMap(pageInfo, termId,
+				classId, null, order);
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
+	 * 显示表格：素质学分日常行为部分评分
+	 * 
+	 * @param termId
+	 *            测评ID
+	 * @param classId
+	 *            班级ID
+	 * @param order
+	 *            排序
+	 * @param offset
+	 *            偏移量
+	 * @param limit
+	 *            每页数量
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listSZXFRCXWBFPF", produces = "application/json; charset=utf-8")
+	public String listSZXFRCXWBFPF(
+			HttpServletRequest request,
+			String termId,
+			String classId,
+			String order,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		pageInfo = tableZHCPCJTJServcie.getRecordWithMap(pageInfo, termId,
+				classId, null, order);
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
+	 * 显示表格：素质教育加分
+	 * 
+	 * @param termId
+	 *            测评ID
+	 * @param classId
+	 *            班级ID
+	 * @param order
+	 *            排序
+	 * @param offset
+	 *            偏移量
+	 * @param limit
+	 *            每页数量
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listSZJYJFPF", produces = "application/json; charset=utf-8")
+	public String listSZJYJFPF(
+			HttpServletRequest request,
+			String termId,
+			String classId,
+			String order,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		pageInfo = tableZHCPCJTJServcie.getRecordWithMap(pageInfo, termId,
+				classId, null, order);
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 

@@ -7,7 +7,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import com.github.pagehelper.PageInfo;
 
 /**
- * <h1>创建综合成绩统计表记录</h1>
+ * <h1>综合成绩统计表</h1>
  * <p>
  * </p>
  * 
@@ -57,12 +57,17 @@ public interface TableZHCPCJTJService {
 	 * @param pageInfo
 	 *            页面信息
 	 * @param termId
-	 *            学期Id
+	 *            学期ID(非空）
+	 * @param classId
+	 *            班级ID
 	 * @param sno
 	 *            学号
+	 * @param order
+	 *            排序
 	 * @return 结果集
 	 */
 	public PageInfo<Map<String, String>> getRecordWithMap(
-			PageInfo<Map<String, String>> pageInfo, String termId, String sno);
+			PageInfo<Map<String, String>> pageInfo, String termId,
+			String classId, String sno, String order);
 
 }

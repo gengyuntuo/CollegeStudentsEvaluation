@@ -57,6 +57,61 @@
 		WHERE id = #{value}
 	</select>
 	<select id="getRecordWithMap" parameterType="string" resultType="map">
-		select * from
+		SELECT 
+	        `zhstu`.*,
+	        `rcxw`.`id` AS `rcxwId`,
+	        `rcxw`.`she_hui_gong_de` AS `shgd`
+			`rcxw`.`wen_ming_jiao_wang` AS `wmjw`,
+			`rcxw`.`cheng_xin_li_shen` AS `cxls`,
+			`rcxw`.`ti_yu_duan_lian` AS `tydl`,
+			`rcxw`.`ai_hu_gong_wu` AS `ahgw`,
+			`rcxw`.`xue_xiao_gui_ding` AS `xxgd`,
+			`rcxw`.`can_jia_huo_dong` AS `cjhd`,
+			`rcxw`.`ting_ke_ji_lu` AS `tkjl`,
+			`rcxw`.`gong_yu_jian_cha` AS `gyjc`,
+			`rcxw`.`she_hui_gong_de`+
+			`rcxw`.`wen_ming_jiao_wang`+
+			`rcxw`.`cheng_xin_li_shen`+
+			`rcxw`.`ti_yu_duan_lian`+
+			`rcxw`.`ai_hu_gong_wu`+
+			`rcxw`.`xue_xiao_gui_ding`+
+			`rcxw`.`can_jia_huo_dong`+
+			`rcxw`.`ting_ke_ji_lu`+
+			`rcxw`.`gong_yu_jian_cha` AS `rcxwScore`,
+	        `rcxw`.`is_valid` AS `rcxwState`
+	    FROM
+	        (SELECT 
+	        	`stu`.`id` AS `stuId`,
+	        	`stu`.`sno` AS `sno`,
+	        	`stu`.`name` AS `name`,
+				`zh`.`term_id` AS `termId`,
+	            `zh`.`id` AS `zhId`,
+	            `zh`.`is_valid` AS `zhState`
+			FROM
+				`t_zhcpcjtj` `zh`
+			LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
+			WHERE
+				<if test="termId != null">
+					`zh`.`term_id` = #{termId}
+				</if>
+				<if test="zhId != null">
+					AND `zh`.`id` = #{zhId}
+				</if>
+				<if test="classId != null">
+					AND `stu`.`class_id` = #{classId}
+				</if>
+				) `zhstu`
+	    LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`zhId` = `rcxw`.`zong_he_id`
+		ORDER BY 
+		<choose>
+			<!-- 根据成绩降序排列 -->
+			<when test="order = 'score'">
+				`rcxwScore` DESC, `sno` ASC
+			</when>
+			<!-- 默认为按照学号排序 -->
+			<otherwise>
+				`sno`
+			</otherwise>
+		</choose>
 	</select>
 </mapper>
