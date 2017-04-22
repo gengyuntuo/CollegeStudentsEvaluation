@@ -1,3 +1,31 @@
+/**
+ * 参数
+ */
+var termId = $("#termId").val(); // 测评ID
+
+/**
+ * 获取bootstrapTable的查询参数
+ * 
+ * @param params
+ * @returns
+ */
+function getQueryParams(params) {
+	params["termId"] = termId;
+	var classId = $("#classSelect").val();
+	if (classId != "") {
+		params["classId"] = classId;
+	}
+	var order = $("#orderSelect").val();
+	if (order != "") {
+		params["order"] = order;
+	} else {
+		params["order"] = undefined;
+	}
+	return params;
+}
+/**
+ * 页面加载完成
+ */
 $(document).ready(function() {
 	/**
 	 * 创建列表对象
@@ -12,10 +40,7 @@ $(document).ready(function() {
 			$('#tableZHCP').bootstrapTable({
 				url : 'listZHCPCJTJ.do',
 				method : 'GET',
-				queryParams : function(params) {
-					params["termId"] = 18;
-					return params;
-				},
+				queryParams : getQueryParams,
 				cache : true, // 禁用ajax缓存数据
 				striped : true, // 设置为 true 会有隔行变色效果
 				sidePagination : 'server', // 设置在哪里进行分页，可选值为 'client' 或者
@@ -62,7 +87,7 @@ $(document).ready(function() {
 					align : "center",
 					valign : "middle",
 				}, {
-					title : '③素质学分合计   ③=①+②',
+					title : '③素质学分合计 ③=①+②',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -84,7 +109,7 @@ $(document).ready(function() {
 					align : "center",
 					valign : "middle"
 				}, {
-					title : '⑥综合测评成绩     ⑥=⑤×80%+④×20%',
+					title : '⑥综合测评成绩 ⑥=⑤×80%+④×20%',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -116,10 +141,7 @@ $(document).ready(function() {
 			$('#tableRCXW').bootstrapTable({
 				url : 'listSZXFRCXWBFPF.do',
 				method : 'GET',
-				queryParams : function(params) {
-					params["termId"] = 18;
-					return params;
-				},
+				queryParams : getQueryParams,
 				cache : true, // 禁用ajax缓存数据
 				striped : true, // 设置为 true 会有隔行变色效果
 				sidePagination : 'server', // 设置在哪里进行分页，可选值为 'client' 或者
@@ -237,10 +259,7 @@ $(document).ready(function() {
 			$('#tableSZJF').bootstrapTable({
 				url : 'listSZJYJFPF.do',
 				method : 'GET',
-				queryParams : function(params) {
-					params["termId"] = 18;
-					return params;
-				},
+				queryParams : getQueryParams,
 				cache : true, // 禁用ajax缓存数据
 				striped : true, // 设置为 true 会有隔行变色效果
 				sidePagination : 'server', // 设置在哪里进行分页，可选值为 'client' 或者
@@ -326,7 +345,7 @@ $(document).ready(function() {
 	};
 
 	/**
-	 * 执行
+	 * 页面控件及事件绑定
 	 */
 	// 1. 初始化Table
 	var tableZHCP = new TableZHCPInit();
@@ -335,4 +354,60 @@ $(document).ready(function() {
 	tableZHCP.Init();
 	tableRCXW.Init();
 	tableSZJF.Init();
+	// 2. 绑定Select2控件
+	$("#tableSelect").select2({
+		width : "20%",
+		allowClear : false,
+		minimumResultsForSearch : -1,
+		language : "zh-CN",
+	});
+	$("#classSelect").select2({
+		width : "20%",
+		allowClear : false,
+		minimumResultsForSearch : -1,
+		language : "zh-CN",
+	});
+	$("#orderSelect").select2({
+		width : "20%",
+		allowClear : false,
+		minimumResultsForSearch : -1,
+		language : "zh-CN",
+	});
+	// 3. 下拉框点击事件
+	$("#tableSelect").on("change", function(value) {
+		console.info("更换Table");
+		// $("#tableSZJF").bootstrapTable("destroy");
+		switch ($(this).val()) {
+		case "zhcp":
+			$("#tableZHCP").bootstrapTable("hide");
+			break;
+		case "rcxw":
+			$("#tableRCXW").bootstrapTable("hide");
+			break;
+		case "szjf":
+			$("#tableSZJF").bootstrapTable("hidden");
+			break;
+		default:
+			break;
+		}
+	});
+	$("#classSelect").on("change", function(value) {
+		$("#tableZHCP").bootstrapTable("refresh");
+		console.info("更换显示内容");
+	});
+	$("#orderSelect").on("change", function(value) {
+		console.info("更换排序方式");
+	});
+	// 4. 按钮点击事件
+	$("#exportBtn").on("click", function() {
+		// $.ajax({
+		// url : "",
+		// type : "",
+		// data : {},
+		// success : function() {
+		// ;
+		// }
+		// });
+		alert("下载当前的表单");
+	});
 });
