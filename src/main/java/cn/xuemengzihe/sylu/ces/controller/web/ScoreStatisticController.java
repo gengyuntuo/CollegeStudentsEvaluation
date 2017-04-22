@@ -432,7 +432,7 @@ public class ScoreStatisticController {
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);
 		// 分页查询记录
-		pageInfo = tableZHCPCJTJServcie.getRecordWithMap(pageInfo, termId,
+		pageInfo = tableSZXFRCXWBFPFService.getRecordWithMap(pageInfo, termId,
 				classId, null, order);
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
@@ -465,7 +465,7 @@ public class ScoreStatisticController {
 		pageInfo.setPageSize(limit);
 		pageInfo.setPageNum(offset / limit + 1);
 		// 分页查询记录
-		pageInfo = tableZHCPCJTJServcie.getRecordWithMap(pageInfo, termId,
+		pageInfo = tableSZJYJFPFService.getRecordWithMap(pageInfo, termId,
 				classId, null, order);
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}

@@ -67,7 +67,10 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">日常行为得分</h4>
 							</div>
-							<div class="panel-body"></div>
+							<div class="panel-body">
+								<table id="tableRCXW" class="table table-bordered">
+								</table>
+							</div>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
@@ -76,7 +79,10 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">素质教育得分</h4>
 							</div>
-							<div class="panel-body"></div>
+							<div class="panel-body">
+								<table id="tableSZJF" class="table table-bordered">
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

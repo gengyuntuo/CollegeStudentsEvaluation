@@ -62,7 +62,6 @@ SELECT
 	        	`stu`.`name` AS `name`,
 				`zh`.`term_id` AS `termId`,
 	            `zh`.`id` AS `zhId`,
-	            `zh`.`ping_jun_xue_fen_ji_dian` AS `xfjd`,
 	            `zh`.`is_valid` AS `zhState`
 			FROM
 				`t_zhcpcjtj` `zh`

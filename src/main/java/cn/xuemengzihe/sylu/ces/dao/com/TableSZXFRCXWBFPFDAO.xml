@@ -60,7 +60,7 @@
 		SELECT 
 	        `zhstu`.*,
 	        `rcxw`.`id` AS `rcxwId`,
-	        `rcxw`.`she_hui_gong_de` AS `shgd`
+	        `rcxw`.`she_hui_gong_de` AS `shgd`,
 			`rcxw`.`wen_ming_jiao_wang` AS `wmjw`,
 			`rcxw`.`cheng_xin_li_shen` AS `cxls`,
 			`rcxw`.`ti_yu_duan_lian` AS `tydl`,
