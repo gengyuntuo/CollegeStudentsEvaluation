@@ -268,7 +268,7 @@ CREATE VIEW `ces`.`view_rec_of_stu` AS
     WHERE
         msg.is_valid = 'Y' AND msg.type = 'TTS' 
     UNION SELECT 
-        msg.*, stu.name, 'T' AS role
+        msg.*, stu.name, 'S' AS role
     FROM
         message msg
             LEFT JOIN

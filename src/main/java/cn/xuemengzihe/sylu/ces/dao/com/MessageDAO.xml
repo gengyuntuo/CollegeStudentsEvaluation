@@ -31,6 +31,14 @@
 	<delete id="deleteMessage" parameterType="int">
 		DELETE FROM  `message` WHERE `id` = #{id}
 	</delete>
+	<update id="tickReadedTagForAMessage" parameterType="int">
+		UPDATE `message` SET `state` = 'R'
+		WHERE id = #{value}
+	</update>
+	<update id="tickReadedTagForAllMessage" parameterType="map">
+		UPDATE `message` SET `state` = 'R'
+		WHERE receiverId = #{receiverId} and type IN (${type})
+	</update>
 	<update id="updateMessage" parameterType="message">
 		UPDATE `message` SET 
 			`type` = #{type},
@@ -47,7 +55,42 @@
 	<select id="findMessageById" parameterType="int" resultType="message">
 		SELECT * FROM `message` WHERE `id` = #{id}
 	</select>
-	<select id="findMessageWithMap" parameterType="map" resultType="map">
- 
+	<!-- 根据需求查询某位用户的消息：
+		参数说明：
+			recMode 指定查询类型，其值为Y（仅查询接收的消息）recMode 和sendMode至少有一个不为空
+			sendMode 指定查询类型，其值为Y（仅查询发送的消息）recMode 和sendMode至少有一个不为空
+			tableName 指定查询的视图名称，不可以为空，取值（teach:查询用户为教师 stu:查询用户为学生）
+			userId 指定当前查询用户的ID，不可以为空
+			state 指定查询消息的类型，可以为空，缺省时为查询所有类型消息，其取值N-未读消息,R-已读消息
+	 -->
+	<select id="getMessageWithMap" parameterType="map" resultType="map">
+		SELECT * FROM (
+			<!-- 收消息模式：查询收到的消息 -->
+			<if test="recMode = 'Y'">
+				SELECT
+					*, 'rec' AS `io`
+				FROM
+					`view_rec_of_${tableName}`
+				WHERE
+					receiver_id = #{userId}
+			</if>
+			<!-- 收消息模式和发送消息模式都开启： 查询收到和发送的消息 -->
+			<if test="recMode ='Y' and sendMode = 'Y'">
+				UNION
+			</if>
+			<!-- 发消息模式：查询发送的消息 -->
+			<if test="sendMode = 'Y'">
+				SELECT 
+					*, 'out' AS `io`
+				FROM
+					`view_send_of_${tableName}`
+				WHERE
+					sender_id = #{userId}
+			</if>
+		) `tab`
+		<if test="state != null">
+			WHERE `tab`.`state` = #{state}
+		</if>
+		ORDER BY `c_time` DESC
 	</select>
 </mapper>
