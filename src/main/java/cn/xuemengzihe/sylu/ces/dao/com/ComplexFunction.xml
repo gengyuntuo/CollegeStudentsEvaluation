@@ -14,4 +14,45 @@
 			AND `class`.`is_valid` = 'Y'
 		ORDER BY class.start_year DESC
 	</select>
+	<!-- 查询收件人 -->
+	<select id="getReceiver" parameterType="map" resultType="map">
+		SELECT 
+		    *
+		FROM
+		    (SELECT 
+		        `id`,
+		            `name`,
+		            `portrait` AS `avatar`,
+		            `gender`,
+		            `email`,
+		            'S' AS `role`
+		    FROM
+		        `student`
+			WHERE
+		    	`is_valid` = 'Y'
+		    	<if test="classId != null">
+		    		AND `class_id` = #{classId}
+		    	</if>
+	    		AND (
+	    		`sno` LIKE '%${search}%'
+				OR `name` LIKE '%${search}%'
+	      		OR `email` LIKE '%${search}%')
+			UNION
+			SELECT 
+				`id`,
+				`name`,
+				`portrait` AS `avatar`,
+		 		`gender`,
+				`email`,
+				'T' AS `role`
+		    FROM
+				`teacher`
+		    WHERE
+				`is_valid` = 'Y'
+		 		AND (
+		 		`name` LIKE '%${search}%'
+				OR `email` LIKE '%${search}%')
+		) tab
+		ORDER BY role DESC, id DESC
+	</select>
 </mapper>

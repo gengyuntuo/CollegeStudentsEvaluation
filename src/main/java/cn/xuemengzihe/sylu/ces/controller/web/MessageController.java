@@ -1,7 +1,10 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <h1>Message Controller</h1>
@@ -26,5 +29,17 @@ public class MessageController {
 	@RequestMapping("/writeMessage")
 	public String writeMessage() {
 		return "/message/writeMessage";
+	}
+
+	/**
+	 * 获取收件人列表
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/writeMessage")
+	public String getReceiver(HttpServletRequest request) {
+		return null;
 	}
 }

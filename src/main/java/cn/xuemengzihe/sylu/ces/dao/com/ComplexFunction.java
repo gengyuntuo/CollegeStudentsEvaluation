@@ -24,4 +24,13 @@ public interface ComplexFunction {
 	 * @return
 	 */
 	public List<Map<String, String>> getClassesOfTeacherSelect(Integer id);
+
+	/**
+	 * 在发送消息的时候选择收件人列表
+	 * 
+	 * @param conditions
+	 *            查询条件（search、chassId）
+	 * @return
+	 */
+	public List<Map<String, String>> getReceiver(Map<String, String> conditions);
 }

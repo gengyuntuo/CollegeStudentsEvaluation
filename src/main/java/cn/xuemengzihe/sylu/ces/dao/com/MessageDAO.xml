@@ -8,6 +8,7 @@
 			`type`,
 			`sender_id`,
 			`receiver_id`,
+			`title`,
 			`content`,
 			`state`,
 			`with_mail`,
@@ -18,6 +19,7 @@
 			#{type},
 			#{senderId},
 			#{receiverId},
+			#{title},
 			#{content},
 			#{state},
 			#{withMail},
@@ -34,6 +36,7 @@
 			`type` = #{type},
 			`sender_id` = #{senderId},
 			`receiver_id` = #{receiverId},
+			`title` = #{title},
 			`content` = #{content},
 			`state` = #{state},
 			`with_mail` = #{withMail},
@@ -44,7 +47,7 @@
 	<select id="findMessageById" parameterType="int" resultType="message">
 		SELECT * FROM `message` WHERE `id` = #{id}
 	</select>
-	<select id="findMessage">
+	<select id="findMessageWithMap" parameterType="map" resultType="map">
  
 	</select>
 </mapper>

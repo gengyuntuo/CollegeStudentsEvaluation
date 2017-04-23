@@ -240,6 +240,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`message` (
   `type` VARCHAR(10) NOT NULL COMMENT '消息类型（TTS->老师发送给学生）、（TTT->老师发送给老师）、（STT->学生发送给老师）、（STS->学生发送给学生）',
   `sender_id` INT NOT NULL COMMENT '发送者ID',
   `receiver_id` INT NOT NULL COMMENT '接收者ID',
+  `title` VARCHAR(1000) NOT NULL COMMENT '标题',
   `content` VARCHAR(10000) NOT NULL COMMENT '内容',
   `state` VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '消息状态，是否已读等',
   `with_mail` VARCHAR(1) NULL DEFAULT 'N' COMMENT '是否有邮件通知',

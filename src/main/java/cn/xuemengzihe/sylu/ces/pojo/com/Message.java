@@ -13,20 +13,18 @@ import java.util.Date;
  */
 public class Message {
 	private Integer id; // ID
-	private Character type; // 消息类型 图片、文字
-	private Character sendType; // 消息发送类型，老师给学生，学生给老师、老师给老师等
-	private Character isRead; // 是否阅读消息
+	private String type; // 消息发送类型，老师给学生，学生给老师、老师给老师等
+	private String isRead; // 是否阅读消息
 	private Integer senderId; // 发送者ID
 	private Integer receiverId; // 接受者ID
-	private String message; // 消息内容
+	private String title; // 标题
+	private String content; // 消息内容
+	private String state; // 消息状态（已读、未读）
+	private String with_mail; // 是否同时发送邮件通知
 
-	private Character isValid; // 该消息是否有效
+	private String isValid; // 该消息是否有效
 	private Date cTime;
 	private Date uTime;
-
-	public Message() {
-		super();
-	}
 
 	public Integer getId() {
 		return id;
@@ -36,27 +34,19 @@ public class Message {
 		this.id = id;
 	}
 
-	public Character getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Character type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public Character getSendType() {
-		return sendType;
-	}
-
-	public void setSendType(Character sendType) {
-		this.sendType = sendType;
-	}
-
-	public Character getIsRead() {
+	public String getIsRead() {
 		return isRead;
 	}
 
-	public void setIsRead(Character isRead) {
+	public void setIsRead(String isRead) {
 		this.isRead = isRead;
 	}
 
@@ -76,19 +66,43 @@ public class Message {
 		this.receiverId = receiverId;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Character getIsValid() {
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getWith_mail() {
+		return with_mail;
+	}
+
+	public void setWith_mail(String with_mail) {
+		this.with_mail = with_mail;
+	}
+
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 
@@ -110,11 +124,11 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", type=" + type + ", sendType="
-				+ sendType + ", isRead=" + isRead + ", senderId=" + senderId
-				+ ", receiverId=" + receiverId + ", message=" + message
-				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
-				+ uTime + "]";
+		return "Message [id=" + id + ", type=" + type + ", isRead=" + isRead
+				+ ", senderId=" + senderId + ", receiverId=" + receiverId
+				+ ", title=" + title + ", content=" + content + ", state="
+				+ state + ", with_mail=" + with_mail + ", isValid=" + isValid
+				+ ", cTime=" + cTime + ", uTime=" + uTime + "]";
 	}
 
 }

@@ -15,6 +15,16 @@
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
+<style type="text/css">
+.bigdrop.select2-container .select2-results {
+	max-height: 300px;
+}
+
+.bigdrop .select2-results {
+	max-height: 300px;
+}
+</style>
 </head>
 <body>
 	<!-- Start #header -->
@@ -185,7 +195,7 @@
 							<form action="#" role="form" class="form-horizontal">
 								<div class="form-group">
 									<div class="col-lg-12">
-										<input type="text" class="form-control" id="to" name="to" placeholder="To">
+										<select id="receiverSelect" name="receiverId"></select>
 									</div>
 								</div>
 								<!-- End .form-group  -->
@@ -239,6 +249,8 @@
 	<!-- End #content -->
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
-	<script src="assets/js/pages/dashboard.js"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/pages/writeMessage.js"/>"></script>
 </body>
 </html>

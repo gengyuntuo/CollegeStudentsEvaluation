@@ -77,6 +77,10 @@ public class TermServiceImpl implements TermService {
 					.getId()));
 		}
 
+		// TODO 创建综合测评表
+		// TODO 创建日常行为评分表
+		// TODO 创建素质教育加分评分表
+
 		return result;
 	}
 
