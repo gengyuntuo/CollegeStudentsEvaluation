@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,14 @@ public class ComplexFunctionServiceImpl implements ComplexFunctionService {
 			String classId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Integer createZHCPTJ(String termId, String stuId) {
+		Map<String, String> params = new HashMap<>();
+		params.put("termId", termId);
+		params.put("stuId", stuId);
+		return complexFunction.createZHCPTJ(params);
 	}
 
 }

@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`student` (
   `password` VARCHAR(32) NOT NULL COMMENT '密码',
   `user_type` VARCHAR(1) NOT NULL COMMENT '用户类型 例如T：老师，S：学生，M：班委，A：管理员',
   # 学生特有的字段
-  `sno` INT UNIQUE NOT NULL COMMENT '学生学号',
+  `sno` VARCHAR(45) UNIQUE NOT NULL COMMENT '学生学号',
   `class_id` INT NOT NULL COMMENT '班级的ID',
   `dormno` VARCHAR(45) NULL DEFAULT '' COMMENT '寝室楼号',
   `dorm_info` VARCHAR(45) NULL DEFAULT '' COMMENT '寝室号、床号',
@@ -179,10 +179,12 @@ CREATE TABLE IF NOT EXISTS `ces`.`t_zhcpcjtj` (
   `is_valid` VARCHAR(1) NULL DEFAULT 'N' COMMENT '标志此表是否审核过',
   `c_time` DATETIME NOT NULL COMMENT '创建时间',
   `u_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE(`term_id`,`sno`)
 ) COMMENT '综合测评成绩统计表';
 
 /* 素质教育加分评分表 */
+DROP TABLE IF EXISTS `ces`.`t_szjyjfpf`;
 CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfpf` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `zong_he_id` INT NOT NULL DEFAULT 0 COMMENT '综合测评表ID',
@@ -215,6 +217,7 @@ CREATE TABLE IF NOT EXISTS `ces`.`t_szjyjfsq` (
 ) COMMENT '素质教育加分申请表';
 
 /* 素质学分日常行为部分评分表 */
+DROP TABLE IF EXISTS `ces`.`t_szxfrcxwbfpf`;
 CREATE TABLE IF NOT EXISTS `ces`.`t_szxfrcxwbfpf` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `zong_he_id` INT NOT NULL DEFAULT 0 COMMENT '综合测评表ID',
@@ -250,6 +253,143 @@ CREATE TABLE IF NOT EXISTS `ces`.`message` (
   PRIMARY KEY (`id`))
 COMMENT = '消息表';
 
+/********/
+/* 视图 */
+/********/
+/* 学生接收消息的视图 */
+DROP VIEW IF EXISTS `ces`.`view_rec_of_stu`;
+CREATE VIEW `ces`.`view_rec_of_stu` AS
+    SELECT 
+        msg.*, t.name, 'T' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        teacher t ON msg.sender_id = t.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'TTS' 
+    UNION SELECT 
+        msg.*, stu.name, 'T' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        student stu ON msg.sender_id = stu.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'STS';
 
+/* 学生发送消息的视图 */
+DROP VIEW IF EXISTS `ces`.`view_send_of_stu`;
+CREATE VIEW `ces`.`view_send_of_stu` AS
+    SELECT 
+        msg.*, t.name, 'T' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        teacher t ON msg.receiver_id = t.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'STT' 
+    UNION SELECT 
+        msg.*, stu.name, 'S' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        student stu ON msg.receiver_id = stu.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'STS';
 
+/* 老师接收消息的视图 */
+DROP VIEW IF EXISTS `ces`.`view_rec_of_teach`;
+CREATE VIEW `ces`.`view_rec_of_teach` AS
+    SELECT 
+        msg.*, t.name, 'T' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        teacher t ON msg.sender_id = t.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'TTT' 
+    UNION SELECT 
+        msg.*, stu.name, 'S' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        student stu ON msg.sender_id = stu.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'STT';
 
+/* 教师发送消息的视图 */
+DROP VIEW IF EXISTS `ces`.`view_send_of_teach`;
+CREATE VIEW `ces`.`view_send_of_teach` AS
+    SELECT 
+        msg.*, t.name, 'T' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        teacher t ON msg.receiver_id = t.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'TTT' 
+    UNION SELECT 
+        msg.*, stu.name, 'S' AS role
+    FROM
+        message msg
+            LEFT JOIN
+        student stu ON msg.receiver_id = stu.id
+    WHERE
+        msg.is_valid = 'Y' AND msg.type = 'TTS';
+
+/********/
+/* 函数 */
+/********/
+DROP function IF EXISTS `create_zhcpcjtj`;
+DELIMITER $$
+USE `ces`$$
+CREATE FUNCTION `create_zhcpcjtj` (termId INT, stuId INT) RETURNS INT # termId 测评ID, stuId 学生ID
+BEGIN
+	/* 变量声明 */
+	DECLARE zhId INT DEFAULT -1; # 综合评分表ID
+	DECLARE sno VARCHAR(45) DEFAULT NULL; # 学生学号
+
+	/* 获取学生学号 */
+	SELECT `student`.`sno` INTO sno FROM `student` WHERE `id` = stuId;
+
+	# 创建综合测评表
+	INSERT INTO `t_zhcpcjtj` (
+		`sno`,
+		`term_id`,
+		`ping_jun_xue_fen_ji_dian`,
+		`is_valid`,
+		`c_time`)
+	VALUES (sno, termId, 0.0, 'N', NOW());
+	
+	SELECT LAST_INSERT_ID() INTO zhId; # 获取综合测评表ID
+
+	# 创建素质教育日常行为部分评分表
+	INSERT INTO `t_szxfrcxwbfpf` (
+	`zong_he_id`,
+	`she_hui_gong_de`,
+	`wen_ming_jiao_wang`,
+	`cheng_xin_li_shen`,
+	`ti_yu_duan_lian`,
+	`ai_hu_gong_wu`,
+	`xue_xiao_gui_ding`,
+	`can_jia_huo_dong`,
+	`ting_ke_ji_lu`,
+	`gong_yu_jian_cha`,
+	`is_valid`,
+	`c_time`)
+	VALUES (zhId, 5, 5, 5, 5, 5, 10, 10, 10, 10, 'N', NOW());
+
+	# 创建素质教育加分评分表
+	INSERT INTO `t_szjyjfpf` (
+	`zong_he_id`,
+	`she_hui_fu_wu`,
+	`she_hui_shi_jian`,
+	`bi_sai_huo_jiang`,
+	`xue_sheng_gan_bu`,
+	`is_valid`,
+	`c_time`)
+	VALUES (zhId, 0, 0, 0, 0, 'N', NOW());
+
+	# 创建成功返回综合测评表ID
+	RETURN zhId; 
+END$$
+DELIMITER ;

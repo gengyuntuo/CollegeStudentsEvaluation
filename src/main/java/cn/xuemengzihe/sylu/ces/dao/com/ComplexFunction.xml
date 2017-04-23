@@ -55,4 +55,8 @@
 		) tab
 		ORDER BY role DESC, id DESC
 	</select>
+	<!-- 创建综合测评统计表（同时会创建素质教育评分表和素质教育日常行为部分评分表） -->
+	<select id="createZHCPTJ" parameterType="map" resultType="int">
+		SELECT create_zhcpcjtj(#{termId}, #{stuId})	
+	</select>
 </mapper>

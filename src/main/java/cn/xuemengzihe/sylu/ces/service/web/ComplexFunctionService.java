@@ -26,4 +26,15 @@ public interface ComplexFunctionService {
 	public PageInfo<Map<String, String>> getReceiver(
 			PageInfo<Map<String, String>> pageInfo, String search,
 			String classId);
+
+	/**
+	 * 创建综合测评统计表（同时会创建素质教育评分表和素质教育日常行为部分评分表）
+	 * 
+	 * @param termId
+	 *            termId 测评学期ID
+	 * @param stuId
+	 *            学生ID
+	 * @return 综合测评表ID
+	 */
+	public Integer createZHCPTJ(String termId, String stuId);
 }

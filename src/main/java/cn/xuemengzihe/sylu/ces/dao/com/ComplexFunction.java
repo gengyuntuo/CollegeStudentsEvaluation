@@ -33,4 +33,13 @@ public interface ComplexFunction {
 	 * @return
 	 */
 	public List<Map<String, String>> getReceiver(Map<String, String> conditions);
+
+	/**
+	 * 创建综合测评统计表（同时会创建素质教育评分表和素质教育日常行为部分评分表）
+	 * 
+	 * @param params
+	 *            （termId 测评学期ID，stuId 学生ID）
+	 * @return 综合测评表ID
+	 */
+	public Integer createZHCPTJ(Map<String, String> params);
 }

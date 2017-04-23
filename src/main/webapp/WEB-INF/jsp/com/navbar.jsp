@@ -37,14 +37,6 @@
 									</div>
 								</div>
 							</li>
-							<li class="search-email">
-								<form>
-									<input type="text" name="search" placeholder="搜索邮件...">
-									<button type="submit">
-										<i class="ec-search"></i>
-									</button>
-								</form>
-							</li>
 							<li class="mail-list clearfix"><a href="#"> <img src="assets/img/avatars/128.jpg" class="mail-avatar pull-left" alt="avatar">
 									<p class="name">
 										<span class="status"><i class="en-dot"></i></span> Jason Rivera <span class="notification">2</span> <span class="time">12:30 am</span>

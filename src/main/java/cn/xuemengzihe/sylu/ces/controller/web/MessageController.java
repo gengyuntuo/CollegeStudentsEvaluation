@@ -38,7 +38,7 @@ public class MessageController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/writeMessage")
+	@RequestMapping("/getReceiver")
 	public String getReceiver(HttpServletRequest request) {
 		return null;
 	}
