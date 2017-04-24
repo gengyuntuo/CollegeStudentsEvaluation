@@ -172,7 +172,7 @@ public class ExcelServiceImpl implements ExcelService {
 	@Override
 	public String exportExcelFileOfZHCPCJTJ(String termId, String classId,
 			String order, boolean showSignColumn) {
-		GenerateExcelFile excelFactory = new GenerateExcelFile();
+		GenerateExcelFile  excelFactory = new GenerateExcelFile();
 		String title = "沈阳理工大学$CLASSID班综合测评成绩统计表";
 		String[] colsTitle = { "学号", "姓名", "①日常行为得分", "②素质活动得分",
 				"③素质学分合计 ③=①+②", "④素质学分绩点", "⑤平均学分绩点", "⑥综合测评成绩 ⑥=⑤×80%+④×20%",
