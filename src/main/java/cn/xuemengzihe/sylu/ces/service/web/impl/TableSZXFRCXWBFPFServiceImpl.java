@@ -58,7 +58,8 @@ public class TableSZXFRCXWBFPFServiceImpl implements TableSZXFRCXWBFPFService {
 		conditions.put("sno", sno);
 		conditions.put("order", order);
 		// 分页查询
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = tableSZXFRCXWBFPFDAO
 				.getRecordWithMap(conditions);
 		pageInfo = new PageInfo<>(list);

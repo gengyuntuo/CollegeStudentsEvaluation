@@ -57,8 +57,8 @@ public class TableZHCPCJTJServiceImpl implements TableZHCPCJTJService {
 		conditions.put("classId", classId);
 		conditions.put("sno", sno);
 		conditions.put("order", order);
-		// 分页查询
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = tableZHCPCJTJDAO
 				.getRecordWithMap(conditions);
 		pageInfo = new PageInfo<>(list);

@@ -62,5 +62,8 @@
 		<if test="setting != '' and setting != null">
 			AND group = #{group}
 		</if>
+		<if test="order != '' and order != null">
+			OREDER BY `${order}`
+		</if>
 	</select>
 </mapper>

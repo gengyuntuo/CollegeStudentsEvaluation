@@ -19,6 +19,11 @@ import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
 import cn.xuemengzihe.sylu.ces.service.web.SettingService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFPFService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
+import cn.xuemengzihe.sylu.ces.service.web.TableSZXFRCXWBFPFService;
+import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
+import cn.xuemengzihe.util.excel.GenerateExcelFile;
 import cn.xuemengzihe.util.excel.ParseExcelFile;
 
 /**
@@ -40,6 +45,14 @@ public class ExcelServiceImpl implements ExcelService {
 	private ClassService classService;
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private TableSZJYJFSQService tableSZJYJFSQServcie;
+	@Autowired
+	private TableSZJYJFPFService tableSZJYJFPFService;
+	@Autowired
+	private TableZHCPCJTJService tableZHCPCJTJServcie;
+	@Autowired
+	private TableSZXFRCXWBFPFService tableSZXFRCXWBFPFService;
 
 	@Override
 	public ImportStudentByExcelResult importStudentInfomationFromExcelFile(
@@ -154,5 +167,64 @@ public class ExcelServiceImpl implements ExcelService {
 			}
 		}
 		return info; // 返回此次插入数据的信息
+	}
+
+	@Override
+	public String exportExcelFileOfZHCPCJTJ(String termId, String classId,
+			String order, boolean showSignColumn) {
+		GenerateExcelFile excelFactory = new GenerateExcelFile();
+		String title = "沈阳理工大学$CLASSID班综合测评成绩统计表";
+		String[] colsTitle = { "学号", "姓名", "①日常行为得分", "②素质活动得分",
+				"③素质学分合计 ③=①+②", "④素质学分绩点", "⑤平均学分绩点", "⑥综合测评成绩 ⑥=⑤×80%+④×20%",
+				"签字确认" };
+		List<Map<String, String>> list = tableZHCPCJTJServcie.getRecordWithMap(
+				null, termId, classId, null, order).getList();
+
+		int totalCols = colsTitle.length - (showSignColumn ? 0 : 1);
+		for (Map<String, String> row : list) {
+			for (int i = 0; i < totalCols; i++) {
+				switch (i) {
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				case 7:
+					break;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String exportExcelFileOfSZJYJFPF(String termId, String classId,
+			String order, boolean showSignColumn) {
+		List<Map<String, String>> list = tableSZJYJFPFService.getRecordWithMap(
+				null, termId, classId, null, order).getList();
+		return null;
+	}
+
+	@Override
+	public String exportExcelFileOfSZJYJFSQ() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String exportExcelFileOfSZXFRCXWBFPF(String termId, String classId,
+			String order, boolean showSignColumn) {
+		List<Map<String, String>> list = tableSZXFRCXWBFPFService
+				.getRecordWithMap(null, termId, classId, null, order).getList();
+		return null;
 	}
 }

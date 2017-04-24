@@ -59,7 +59,8 @@ public class TableSZJYJFSQServiceImpl implements TableSZJYJFSQService {
 		conditions.put("sno", sno);
 		conditions.put("id", termId);
 		// 分页查询
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = tableSZJYJFSQDAO
 				.getRecordWithMap(conditions);
 		pageInfo = new PageInfo<>(list);

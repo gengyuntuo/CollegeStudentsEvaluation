@@ -57,7 +57,8 @@ public class TableSZJYJFPFServiceImpl implements TableSZJYJFPFService {
 		conditions.put("sno", sno);
 		conditions.put("order", order);
 		// 分页查询
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = tableSZJYJFPFDAO
 				.getRecordWithMap(conditions);
 		pageInfo = new PageInfo<>(list);
