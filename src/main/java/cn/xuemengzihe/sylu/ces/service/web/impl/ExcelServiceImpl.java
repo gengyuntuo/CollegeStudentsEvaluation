@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Setting;
 import cn.xuemengzihe.sylu.ces.pojo.web.ImportStudentByExcelResult;
@@ -171,60 +172,193 @@ public class ExcelServiceImpl implements ExcelService {
 
 	@Override
 	public String exportExcelFileOfZHCPCJTJ(String termId, String classId,
-			String order, boolean showSignColumn) {
-		GenerateExcelFile  excelFactory = new GenerateExcelFile();
+			String order, boolean showSignColumn, String path) {
+		GenerateExcelFile excel = new GenerateExcelFile();
+
 		String title = "沈阳理工大学$CLASSID班综合测评成绩统计表";
 		String[] colsTitle = { "学号", "姓名", "①日常行为得分", "②素质活动得分",
 				"③素质学分合计 ③=①+②", "④素质学分绩点", "⑤平均学分绩点", "⑥综合测评成绩 ⑥=⑤×80%+④×20%",
 				"签字确认" };
+
+		// 班级
+		Clazz clazz = classService.findClazzById(Integer.parseInt(classId));
 		List<Map<String, String>> list = tableZHCPCJTJServcie.getRecordWithMap(
 				null, termId, classId, null, order).getList();
+		if (clazz == null) {
+			try {
+				excel.close();
+			} catch (IOException e) {
+			}
+			throw new InvalidParameterException();
+		}
 
+		// 显示的列数
 		int totalCols = colsTitle.length - (showSignColumn ? 0 : 1);
+
+		excel.setFont("宋体", 22, true); // 设置标题字体
+		excel.setStyle(true, true); // 设置标题样式（加载字体）
+		excel.writeAndMerge(title.replace("$CLASSID", clazz.getClassId()),
+				totalCols, 1);
+		excel.setFont("宋体", 12, true);
+		excel.setStyle(true, true);
+		excel.writeMultiValue(true, colsTitle);// 换行显示列名
+
+		excel.setFont("宋体", 12, false);
+		excel.setStyle(true, true);
 		for (Map<String, String> row : list) {
+			Double totalSz = 0D; // 素质学分合计
+			Double totalSzjd = 0D; // 素质学分绩点
+			excel.switchToNextRow();
 			for (int i = 0; i < totalCols; i++) {
 				switch (i) {
 				case 0:
+					excel.writeValue(row.get("sno"));
 					break;
 				case 1:
+					excel.writeValue(row.get("name"));
 					break;
 				case 2:
+					excel.writeValue(row.get("rcxwScore"));
 					break;
 				case 3:
+					excel.writeValue(row.get("szjfScore"));
 					break;
 				case 4:
+					totalSz = Double.parseDouble(row.get("rcxwScore"))
+							+ Double.parseDouble(row.get("szjfScore"));
+					excel.writeValue(totalSz.toString());
 					break;
 				case 5:
+					totalSzjd = (totalSz - 50) / 10;
+					excel.writeValue(totalSzjd.toString());
 					break;
 				case 6:
+					excel.writeValue(row.get("xfjd"));
 					break;
 				case 7:
+					excel.writeValue(totalSzjd * 0.2
+							+ Double.parseDouble(row.get("xfjd")) * 0.8 + "");
+					break;
+				case 8:
 					break;
 				}
 			}
 		}
-		return null;
+		excel.generateExcelFile(path);
+		try {
+			excel.close();
+		} catch (IOException e) {
+		}
+		return path;
 	}
 
 	@Override
 	public String exportExcelFileOfSZJYJFPF(String termId, String classId,
-			String order, boolean showSignColumn) {
+			String order, boolean showSignColumn, String path) {
+		GenerateExcelFile excel = new GenerateExcelFile();
+
+		String title = "沈阳理工大学$CLASSID班素质教育加分评分表";
+		String[] colsTitle = { "学号", "姓名", "积极为社会服务，为他人奉献（满分8分）",
+				"积极参加社会实践与志愿服务（满分12分）", "参加各类比赛获奖情况（满分15分）", "学生干部职务加分（满分10分）",
+				"素质教育加分总分（满分30分）" };
+		String[] colsKey = { "sno", "name", "shfw", "shsj", "bshj", "xsgb",
+				"score" };
+
+		// 班级
+		Clazz clazz = classService.findClazzById(Integer.parseInt(classId));
 		List<Map<String, String>> list = tableSZJYJFPFService.getRecordWithMap(
 				null, termId, classId, null, order).getList();
-		return null;
+		if (clazz == null) {
+			try {
+				excel.close();
+			} catch (IOException e) {
+			}
+			throw new InvalidParameterException();
+		}
+
+		// 显示的列数
+		int totalCols = colsTitle.length;
+
+		excel.setFont("宋体", 22, true); // 设置标题字体
+		excel.setStyle(true, true); // 设置标题样式（加载字体）
+		excel.writeAndMerge(title.replace("$CLASSID", clazz.getClassId()),
+				totalCols, 1);
+		excel.setFont("宋体", 12, true);
+		excel.setStyle(true, true);
+		excel.writeMultiValue(true, colsTitle);// 换行显示列名
+
+		excel.setFont("宋体", 12, false);
+		excel.setStyle(true, true);
+
+		Double score = 0D;
+		for (Map<String, String> var : list) {
+			score = Double.parseDouble(var.get("shfw"))
+					+ Double.parseDouble(var.get("shsj"))
+					+ Double.parseDouble(var.get("bshj"))
+					+ Double.parseDouble(var.get("xsgb"));
+			var.put("score", score.toString());
+		}
+		excel.writeTableContent(colsKey, list);
+
+		excel.generateExcelFile(path); // 生成Excel
+		try {
+			excel.close();
+		} catch (IOException e) {
+		}
+		return path;
 	}
 
 	@Override
 	public String exportExcelFileOfSZJYJFSQ() {
-		// TODO Auto-generated method stub
+		// TODO 生成素质加分教育申请Excel文件
 		return null;
 	}
 
 	@Override
 	public String exportExcelFileOfSZXFRCXWBFPF(String termId, String classId,
-			String order, boolean showSignColumn) {
+			String order, boolean showSignColumn, String path) {
+		GenerateExcelFile excel = new GenerateExcelFile();
+
+		String title = "沈阳理工大学$CLASSID班素质学分日常行为部分评分表";
+		String[] colsTitle = { "学号", "姓名", "遵守社会公德（5、0）", "与他人文明交往 尊重师长（5、0）",
+				"诚信立身 勤俭立行（5、0）", "加强体育锻炼 提高身体素质（5、0）", "爱护公物 爱护校园环境 （5、0）",
+				"遵守学校相关管理规定 (10)", "积极参加各项活动（10）", "辅导员根据听课记录及工作笔记（15）",
+				"辅导员根据公寓检查记录 (10)", "总分" };
+		String[] colsKey = { "sno", "name", "shgd", "wmjw", "cxls", "tydl",
+				"ahgw", "xxgd", "cjhd", "tkjl", "gyjc", "rcxwScore" };
+
+		// 班级
+		Clazz clazz = classService.findClazzById(Integer.parseInt(classId));
 		List<Map<String, String>> list = tableSZXFRCXWBFPFService
 				.getRecordWithMap(null, termId, classId, null, order).getList();
-		return null;
+		if (clazz == null) {
+			try {
+				excel.close();
+			} catch (IOException e) {
+			}
+			throw new InvalidParameterException();
+		}
+
+		// 显示的列数
+		int totalCols = colsTitle.length;
+
+		excel.setFont("宋体", 22, true); // 设置标题字体
+		excel.setStyle(true, true); // 设置标题样式（加载字体）
+		excel.writeAndMerge(title.replace("$CLASSID", clazz.getClassId()),
+				totalCols, 1);
+		excel.setFont("宋体", 12, true);
+		excel.setStyle(true, true);
+		excel.writeMultiValue(true, colsTitle);// 换行显示列名
+
+		excel.setFont("宋体", 12, false);
+		excel.setStyle(true, true);
+		excel.writeTableContent(colsKey, list);
+
+		excel.generateExcelFile(path); // 生成Excel
+		try {
+			excel.close();
+		} catch (IOException e) {
+		}
+		return path;
 	}
 }

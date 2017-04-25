@@ -38,10 +38,12 @@ public interface ExcelService {
 	 *            排序方式
 	 * @param showSignColumn
 	 *            显示签字列
+	 * @param path
+	 *            存储的文件路径
 	 * @return Excel 文件路径
 	 */
 	public String exportExcelFileOfZHCPCJTJ(String termId, String classId,
-			String order, boolean showSignColumn);
+			String order, boolean showSignColumn, String path);
 
 	/**
 	 * 导出素质教育加分评分表
@@ -56,10 +58,12 @@ public interface ExcelService {
 	 *            排序方式
 	 * @param showSignColumn
 	 *            显示签字列
+	 * @param path
+	 *            存储的文件路径
 	 * @return Excel 文件路径
 	 */
 	public String exportExcelFileOfSZJYJFPF(String termId, String classId,
-			String order, boolean showSignColumn);
+			String order, boolean showSignColumn, String path);
 
 	/**
 	 * 
@@ -80,8 +84,10 @@ public interface ExcelService {
 	 *            排序方式
 	 * @param showSignColumn
 	 *            显示签字列
+	 * @param path
+	 *            存储的文件路径
 	 * @return Excel 文件路径
 	 */
 	public String exportExcelFileOfSZXFRCXWBFPF(String termId, String classId,
-			String order, boolean showSignColumn);
+			String order, boolean showSignColumn, String path);
 }
