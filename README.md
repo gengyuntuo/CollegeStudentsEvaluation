@@ -30,4 +30,56 @@
 	    }
 	});
  ```
-
+### 2. select2控件分段远程加载数据时失败
+使用官方提供的旧版ajax配置无法处理结果数据，在新版中处理结果的属性为`processResults`,并非`results`
+```javascript
+$("#receiverSelect").select2({
+	width : "100%",
+	allowClear : false,
+	palceholder : "收件人",
+	language : "zh-CN",
+	minimumInputLength : 1,
+	ajax : {
+		url : "data.json",
+		dataType : 'json',
+		quietMillis : 250, // 当输入框接收输入后多长时间开始发送请求
+		data : function(term, page) { // page 为从1开始的页码
+			return {
+				"search" : term["term"], // 搜索关键字
+				"page" : page, // 页码
+			};
+		},
+		processResults : function(data) {
+			console.info(data);
+			return {
+				results : data.items,
+				pagination : {
+					more : true
+				// 每页30条数据
+				// 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
+				}
+			};
+		}
+	},
+	escapeMarkup : function(m) {
+		return m;
+	}
+});
+```
+返回的数据（JSON）
+```javascript
+{   "total_count":100,
+	"page": 3,
+	"items":[
+		{"id":"13030504","text":"13030504" },
+		{"id":"13030503","text":"13030503" },
+		{"id":"13030502","text":"13030502" },
+		{"id":"13030502","text":"13030502" },
+		{"id":"13030504","text":"13030504" },
+		{"id":"13030503","text":"13030503" },
+		{"id":"13030502","text":"13030502" },
+		{"id":"13030502","text":"13030502" },
+		{"id":"13030504","text":"13030504" },
+		{"id":"13030501","text":"13030501" }]
+}
+```

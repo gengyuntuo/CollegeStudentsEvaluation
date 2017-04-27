@@ -20,18 +20,18 @@ $(document).ready(function() {
 					"page" : page, // 页码
 				};
 			},
-			results : function(data, page) {
+			processResults : function(data) {
 				console.info(data);
-				console.page(page);
-				var more = (page * 30) < data.total_count; // 不管是否有更多的结果都要这样做
 				return {
-					results : data["items"],
-					more : more// 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
+					results : data.items,
+					pagination : {
+						more : true
+					// 每页30条数据
+					// 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
+					}
 				};
 			}
 		},
-		formatResult : select2FormatResult,
-		formatSelection : select2FormatSelection,
 		escapeMarkup : function(m) {
 			return m;
 		}
@@ -49,16 +49,3 @@ $(document).ready(function() {
 		alert("下载当前的表单");
 	});
 });
-/**
- * 函数定义
- */
-// 格式化Select2下拉列表项
-function select2FormatResult(repo) {
-	var markup = "";
-	return markup;
-}
-
-// 格式化Select2选择项
-function select2FormatSelection(repo) {
-	return repo.full_name;
-}
