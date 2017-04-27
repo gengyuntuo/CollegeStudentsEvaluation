@@ -26,7 +26,7 @@ $(document).ready(function() {
 				var more = (page * 30) < data.total_count; // 不管是否有更多的结果都要这样做
 				return {
 					results : data["items"],
-					more : more, // 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
+					more : more// 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
 				};
 			}
 		},
