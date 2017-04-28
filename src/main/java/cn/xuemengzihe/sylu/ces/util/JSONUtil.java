@@ -68,4 +68,52 @@ public class JSONUtil {
 		builder.deleteCharAt(builder.length() - 1); // 删除最后一行的“，”号
 		return builder.append("]}").toString();
 	}
+
+	/**
+	 * 将PageInfo对象转化成带分页信息的JSON数据,带有当前页的页码
+	 * 
+	 * @param pageInfo
+	 *            PageInfo 对象
+	 * @return JSON
+	 */
+	public static String parsePageInfoToJSONWithPageNumber(
+			PageInfo<Map<String, String>> pageInfo) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"total\":");
+		builder.append(pageInfo.getTotal());
+		builder.append(",\"page\": ");
+		builder.append(pageInfo.getPageNum());
+		builder.append(",\"rows\": [");
+		if (pageInfo.getList() == null || pageInfo.getList().size() <= 0) {
+			return builder.append("]}").toString();
+		}
+		Gson gson = new Gson();
+		Type type = new TypeToken<Map<String, String>>() {
+		}.getType();
+		for (Map<String, String> var : pageInfo.getList()) {
+			builder.append(gson.toJson(var, type));
+			builder.append(",");
+		}
+		builder.deleteCharAt(builder.length() - 1); // 删除最后一行的“，”号
+		return builder.append("]}").toString();
+	}
+	public static String parsePageInfoToJSONUseForMessageDetect(
+			PageInfo<Map<String, String>> pageInfo) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\"total\":");
+		builder.append(pageInfo.getTotal());
+		builder.append(",\"msg\": [");
+		if (pageInfo.getList() == null || pageInfo.getList().size() <= 0) {
+			return builder.append("]}").toString();
+		}
+		Gson gson = new Gson();
+		Type type = new TypeToken<Map<String, String>>() {
+		}.getType();
+		for (Map<String, String> var : pageInfo.getList()) {
+			builder.append(gson.toJson(var, type));
+			builder.append(",");
+		}
+		builder.deleteCharAt(builder.length() - 1); // 删除最后一行的“，”号
+		return builder.append("]}").toString();
+	}
 }

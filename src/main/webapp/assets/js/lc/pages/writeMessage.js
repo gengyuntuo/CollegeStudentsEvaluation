@@ -6,46 +6,93 @@ $(document).ready(function() {
 	// 1. 绑定Select2控件
 	$("#receiverSelect").select2({
 		width : "100%",
-		allowClear : false,
-		palceholder : "收件人",
-		language : "zh-CN",
+		allowClear : true,
+		placeholder : "请选择收件人",
 		minimumInputLength : 1,
+		language : "zh-CN",
 		ajax : {
-			url : "data.json",
+			url : "getReceiver.do",
 			dataType : 'json',
-			quietMillis : 250, // 当输入框接收输入后多长时间开始发送请求
-			data : function(term, page) { // page 为从1开始的页码
+			cache : true,
+			data : function(params) { // page 为从1开始的页码
+				// console.info(params);
 				return {
-					"search" : term["term"], // 搜索关键字
-					"page" : page, // 页码
+					"search" : params["term"], // 搜索关键字
+					"page" : params.page
 				};
 			},
 			processResults : function(data) {
-				console.info(data);
+				var options = [];
+				$.each(data.rows, function(index, value) {
+					var item = {};
+					item.id = value.id;
+					item.text = (value.role == "S" ? "[学生]" : "[老师]")//
+							+ "  " + value.name;
+					options.push(item);
+				});
 				return {
-					results : data.items,
+					results : options,
 					pagination : {
-						more : true
-					// 每页30条数据
-					// 注意： 返回more的值，这样Select2才可以知道是否有更多的值需要加载
+						page : 2,
+						more : data.total > 10 * data.page
 					}
 				};
 			}
-		},
-		escapeMarkup : function(m) {
-			return m;
 		}
 	});
 	// 2. 按钮点击事件
-	$("#exportBtn").on("click", function() {
-		// $.ajax({
-		// url : "",
-		// type : "",
-		// data : {},
-		// success : function() {
-		// ;
-		// }
-		// });
+	$("#sendBtn").on("click", function() {
+		$.ajax({
+			url : "sendMessage.do",
+			type : "POST",
+			data : {
+				"role":"S",
+				"receiverId":12,
+				"withMail": true,
+				"content": "content"
+			},
+			success : function() {
+				;
+			}
+		});
 		alert("下载当前的表单");
+	});
+	// 3. --------------- Tinymce for send email ------------------//
+	tinymce.init({
+		selector : "textarea.tinymce",
+		menubar : false,
+		plugins : [ "advlist " + // //
+		"autolink " + //
+		"lists " + //
+		"link " + //
+		"image " + //
+		"charmap " + //
+		"print " + //
+		"preview " + //
+		"anchor " + //
+		"searchreplace " + //
+		"visualblocks " + //
+		"code " + //
+		"fullscreen " + //
+		"insertdatetime " + //
+		"media table " + //
+		"contextmenu " + //
+		"paste" //
+		],
+		toolbar : "bold " + //
+		"italic " + //
+		"strikethrough " + //
+		"bullist " + //
+		"numlist " + //
+		"blockquote " + //
+		"hr " + //
+		"alignleft " + //
+		"aligncenter " + //
+		"alignright " + //
+		"alignjustify " + //
+		"link unlink " + //
+		"code " + //
+		"image " + //
+		"media | fullscreen" //
 	});
 });

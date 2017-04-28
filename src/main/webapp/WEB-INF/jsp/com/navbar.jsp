@@ -25,7 +25,7 @@
 							<li><a href="#"><i class="ec-contract"></i> Contracts <span class="notification dark">7</span></a></li>
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-mail"></i><span class="notification">4</span></a>
-						<ul class="dropdown-menu email right" role="menu">
+						<ul id= "msgTip" class="dropdown-menu email right" role="menu">
 							<li class="mail-head">
 								<div class="clearfix">
 									<div class="pull-left">

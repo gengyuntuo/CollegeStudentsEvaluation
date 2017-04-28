@@ -28,15 +28,11 @@
 <script src="<c:url value="/assets/plugins/forms/autosize/jquery.autosize.js"/>"></script>
 <!-- Proivde quick search for many widgets -->
 <script src="<c:url value="/assets/plugins/core/quicksearch/jquery.quicksearch.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/flot/date.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/sparklines/jquery.sparkline.js"/>"></script>
-<script src="<c:url value="/assets/plugins/charts/pie-chart/jquery.easy-pie-chart.js"/>"></script>
 <script src="<c:url value="/assets/plugins/forms/icheck/jquery.icheck.js"/>"></script>
 <script src="<c:url value="/assets/plugins/forms/tags/jquery.tagsinput.min.js"/>"></script>
 <script src="<c:url value="/assets/plugins/forms/tinymce/tinymce.min.js"/>"></script>
 <script src="<c:url value="/assets/plugins/misc/highlight/highlight.pack.js"/>"></script>
 <script src="<c:url value="/assets/plugins/misc/countTo/jquery.countTo.js"/>"></script>
-<script src="<c:url value="/assets/plugins/ui/weather/skyicons.js"/>"></script>
 <script src="<c:url value="/assets/plugins/ui/notify/jquery.gritter.js"/>"></script>
 <script src="<c:url value="/assets/plugins/ui/calendar/fullcalendar.js"/>"></script>
 <script src="<c:url value="/assets/js/jquery.sprFlat.js"/>"></script>

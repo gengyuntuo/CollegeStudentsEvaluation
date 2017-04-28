@@ -42,7 +42,7 @@
 				<!-- Start .outlet -->
 				<!-- Page start here ( usual with .row ) -->
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<!-- col-lg-12 start here -->
 						<div class="panel-body">
 							<div class="input-group" style="float:left;width:300px">
