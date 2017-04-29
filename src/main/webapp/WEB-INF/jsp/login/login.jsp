@@ -83,7 +83,11 @@
 								<!-- col-lg-12 start here -->
 								<button class="btn btn-success pull-right" type="submit">登录</button>
 							</div>
-							<!-- col-lg-12 end here -->
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<label style="color:red;">${tip }</label>
+							</div>
 						</div>
 					</form>
 				</div>

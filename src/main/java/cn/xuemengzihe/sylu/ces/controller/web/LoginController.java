@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
@@ -79,8 +80,8 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "login")
 	public String login(HttpServletRequest request,
-			HttpServletResponse response, String userName, String password,
-			String remember, Integer role, String page) {
+			HttpServletResponse response, Model model, String userName,
+			String password, String remember, Integer role, String page) {
 		if (userName == null || password == null || userName.trim().isEmpty()
 				|| password.trim().isEmpty()) // 如果请求参数不完整将直接返回登录页面
 			return "/login/login";
@@ -93,6 +94,11 @@ public class LoginController {
 		switch (role) {
 		case ROLE_ADMIN:
 			user = teacherService.loginVerify(userName, password);
+			// 管理员也在数据库中也是教师表的记录，但是管理员的user_type字段为A
+			// 这里验证当前的老师是否为管理员
+			if (user == null || !"A".equals(user.getUserType())) {
+				user = null;
+			}
 			break;
 		case ROLE_TEACHER:
 			user = teacherService.loginVerify(userName, password);
