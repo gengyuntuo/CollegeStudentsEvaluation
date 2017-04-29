@@ -64,9 +64,9 @@
 			state 指定查询消息的类型，可以为空，缺省时为查询所有类型消息，其取值N-未读消息,R-已读消息
 	 -->
 	<select id="getMessageWithMap" parameterType="map" resultType="map">
-		SELECT * FROM (
+		SELECT *,DATE_FORMAT(`c_time`,'%Y-%m-%d %H:%i:%S') `time` FROM (
 			<!-- 收消息模式：查询收到的消息 -->
-			<if test="recMode = 'Y'">
+			<if test="recMode != null">
 				SELECT
 					*, 'rec' AS `io`
 				FROM
@@ -75,11 +75,11 @@
 					receiver_id = #{userId}
 			</if>
 			<!-- 收消息模式和发送消息模式都开启： 查询收到和发送的消息 -->
-			<if test="recMode ='Y' and sendMode = 'Y'">
+			<if test="recMode != null and sendMode != null">
 				UNION
 			</if>
 			<!-- 发消息模式：查询发送的消息 -->
-			<if test="sendMode = 'Y'">
+			<if test="sendMode != null">
 				SELECT 
 					*, 'out' AS `io`
 				FROM

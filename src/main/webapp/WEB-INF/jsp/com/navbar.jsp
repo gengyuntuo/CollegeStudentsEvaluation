@@ -25,25 +25,7 @@
 							<li><a href="#"><i class="ec-contract"></i> Contracts <span class="notification dark">7</span></a></li>
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-mail"></i><span class="notification">4</span></a>
-						<ul id= "msgTip" class="dropdown-menu email right" role="menu">
-							<li class="mail-head">
-								<div class="clearfix">
-									<div class="pull-left">
-										<a href="email-inbox.html"><i class="ec-archive"></i></a>
-									</div>
-									<span>收件箱</span>
-									<div class="pull-right">
-										<a href="email-inbox.html"><i class="st-pencil"></i></a>
-									</div>
-								</div>
-							</li>
-							<li class="mail-list clearfix"><a href="#"> <img src="assets/img/avatars/128.jpg" class="mail-avatar pull-left" alt="avatar">
-									<p class="name">
-										<span class="status"><i class="en-dot"></i></span> Jason Rivera <span class="notification">2</span> <span class="time">12:30 am</span>
-									</p>
-									<p class="msg">I contact you regarding my account please can you set up my pass ...</p>
-							</a></li>
-							<li class="mail-more"><a href="email-inbox.html">View all <i class="en-arrow-right7"></i></a></li>
+						<ul id="msgTip" class="dropdown-menu email right" role="menu">
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"> <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">${user.name }
 					</a>

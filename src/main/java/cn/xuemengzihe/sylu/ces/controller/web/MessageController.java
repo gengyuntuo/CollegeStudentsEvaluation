@@ -50,6 +50,54 @@ public class MessageController {
 	}
 
 	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/inboxData", produces = "application/json; charset=utf-8")
+	public String inboxData(
+			HttpServletRequest request,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		pageInfo = msgService.findMessageWithMap(pageInfo,
+				MessageService.MODE_MSG_RECEIVE,
+				persion instanceof Teacher ? MessageService.USERTYPE_TEACHER
+						: MessageService.USERTYPE_STUDENT, persion.getId(),
+				MessageService.STATE_UNREADED);
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/outboxData", produces = "application/json; charset=utf-8")
+	public String outboxData(
+			HttpServletRequest request,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+		// 分页查询记录
+		pageInfo = msgService.findMessageWithMap(pageInfo,
+				MessageService.MODE_MSG_SEND,
+				persion instanceof Teacher ? MessageService.USERTYPE_TEACHER
+						: MessageService.USERTYPE_STUDENT, persion.getId(),
+				MessageService.STATE_UNREADED);
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
 	 * 获取收件人列表
 	 * 
 	 * @param request

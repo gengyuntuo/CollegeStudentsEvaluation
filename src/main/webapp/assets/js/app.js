@@ -207,9 +207,10 @@ $(document).ready(function() {
  *            新的消息
  */
 function reloadMessageTip(data) {
-	console.info("刷新消息提示框");
+	// console.info("刷新消息提示框");
 	// 提示框模板
-	html = "<li class=\"mail-head\"><div class=\"clearfix\">"
+	var msg = "";
+	msgTipTemplate = "<li class=\"mail-head\"><div class=\"clearfix\">"
 			+ "<div class=\"pull-left\"><a href=\"inbox.do\">"
 			+ "<i class=\"ec-archive\"></i></a></div><span>"
 			+ "收信箱</span><div class=\"pull-right\">"
@@ -224,12 +225,14 @@ function reloadMessageTip(data) {
 			+ "<a href=\"#\"><img src=\"assets/img/avatars/128.jpg\" "
 			+ "class=\"mail-avatar pull-left\" alt=\"avatar\">"
 			+ "<p class=\"name\"><span class=\"status\">"
-			+ "<i class=\"en-dot\"></i></span> Jason Rivera "
-			+ "<span class=\"notification\">2</span> "
-			+ "<span class=\"time\">12:30 am</span></p>"
-			+ "<p class=\"msg\">I contact you regarding my"
-			+ " account please can you set up my pass ...</p>" + "</a></li>";
-	$.each(data.msg, function(index, value){
-		;
+			+ "<i class=\"en-dot\"></i></span>%NAME%"
+			+ "<span class=\"notification\"></span>"
+			+ "<span class=\"time\">%TIME%</span></p>"
+			+ "<p class=\"msg\">%CONTENT%</p></a></li>";
+	$.each(data.msg, function(index, value) {
+		msg += msgTemplate.replace("%NAME%", value.name)//
+		.replace("%TIME%", value.time)//
+		.replace("%CONTENT%", value.content);
 	});
+	$("#msgTip").html(msgTipTemplate.replace("%MESSAGES%", msg));
 }

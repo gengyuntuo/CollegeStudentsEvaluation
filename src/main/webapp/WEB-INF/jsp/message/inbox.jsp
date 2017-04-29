@@ -12,6 +12,7 @@
 <jsp:include page="../com/metas.jsp" />
 <!-- Import google fonts - Heading first/ text second -->
 <link rel='stylesheet' type='text/css' />
+<link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
@@ -32,94 +33,62 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="ec-archive"></i> 收件箱
+						<i class="im-table2"></i> 收件箱
 					</h1>
 				</div>
-				<!-- End .page-header -->
 			</div>
+			<!-- End .page-header -->
 			<!-- End .row -->
 			<div class="outlet">
 				<!-- Start .outlet -->
-				<!-- Page start here -->
-				<div id="email-sidebar">
-					<!-- Start #email-sidebar -->
-					<div class="p15">
-						<a id="write-email" href="wrirteEmail.do" class="btn btn-danger btn-block uppercase"><i class="im-quill"></i> 写信息</a>
-					</div>
-					<ul id="email-nav" class="nav nav-pills nav-stacked">
-						<li><a href="email-inbox.html"><i class="ec-archive"></i> 收件箱 <span class="notification blue">27</span></a></li>
-						<li><a href="#"><i class="en-location2"></i> 发件箱 <span class="notification green">14</span></a></li>
-						<li><a href="#"><i class="ec-trashcan"></i> 垃圾箱 <span class="notification dark">3</span></a></li>
-						<li class="nav-header">标签</li>
-						<li><a href="#"><span class="circle"></span> Work</a></li>
-						<li><a href="#"><span class="circle color-red"></span> Private</a></li>
-						<li><a href="#"><span class="circle color-green"></span> Travel</a></li>
-						<li><a href="#"><span class="circle color-pink"></span> Promotions</a></li>
-						<li><a href="#"><span class="circle color-teal"></span> Updates</a></li>
-					</ul>
-				</div>
-				<!--End #email-sidebar -->
-				<div id="email-content">
-					<!-- Start #email-content -->
-					<div class="email-wrapper">
-						<div class="email-toolbar col-lg-12">
-							<div class="pull-left" role="toolbar">
-								<button id="email-toggle" class="email-toggle" type="button">
-									<span class="sr-only">邮箱导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				<!-- Page start here ( usual with .row ) -->
+				<div class="row">
+					<div class="col-lg-12">
+						<!-- col-lg-12 start here -->
+						<div class="panel-body">
+							<div class="input-group" style="float:left;width:300px">
+								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
+									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
+								</span>
+							</div>
+							<div style="float: right">
+								<button id="btn_refresh" type="button" class="btn btn-default">
+									<span class="fa-refresh"></span> 刷新
 								</button>
-								<a href="#" class="btn btn-default btn-round btn-sm tip mr5" title="Refresh inbox"><i class="ec-refresh s16"></i></a> <a href="#" class="btn btn-danger btn-round btn-sm tip mr5" title="Delete"><i
-									class="ec-trashcan s16"></i></a> <a href="#" class="btn btn-default btn-round btn-sm tip mr5" title="Print"><i class="fa-print s16"></i></a>
+								<button id="btn_add" type="button" class="btn btn-primary">
+									<span class="st-file-add"></span> 新增
+								</button>
+								<button id="btn_update" type="button" class="btn btn-success">
+									<span class="fa-edit"></span> 修改
+								</button>
+								<button id="btn_delete" type="button" class="btn btn-danger">
+									<span class="im-remove2"></span> 删除
+								</button>
+								<p></p>
+							</div>
+							<div>
+								<table id="mytable" class="table table-bordered">
+								</table>
 							</div>
 						</div>
-						<div class="email-list col-lg-12">
-							<table class="table table-striped table-hover table-fixed-layout non-responsive">
-								<tbody>
-									<tr>
-										<td class="email-select input-mini"><label class="checkbox"> <input class="check" type="checkbox" value="option3">
-										</label></td>
-										<td class="email-star input-mini"><i class="im-star s20"></i></td>
-										<td class="email-subject"><a href="email-read.html">Twitter</a></td>
-										<td class="email-intro"><a href="email-read.html"> <span class="label label-teal mr10">Updates</span> SuggeElson, check out your week on Twitter. <span class="text-muted small ml10">SuggeElson
-													see your week in review. Theese tweets help you to make connections...</span>
-										</a></td>
-										<td class="email-date text-right input-mini">Apr 28</td>
-									</tr>
-									<tr>
-										<td><label class="checkbox"> <input class="check" type="checkbox" value="option3">
-										</label></td>
-										<td class="email-star input-mini"><i class="im-star s20"></i></td>
-										<td class="email-subject"><a href="email-read.html">FC Barcelona Fans</a></td>
-										<td class="email-intro"><a href="email-read.html"> <span class="label label-pink mr10">Promotions</span> Tito, eternaly remembered <span class="text-muted small ml10">Barca
-													fans mobile view as web page...</span>
-										</a></td>
-										<td class="email-date text-right input-mini">Apr 28</td>
-									</tr>
-									<tr>
-										<td><label class="checkbox"> <input class="check" type="checkbox" value="option3">
-										</label></td>
-										<td class="email-star input-mini"><i class="im-star s20"></i></td>
-										<td class="email-subject"><a href="email-read.html">ADATA</a></td>
-										<td class="email-intro"><a href="email-read.html"> A sense of speed you can't even begin to imagine <span class="text-muted small ml10">If you unable to see this message
-													please click bellow ...</span>
-										</a></td>
-										<td class="email-date text-right input-mini">Apr 27</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
 					</div>
+					<!-- col-lg-12 end here -->
 				</div>
-				<!--End #email-content -->
 				<!-- Page End here -->
 			</div>
 			<!-- End .outlet -->
 		</div>
 		<!-- End .content-wrapper -->
 		<div class="clearfix"></div>
+		<!-- End #content -->
 	</div>
+
 	<!-- End #content -->
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
-	<script src="<c:url value="/assets/js/pages/email.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/pages/inbox.js"/>"></script>
+
 </body>
 </html>
