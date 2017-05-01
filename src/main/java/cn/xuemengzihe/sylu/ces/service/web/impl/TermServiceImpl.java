@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
 import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.dao.com.TermDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.pojo.com.TermClass;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
 
 import com.github.pagehelper.PageHelper;
@@ -43,6 +46,10 @@ public class TermServiceImpl implements TermService {
 	private ClassService classService;
 	@Autowired
 	private TermClassDAO termClassDAO;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private ComplexFunction complexFunction;
 
 	@Override
 	@Transactional
@@ -50,7 +57,7 @@ public class TermServiceImpl implements TermService {
 			String classes[], Date startDate, Date stopDate) {
 		// 创建学期
 		String result = "";
-		Clazz clazz = null;
+		Clazz clazz = null; // 班级
 		Term termObj = new Term();
 		termObj.setName(name);
 		termObj.setTeacherId(teacherId);
@@ -77,9 +84,18 @@ public class TermServiceImpl implements TermService {
 					.getId()));
 		}
 
-		// TODO 创建综合测评表
-		// TODO 创建日常行为评分表
-		// TODO 创建素质教育加分评分表
+		// 创建综合测评表
+		// 创建日常行为评分表
+		// 创建素质教育加分评分表
+		for (TermClass termClass : termClassDAO.findByTermId(termObj.getId())) {
+			clazz = classService.findClazzById(termClass.getClassId());
+			Map<String, String> params = new HashMap<>();
+			params.put("termId", termObj.getId().toString());
+			for (Student student : clazz.getStudents()) {
+				params.put("stuId", student.getId().toString());
+				complexFunction.createZHCPTJ(params);
+			}
+		}
 
 		return result;
 	}

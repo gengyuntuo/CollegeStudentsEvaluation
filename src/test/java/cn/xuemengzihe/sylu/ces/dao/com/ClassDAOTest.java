@@ -18,6 +18,7 @@ public class ClassDAOTest {
 	@Test
 	public void testFindClazzById() {
 		System.out.println(classDAO.findClazzById(1));
+		System.out.println(classDAO.findClazzById(1).getStudents().size());
 	}
 
 }
