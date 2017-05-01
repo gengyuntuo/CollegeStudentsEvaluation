@@ -14,13 +14,12 @@ import java.util.Date;
 public class Message {
 	private Integer id; // ID
 	private String type; // 消息发送类型，老师给学生，学生给老师、老师给老师等
-	private String isRead; // 是否阅读消息
 	private Integer senderId; // 发送者ID
 	private Integer receiverId; // 接受者ID
 	private String title; // 标题
 	private String content; // 消息内容
 	private String state; // 消息状态（已读、未读）
-	private String with_mail; // 是否同时发送邮件通知
+	private String withMail; // 是否同时发送邮件通知
 
 	private String isValid; // 该消息是否有效
 	private Date cTime;
@@ -40,14 +39,6 @@ public class Message {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getIsRead() {
-		return isRead;
-	}
-
-	public void setIsRead(String isRead) {
-		this.isRead = isRead;
 	}
 
 	public Integer getSenderId() {
@@ -90,12 +81,12 @@ public class Message {
 		this.state = state;
 	}
 
-	public String getWith_mail() {
-		return with_mail;
+	public String getWithMail() {
+		return withMail;
 	}
 
-	public void setWith_mail(String with_mail) {
-		this.with_mail = with_mail;
+	public void setWithMail(String withMail) {
+		this.withMail = withMail;
 	}
 
 	public String getIsValid() {
@@ -124,11 +115,11 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", type=" + type + ", isRead=" + isRead
-				+ ", senderId=" + senderId + ", receiverId=" + receiverId
-				+ ", title=" + title + ", content=" + content + ", state="
-				+ state + ", with_mail=" + with_mail + ", isValid=" + isValid
-				+ ", cTime=" + cTime + ", uTime=" + uTime + "]";
+		return "Message [id=" + id + ", type=" + type + ", senderId="
+				+ senderId + ", receiverId=" + receiverId + ", title=" + title
+				+ ", content=" + content + ", state=" + state + ", with_mail="
+				+ withMail + ", isValid=" + isValid + ", cTime=" + cTime
+				+ ", uTime=" + uTime + "]";
 	}
 
 }

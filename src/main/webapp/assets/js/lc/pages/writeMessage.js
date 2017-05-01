@@ -25,11 +25,12 @@ $(document).ready(function() {
 				var options = [];
 				$.each(data.rows, function(index, value) {
 					var item = {};
-					item.id = value.id;
+					item.id = value.id + "," + value.role;
 					item.text = (value.role == "S" ? "[学生]" : "[老师]")//
 							+ "  " + value.name;
 					options.push(item);
 				});
+				// console.info(options);
 				return {
 					results : options,
 					pagination : {
@@ -40,22 +41,59 @@ $(document).ready(function() {
 			}
 		}
 	});
+	// SELECT2 绑定change事件
+	// $("#receiverSelect").on("change", function(e) {
+	// log("change " + JSON.stringify({
+	// val : e.val,
+	// added : e.added,
+	// removed : e.removed
+	// }));
+	// });
 	// 2. 按钮点击事件
 	$("#sendBtn").on("click", function() {
+		var receiverIdAndRole = $("#receiverSelect").val();
+		if (receiverIdAndRole == undefined //
+				|| receiverIdAndRole == null //
+				|| receiverIdAndRole.trim() == "") {
+			alert("选选择收信人");
+			return;
+		}
+		var receiverId = receiverIdAndRole.split(",")[0];
+		var receiverRole = receiverIdAndRole.split(",")[1];
+		var subject = $("#subject").val();
+		if (subject == undefined //
+				|| subject == null //
+				|| subject.trim().length < 1) {
+			alert("请输入主题");
+			return;
+		}
+		var content = $("#email-text").val();
+		if (content == undefined //
+				|| content == null //
+				|| content.trim().length < 1) {
+			alert("请输入内容");
+			return;
+		}
+		var withMail = $("#withMail").attr("checked");
+		// console.info(receiverIdAndRole);
+		// console.info(subject);
+		// console.info(content);
+		// console.info(withMail);
 		$.ajax({
 			url : "sendMessage.do",
 			type : "POST",
 			data : {
-				"role":"S",
-				"receiverId":12,
-				"withMail": true,
-				"content": "content"
+				"type" : receiverRole,
+				"receiverId" : receiverId,
+				"title" : subject,
+				"content" : content,
+				"withMail" : "checked" == withMail ? "Y" : "N"
 			},
-			success : function() {
-				;
+			success : function(data) {
+				console.info(data);
+				alert(data.result + data.tip);
 			}
 		});
-		alert("下载当前的表单");
 	});
 	// 3. --------------- Tinymce for send email ------------------//
 	tinymce.init({

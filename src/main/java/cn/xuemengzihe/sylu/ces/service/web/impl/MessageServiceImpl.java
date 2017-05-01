@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,11 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public boolean insertMessage(Message msg) {
+		// 此处对应的功能为发送消息，在这里完善msg对象的信息
+		msg.setIsValid("Y");
+		msg.setcTime(new Date());
+		msg.setuTime(new Date());
+		msg.setState(STATE_UNREADED);// 设置消息为未读状态
 		if (msgDao.insertMessage(msg) == 1)
 			return true;
 		else
@@ -116,6 +122,11 @@ public class MessageServiceImpl implements MessageService {
 		// 设置用户ID
 		conditions.put("receiverId", userId + "");
 		return msgDao.tickReadedTagForAllMessage(conditions);
+	}
+
+	@Override
+	public Message findMessageById(Integer id) {
+		return msgDao.getMessageById(id);
 	}
 
 	@Override

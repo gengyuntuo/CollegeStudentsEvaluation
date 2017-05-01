@@ -12,7 +12,7 @@ package cn.xuemengzihe.sylu.ces.pojo.com;
  */
 public class Student extends Persion {
 	private String sno; // 班级学号
-	private Integer clazzId; // 班级ID
+	private Integer classId; // 班级ID
 	private String dormno; // 寝室楼号
 	private String dormInfo; // 寝室号、床位号
 	private String politicalStatus; // 政治面貌
@@ -38,12 +38,12 @@ public class Student extends Persion {
 		this.sno = sno;
 	}
 
-	public Integer getClazzId() {
-		return clazzId;
+	public Integer getClassId() {
+		return classId;
 	}
 
-	public void setClazzId(Integer clazzId) {
-		this.clazzId = clazzId;
+	public void setClassId(Integer classId) {
+		this.classId = classId;
 	}
 
 	public String getDormno() {
@@ -136,7 +136,7 @@ public class Student extends Persion {
 
 	@Override
 	public String toString() {
-		return "Student [sno=" + sno + ", classId=" + clazzId + ", dormno="
+		return "Student [sno=" + sno + ", classId=" + classId + ", dormno="
 				+ dormno + ", dormInfo=" + dormInfo + ", politicalStatus="
 				+ politicalStatus + ", bankCard=" + bankCard + ", haveLoan="
 				+ haveLoan + ", havePovertyCertificate="

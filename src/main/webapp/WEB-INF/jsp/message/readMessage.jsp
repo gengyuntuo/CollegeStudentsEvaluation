@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>写邮件</title>
+<title>邮件</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -42,7 +42,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="ec-archive"></i> 写信息
+						<i class="ec-archive"></i> 消息
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -51,38 +51,7 @@
 			<div class="outlet">
 				<!-- Start .outlet -->
 				<!-- Page start here ( usual with .row ) -->
-				<div class="row">
-					<form action="#" role="form" class="form-horizontal">
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<select id="receiverSelect" name="receiverId">
-									<option></option>
-								</select>
-							</div>
-						</div>
-						<!-- End .form-group  -->
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<input type="text" class="form-control" id="subject" name="subject" placeholder="消息主题">
-							</div>
-						</div>
-						<!-- End .form-group  -->
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<textarea name="email-text" id="email-text" class="form-control tinymce" rows="21" style="resize:none;">
-								单击此处，输入消息内容!</textarea>
-							</div>
-						</div>
-						<!-- End .form-group  -->
-						<div class="form-group">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<label class="checkbox" style="float:left;"> <input id="withMail" type="checkbox" checked="checked">邮件通知查看消息
-								</label>
-								<button id="sendBtn" type="button" class="btn btn-primary" style="float:right;">发送</button>
-							</div>
-						</div>
-					</form>
-				</div>
+				<div class="row">${msg.content }</div>
 				<!-- Page End here -->
 			</div>
 			<!-- End .outlet -->

@@ -52,7 +52,7 @@
 		WHERE
 		    `id` = #{id}
 	</update>
-	<select id="findMessageById" parameterType="int" resultType="message">
+	<select id="getMessageById" parameterType="int" resultType="message">
 		SELECT * FROM `message` WHERE `id` = #{id}
 	</select>
 	<!-- 根据需求查询某位用户的消息：

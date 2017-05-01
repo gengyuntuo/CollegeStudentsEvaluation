@@ -6,15 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
+import cn.xuemengzihe.sylu.ces.pojo.com.Message;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.service.web.ComplexFunctionService;
+import cn.xuemengzihe.sylu.ces.service.web.MailService;
 import cn.xuemengzihe.sylu.ces.service.web.MessageService;
+import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.service.web.TeacherService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
 import com.github.pagehelper.PageInfo;
@@ -31,6 +37,12 @@ import com.github.pagehelper.PageInfo;
 public class MessageController {
 	@Autowired
 	private MessageService msgService;
+	@Autowired
+	private MailService mailService;
+	@Autowired
+	private TeacherService teacherService;
+	@Autowired
+	private StudentService studentService;
 	@Autowired
 	private ComplexFunctionService complexFunctionService;
 
@@ -50,8 +62,62 @@ public class MessageController {
 	}
 
 	/**
+	 * 发送消息
 	 * 
 	 * @param request
+	 * @param msg
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/sendMessage", produces = "application/json; charset=utf-8")
+	public String sendMessage(HttpServletRequest request, Model model,
+			Message msg) {
+		// TODO Message对象中的参数校验
+
+		// 验证接收者的参数是否正确
+		Persion recPersion = null; // 接收者
+		if ("T".equals(msg.getType())) {
+			recPersion = teacherService.findTeacherById(msg.getReceiverId());
+		} else if ("S".equals(msg.getType())) {
+			recPersion = studentService.findStudentById(msg.getReceiverId());
+		}
+		if (recPersion == null) {
+			model.addAttribute("tip", "接收者ID不正确！");
+			throw new InvalidParameterException();
+		}
+
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		msg.setType(persion instanceof Teacher ? "TT" + msg.getType() : "ST"
+				+ msg.getType()); // 设置消息的接收发送类型
+		msg.setSenderId(persion.getId()); // 设置发送者ID
+
+		if (msgService.insertMessage(msg)) {
+			// 发送邮件通知接收者
+			final String emailAddress = recPersion.getEmail();
+			final String name = persion.getName();
+			if ("Y".equals(msg.getWithMail())) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						mailService.sendPlainMail("测评系统通知", "您收到" + name
+								+ "的消息，请登录网站查看", emailAddress);
+					}
+				}).start();
+			}
+			// 发送成功
+			return "{\"result\":\"success\",\"tip\":\"发送成功！\"}";
+		} else {
+			// 发送失败
+			return "{\"result\":\"error\",\"tip\":\"发送失败！\"}";
+		}
+	}
+
+	/**
+	 * 收到的信息
+	 * 
+	 * @param request
+	 * @param offset
+	 * @param limit
 	 * @return
 	 */
 	@ResponseBody
@@ -74,8 +140,11 @@ public class MessageController {
 	}
 
 	/**
+	 * 发出的消息
 	 * 
 	 * @param request
+	 * @param offset
+	 * @param limit
 	 * @return
 	 */
 	@ResponseBody
@@ -121,11 +190,17 @@ public class MessageController {
 					null);
 		} else { // 学生
 			pageInfo = complexFunctionService.getReceiver(pageInfo, search,
-					((Student) persion).getClazzId().toString());
+					((Student) persion).getClassId().toString());
 		}
 		return JSONUtil.parsePageInfoToJSONWithPageNumber(pageInfo);
 	}
 
+	/**
+	 * 获取未读消息
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/getNewMessage", produces = "application/json; charset=utf-8")
 	public String getNewMessage(HttpServletRequest request) {
@@ -138,5 +213,74 @@ public class MessageController {
 						: MessageService.USERTYPE_STUDENT, persion.getId(),
 				MessageService.STATE_UNREADED);
 		return JSONUtil.parsePageInfoToJSONUseForMessageDetect(pageInfo);
+	}
+
+	/**
+	 * 查询消息内容
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/readMessage")
+	public String readMessage(HttpServletRequest request, Model model,
+			Integer id) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		Message msg = msgService.findMessageById(id);
+		try {
+			if (msg == null) {
+				throw new InvalidParameterException();
+			}
+			// 判断当前请求的用户是学生还是老师
+			if (persion instanceof Teacher) {
+				// 1.老师
+				// 判断是发送的消息还是接收的消息
+				if ("TTT".equals(msg.getType()) || "STT".equals(msg.getType())) {
+					// 接收的消息
+					if (msg.getReceiverId() != persion.getId()) {
+						throw new InvalidParameterException();
+					}
+					tickMessage(msg, id);
+				} else if ("TTT".equals(msg.getType())
+						|| "TTS".equals(msg.getType())) {
+					// 发送的消息
+					if (msg.getSenderId() != persion.getId()) {
+						throw new InvalidParameterException();
+					}
+				}
+			} else {
+				// 2.学生
+				// 判断是发送的消息还是接收的消息
+				if ("TTS".equals(msg.getType()) || "STS".equals(msg.getType())) {
+					// 接收的消息
+					if (msg.getReceiverId() != persion.getId()) {
+						throw new InvalidParameterException();
+					}
+					tickMessage(msg, id);
+				} else if ("STT".equals(msg.getType())
+						|| "STS".equals(msg.getType())) {
+					// 发送的消息
+					if (msg.getSenderId() != persion.getId()) {
+						throw new InvalidParameterException();
+					}
+				}
+			}
+			model.addAttribute("msg", msg); // 添加消息到模型中
+		} catch (InvalidParameterException e) {
+			model.addAttribute("tip", "该消息不存在！");
+		}
+		return "/message/readMessage";
+	}
+
+	/**
+	 * 将消息标记为阅读
+	 * 
+	 * @param msg
+	 * @param id
+	 */
+	private void tickMessage(Message msg, Integer id) {
+		if ("N".equals(msg.getState())) {
+			msgService.tickReadedTagForAMessage(id);
+		}
 	}
 }

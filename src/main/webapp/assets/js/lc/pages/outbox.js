@@ -64,6 +64,7 @@ $(document).ready(function() {
 					align : "center",
 					valign : "middle",
 				}, {
+					field : 'state',
 					title : '状态',
 					halign : "center",
 					align : "center",

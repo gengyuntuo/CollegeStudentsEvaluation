@@ -98,6 +98,8 @@ public interface MessageService {
 	 */
 	public Integer tickReadedTagForAllMessage(String userType, Integer userId);
 
+	public Message findMessageById(Integer id);
+
 	/**
 	 * <h1>根据需求查询某位用户的消息</h1><br/>
 	 * 

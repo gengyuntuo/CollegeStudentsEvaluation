@@ -87,7 +87,7 @@ public class StudentController {
 
 		// 学生特有的属性
 		oldStudent.setBankCard(student.getBankCard());
-		oldStudent.setClazzId(student.getClazzId());
+		oldStudent.setClassId(student.getClassId());
 		oldStudent.setFatherName(student.getFatherName());
 		oldStudent.setFatherPhone(student.getFatherPhone());
 		oldStudent.setDormInfo(student.getDormInfo());
