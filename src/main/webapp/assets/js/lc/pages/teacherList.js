@@ -39,28 +39,32 @@ $(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
+					width : "20%",
 					field : "name",
 					title : '姓名',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"teacherDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "10%",
 					field : 'gender',
 					title : '性别',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "35%",
 					field : 'email',
 					title : '邮箱',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "35%",
 					field : 'phone',
 					title : '手机',
 					halign : "center",

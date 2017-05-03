@@ -43,23 +43,38 @@ $(function() {
 					visible : false,
 					title : 'id'
 				}, {
+					width : "20%",
 					field : "numb",
 					title : '学院代码',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"instituteDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "40%",
 					field : 'name',
 					title : '学院名称',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"instituteDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "40%",
 					field : 'desc',
 					title : '学院简介',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return value.length > 30 ? //
+						value.substring(0, 30) + "..." : value;
+					}
 				} ]
 			});
 		};
@@ -71,7 +86,7 @@ $(function() {
 	oTable.Init();
 
 	// 2. 绑定按钮事件
-	var dialog_add, dialog_update, dialog_delete, form = $('#form');
+	var dialog_add = null, dialog_update = null, dialog_delete = null, form = $('#form');
 	// 添加对话框
 	dialog_add = $("#dialog-add").dialog({
 		autoOpen : false,
@@ -278,7 +293,7 @@ $(function() {
 
 /**
  * 搜索按钮事件
- */ 
+ */
 function btn_search() {
 	$('#mytable').bootstrapTable('refresh', { // 更新数据
 		query : { // 在搜索时设置记录偏移量为0，也就是从第一条记录开始
@@ -289,7 +304,7 @@ function btn_search() {
 
 /**
  * 查询搜索框的输入，如果有输入则返回输入的内容，没有输入则返回undefined
- */ 
+ */
 function checkSearchText() {
 	// console.info("checkSearchText() function Run!");
 	var search = $("#search-input").val();

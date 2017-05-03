@@ -39,45 +39,55 @@ $(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
+					width : "20%",
 					field : "sno",
 					title : '学号',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"studentDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "10%",
 					field : "name",
 					title : '姓名',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"studentDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "5%",
 					field : 'nation',
 					title : '民族',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "5%",
 					field : 'gender',
 					title : '性别',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "30%",
 					field : 'email',
 					title : '邮箱',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
+					width : "30%",
 					field : 'phone',
 					title : '手机',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				} ]
 			});
 		};
@@ -89,7 +99,7 @@ $(function() {
 	oTable.Init();
 
 	// 2. 绑定按钮事件
-	var dialog_add, dialog_update, dialog_delete, form = $('#form');
+	var dialog_add = null, dialog_update = null, dialog_delete = null, form = $('#form');
 	// 添加对话框
 	dialog_add = $("#dialog-add").dialog({
 		autoOpen : false,

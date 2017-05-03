@@ -39,37 +39,52 @@ $(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
+					width : "20%",
 					field : "numb",
 					title : '专业代码',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"majorDetail.do?"// 
+								+ "item=" + row.id + "\">"// 
+								+ value + "</a>"; //
+					}
 				}, {
+					width : "25%",
 					field : 'name',
 					title : '专业名称',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"majorDetail.do?"// 
+								+ "item=" + row.id + "\">"//
+								+ value + "</a>"; //
+					}
 				}, {
+					width : "25%",
 					field : 'iname',
 					title : '所属学院',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"instituteDetail.do?"// 
+								+ "item=" + row.institute + "\">" //
+								+ value + "</a>"; //
+					}
 				}, {
-					field : 'institute',
-					title : '学院ID',
-					visible : false
-				}, {
+					width : "30%",
 					field : 'desc',
 					title : '专业简介',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return value.length > 30 ? //
+						value.substring(0, 30) + "..." : value;
+					}
 				} ]
 			});
 		};
@@ -116,7 +131,7 @@ $(function() {
 						"mNumb" : numb,
 						"mName" : name,
 						"desc" : desc,
-						"instituteId":institute
+						"instituteId" : institute
 					},
 					success : function(data) {
 						var result = eval(data);
@@ -174,7 +189,7 @@ $(function() {
 						"mNumb" : numb,
 						"mName" : name,
 						"desc" : desc,
-						"instituteId": institute
+						"instituteId" : institute
 					},
 					success : function(data) {
 						var result = eval(data);

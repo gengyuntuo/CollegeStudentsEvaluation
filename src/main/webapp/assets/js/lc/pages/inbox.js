@@ -42,28 +42,34 @@ $(document).ready(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
+					width : "20%",
 					field : 'name',
 					title : '发件人',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
+					width : "40%",
 					field : "title",
 					title : '主题',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						value = value.length > 30 ? //
+						value.substring(0, 30) + "..." : value;
+						return "<a href=\"messageDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
+					width : "30%",
 					field : 'time',
 					title : '时间',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "10",
 					field : 'state',
 					title : '状态',
 					halign : "center",
