@@ -11,20 +11,12 @@
 				<ul class="nav navbar-nav pull-right">
 					<li id="toggle-sidebar-li"><a href="#" id="toggle-sidebar"><i class="en-arrow-left2"></i> </a></li>
 					<li><a href="#" class="full-screen"><i class="fa-fullscreen"></i></a></li>
-					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-cog"></i><span class="notification">10</span></a>
+					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-cog"></i><span class="notification">2</span></a>
 						<ul class="dropdown-menu right" role="menu">
 							<li><a href="#"><i class="en-database"></i> Database <span class="notification">3</span></a></li>
-							<li><a href="#"><i class="st-cube"></i> Packages <span class="notification blue">17</span></a></li>
-							<li><a href="#"><i class="st-health"></i> Disconnects <span class="notification yellow">1</span></a></li>
-							<li><a href="#"><i class="im-images"></i> Images <span class="notification teal">320</span></a></li>
-							<li><a href="#"><i class="st-users"></i> Users <span class="notification orange">2k</span></a></li>
-							<li><a href="#"><i class="st-meter"></i> Traffic <span class="notification magenta">2tb</span></a></li>
-							<li><a href="#"><i class="im-coin"></i> Finances <span class="notification pink">+3k</span></a></li>
-							<li><a href="#"><i class="st-folder"></i> Directories <span class="notification green">17</span></a></li>
-							<li><a href="#"><i class="st-bag"></i> Orders <span class="notification purple">12</span></a></li>
 							<li><a href="#"><i class="ec-contract"></i> Contracts <span class="notification dark">7</span></a></li>
 						</ul></li>
-					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-mail"></i><span class="notification">4</span></a>
+					<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="ec-mail"></i><span id="mail-count" class="notification"></span></a>
 						<ul id="msgTip" class="dropdown-menu email right" role="menu">
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"> <img class="user-avatar" src="assets/img/avatars/48.jpg" alt="SuggeElson">${user.name }

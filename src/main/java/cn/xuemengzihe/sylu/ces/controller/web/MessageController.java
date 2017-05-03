@@ -216,7 +216,7 @@ public class MessageController {
 	}
 
 	/**
-	 * 查询消息内容
+	 * 查阅消息内容
 	 * 
 	 * @param request
 	 * @param id
@@ -224,7 +224,7 @@ public class MessageController {
 	 */
 	@RequestMapping("/readMessage")
 	public String readMessage(HttpServletRequest request, Model model,
-			Integer id) {
+			@RequestParam(required = true, value = "item") Integer id) {
 		Persion persion = (Persion) request.getSession().getAttribute("user");
 		Message msg = msgService.findMessageById(id);
 		try {

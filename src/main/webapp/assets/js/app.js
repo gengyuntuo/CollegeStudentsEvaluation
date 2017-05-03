@@ -175,7 +175,7 @@ $(document).ready(function() {
 
 	// 新消息查询
 	var msgSerial = "";
-	var msgDetect = setInterval(function() {
+	setInterval(function() {
 		$.ajax({
 			url : "getNewMessage.do",
 			type : "POST",
@@ -189,6 +189,7 @@ $(document).ready(function() {
 				});
 				// 判断序列号是否发生变化，如果变化就重新修改消息提示框内容
 				if (curMsgSerial != msgSerial) {
+					$("#mail-count").html(data.total);
 					reloadMessageTip(data); // 重新加载消息提示框中的内容
 					msgSerial = curMsgSerial; // 修改序列号
 				}
@@ -197,7 +198,7 @@ $(document).ready(function() {
 				console.info("新消息查询失败！");
 			}
 		});
-	}, 5000);
+	}, 1500);
 
 });
 /**
@@ -222,7 +223,8 @@ function reloadMessageTip(data) {
 			+ "<i class=\"en-arrow-right7\"></i></a></li>";
 	// 提示框中消息的模板
 	msgTemplate = "<li class=\"mail-list clearfix\">"
-			+ "<a href=\"#\"><img src=\"assets/img/avatars/128.jpg\" "
+			+ "<a href=\"readMessage.do?item=%ITEMID%\">"
+			+ "<img src=\"assets/img/avatars/128.jpg\" "
 			+ "class=\"mail-avatar pull-left\" alt=\"avatar\">"
 			+ "<p class=\"name\"><span class=\"status\">"
 			+ "<i class=\"en-dot\"></i></span>%NAME%"
@@ -230,7 +232,9 @@ function reloadMessageTip(data) {
 			+ "<span class=\"time\">%TIME%</span></p>"
 			+ "<p class=\"msg\">%CONTENT%</p></a></li>";
 	$.each(data.msg, function(index, value) {
-		msg += msgTemplate.replace("%NAME%", value.name)//
+		msg += msgTemplate // 
+		.replace("%ITEMID%", value.id)//
+		.replace("%NAME%", value.name)//
 		.replace("%TIME%", value.time)//
 		.replace("%CONTENT%", value.content);
 	});

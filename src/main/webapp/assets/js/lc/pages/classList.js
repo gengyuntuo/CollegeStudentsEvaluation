@@ -39,29 +39,24 @@ $(function() {
 				columns : [ {
 					checkbox : true
 				}, {
-					field : 'id',
-					visible : false,
-					title : 'id'
-				}, {
-					field : 'majorId',
-					visible : false,
-					title : 'majorId'
-				}, {
-					field : 'teacherId',
-					visible : false,
-					title : 'teacherId'
-				}, {
 					field : "className",
 					title : '班级',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"classDetail.do?"// 
+								+ "item=" + row.id + "\">" + value + "</a>"; //
+					}
 				}, {
-					field : 'studyYear',
+					field : 'study_year',
 					title : '学制',
 					halign : "center",
 					align : "center",
 					valign : "middle",
+					formatter : function(value, row, index) {
+						return value + "年"; //
+					}
 				}, {
 					field : 'mname',
 					title : '专业',

@@ -32,7 +32,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> 首页
+						<i class="im-screen"></i> 欢迎 ${user.name }老师
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -41,7 +41,30 @@
 			<div class="outlet">
 				<!-- Start .outlet -->
 				<!-- Page start here ( usual with .row ) -->
-				<div class="row"></div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+						<div class="panel panel-default">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h4 class="panel-title">系统时间</h4>
+							</div>
+							<div class="panel-body">
+								<code>2016-2-22 11:12</code>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+						<div class="panel panel-default">
+							<!-- Start .panel -->
+							<div class="panel-heading">
+								<h4 class="panel-title">系统资源状态</h4>
+							</div>
+							<div class="panel-body">
+								<code>80%占用</code>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- End .row -->
 				<div class="row"></div>
 				<!-- End .row -->
