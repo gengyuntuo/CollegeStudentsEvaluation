@@ -102,8 +102,13 @@
 		    `t`.`teacher_id` AS `teacherId`,
 		    `teacher`.`name` AS `teacherName`
 		FROM
-		    (SELECT  * FROM `term` WHERE
+		    (SELECT  `term`.*, `term_class`.`class_id` AS `tmpCi` FROM `term`
+				LEFT JOIN `term_class` ON `term`.`id` = `term_class`.`term_id`
+				WHERE
 		        `term`.`is_valid` = 'Y'
+		        <if test="classId != null">
+		        	AND `term_class`.`class_id` = #{classId}
+		        </if>
 		        <if test="teacherId != null">
 		        	AND `term`.`teacher_id` = #{teacherId}
 		        </if>

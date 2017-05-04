@@ -11,6 +11,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.service.web.MenuService;
 
 /**
@@ -59,7 +61,14 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 		// 【解决方案】：
 		// --> 1.使用Redis的TTL机制来解决
 		// --> 2.使用AOP，如果有菜单更新操作，就刷新Service中的缓存数据
-		request.setAttribute("menu", menuService.getMenu(persion.getUserType()));
+		if (persion instanceof Teacher) {
+			request.setAttribute("menu",
+					menuService.getMenu(persion.getUserType()));
+		} else if (persion instanceof Student) {
+			// 如果Role属性非空，则为班委，否则为学生
+			request.setAttribute("menu",
+					menuService.getMenu(persion.getRole() != null ? "M" : "S"));
+		}
 		logger.debug("this user get the menu!");
 		// TODO 该类的功能并没有完成，JSON请求的判断和用户安全访问
 		return true;

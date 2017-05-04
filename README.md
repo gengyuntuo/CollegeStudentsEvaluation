@@ -19,7 +19,7 @@
 
 ## 问题解决
 ### 1. select2 在jQuery Dialog中无法搜索问题解决
- ** 解决方案： ** 在dialog前加入_allowInteraction的重载
+**解决方案：** 在dialog前加入_allowInteraction的重载
  ```
 	  // 解决Select2在jQuery dialog中无法搜索的问题
 	$.widget("ui.dialog", $.ui.dialog, {
@@ -86,7 +86,7 @@ $("#receiverSelect").select2({
 ```
 ### 3. 设置MySQL客户端的字符串编码
 MySQL字符串的默认编码一般是GBK，所以显示中文会乱码，只需要修改显示的字符串编码就可以解决该问题
-== 注意 == 非永久设置，只有本次访问生效
+**注意** 非永久设置，只有本次访问生效
 ```
 SET NAMES utf8
 ```

@@ -39,6 +39,24 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public Integer updateTeacher(Teacher teacher) {
+		Teacher teach = teacherDAO.findTeacherById(teacher.getId());
+		teach.setAddress(teacher.getAddress());
+		teach.setAlipay(teacher.getAlipay());
+		teach.setBirthday(teacher.getBirthday());
+		teach.setEmail(teacher.getEmail());
+		teach.setGender(teacher.getGender());
+		teach.setIdCard(teacher.getIdCard());
+		teach.setMotto(teacher.getMotto());
+		teach.setName(teacher.getName());
+		teach.setNation(teacher.getNation());
+		teach.setNick(teacher.getNick());
+		teach.setPhone(teacher.getPhone());
+		teach.setPortrait(teacher.getPortrait()); // 头像的修改要特别注意
+		teach.setQqNumb(teacher.getQqNumb());
+		teach.setResident(teacher.getResident());
+		teach.setRole(teacher.getUserType()); // 个人不可以修改
+		teach.setWeChat(teacher.getWeChat());
+
 		return teacherDAO.updateTeacher(teacher);
 	}
 

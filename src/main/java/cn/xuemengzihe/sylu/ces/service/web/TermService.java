@@ -66,11 +66,13 @@ public interface TermService {
 	 *            分页信息
 	 * @param search
 	 *            过滤条件
+	 * @param classId
+	 *            班级ID
 	 * @param teacherId
 	 *            教师ID
 	 * @return
 	 */
 	public PageInfo<Map<String, String>> getTermWithPageSize(
 			PageInfo<Map<String, String>> pageInfo, String search,
-			String teacherId);
+			String classId, String teacherId);
 }

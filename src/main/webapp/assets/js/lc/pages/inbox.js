@@ -58,7 +58,7 @@ $(document).ready(function() {
 					formatter : function(value, row, index) {
 						value = value.length > 30 ? //
 						value.substring(0, 30) + "..." : value;
-						return "<a href=\"messageDetail.do?"// 
+						return "<a href=\"readMessage.do?"// 
 								+ "item=" + row.id + "\">" + value + "</a>"; //
 					}
 				}, {

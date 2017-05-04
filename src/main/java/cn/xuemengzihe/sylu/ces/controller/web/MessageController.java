@@ -134,8 +134,7 @@ public class MessageController {
 		pageInfo = msgService.findMessageWithMap(pageInfo,
 				MessageService.MODE_MSG_RECEIVE,
 				persion instanceof Teacher ? MessageService.USERTYPE_TEACHER
-						: MessageService.USERTYPE_STUDENT, persion.getId(),
-				MessageService.STATE_UNREADED);
+						: MessageService.USERTYPE_STUDENT, persion.getId(), "");
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 

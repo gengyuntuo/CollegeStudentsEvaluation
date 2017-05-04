@@ -124,10 +124,11 @@ public class TermServiceImpl implements TermService {
 	@Override
 	public PageInfo<Map<String, String>> getTermWithPageSize(
 			PageInfo<Map<String, String>> pageInfo, String search,
-			String teacherId) {
+			String classId, String teacherId) {
 		Map<String, String> conditions = new HashMap<>();
 		conditions.put("teacherId", teacherId);
 		conditions.put("search", search);
+		conditions.put("classId", classId);
 		// 分页查询
 		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = termDAO.findTermsWithMap(conditions);

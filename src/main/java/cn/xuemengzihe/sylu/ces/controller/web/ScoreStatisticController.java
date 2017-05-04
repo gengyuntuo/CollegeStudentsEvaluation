@@ -44,7 +44,8 @@ import com.github.pagehelper.PageInfo;
 /**
  * <h1>Score Statistic Controller</h1>
  * <p>
- * 成绩统计相关
+ * 成绩统计相关<br/>
+ * <b>注意：</b>并非所有与成绩相关的方法都在该类中，部分班长特有的在操作在{@link MonitorController}中
  * </p>
  * 
  * @author 李春
@@ -71,11 +72,33 @@ public class ScoreStatisticController {
 	@Autowired
 	private TermClassDAO termClassDAO;
 
+	/**
+	 * 成绩信息
+	 * 
+	 * @return
+	 */
 	@RequestMapping("scoreInfo")
 	public String scoreInfo() {
 		return "/score/scoreInfo";
 	}
 
+	/**
+	 * 成绩统计（学生和教师）
+	 * 
+	 * @return
+	 */
+	@RequestMapping("scoreStatic")
+	public String scoreStatic() {
+		return "/score/scoreStatic";
+	}
+
+	/**
+	 * 测评列表
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("scoreList")
 	public String scoreList(HttpServletRequest request, Model model) {
 		// 获取创建学期时的列表
@@ -160,14 +183,18 @@ public class ScoreStatisticController {
 
 		// 判断当前 用户是否为教师，如果是教师，则只查询教师的相关内容
 		String teacherId = null;
+		String classId = null;
 		Persion persion = (Persion) request.getSession().getAttribute("user");
 		if (persion instanceof Teacher
 				&& "T".equals(((Teacher) persion).getRole())) {
 			teacherId = persion.getId() + "";
+		} else if (persion instanceof Student) {
+			classId = ((Student) persion).getClassId().toString();
 		}
 
 		// 分页查询记录
-		pageInfo = termService.getTermWithPageSize(pageInfo, search, teacherId);
+		pageInfo = termService.getTermWithPageSize(pageInfo, search, classId,
+				teacherId);
 		// 将数据分装的模型中
 		// 返回页面
 		return JSONUtil.parsePageInfoToJSON(pageInfo);

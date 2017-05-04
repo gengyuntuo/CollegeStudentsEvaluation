@@ -62,13 +62,13 @@ $(function() {
 					title : '专业',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				}, {
 					field : 'tname',
 					title : '老师',
 					halign : "center",
 					align : "center",
-					valign : "middle",
+					valign : "middle"
 				} ]
 			});
 		};
