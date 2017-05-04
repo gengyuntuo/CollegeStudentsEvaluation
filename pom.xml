@@ -94,7 +94,7 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 
-		<!-- 定时任务 -->
+		<!-- 定时器任务 -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
