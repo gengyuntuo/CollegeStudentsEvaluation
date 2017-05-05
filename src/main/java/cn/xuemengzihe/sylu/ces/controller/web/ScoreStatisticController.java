@@ -599,11 +599,20 @@ public class ScoreStatisticController {
 			if (zhRecord == null) {
 				throw new RuntimeException("未找到对应的测评记录！");
 			}
+			if (new Date().getTime() - term.getStopDate().getTime() > 0) {
+				throw new RuntimeException("无法更新，已经超过测评截止日期");
+			}
 
 			score = webParseService.obtainXFJD(student.getSno(), password,
 					term.getName());
+
+			// 保存成绩
+			if (zhRecord.getPingJunXueFenJiDian() != score) {
+				zhRecord.setPingJunXueFenJiDian(score);
+				tableZHCPCJTJServcie.updateRecord(zhRecord);
+			}
 		} catch (Exception e) {
-			return "{\"result\":\"error\"}";
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
 		}
 		return "{\"result\":\"success\",\"score\":\""
 				+ new DecimalFormat("#.0000").format(score) + "\"}";

@@ -266,21 +266,28 @@ $(document).ready(function() {
 				$.ajax({
 					url : 'updateAVGScorePoint.do',
 					type : 'POST',
+					dataType : "json",
 					data : {
 						"item" : $("#termId").val(),
 						"password" : $("#jxwPassword").val()
 					},
 					success : function(data) {
 						$("#progressBarDiv").attr("hidden", "hidden"); // 关闭进度条
-						var score = $("#btn_update_score").html();
+						var score = $("#scoreId").html().trim();
 						if (data.result == "success") {
 							if (data.score != score) {
-								window.location.href = "#";
+								window//
+								.location//
+								.href = // 
+								"./studentScore"//
+										+ "StaticDetail.do"//
+										+ "?item="//
+										+ $("#termId").val();
 							}
 							alert("更新成功！");
 							dialog_update_score.dialog("close");
 						} else {
-							alert("更新失败，请检查密码！");
+							alert(data.tip);
 						}
 						// $(this).removeAttr("disabled"); // 解锁按钮
 						$("button").removeAttr("disabled"); // 解锁按钮

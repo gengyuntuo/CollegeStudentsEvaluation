@@ -68,7 +68,8 @@
 										<li class="list-group-item">素质学分绩点:<span style="display: block;float: right;">${zhRecord.SZXFScorePoint }</span></li>
 										<li class="list-group-item">平均学分绩点:<span style="display: block;float: right;">
 												<button id="btn_update_score" type="button" class="btn btn-xs btn-primary btn-alt" data-toggle="tooltip" data-placement="top" title="计算平均学分绩点">
-													<fmt:formatNumber pattern="#0.0000" value="${zhRecord.pingJunXueFenJiDian }" />
+													<span id="scoreId"> <fmt:formatNumber pattern="#0.0000" value="${zhRecord.pingJunXueFenJiDian }" />
+													</span>
 												</button>
 										</span>
 										</li>
