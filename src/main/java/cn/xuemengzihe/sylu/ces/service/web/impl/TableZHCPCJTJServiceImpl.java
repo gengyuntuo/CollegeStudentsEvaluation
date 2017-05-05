@@ -49,6 +49,16 @@ public class TableZHCPCJTJServiceImpl implements TableZHCPCJTJService {
 	}
 
 	@Override
+	public TableZHCPCJTJ getRecordDetailWithTermIdSno(Integer termId,
+			String sno, Integer stuId) {
+		Map<String, Object> ids = new HashMap<>();
+		ids.put("termId", termId);
+		ids.put("sno", sno);
+		ids.put("stuId", stuId);
+		return tableZHCPCJTJDAO.getRecordDetailWithTermIdSno(ids);
+	}
+
+	@Override
 	public PageInfo<Map<String, String>> getRecordWithMap(
 			PageInfo<Map<String, String>> pageInfo, String termId,
 			String classId, String sno, String order) {

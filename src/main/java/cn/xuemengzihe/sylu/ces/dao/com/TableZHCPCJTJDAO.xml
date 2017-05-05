@@ -3,6 +3,48 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.xuemengzihe.sylu.ces.dao.com.TableZHCPCJTJDAO">
+	<resultMap type="tableZHCPCJTJ" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="sno" property="sno"/>
+		<result column="termId" property="termId"/>
+		<result column="xfjd" property="pingJunXueFenJiDian"/>
+		<result column="zhState" property="isValid"/>
+		<result column="zhCTime" property="cTime"/>
+		<result column="zhUTime" property="uTime"/>
+		<association property="student" javaType="student">
+			<id column="stuId" property="id"/>
+			<result column="name" property="name"/>
+			<result column="sno" property="sno"/>
+			<result column="classId" property="classId"/>
+		</association>
+		<association property="tableSZXFXWBF" javaType="tableSZXFRCXWBFPF">
+			<id column="rcxwId" property="id"/>
+			<result column="id" property="zongHeId"/>
+			<result column="rcxwSHGD" property="sheHuiGongDe"/>
+			<result column="rcxwWMJW" property="wenMingJiaoWang"/>
+			<result column="rcxwCXLS" property="chengXinLiShen"/>
+			<result column="rcxwTYDL" property="tiYuDuanLian"/>
+			<result column="rcxwAHGW" property="aiHuGongWu"/>
+			<result column="rcxwXXGD" property="xueXiaoGuiDing"/>
+			<result column="rcxwCJHD" property="canJiaHuoDong"/>
+			<result column="rcxwTKJL" property="tingKeJiLu"/>
+			<result column="rcxwGYJC" property="gongYuJianCha"/>
+			<result column="rcxwState" property="isValid"/>
+			<result column="rcxwCTime" property="cTime"/>
+			<result column="rcxwUTime" property="uTime"/>
+		</association>
+		<association property="tableSZJYJF" javaType="tableSZJYJFPF">
+			<id column="szjfId" property="id"/>
+			<result column="id" property="zongHeId"/>
+			<result column="szjfSHFW" property="sheHuiFuWu"/>
+			<result column="szjfSHSJ" property="sheHuiShiJian"/>
+			<result column="szjfBSHJ" property="biSaiHuoJiang"/>
+			<result column="szjfXSGB" property="xueShengGanBu"/>
+			<result column="szjfState" property="isValid"/>
+			<result column="szjfCTime" property="cTime"/>
+			<result column="szjfUTime" property="uTime"/>
+		</association>
+	</resultMap>
 	<insert id="insertRecord" parameterType="tableZHCPCJTJ" useGeneratedKeys="true">
 		INSERT INTO `t_zhcpcjtj` (
 			`sno`, 
@@ -34,22 +76,82 @@
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableZHCPCJTJ">
 		SELECT 
-		    *
+			*
 		FROM
-		    (SELECT 
-		        zhstu.id
-		    FROM
-		        (SELECT 
-		        zh.id
-		    FROM
-		        t_zhcpcjtj zh
-		    LEFT JOIN student stu ON zh.sno = stu.sno
-		    WHERE
-		        zh.id = '1') zhstu
-		    LEFT JOIN t_szxfrcxwbfpf rcxw ON zhstu.id = rcxw.zong_he_id) zsr
-		        LEFT JOIN
-		    t_szjyjfpf szjf ON zsr.id = szjf.zong_he_id
+			(SELECT 
+				`zhstu`.`id`
+			FROM
+				(SELECT 
+				`zh`.`id`
+				FROM
+					`t_zhcpcjtj` `zh`
+				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
+				WHERE
+					`zh`.`id` = '1'
+				) `zhstu`
+			LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`id` = `rcxw`.`zong_he_id`
+		    ) `zsr`
+		LEFT JOIN `t_szjyjfpf` `szjf` ON `zsr`.`id` = `szjf`.`zong_he_id`
 	</select>
+	<!-- 使用测评ID和学生学号查询个人详细的信息 -->
+	<select id="getRecordDetailWithTermIdSno" parameterType="map" resultMap="resultMap">
+		SELECT 
+			`zsr`.*,
+			`szjf`.`id` AS `szjfId`,
+			`szjf`.`she_hui_fu_wu` AS `szjfSHFW`,
+			`szjf`.`she_hui_shi_jian` AS `szjfSHSJ`,
+			`szjf`.`bi_sai_huo_jiang` AS `szjfBSHJ`,
+			`szjf`.`xue_sheng_gan_bu` AS `szjfXSGB`,
+			`szjf`.`is_valid` AS `szjfState`,
+			`szjf`.`c_time` AS `szjfCTime`,
+			`szjf`.`u_time` AS `szjfUTime`
+		FROM
+			(SELECT 
+				`zhstu`.*,
+				`rcxw`.`id` AS `rcxwId`,
+				`rcxw`.`she_hui_gong_de` AS `rcxwSHGD`,
+				`rcxw`.`wen_ming_jiao_wang` AS `rcxwWMJW`,
+				`rcxw`.`cheng_xin_li_shen` AS `rcxwCXLS`,
+				`rcxw`.`ti_yu_duan_lian` AS `rcxwTYDL`,
+				`rcxw`.`ai_hu_gong_wu` AS `rcxwAHGW`,
+				`rcxw`.`xue_xiao_gui_ding` AS `rcxwXXGD`,
+				`rcxw`.`can_jia_huo_dong` AS `rcxwCJHD`,
+				`rcxw`.`ting_ke_ji_lu` AS `rcxwTKJL`,
+				`rcxw`.`gong_yu_jian_cha` AS `rcxwGYJC`,
+				`rcxw`.`is_valid` AS `rcxwState`,
+				`rcxw`.`c_time` AS `rcxwCTime`,
+				`rcxw`.`u_time` AS `rcxwUTime`
+			FROM
+				(SELECT 
+					`stu`.`id` AS `stuId`,
+					`stu`.`sno` AS `sno`,
+					`stu`.`name` AS `name`,
+					`stu`.`class_id` AS `classId`,
+					`zh`.`id` AS `id`,
+					`zh`.`term_id` AS `termId`,
+					`zh`.`id` AS `zhId`,
+					`zh`.`ping_jun_xue_fen_ji_dian` AS `xfjd`,
+					`zh`.`is_valid` AS `zhState`,
+					`zh`.`c_time` AS `zhCTime`,
+					`zh`.`u_time` AS `zhUTime`
+				FROM
+					`t_zhcpcjtj` `zh`
+				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
+				WHERE
+					`zh`.`term_id` = #{termId}
+					<if test="sno != null">
+						AND `zh`.`sno` = #{sno}
+					</if>
+					<if test="stuId != null">
+						AND `stu`.`id` = #{stuId}
+					</if>
+				
+				) `zhstu`
+			LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`id` = `rcxw`.`zong_he_id`
+		) `zsr`
+		LEFT JOIN `t_szjyjfpf` `szjf` ON `zsr`.`id` = `szjf`.`zong_he_id`
+	</select>
+	
 	<select id="getRecordWithMap" parameterType="map" resultType="map">
 		SELECT 
 		    `zsr`.*,
@@ -87,8 +189,9 @@
 					`t_zhcpcjtj` `zh`
 				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
 				WHERE
+					1 = 1
 					<if test="termId != null">
-						`zh`.`term_id` = #{termId}
+						AND `zh`.`term_id` = #{termId}
 					</if>
 					<if test="zhId != null">
 						AND `zh`.`id` = #{zhId}

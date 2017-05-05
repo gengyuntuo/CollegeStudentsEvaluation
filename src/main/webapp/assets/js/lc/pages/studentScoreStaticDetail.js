@@ -73,30 +73,35 @@ $(document).ready(function() {
 					visible : false,
 					title : 'id'
 				}, {
+					width : "20%",
 					field : "name",
 					title : '名称',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "20%",
 					field : 'type',
 					title : '类型',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "10%",
 					field : 'time',
 					title : '时间',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "15%",
 					field : 'level',
 					title : '等级',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "15%",
 					field : 'evidence',
 					title : '证明',
 					halign : "center",
@@ -107,12 +112,14 @@ $(document).ready(function() {
 								+ row["filePath"] + "\">" + value + "</a>";
 					}
 				}, {
+					width : "10%",
 					field : 'score',
 					title : '分数',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "10%",
 					field : 'state',
 					title : '状态',
 					halign : "center",
@@ -230,6 +237,7 @@ $(document).ready(function() {
 		close : function() { // 关闭窗口
 		}
 	});
+
 	// 密码输入对话框
 	dialog_update_score = $("#dialog_update_score").dialog({
 		autoOpen : false,
@@ -251,20 +259,42 @@ $(document).ready(function() {
 		},
 		buttons : {
 			"查询" : function() {
+				// $(this).attr("disabled", "disabled"); // 锁定按钮，防止重复点击
+				// console.info($(this));
+				$("#progressBarDiv").removeAttr("hidden"); // 打开进度条
 				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
 				$.ajax({
-					url : '',
+					url : 'updateAVGScorePoint.do',
 					type : 'POST',
 					data : {
+						"item" : $("#termId").val(),
+						"password" : $("#jxwPassword").val()
 					},
 					success : function(data) {
+						$("#progressBarDiv").attr("hidden", "hidden"); // 关闭进度条
+						var score = $("#btn_update_score").html();
+						if (data.result == "success") {
+							if (data.score != score) {
+								window.location.href = "#";
+							}
+							alert("更新成功！");
+							dialog_update_score.dialog("close");
+						} else {
+							alert("更新失败，请检查密码！");
+						}
+						// $(this).removeAttr("disabled"); // 解锁按钮
+						$("button").removeAttr("disabled"); // 解锁按钮
 					},
 					error : function(data) {
-						alert("删除失败！");
+						$("#progressBarDiv").attr("hidden", "hidden"); // 关闭进度条
+						// $(this).removeAttr("disabled"); // 解锁按钮
+						$("button").removeAttr("disabled"); // 解锁按钮
+						alert("更新失败！");
 					}
 				});
 			},
 			"取消" : function() {
+				$("button").removeAttr("disabled"); // 解锁按钮
 				dialog_update_score.dialog("close");
 			}
 		}
@@ -292,8 +322,10 @@ $(document).ready(function() {
 		// 获取选择的行，获得是数组
 		// $('#mytable').bootstrapTable('refresh');更新数据
 	});
+
 	// 绑定单击事件到更新成绩按钮，打开窗口
 	$('#btn_update_score').click(function() {
+		$("#progressBarDiv").attr("hidden", "hidden"); // 关闭进度条
 		dialog_update_score.dialog("open");
 	});
 
@@ -318,20 +350,6 @@ $(document).ready(function() {
 		allowClear : true,
 		language : "zh-CN"
 	});
-	$("#select_type").on("change", function(e) {
-		if ("game" == $(this).val()) {
-			$("#input_name").attr("placeholder", "请输入比赛名称");
-			$("#div_level").removeAttr("hidden");
-		} else if ("cadre" == $(this).val()) {
-			$("#div_level").attr("hidden", "hidden");
-			$("#input_name").attr("placeholder", "请输入职务名称");
-		} else if ("" == $(this).val()) {
-			// $("#div_level").remove("hidden");
-			$("#input_name").attr("placeholder", "请输入名称");
-			console.info("什么都没选！");
-		}
-		// console.info($(this).val());
-	});
 	// DataPicker
 	$(function() {
 		$("#input_date").datepicker({
@@ -342,6 +360,15 @@ $(document).ready(function() {
 			monthNamesShort : [ '一月', '二月', '三月', '四月', '五月', //
 			'六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ]
 		});
+	});
+
+	// Tooltip
+	// $('[data-toggle="tooltip"]').tooltip()
+
+	// Button 点击后锁定
+	$("button").on("click", function() {
+		if ("查询" == $(this).html())
+			$(this).attr("disabled", "disabled");
 	});
 });
 

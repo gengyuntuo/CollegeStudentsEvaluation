@@ -2,9 +2,11 @@ package cn.xuemengzihe.sylu.ces.controller.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
@@ -35,6 +38,7 @@ import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZXFRCXWBFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
+import cn.xuemengzihe.sylu.ces.service.web.WebParseService;
 import cn.xuemengzihe.sylu.ces.util.Base64Util;
 import cn.xuemengzihe.sylu.ces.util.FileUtil;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
@@ -67,6 +71,8 @@ public class ScoreStatisticController {
 	private TableZHCPCJTJService tableZHCPCJTJServcie;
 	@Autowired
 	private TableSZXFRCXWBFPFService tableSZXFRCXWBFPFService;
+	@Autowired
+	private WebParseService webParseService;
 	@Autowired
 	private ComplexFunction compexFunction;
 	@Autowired
@@ -243,22 +249,39 @@ public class ScoreStatisticController {
 	public String studentScoreStaticDetail(HttpServletRequest request,
 			Model model, Integer item) {
 		// 变量定义
-		// Student student = (Student)
-		// request.getSession().getAttribute("user");
+		Student student = (Student) request.getSession().getAttribute("user");
 		Term term = null; // 测评班级的学期信息
+		TableZHCPCJTJ zhRecord = null; // 综合测评表（详细）
 
 		// 参数合法性校验
 		if (item == null)
 			throw new MissingParameterException();
-
 		// 参数有效性校验
 		term = termService.getTermById(item);
 		if (term == null) {
 			throw new InvalidParameterException();
 		}
 
-		// TODO 业务
+		// 查询综合测评表
+		zhRecord = tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(item,
+				null, student.getId());
+		// 如果当前学生不存在统计表，则创建
+		if (zhRecord == null) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("termId", item + "");
+			params.put("stuId", student.getId() + "");
+			compexFunction.createZHCPTJ(params);
+			// 再次查询综合测评表
+			zhRecord = tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(item,
+					null, student.getId());
+			if (zhRecord == null) {
+				throw new RuntimeException("综合测评表创建失败！");
+			}
+		}
+
+		// 绑定参数
 		model.addAttribute("term", term);
+		model.addAttribute("zhRecord", zhRecord);
 
 		return "/score/studentScoreStaticDetail";
 	}
@@ -325,7 +348,7 @@ public class ScoreStatisticController {
 	 */
 	@RequestMapping("createSZJYJFSQ")
 	public String createSZJYJFSQ(HttpServletRequest request, Model model,
-			TableSZJYJFSQ record, String id, MultipartFile file) {
+			Integer item, TableSZJYJFSQ record, MultipartFile file) {
 		// TODO 表单参数合法性校验
 
 		// TODO 获取Session中Student对象，校验该身份的有效性，是否有权限添加记录
@@ -549,5 +572,40 @@ public class ScoreStatisticController {
 			return "{\"tip\":\"删除失败！\"}";
 		}
 		return "{\"good\":\"删除成功！\"}";
+	}
+
+	/**
+	 * 学生：更新个人平均学分绩点
+	 * 
+	 * @param request
+	 * @param model
+	 * @param item
+	 *            测评ID
+	 * @param password
+	 *            教学网密码
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateAVGScorePoint", produces = "application/json; charset=utf-8")
+	public String updateAVGScorePoint(HttpServletRequest request, Model model,
+			@RequestParam(required = true) Integer item,
+			@RequestParam(required = true) String password) {
+		Double score = 0.; // 成绩
+		Student student = (Student) request.getSession().getAttribute("user");
+		Term term = termService.getTermById(item);
+		TableZHCPCJTJ zhRecord = tableZHCPCJTJServcie
+				.getRecordDetailWithTermIdSno(item, null, student.getId());
+		try {
+			if (zhRecord == null) {
+				throw new RuntimeException("未找到对应的测评记录！");
+			}
+
+			score = webParseService.obtainXFJD(student.getSno(), password,
+					term.getName());
+		} catch (Exception e) {
+			return "{\"result\":\"error\"}";
+		}
+		return "{\"result\":\"success\",\"score\":\""
+				+ new DecimalFormat("#.0000").format(score) + "\"}";
 	}
 }

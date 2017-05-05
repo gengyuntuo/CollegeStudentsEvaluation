@@ -37,7 +37,7 @@ $(function() {
 					align : "center",
 					valign : "middle",
 					formatter : function(value, row, index) {
-						return "<a href=\"studentScoreStatic"//
+						return "<a href=\"studentScoreStaticDetail"//
 								+ ".do?item=" + row["termId"]//
 								+ "\">" + value + "</a>";//
 					}

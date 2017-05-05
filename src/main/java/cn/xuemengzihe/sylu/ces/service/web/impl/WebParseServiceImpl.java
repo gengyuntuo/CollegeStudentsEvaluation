@@ -44,6 +44,7 @@ public class WebParseServiceImpl implements WebParseService {
 			result = client.queryScore(grade, "", ConfigName.BTN_学年成绩);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException("成绩查询失败！");
 		} finally {
 			try {
 				client.close();

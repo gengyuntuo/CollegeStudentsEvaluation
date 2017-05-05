@@ -6,7 +6,7 @@ import java.util.Date;
  * <h1>素质学分日常行为部分评分表</h1>
  * <p>
  * </p>
- *
+ * 
  * @author 李春
  * @time 2017年3月28日 下午6:36:12
  */
@@ -20,7 +20,7 @@ public class TableSZXFRCXWBFPF {
 	private Double aiHuGongWu; // 爱护公物
 	private Double xueXiaoGuiDing; // 学校规定
 	private Double canJiaHuoDong; // 参加活动
-	private Double tingkejilu; // 听课记录
+	private Double tingKeJiLu; // 听课记录
 	private Double gongYuJianCha; // 公寓检查
 	private Character isValid;
 	private Date cTime;
@@ -102,12 +102,12 @@ public class TableSZXFRCXWBFPF {
 		this.canJiaHuoDong = canJiaHuoDong;
 	}
 
-	public Double getTingkejilu() {
-		return tingkejilu;
+	public Double getTingKeJiLu() {
+		return tingKeJiLu;
 	}
 
-	public void setTingkejilu(Double tingkejilu) {
-		this.tingkejilu = tingkejilu;
+	public void setTingKeJiLu(Double tingKeJiLu) {
+		this.tingKeJiLu = tingKeJiLu;
 	}
 
 	public Double getGongYuJianCha() {
@@ -142,6 +142,14 @@ public class TableSZXFRCXWBFPF {
 		this.uTime = uTime;
 	}
 
+	public Double getScore() {
+		Double score = this.sheHuiGongDe + this.wenMingJiaoWang
+				+ this.chengXinLiShen + this.tiYuDuanLian + this.aiHuGongWu
+				+ this.xueXiaoGuiDing + this.canJiaHuoDong + this.tingKeJiLu
+				+ this.gongYuJianCha;
+		return score;
+	}
+
 	@Override
 	public String toString() {
 		return "TableSZXFRCXWBFPF [id=" + id + ", zongHeId=" + zongHeId
@@ -149,8 +157,8 @@ public class TableSZXFRCXWBFPF {
 				+ wenMingJiaoWang + ", chengXinLiShen=" + chengXinLiShen
 				+ ", tiYuDuanLian=" + tiYuDuanLian + ", aiHuGongWu="
 				+ aiHuGongWu + ", xueXiaoGuiDing=" + xueXiaoGuiDing
-				+ ", canJiaHuoDong=" + canJiaHuoDong + ", tingkejilu="
-				+ tingkejilu + ", gongYuJianCha=" + gongYuJianCha
+				+ ", canJiaHuoDong=" + canJiaHuoDong + ", tingKeJiLu="
+				+ tingKeJiLu + ", gongYuJianCha=" + gongYuJianCha
 				+ ", isValid=" + isValid + ", cTime=" + cTime + ", uTime="
 				+ uTime + "]";
 	}

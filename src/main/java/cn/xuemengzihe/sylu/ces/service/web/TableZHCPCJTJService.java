@@ -52,6 +52,20 @@ public interface TableZHCPCJTJService {
 	public TableZHCPCJTJ getRecordById(Integer id);
 
 	/**
+	 * 使用测评ID和学号(或学生ID)确定某一个学生与测评相关的所有表
+	 * 
+	 * @param termId
+	 *            测评ID（必须）
+	 * @param sno
+	 *            学号（sno、sutId不能全为空）
+	 * @param stuId
+	 *            学生ID（sno、sutId不能全为空）
+	 * @return
+	 */
+	public TableZHCPCJTJ getRecordDetailWithTermIdSno(Integer termId,
+			String sno, Integer stuId);
+
+	/**
 	 * 分页查询记录
 	 * 
 	 * @param pageInfo

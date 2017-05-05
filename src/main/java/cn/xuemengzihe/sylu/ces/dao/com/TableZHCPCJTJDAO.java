@@ -54,6 +54,15 @@ public interface TableZHCPCJTJDAO {
 	public TableZHCPCJTJ getRecordById(Integer id);
 
 	/**
+	 * 使用测评ID和学号(或学生ID)确定某一个学生与测评相关的所有表
+	 * 
+	 * @param ids
+	 *            Map集合，termId:测评Id sno:学号（或者stuId: 学生Id）
+	 * @return
+	 */
+	public TableZHCPCJTJ getRecordDetailWithTermIdSno(Map<String, Object> ids);
+
+	/**
 	 * 获取所有的记录，返回Map集合，支持条件查询
 	 * 
 	 * @param conditions

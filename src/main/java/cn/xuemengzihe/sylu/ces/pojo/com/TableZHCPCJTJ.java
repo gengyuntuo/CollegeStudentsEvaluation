@@ -109,6 +109,70 @@ public class TableZHCPCJTJ {
 		this.tableSZJYJF = tableSZJYJF;
 	}
 
+	/**
+	 * 获取日常行为得分
+	 * 
+	 * @return
+	 */
+	public Double getRCXWScore() {
+		if (tableSZXFXWBF != null) {
+			return tableSZXFXWBF.getScore();
+		} else {
+			return 0.;
+		}
+	}
+
+	/**
+	 * 获取素质活动得分
+	 * 
+	 * @return
+	 */
+	public Double getSZHDScore() {
+		if (tableSZJYJF != null) {
+			return tableSZJYJF.getScore();
+		} else {
+			return 0.;
+		}
+	}
+
+	/**
+	 * 获取素质学分合计
+	 * 
+	 * @return
+	 */
+	public Double getSZXFTotalScore() {
+		if (tableSZXFXWBF != null && tableSZJYJF != null) {
+			return tableSZXFXWBF.getScore() + tableSZJYJF.getScore();
+		} else {
+			return 0.;
+		}
+	}
+
+	/**
+	 * 素质学分绩点
+	 * 
+	 * @return
+	 */
+	public Double getSZXFScorePoint() {
+		if (tableSZXFXWBF != null && tableSZJYJF != null) {
+			Double score = (tableSZXFXWBF.getScore() + tableSZJYJF.getScore() - 50) / 10;
+			return score < 0 ? 0 : score;
+		} else {
+			return 0.;
+		}
+	}
+
+	/**
+	 * 综合测评成绩
+	 * 
+	 * @return
+	 */
+	public Double getScore() {
+		Double score = pingJunXueFenJiDian * 0.8 + this.getSZXFScorePoint()
+				* 0.2;
+		return score < 0 ? 0 : score;
+	}
+
 	@Override
 	public String toString() {
 		return "TableZHCPCJTJ [id=" + id + ", sno=" + sno + ", termId="

@@ -66,32 +66,33 @@
 	</update>
 	<select id="findById" parameterType="int" resultMap="myResultMap">
 		SELECT 
-		    `tab`.*,
-		    `class`.`id` AS `cid`,
-		    `class`.`class_id` AS `cClassId`,
-		    `class`.`major_id` AS `cMajorId`,
-		    `class`.`teacher_id` AS `cTeacherId`
+			`t_term`.*,
+			`class`.`id` AS `cid`,
+			`class`.`class_id` AS `cClassId`,
+			`class`.`major_id` AS `cMajorId`,
+			`class`.`teacher_id` AS `cTeacherId`
 		FROM
-		    (SELECT 
-		        `t`.`id` AS `id`,
-		            `t`.`name` AS `name`,
-		            `t`.`teacher_id` AS `teacher_id`,
-		            `t`.`desc` AS `desc`,
-		            `t`.`start_date` AS `start_date`,
-		            `t`.`stop_date` AS `stop_date`,
-		            `t`.`is_valid` AS `is_valid`,
-		            `t`.`c_time` AS `c_time`,
-		            `t`.`u_time` AS `u_time`,
-		            `tc`.`id` AS `termClassId`,
-		            `tc`.`term_id` AS `term_id`,
-		            `tc`.`class_id` AS `class_id`
-		    FROM
-		        `term` `t`
-		    LEFT JOIN `term_class` `tc` ON `t`.`id` = `tc`.`term_id`
-		    WHERE
-		        `t`.`is_valid` = 'Y' AND `t`.`id` = #{value}) `tab`
-		        LEFT JOIN
-		    `class` ON `tab`.`class_id` = `class`.`id`
+			(SELECT 
+				`t`.`id` AS `id`,
+					`t`.`name` AS `name`,
+					`t`.`teacher_id` AS `teacher_id`,
+					`t`.`desc` AS `desc`,
+					`t`.`start_date` AS `start_date`,
+					`t`.`stop_date` AS `stop_date`,
+					`t`.`is_valid` AS `is_valid`,
+					`t`.`c_time` AS `c_time`,
+					`t`.`u_time` AS `u_time`,
+					`tc`.`id` AS `termClassId`,
+					`tc`.`term_id` AS `term_id`,
+					`tc`.`class_id` AS `class_id`
+			FROM
+				`term` `t`
+			LEFT JOIN `term_class` `tc` ON `t`.`id` = `tc`.`term_id`
+			WHERE
+				`t`.`is_valid` = 'Y' AND `t`.`id` = #{value}
+			) `t_term`
+		LEFT JOIN
+			`class` ON `t_term`.`class_id` = `class`.`id`
 	</select>
 	<select id="findTermsWithMap" parameterType="map" resultType="map">
 		SELECT 

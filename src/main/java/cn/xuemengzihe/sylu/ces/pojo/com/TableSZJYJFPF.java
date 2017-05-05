@@ -15,7 +15,7 @@ public class TableSZJYJFPF {
 	private Double sheHuiFuWu; // 社会服务
 	private Double sheHuiShiJian; // 社会实践
 	private Double biSaiHuoJiang; // 比赛获奖
-	private Double xueShengGanBu; // 学生干部 
+	private Double xueShengGanBu; // 学生干部
 	private Character isValid; // 标志该表是否有效
 	private Date cTime;
 	private Date uTime;
@@ -107,6 +107,12 @@ public class TableSZJYJFPF {
 
 	public void setTableSZJYJFSQ(List<TableSZJYJFSQ> tableSZJYJFSQ) {
 		this.tableSZJYJFSQ = tableSZJYJFSQ;
+	}
+
+	public Double getScore() {
+		Double score = this.sheHuiFuWu + this.sheHuiShiJian
+				+ this.biSaiHuoJiang + this.xueShengGanBu;
+		return score > 30 ? 30 : score; // 最高得分为30分
 	}
 
 	@Override
