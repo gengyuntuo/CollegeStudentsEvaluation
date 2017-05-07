@@ -255,7 +255,7 @@ $(function() {
 	// 表单元素
 	$("#term").select2({
 		width : "100%",
-		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
+		// minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
 		placeholder : "请选择学期",
 		allowClear : true,
 		language : "zh-CN"

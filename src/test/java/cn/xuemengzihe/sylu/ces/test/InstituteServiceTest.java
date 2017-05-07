@@ -28,14 +28,14 @@ public class InstituteServiceTest {
 	@Test
 	public void testInsertInstitute() {
 		Institute ins = new Institute();
-		ins.setcTime( new Date());
+		ins.setcTime(new Date());
 		ins.setDesc("电气工程及其自动化3");
 		ins.setId(3);
 		ins.setiName("电气工程及其自动化3");
 		ins.setiNumb("123132");
 		ins.setIsValid("N");
 		ins.setuTime(new Date());
-		
+
 		instiuteService.insertInstitute(ins);
 		System.out.println(ins);
 	}

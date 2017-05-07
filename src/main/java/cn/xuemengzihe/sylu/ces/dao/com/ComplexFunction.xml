@@ -10,7 +10,7 @@
 		FROM
 	    	`class`
 		WHERE
-	    	`class`.`teacher_id` = 1
+	    	`class`.`teacher_id` = #{teacherId}
 			AND `class`.`is_valid` = 'Y'
 		ORDER BY class.start_year DESC
 	</select>

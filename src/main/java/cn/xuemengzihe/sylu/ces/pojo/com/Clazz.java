@@ -28,7 +28,6 @@ public class Clazz {
 	private List<Student> students; // 班级学生
 
 	public Clazz() {
-		super();
 	}
 
 	public Integer getId() {
@@ -47,11 +46,11 @@ public class Clazz {
 		this.classId = classId;
 	}
 
-	public Integer getMajor() {
+	public Integer getMajorId() {
 		return majorId;
 	}
 
-	public void setMajor(Integer majorId) {
+	public void setMajorId(Integer majorId) {
 		this.majorId = majorId;
 	}
 
@@ -121,11 +120,11 @@ public class Clazz {
 
 	@Override
 	public String toString() {
-		return "Clazz [id=" + id + ", classId=" + classId + ", majorId=" + majorId
-				+ ", teacherId=" + teacherId + ", studyYear=" + studyYear
-				+ ", startYear=" + startYear + ", isValid=" + isValid
-				+ ", cTime=" + cTime + ", uTime=" + uTime + ", teacher="
-				+ teacher + ", students=" + students + "]";
+		return "Clazz [id=" + id + ", classId=" + classId + ", majorId="
+				+ majorId + ", teacherId=" + teacherId + ", studyYear="
+				+ studyYear + ", startYear=" + startYear + ", isValid="
+				+ isValid + ", cTime=" + cTime + ", uTime=" + uTime
+				+ ", teacher=" + teacher + ", students=" + students + "]";
 	}
 
 }

@@ -55,7 +55,8 @@ public class MajorServiceImpl implements MajorService {
 
 	@Override
 	public PageInfo<Major> findMajorsOfPage(PageInfo<Major> pageInfo) {
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Major> list = majorDAO.findMajorsOfAll();
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
@@ -64,7 +65,8 @@ public class MajorServiceImpl implements MajorService {
 	@Override
 	public PageInfo<Map<String, String>> findMajorsOfPageWithMapSet(
 			PageInfo<Map<String, String>> pageInfo, String condition) {
-		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = majorDAO
 				.findMajorsOfAllWithMapSet(condition);
 		pageInfo = new PageInfo<>(list);

@@ -1,3 +1,19 @@
+/**
+ * 解决Select2在jQuery dialog中无法搜索的问题
+ */
+$.widget("ui.dialog", $.ui.dialog, {
+	open : function() {
+		return this._super();
+	},
+	_allowInteraction : function(event) {
+		return !!$(event.target).is(".select2-search__field")
+				|| this._super(event);
+	}
+});
+
+/**
+ * 页面加载完成
+ */
 $(function() {
 	var TableInit = function() {
 		var oTableInit = new Object();
@@ -29,7 +45,7 @@ $(function() {
 				showPaginationSwitch : false, // 是否显示 数据条数选择框
 				clickToSelect : true, // 设置true 将在点击行时，自动选择rediobox 和 checkbox
 				singleSelect : true, // 设置True 将禁止多选
-				idField : 'id', // 指定主键列
+				// idField : 'id', // 指定主键列
 				cardView : false, // 设置为
 				// true将显示card视图，适用于移动设备。否则为table试图，适用于pc
 				showRefresh : false, // 是否显示 刷新按钮
@@ -39,6 +55,7 @@ $(function() {
 				columns : [ {
 					checkbox : true
 				}, {
+					width : "20%",
 					field : "className",
 					title : '班级',
 					halign : "center",
@@ -49,6 +66,7 @@ $(function() {
 								+ "item=" + row.id + "\">" + value + "</a>"; //
 					}
 				}, {
+					width : "10%",
 					field : 'study_year',
 					title : '学制',
 					halign : "center",
@@ -58,12 +76,21 @@ $(function() {
 						return value + "年"; //
 					}
 				}, {
+					width : "20%",
+					field : 'start_year',
+					title : '入学日期',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					width : "30%",
 					field : 'mname',
 					title : '专业',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
+					width : "20%",
 					field : 'tname',
 					title : '老师',
 					halign : "center",
@@ -80,11 +107,11 @@ $(function() {
 	oTable.Init();
 
 	// 2. 绑定按钮事件
-	var dialog_add, dialog_update, dialog_delete, form = $('#form');
+	var dialog_add = null, dialog_update = null, dialog_delete = null, form = $('#form');
 	// 添加对话框
 	dialog_add = $("#dialog-add").dialog({
 		autoOpen : false,
-		title : '添加学院',
+		title : '创建班级',
 		height : 600,
 		width : 500,
 		modal : true,
@@ -103,28 +130,34 @@ $(function() {
 		buttons : {
 			"添加" : function() {
 				// 获取并验证表单内容
-				var numb = $("#numb").val();
-				var name = $("#name").val();
-				var desc = $("#desc").val();
+				var majorId = $("#majorId").val();
+				var classId = $("#classId").val();
+				var studyYear = $("#studyYear").val();
+				var startYear = $("#startYear").val();
 				// TODO 数据合法性校验
 				$.ajax({
 					url : 'classAdd.do',
 					type : 'POST',
 					data : {
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"majorId" : majorId,
+						"classId" : classId,
+						"studyYear" : studyYear,
+						"startYear" : startYear
 					},
+					dataType : "json",
 					success : function(data) {
-						var result = eval(data);
-						if (result["tip"] != undefined)
-							alert("添加失败！" + result["tip"]);
-						// 添加成功，同时更新数据
-						$('#mytable').bootstrapTable('refresh');
-						dialog_add.dialog("close");
+						if (data.result == "success") {
+							// 添加成功
+							$('#mytable').bootstrapTable('refresh'); // 刷新页面
+							dialog_add.dialog("close"); // 关闭窗口
+						} else {
+							// 添加失败
+							alert(data.tip);
+							return;
+						}
 					},
 					error : function(data) {
-						alert("添加失败！");
+						alert("添加失败，请求失败！");
 					}
 				});
 			},
@@ -139,7 +172,7 @@ $(function() {
 	// 修改对话框
 	dialog_update = $("#dialog-update").dialog({
 		autoOpen : false,
-		title : '修改学院',
+		title : '修改班级',
 		height : 600,
 		width : 500,
 		modal : true,
@@ -157,29 +190,35 @@ $(function() {
 		},
 		buttons : {
 			"修改" : function() {
-				var id = $('#uid').val();
-				var numb = $('#unumb').val();
-				var name = $('#uname').val();
-				var desc = $('#udesc').val();
+				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+				// 获取并验证表单内容
+				var id = obj.id;
+				var majorId = $("#umajorId").val();
+				var classId = $("#uclassId").val();
+				var studyYear = $("#ustudyYear").val();
+				var startYear = $("#ustartYear").val();
 				// TODO 数据合法性校验
 				$.ajax({
 					url : 'classUpdate.do',
 					type : 'POST',
 					data : {
 						"id" : id,
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"majorId" : majorId,
+						"classId" : classId,
+						"studyYear" : studyYear,
+						"startYear" : startYear
 					},
+					dataType : "json",
 					success : function(data) {
-						var result = eval(data);
-						if (result["tip"] != undefined) {
-							alert("修改失败！" + result["tip"]);
+						if (data.result == "success") {
+							// 修改成功
+							$('#mytable').bootstrapTable('refresh'); // 刷新页面
+							dialog_update.dialog("close"); // 关闭窗口
+						} else {
+							// 添加失败
+							alert(data["tip"]);
 							return;
 						}
-						// 修改成功，同时更新数据
-						$('#mytable').bootstrapTable('refresh');
-						dialog_update.dialog("close");
 					},
 					error : function(data) {
 						alert("修改失败！");
@@ -220,10 +259,10 @@ $(function() {
 					data : {
 						"id" : obj["id"]
 					},
+					dataType : "json",
 					success : function(data) {
-						var result = eval(data);
-						if (result["tip"] != undefined) {
-							alert("删除失败！" + result["tip"]);
+						if (data["result"] != "success") {
+							alert(data["tip"]);
 							return;
 						}
 						// 删除成功，同时更新数据
@@ -254,11 +293,18 @@ $(function() {
 			alert("请选择行！");
 			return;
 		}
-		$('#uid').val(obj['id']);
-		$('#unumb').val(obj['numb']);
-		$('#uname').val(obj['name']);
-		$('#udesc').val(obj['desc']);
-		// console.info(obj);
+		form[0].reset();
+		$("#umajorId").val(obj.majorId);
+		$("#umajorId").select2({
+			width : "100%",
+			minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
+			placeholder : "请选择专业",
+			allowClear : true,
+			language : "zh-CN"
+		});
+		$("#uclassId").val(obj.className);
+		$("#ustudyYear").val(obj.study_year);
+		$("#ustartYear").val(obj.start_year);
 		dialog_update.dialog("open");
 	});
 	// 绑定单击事件到删除按钮，打开窗口
@@ -281,6 +327,28 @@ $(function() {
 				offset : 0
 			}
 		});
+	});
+
+	/**
+	 * 专业选择下拉框
+	 */
+	$("#majorId").select2({
+		width : "100%",
+		minimumResultsForSearch : -1, // 当结果总数大于或等于该值时才显示搜索框，-1时不显示搜索框
+		placeholder : "请选择专业",
+		allowClear : true,
+		language : "zh-CN"
+	});
+	/**
+	 * 入学时间
+	 */
+	$("#startYear,#ustartYear").datepicker({
+		dateFormat : "yy-mm-dd",
+		changeMonth : true,
+		changeYear : true,
+		dayNamesMin : [ '日', '一', '二', '三', '四', '五', '六' ],
+		monthNamesShort : [ '一月', '二月', '三月', '四月', '五月', //
+		'六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ]
 	});
 
 });

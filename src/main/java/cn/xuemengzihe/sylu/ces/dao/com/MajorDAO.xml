@@ -8,11 +8,11 @@
 		<result column="m_numb" property="mNumb"/>
 		<result column="m_name" property="mName"/>
 		<result column="desc" property="desc"/>
-		<association property="institute" javaType="major">
-			<id column="id" property="iid"/>
-			<result column="i_numb" property="iNumb"/>
-			<result column="i_name" property="iName"/>
-			<result column="desc" property="idesc"/>
+		<association property="institute" javaType="institute">
+			<id column="iid" property="id"/>
+			<result column="inumb" property="iNumb"/>
+			<result column="iname" property="iName"/>
+			<result column="idesc" property="desc"/>
 		</association>
 	</resultMap>
 	<insert id="insertMajor" parameterType="major">

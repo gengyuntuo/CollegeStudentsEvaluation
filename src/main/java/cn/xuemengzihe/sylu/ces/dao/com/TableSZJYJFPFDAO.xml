@@ -50,10 +50,10 @@ SELECT
 			`szjf`.`she_hui_shi_jian` AS `shsj`,
 			`szjf`.`bi_sai_huo_jiang` AS `bshj`,
 			`szjf`.`xue_sheng_gan_bu` AS `xsgb`,
-			`szjf`.`she_hui_fu_wu`+
+			GET_SZJYJFPF(`szjf`.`she_hui_fu_wu`+
 			`szjf`.`she_hui_shi_jian`+
 			`szjf`.`bi_sai_huo_jiang`+
-			`szjf`.`xue_sheng_gan_bu` AS `szjfScore`,
+			`szjf`.`xue_sheng_gan_bu`) AS `szjfScore`,
 		    `szjf`.`is_valid` AS `szjfState`
 		FROM
 	        (SELECT 

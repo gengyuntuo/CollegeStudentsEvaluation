@@ -393,3 +393,67 @@ BEGIN
 	RETURN zhId; 
 END$$
 DELIMITER ;
+
+# 素质教育加分有最高三十分的限制，该函数将保证结果只有30分
+DROP function IF EXISTS `get_szjyjfpf`;
+DELIMITER $$
+CREATE FUNCTION `get_szjyjfpf` (score DOUBLE)
+RETURNS DOUBLE
+BEGIN
+	IF score > 30 THEN
+		SET score = 30;
+	END IF;
+	RETURN score;
+END$$
+
+DELIMITER ;
+
+/************/
+/* 存取过程 */
+/************/
+# 依据素质教育加分申请表，根据加分依据计算成绩，然后更新素质教育加分评测表中的数据
+DROP procedure IF EXISTS `update_szjyjf_score`;
+DELIMITER $$
+CREATE PROCEDURE `update_szjyjf_score` (p_szId INT)
+BEGIN
+	DECLARE  score_shfw DOUBLE;
+	DECLARE  score_shsj DOUBLE;
+	DECLARE  score_bshj DOUBLE;
+	DECLARE  score_xsgb DOUBLE;
+	/* 更新素质教育加分表 */
+
+	/* 积极为社会服务，为他人奉献（满分8分） */
+	SELECT IFNULL(SUM(`score`),0) INTO score_shfw FROM `t_szjyjfsq` t
+	WHERE t.`su_zhi_id` = p_szId AND t.`is_valid` ='Y' AND t.`type` = 'shfw';
+	IF score_shfw > 8 THEN
+		SET score_shfw = 8;
+	END IF;
+	UPDATE `t_szjyjfpf` SET `she_hui_fu_wu` = score_shfw WHERE `t_szjyjfpf`.`id` = p_szId;
+
+	/* 积极参加社会实践与志愿服务（满分12分） */
+	SELECT IFNULL(SUM(`score`),0) INTO score_shsj FROM `t_szjyjfsq` t
+	WHERE t.`su_zhi_id` = p_szId AND t.`is_valid` ='Y' AND t.`type` = 'shsj';
+	IF score_shsj > 12 THEN
+		SET score_shsj = 12;
+	END IF;
+	UPDATE `t_szjyjfpf` SET `she_hui_shi_jian` = score_shsj WHERE `t_szjyjfpf`.`id` = p_szId;
+
+	/* 参加各类比赛获奖情况（满分15分） */
+	SELECT IFNULL(SUM(`score`),0) INTO score_bshj FROM `t_szjyjfsq` t
+	WHERE t.`su_zhi_id` = p_szId AND t.`is_valid` ='Y' AND t.`type` = 'bshj';
+	IF score_bshj > 15 THEN
+		SET score_bshj = 15;
+	END IF;
+	UPDATE `t_szjyjfpf` SET `bi_sai_huo_jiang` = score_bshj WHERE `t_szjyjfpf`.`id` = p_szId;
+
+	/* 学生干部职务加分（满分10分） */
+	SELECT IFNULL(SUM(`score`),0) INTO score_xsgb FROM `t_szjyjfsq` t
+	WHERE t.`su_zhi_id` = p_szId AND t.`is_valid` ='Y' AND t.`type` = 'xsgb';
+	IF score_xsgb > 10 THEN
+		SET score_xsgb = 10;
+	END IF;
+	UPDATE `t_szjyjfpf` SET `xue_sheng_gan_bu` = score_xsgb WHERE `t_szjyjfpf`.`id` = p_szId;
+
+END$$
+
+DELIMITER ;

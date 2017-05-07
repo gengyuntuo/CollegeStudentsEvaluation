@@ -15,6 +15,7 @@
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
 <link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
 </head>
 <body>
 	<!-- Start #header -->
@@ -83,47 +84,70 @@
 	</div>
 
 	<!-- 对话框 开始 -->
+	<!-- 添加对话框 -->
 	<div id="dialog-add">
 		<form id="form" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="numb" name="numb" type="text" class="form-control" placeholder="班级代码">
+					<select id="majorId" name="majorId" class="form-control">
+						<option></option>
+						<c:forEach var="item" items="${majorList }">
+							<option value="${item.id }">${item.mName }</option>
+						</c:forEach>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="班级名称">
+					<input id="classId" name="classId" type="number" class="form-control" placeholder="班级名称">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学制：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="desc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+					<input id="studyYear" name="studyYear" type="number" class="form-control" placeholder="学制">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">日期：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="startYear" name="startYear" type="text" class="form-control" placeholder="请选择入学时间">
 				</div>
 			</div>
 		</form>
 	</div>
+	<!-- 修改对话框 -->
 	<div id="dialog-update">
-		<form id="dialog-update" class="form-horizontal group-border hover-stripped">
-			<input id="uid" hidden="hidden" />
+		<form  class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="unumb" name="numb" type="text" class="form-control" placeholder="班级代码">
+					<select id="umajorId" name="majorId" class="form-control">
+						<option></option>
+						<c:forEach var="item" items="${majorList }">
+							<option value="${item.id }">${item.mName }</option>
+						</c:forEach>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="uname" name="name" type="text" class="form-control" placeholder="班级名称">
+					<input id="uclassId" name="classId" type="number" class="form-control" placeholder="班级名称">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学制：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="udesc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+					<input id="ustudyYear" name="studyYear" type="number" class="form-control" placeholder="学制">
+				</div>
+			</div>
+			<div class="form-group">
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">日期：</label>
+				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input id="ustartYear" name="startYear" type="text" class="form-control" placeholder="请选择入学时间">
 				</div>
 			</div>
 		</form>
@@ -135,6 +159,8 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/pages/classList.js"/>"></script>
 </body>
 </html>

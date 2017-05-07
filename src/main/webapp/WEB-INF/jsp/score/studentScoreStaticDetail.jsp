@@ -144,7 +144,7 @@
 	<!-- 创建素质教育加分申请表 -->
 	<div id="dialog-add">
 		<form id="form" action="createSZJYJFSQ.do" target="result_iframe" method="post" enctype="multipart/form-data" class="form-horizontal group-border hover-stripped">
-			<input name="term" value="" hidden="hidden">
+			<input name="item" value="${term.id }" hidden="hidden">
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">类型：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -205,6 +205,7 @@
 			</div>
 		</form>
 	</div>
+
 	<!-- 创建素质教育加分申请表结果 -->
 	<div id="result_iframe_div" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">

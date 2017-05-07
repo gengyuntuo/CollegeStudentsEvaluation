@@ -351,39 +351,50 @@ public class ScoreStatisticController {
 			Integer item, TableSZJYJFSQ record, MultipartFile file) {
 		// TODO 表单参数合法性校验
 
-		// TODO 获取Session中Student对象，校验该身份的有效性，是否有权限添加记录
 		Student student = (Student) request.getSession().getAttribute("user");
-		record.setSuZhiId(1);// TODO
-		student.getAddress();
+		Term term = termService.getTermById(item);
+		TableZHCPCJTJ zhRecord = tableZHCPCJTJServcie
+				.getRecordDetailWithTermIdSno(item, student.getSno(), null);
 
-		// 获取项目中储存文件的文件夹的绝对路径
-		String fileLocation = request.getSession().getServletContext()
-				.getRealPath("/");
 		try {
-			String filePathAndName = FileUtil.DIRECTORY_UPLOAD_FILE
-					+ FileUtil.getUploadFilePathAndName(file
-							.getOriginalFilename());
-			FileUtil.mkdirsForFile(fileLocation + filePathAndName);
-			file.transferTo(new File(fileLocation + filePathAndName));
-			record.setFilePath(Base64Util.encode(filePathAndName)); // Base64编码后存入数据库
-		} catch (IOException e) {
-			e.printStackTrace();
-			model.addAttribute("result", "false");
-			model.addAttribute("tip", "创建失败！");
-			return "/other/result";
-		}
+			// 参数检查
+			if (term == null) { // 学期参数异常
+				throw new RuntimeException("学期参数异常,未找到对应的测评信息");
+			}
+			if (zhRecord == null) {
+				throw new RuntimeException("学期参数异常,未找到对应的测评数据");
+			}
+			if (new Date().getTime() - term.getStopDate().getTime() > 0) {
+				throw new RuntimeException("超过截止日期，不能提交！");
+			}
 
-		// TODO 添加
-		try {
+			// 保存文件
+			try {
+				// 获取项目中储存文件的文件夹的绝对路径
+				String fileLocation = request.getSession().getServletContext()
+						.getRealPath("/");
+				String filePathAndName = FileUtil.DIRECTORY_UPLOAD_FILE
+						+ FileUtil.getUploadFilePathAndName(file
+								.getOriginalFilename());
+				FileUtil.mkdirsForFile(fileLocation + filePathAndName);
+				file.transferTo(new File(fileLocation + filePathAndName));
+				record.setFilePath(Base64Util.encode(filePathAndName)); // Base64编码后存入数据库
+			} catch (IOException e) {
+				throw new Exception("写入测评数据失败！");
+			}
 
+			// 设置素质教育加分表
+			record.setSuZhiId(zhRecord.getTableSZJYJF().getId());
+
+			// 插入数据
 			if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
-				throw new Exception();
+				throw new Exception("插入数据失败！");
 			}
 			model.addAttribute("result", "true");
 			model.addAttribute("tip", "创建成功！");
 		} catch (Exception e) {
 			model.addAttribute("result", "false");
-			model.addAttribute("tip", "创建失败！");
+			model.addAttribute("tip", e.getMessage());
 			e.printStackTrace();
 		}
 		return "/other/result";

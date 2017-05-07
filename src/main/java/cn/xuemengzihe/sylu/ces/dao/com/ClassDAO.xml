@@ -19,7 +19,7 @@
 			</collection>
 	</resultMap>
 	<insert id="insertClazz" parameterType="clazz">
-		<selectKey order="AFTER" keyProperty="id">
+		<selectKey order="AFTER" keyProperty="id" resultType="int">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		INSERT INTO class(
@@ -67,13 +67,12 @@
 		        LEFT JOIN
 		    student ON class.id = student.class_id
 		WHERE
-		    student.is_valid = 'Y'
-			AND class.id = #{id}
+			class.id = #{id}
 	</select>
 	<select id="findClazzByClassId" parameterType="string" resultType="clazz">
 		SELECT *
 		FROM class
-		WHERE class_id = #{value}
+		WHERE class_id = #{value} AND is_valid = 'Y'
 	</select>
 	<select id="findClazzsOfAll"  resultType="clazz">
 		SELECT *
@@ -88,6 +87,7 @@
 		            c.major_id majorId,
 		            c.teacher_id teacherId,
 		            study_year study_year,
+		            DATE_FORMAT(`start_year`,'%Y-%m-%d') start_year,
 		            m.m_name mname,
 		            c.c_time, c.u_time
 		    FROM

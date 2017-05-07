@@ -31,7 +31,7 @@ $(document).ready(function() {
 				url : 'listSZJYJFSQ.do',
 				method : 'GET',
 				queryParams : function(params) {
-					params["termId"] = 1;
+					params["termId"] = $("#termId").val();
 					return params;
 				}, // 请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
 				// queryParamsType = 'limit' ,返回参数必须包含limit, offset,
@@ -80,28 +80,28 @@ $(document).ready(function() {
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "20%",
+					width : "10%",
 					field : 'type',
 					title : '类型',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "10%",
+					width : "20%",
 					field : 'time',
 					title : '时间',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "15%",
+					width : "10%",
 					field : 'level',
 					title : '等级',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "15%",
+					width : "20%",
 					field : 'evidence',
 					title : '证明',
 					halign : "center",

@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.service.web.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,10 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public Integer insertClazz(Clazz clazz) {
+		Date date = new Date();
+		clazz.setIsValid("Y");
+		clazz.setuTime(date);
+		clazz.setcTime(date);
 		return clazzDAO.insertClazz(clazz);
 	}
 

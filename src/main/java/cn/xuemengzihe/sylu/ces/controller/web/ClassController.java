@@ -1,6 +1,9 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
+import cn.xuemengzihe.sylu.ces.pojo.com.Major;
+import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.MajorService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
 import com.github.pagehelper.PageInfo;
@@ -19,6 +25,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * <h1>Class Controller</h1>
  * <p>
+ * 班级
  * </p>
  * 
  * @author 李春
@@ -28,52 +35,79 @@ import com.github.pagehelper.PageInfo;
 public class ClassController {
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	private MajorService majorService;
 
 	@RequestMapping("/classInfo")
 	public String majorInfo(Model model) {
-		PageInfo<Clazz> pageInfo = classService.findClazzsOfPage(null);
-		model.addAttribute("pageInfo", pageInfo);
 		return "/class/classInfo";
 	}
 
 	/**
 	 * 添加班级操作
 	 * 
-	 * @param class
-	 * @return 返回添加的提示信息
+	 * @param request
+	 * @param model
+	 * @param clazz
+	 *            班级
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "classAdd", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String classAdd(Clazz clazz) {
-		// 服务器校验
+	public String classAdd(HttpServletRequest request, Model model, Clazz clazz) {
+		// TODO 服务器校验
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+
+		Major major = majorService.findMajorById(clazz.getMajorId());
+		if (major == null) {
+			throw new RuntimeException("专业不存在");
+		}
+
+		clazz.setTeacherId(teacher.getId());
 		int result = classService.insertClazz(clazz);
 		if (result == 1) {
-			return "{}"; // 返回空，表示成功
+			return "{\"result\":\"success\",\"tip\":\"添加成功！\"}"; // 返回空，表示成功
 		}
-		return "{\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
+		return "{\"result\":\"error\",\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 	}
 
+	/**
+	 * 修改班级
+	 * 
+	 * @param request
+	 * @param model
+	 * @param clazz
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "classUpdate", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String classUpdate(Clazz clazz) {
+	public String classUpdate(HttpServletRequest request, Model model,
+			Clazz clazz) {
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+
 		// TODO 数据完整性校验
 		Clazz oldClazz = classService.findClazzById(clazz.getId());
+
 		if (oldClazz == null) {
-			return "{\"tip\":\"您要修改的记录不存在！\"}";
+			return "{\"result\":\"error\",\"tip\":\"无法操作，班级不存在！\"}";
 		}
+
+		if (oldClazz.getTeacherId() != teacher.getId()) {
+			return "{\"result\":\"error\",\"tip\":\"对不起，无法操作他人的班级！\"}";
+		}
+
 		// 赋值
 		oldClazz.setClassId(clazz.getClassId());
-		oldClazz.setMajor(clazz.getMajor());
+		oldClazz.setMajorId(clazz.getMajorId());
 		oldClazz.setStartYear(clazz.getStartYear());
 		oldClazz.setStudyYear(clazz.getStudyYear());
-		oldClazz.setTeacherId(clazz.getTeacherId());
 
 		// 更新
 		int result = classService.updateClazz(oldClazz);
 		if (result == 1) {
-			return "{}"; // 修改成功！
+			return "{\"result\":\"success\",\"tip\":\"添加成功！\"}"; // 返回空，表示成功
 		}
-		return "{\"tip\":\"修改失败！\"}";
+		return "{\"result\":\"error\",\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 	}
 
 	/**
@@ -83,14 +117,15 @@ public class ClassController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "classDelete", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String classDelete(Integer id) {
+	public String classDelete(HttpServletRequest request, Model model,
+			Integer id) {
 		Clazz oldClazz = classService.findClazzById(id);
 		if (oldClazz == null || "N".equals(oldClazz.getIsValid())) {
-			return "{\"tip\":\"您要删除的记录不存在或者已经删除！\"}";
+			return "{\"result\":\"error\",\"tip\":\"您要删除的记录不存在或者已经删除！\"}";
 		}
 		oldClazz.setIsValid("N"); // 设置删除标记
 		classService.updateClazz(oldClazz); // 删除
-		return "{}";
+		return "{\"result\":\"success\",\"tip\":\"删除成功！\"}";
 	}
 
 	/**
@@ -100,13 +135,9 @@ public class ClassController {
 	 * @return
 	 */
 	@RequestMapping("/classList")
-	public String classList() {
-		// 分页查询记录
-		// PageInfo<Clazz> list =
-		// classService.findClazzsOfPage(null);
-		// 将数据分装的模型中
-		// model.addAttribute("list", list);
-		// 返回页面
+	public String classList(HttpServletRequest request, Model model) {
+		List<Major> majorList = majorService.findMajorsOfPage(null).getList();
+		model.addAttribute("majorList", majorList);
 		return "/class/classList";
 	}
 
@@ -125,6 +156,7 @@ public class ClassController {
 	// produces 参数的目的是解决中文乱码问题
 	@RequestMapping(value = "/classData", produces = "application/json; charset=utf-8")
 	public String classData(
+			HttpServletRequest request,
 			String search,
 			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
