@@ -206,12 +206,12 @@
 		ORDER BY 
 		<choose>
 			<!-- 根据成绩降序排列 -->
-			<when test="order = 'score'">
+			<when test="order == 'score'">
 				(`szjfScore`+`rcxwScore`-50)/10*0.02 + `xfjd`*0.8 DESC, `sno` ASC
 			</when>
 			<!-- 默认为按照学号排序 -->
 			<otherwise>
-				`sno`
+				`sno` ASC
 			</otherwise>
 		</choose>
 	</select>

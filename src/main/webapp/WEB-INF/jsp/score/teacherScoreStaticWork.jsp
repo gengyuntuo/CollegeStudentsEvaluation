@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>${term.name }年度${clazz.classId }班测评工作</title>
+<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -46,7 +46,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> ${term.name }年度测评详情
+						<i class="im-screen"></i> ${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -86,31 +86,15 @@
 									</button>
 								</div>
 							</div>
-							<div class="panel-body">
+							<div id="panelZHCP" class="panel-body">
 								<table id="tableZHCP" class="table table-bordered">
 								</table>
 							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="panel panel-primary plain">
-							<!-- Start .panel -->
-							<div class="panel-heading">
-								<h4 class="panel-title">日常行为得分</h4>
-							</div>
-							<div class="panel-body">
+							<div id="panelRCXW" class="panel-body" hidden="hidden">
 								<table id="tableRCXW" class="table table-bordered">
 								</table>
 							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="panel panel-primary plain">
-							<!-- Start .panel -->
-							<div class="panel-heading">
-								<h4 class="panel-title">素质教育得分</h4>
-							</div>
-							<div class="panel-body">
+							<div id="panelSZJF" class="panel-body" hidden="hidden">
 								<table id="tableSZJF" class="table table-bordered">
 								</table>
 							</div>

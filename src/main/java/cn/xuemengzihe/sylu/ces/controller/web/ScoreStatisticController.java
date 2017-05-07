@@ -32,6 +32,7 @@ import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
@@ -77,6 +78,8 @@ public class ScoreStatisticController {
 	private ComplexFunction compexFunction;
 	@Autowired
 	private TermClassDAO termClassDAO;
+	@Autowired
+	private ExcelService excelService;
 
 	/**
 	 * 成绩信息
@@ -627,5 +630,56 @@ public class ScoreStatisticController {
 		}
 		return "{\"result\":\"success\",\"score\":\""
 				+ new DecimalFormat("#.0000").format(score) + "\"}";
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @param tableType
+	 *            表的类型
+	 * @param termId
+	 *            测评Id
+	 * @param classId
+	 *            班级
+	 * @param order
+	 *            排序方式
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/downloadScoreSheet", produces = "application/json; charset=utf-8")
+	public String downloadScoreSheet(HttpServletRequest request, Model model,
+			@RequestParam(required = true) String tableType,
+			@RequestParam(required = true) String termId, String classId,
+			String order) {
+
+		// 参数定义
+		String path = null;
+		String rootPath = request.getSession().getServletContext()
+				.getRealPath("/");
+		String subPath = FileUtil.DIRECTROY_TEMP_FILE + "file.xls";
+		path = rootPath + subPath;
+		try {
+			switch (tableType) {
+			case "zhcp":
+				excelService.exportExcelFileOfZHCPCJTJ(termId, classId, order,
+						false, path);
+				break;
+			case "szjf":
+				excelService.exportExcelFileOfSZJYJFPF(termId, classId, order,
+						false, path);
+				break;
+			case "rcxw":
+				excelService.exportExcelFileOfSZXFRCXWBFPF(termId, classId,
+						order, false, path);
+				break;
+			default:
+				throw new RuntimeException("您指定的成绩表类型不正确");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
+		}
+		return "{\"result\":\"success\",\"url\":\"" + "\"}";
 	}
 }

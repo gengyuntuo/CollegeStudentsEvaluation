@@ -2,6 +2,9 @@
  * 参数
  */
 var termId = $("#termId").val(); // 测评ID
+var table = "zhcp"; // 显示的表格
+var showClass = undefined; // 显示的班级
+var order = undefined; // 排序方式
 
 /**
  * 获取bootstrapTable的查询参数
@@ -21,6 +24,7 @@ function getQueryParams(params) {
 	} else {
 		params["order"] = undefined;
 	}
+	params["tableType"] = $("#tableSelect").val(); //该参数仅在下载表格时使用
 	return params;
 }
 /**
@@ -63,31 +67,36 @@ $(document).ready(function() {
 				columns : [ {
 					checkbox : true
 				}, {
+					width : "20%",
 					field : "sno",
 					title : '学号',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "15%",
 					field : 'name',
 					title : '姓名',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "10%",
 					field : 'rcxwScore',
 					title : '①日常行为得分',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
+					width : "10%",
 					field : 'szjfScore',
 					title : '②素质活动得分',
 					halign : "center",
 					align : "center",
 					valign : "middle",
 				}, {
-					title : '③素质学分合计 ③=①+②',
+					width : "10%",
+					title : '③素质学分合计<br/>③=①+②',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -95,6 +104,7 @@ $(document).ready(function() {
 						return row["rcxwScore"] + row["szjfScore"];
 					}
 				}, {
+					width : "10%",
 					title : '④素质学分绩点',
 					halign : "center",
 					align : "center",
@@ -103,13 +113,15 @@ $(document).ready(function() {
 						return (row["rcxwScore"] + row["szjfScore"] - 50) / 10;
 					}
 				}, {
+					width : "10%",
 					field : 'xfjd',
 					title : '⑤平均学分绩点',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					title : '⑥综合测评成绩 ⑥=⑤×80%+④×20%',
+					width : "10%",
+					title : '⑥综合测评成绩<br/>⑥=⑤×80%+④×20%',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -118,6 +130,7 @@ $(document).ready(function() {
 						return sz * 0.02 + row["xfjd"] * 0.8;
 					}
 				}, {
+					width : "5%",
 					field : 'zhState',
 					title : '状态',
 					halign : "center",
@@ -127,6 +140,8 @@ $(document).ready(function() {
 						switch (value) {
 						case "Y":
 							return "正常";
+						default:
+							return "不正常";
 						}
 					}
 				} ]
@@ -183,7 +198,7 @@ $(document).ready(function() {
 					valign : "middle"
 				}, {
 					field : 'wmjw',
-					title : '与他人文明交往 尊重师长（5、0）',
+					title : '与他人文明交往<br/>尊重师长（5、0）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -195,19 +210,19 @@ $(document).ready(function() {
 					valign : "middle"
 				}, {
 					field : 'tydl',
-					title : '加强体育锻炼 提高身体素质（5、0）',
+					title : '加强体育锻炼<br/>提高身体素质（5、0）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'ahgw',
-					title : '爱护公物 爱护校园环境 （5、0）',
+					title : '爱护公物<br/>爱护校园环境 （5、0）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'xxgd',
-					title : '遵守学校相关管理规定 (10)',
+					title : '遵守学校相关<br/>管理规定 (10)',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -219,13 +234,13 @@ $(document).ready(function() {
 					valign : "middle"
 				}, {
 					field : 'tkjl',
-					title : '辅导员根据听课记录及工作笔记  (15)',
+					title : '辅导员根据听<br/>课记录及工作笔记  (15)',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'gyjc',
-					title : '辅导员根据公寓检查记录 (10)',
+					title : '辅导员根据<br/>公寓检查记录 (10)',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -295,30 +310,30 @@ $(document).ready(function() {
 					valign : "middle"
 				}, {
 					field : 'shfw',
-					title : '积极为社会服务，为他人奉献（满分8分）',
+					title : '积极为社会服务，<br/>为他人奉献（满分8分）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'shsj',
-					title : '积极参加社会实践与志愿服务（满分12分）',
+					title : '积极参加社会实践<br/>与志愿服务（满分12分）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'bshj',
-					title : '参加各类比赛获奖情况（满分15分）',
+					title : '参加各类比赛<br/>获奖情况（满分15分）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
 					field : 'xsgb',
-					title : '学生干部职务加分（满分10分）',
+					title : '学生干部职务加分<br/>（满分10分）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					title : '素质教育加分总分（满分30分）',
+					title : '素质教育加分总分<br/>（满分30分）',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -373,41 +388,57 @@ $(document).ready(function() {
 		minimumResultsForSearch : -1,
 		language : "zh-CN",
 	});
+
 	// 3. 下拉框点击事件
 	$("#tableSelect").on("change", function(value) {
-		console.info("更换Table");
+		$("#panelZHCP").attr("hidden", "hidden");
+		$("#panelRCXW").attr("hidden", "hidden");
+		$("#panelSZJF").attr("hidden", "hidden");
+		// console.info("更换Table");
 		// $("#tableSZJF").bootstrapTable("destroy");
 		switch ($(this).val()) {
 		case "zhcp":
-			$("#tableZHCP").bootstrapTable("hide");
+			$("#panelZHCP").removeAttr("hidden");
+			$("#tableZHCP").bootstrapTable("refresh");
 			break;
 		case "rcxw":
-			$("#tableRCXW").bootstrapTable("hide");
+			$("#panelRCXW").removeAttr("hidden");
+			$("#tableRCXW").bootstrapTable("refresh");
 			break;
 		case "szjf":
-			$("#tableSZJF").bootstrapTable("hidden");
+			$("#panelSZJF").removeAttr("hidden");
+			$("#tableSZJF").bootstrapTable("refresh");
 			break;
 		default:
 			break;
 		}
 	});
 	$("#classSelect").on("change", function(value) {
-		$("#tableZHCP").bootstrapTable("refresh");
+		// $("#tableZHCP").bootstrapTable("refresh");
+		$("#table" + $("#tableSelect").val().toUpperCase()).bootstrapTable("refresh");
 		console.info("更换显示内容");
 	});
 	$("#orderSelect").on("change", function(value) {
+		$("#table" + $("#tableSelect").val().toUpperCase()).bootstrapTable("refresh");
 		console.info("更换排序方式");
 	});
 	// 4. 按钮点击事件
-	$("#exportBtn").on("click", function() {
-		// $.ajax({
-		// url : "",
-		// type : "",
-		// data : {},
-		// success : function() {
-		// ;
-		// }
-		// });
-		alert("下载当前的表单");
+	$("#exportBtn").on("click", function(value) {
+		 $.ajax({
+		 url : "downloadScoreSheet.do",
+		 type : "post",
+		 data :getQueryParams({}),
+		 dataType : "json",
+		 success : function(data) {
+			 if(data.result == "success") {
+				 alert(data.url);
+			 } else  {
+				 alert(data.tip);
+			 }
+		 },
+		 error : function() {
+			 alert("请求发送失败！");
+		 }
+		 });
 	});
 });

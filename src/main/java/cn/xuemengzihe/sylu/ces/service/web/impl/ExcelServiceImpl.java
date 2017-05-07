@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Setting;
+import cn.xuemengzihe.sylu.ces.pojo.com.Term;
 import cn.xuemengzihe.sylu.ces.pojo.web.ImportStudentByExcelResult;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
@@ -24,6 +25,7 @@ import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZXFRCXWBFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
+import cn.xuemengzihe.sylu.ces.service.web.TermService;
 import cn.xuemengzihe.util.excel.GenerateExcelFile;
 import cn.xuemengzihe.util.excel.ParseExcelFile;
 
@@ -44,6 +46,8 @@ public class ExcelServiceImpl implements ExcelService {
 	private SettingService settingService;
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	private TermService termService;
 	@Autowired
 	private StudentService studentService;
 	@Autowired
@@ -175,30 +179,38 @@ public class ExcelServiceImpl implements ExcelService {
 			String order, boolean showSignColumn, String path) {
 		GenerateExcelFile excel = new GenerateExcelFile();
 
-		String title = "沈阳理工大学$CLASSID班综合测评成绩统计表";
+		String title = "沈阳理工大学$CLASSID综合测评成绩统计表";
 		String[] colsTitle = { "学号", "姓名", "①日常行为得分", "②素质活动得分",
 				"③素质学分合计 ③=①+②", "④素质学分绩点", "⑤平均学分绩点", "⑥综合测评成绩 ⑥=⑤×80%+④×20%",
 				"签字确认" };
 
-		// 班级
-		Clazz clazz = classService.findClazzById(Integer.parseInt(classId));
+		// 测评学期
+		Term term = termService.getTermById(Integer.parseInt(termId));
+		// 测评班级
+		Clazz clazz = null;
+		if (classId != null && classId.length() > 0)
+			clazz = classService.findClazzById(Integer.parseInt(classId));
+
 		List<Map<String, String>> list = tableZHCPCJTJServcie.getRecordWithMap(
 				null, termId, classId, null, order).getList();
-		if (clazz == null) {
-			try {
-				excel.close();
-			} catch (IOException e) {
-			}
-			throw new InvalidParameterException();
-		}
 
 		// 显示的列数
 		int totalCols = colsTitle.length - (showSignColumn ? 0 : 1);
 
 		excel.setFont("宋体", 22, true); // 设置标题字体
 		excel.setStyle(true, true); // 设置标题样式（加载字体）
-		excel.writeAndMerge(title.replace("$CLASSID", clazz.getClassId()),
-				totalCols, 1);
+		/**
+		 * 设置表头
+		 */
+		if (clazz != null) {
+			excel.writeAndMerge(
+					title.replace("$CLASSID", clazz.getClassId() + "班"),
+					totalCols, 1);
+		} else {
+			excel.writeAndMerge(
+					title.replace("$CLASSID", term.getName() + "年度"),
+					totalCols, 1);
+		}
 		excel.setFont("宋体", 12, true);
 		excel.setStyle(true, true);
 		excel.writeMultiValue(true, colsTitle);// 换行显示列名
