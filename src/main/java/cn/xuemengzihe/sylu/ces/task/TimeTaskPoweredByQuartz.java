@@ -1,9 +1,18 @@
 package cn.xuemengzihe.sylu.ces.task;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import cn.xuemengzihe.sylu.ces.service.web.MailService;
+import cn.xuemengzihe.sylu.ces.util.FileUtil;
 
 /**
  * <h1>定时任务</h1>
@@ -84,16 +93,68 @@ public class TimeTaskPoweredByQuartz {
 	private final Logger logger = LoggerFactory
 			.getLogger(TimeTaskPoweredByQuartz.class);
 
+	private String rootPath;
+	@Autowired
+	private ApplicationContext applicationContext;
+	@Autowired
+	private MailService mailService;
+
 	public TimeTaskPoweredByQuartz() {
 		logger.info("定时任务创建成功");
 	}
 
+	private void initRootPath() {
+		try {
+			this.rootPath = applicationContext.getResource("WEB-INF/web.xml")
+					.getFile().getAbsolutePath();
+			this.rootPath = this.rootPath.substring(0,
+					this.rootPath.lastIndexOf("WEB-INF"));
+			this.rootPath += FileUtil.DIRECTROY_TEMP_FILE;
+			logger.info("项目的临时目录路径：" + this.rootPath);
+		} catch (IOException e) {
+			logger.info("获取项目临时目录路径失败！");
+		}
+	}
+
 	/**
 	 * 清除过期文件<br/>
-	 * 执行时间：每5秒执行一次
+	 * 执行时间：每天凌晨一点执行
 	 */
-	@Scheduled(cron = "0/5 * *  * * ? ")
+	@Scheduled(cron = "0 0 1 * * ?")
 	public void clearExpiredFiles() {
-		logger.info("执行了定时的方法！");
+		// 获取rootPath
+		if (this.rootPath == null) {
+			initRootPath();
+			// 如果获取失败，则等待下次获取
+			if (this.rootPath == null) {
+				return;
+			}
+		}
+
+		// 删除过时文件 , 仅仅删除创建时间大于1分钟的文件
+		long time = 0;
+		int deleteFiles = 0;
+		int totalFiles = 0;
+		File tempDir = new File(this.rootPath);
+		// logger.info(this.rootPath);
+		try {
+			for (File file : tempDir.listFiles()) {
+				totalFiles++;
+				// logger.info(new Date().getTime() - file.lastModified() + "");
+				time = (new Date().getTime() - file.lastModified()) / 1000 / 60; // 获取修改时间/分钟
+				if (file.exists() && file.isFile() && time > 1) {
+					deleteFiles++;
+					file.delete();
+				}
+			}
+		} catch (Exception e) {
+			logger.info("文件删除时出现异常");
+			e.printStackTrace();
+		}
+
+		// 通知系统管理员
+		mailService.sendPlainMail("系统运行通知", "系统成功执行了删除临时文件的任务，总文件数："
+				+ totalFiles + "（个），删除文件数：" + deleteFiles + "（个）",
+				"gengyuntuo@163.com");
 	}
 }

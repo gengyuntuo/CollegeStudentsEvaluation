@@ -43,6 +43,9 @@ public class TableZHCPCJTJDAOTest {
 
 	@Test
 	public void testGetRecordWithMap() {
+		Map<String, String> ids = new HashedMap<>();
+		ids.put("termId", "1");
+		System.out.println(tableZHCPCJTJDAO.getRecordWithMap(ids));
 	}
 
 }

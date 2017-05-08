@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
-</title>
+<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -16,6 +15,20 @@
 <!--[if lt IE 9]>
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
+<link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
+<style type="text/css">
+.select2-container--default .select2-selection--single {
+	background-color: #75b9e6;
+	background-image: none;
+	border: 1px solid #75b9e6;
+}
+
+.panel-heading .panel-heading-content {
+	padding-top: 3px;
+	min-height: 34px;
+}
+</style>
 </head>
 <body>
 	<!-- Start #header -->
@@ -33,9 +46,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> ${term.name }学年
-						<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach>
-						班测评详情
+						<i class="im-screen"></i> ${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -44,123 +55,54 @@
 			<!-- Start .outlet -->
 			<div class="outlet">
 				<!-- Page start here ( usual with .row ) -->
+
 				<!-- Start .row -->
 				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
 					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
 						<div class="page-header">
-							<h3>评测状态</h3>
+							<h3>评测信息</h3>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
-						<div class="panel panel-primary">
+					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+						<div class="panel panel-primary plain">
 							<!-- Start .panel -->
 							<div class="panel-heading">
-								<h4 class="panel-title">测评进度</h4>
+								<select id="tableSelect">
+									<option value="zhcp">综合测评成绩统计表</option>
+									<option value="rcxw">素质学分日常行为部分评分表</option>
+									<option value="szjf">素质教育加分评分表</option>
+								</select> <select id="classSelect">
+									<option value="">显示所有班级</option>
+									<c:forEach var="item" items="${term.clazzes }">
+										<option value="${item.id }">${item.classId }</option>
+									</c:forEach>
+								</select><select id="orderSelect">
+									<option value="">排序方式：无</option>
+									<option value="score">排序方式：成绩</option>
+								</select>
+								<div class="panel-heading-content" style="text-align: right;float: right">
+									<button id="exportBtn" type="button" class="btn btn-xs btn-info">
+										<span class="en-upload"></span> 导出
+									</button>
+								</div>
 							</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6 control-label">学生申请进度</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-										<div class="progress progress-striped">
-											<div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">30%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">班委工作进度</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">教师工作进度</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">70%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
-								<div class="form-group">
-									<label class="col-xs-6 col-sm-6 col-lg-6 col-md-6  control-label">测评时间进度</label>
-									<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">70%</div>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-										<span class="help-block">学生申请进度:学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量学生完成测评申请的数量</span>
-									</div>
-								</div>
-								<!-- End .form-group  -->
+							<div id="panelZHCP" class="panel-body">
+								<table id="tableZHCP" class="table table-bordered">
+								</table>
 							</div>
-						</div>
-					</div>
-					<div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 ">
-						<div class="panel panel-primary">
-							<!-- Start .panel -->
-							<div class="panel-heading">
-								<h4 class="panel-title">任务统计</h4>
+							<div id="panelRCXW" class="panel-body" hidden="hidden">
+								<table id="tableRCXW" class="table table-bordered">
+								</table>
 							</div>
-							<div class="panel-body">
-								<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-								<div id="main" style="height:300px"></div>
+							<div id="panelSZJF" class="panel-body" hidden="hidden">
+								<table id="tableSZJF" class="table table-bordered">
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- End .row -->
-				<!-- Start .row -->
-				<div class="row col-xs-12 col-sm-12 col-lg-12 col-md-12">
-					<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<div class="page-header">
-							<h3>班级学生</h3>
-						</div>
-					</div>
-					<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-						<!-- col-lg-12 start here -->
-						<div class="panel-body">
-							<div class="input-group" style="float:left;width:300px">
-								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
-									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
-								</span>
-							</div>
-							<div style="float: right">
-								<button id="btn_refresh" type="button" class="btn btn-default">
-									<span class="fa-refresh"></span> 刷新
-								</button>
-								<button id="btn_add" type="button" class="btn btn-primary">
-									<span class="st-file-add"></span> 新增
-								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
-									<span class="fa-edit"></span> 修改
-								</button>
-								<button id="btn_delete" type="button" class="btn btn-danger">
-									<span class="im-remove2"></span> 删除
-								</button>
-								<p></p>
-							</div>
-							<div class="ow col-xs-12 col-sm-12 col-lg-12 col-md-12">
-								<table id="mytable" class="table table-bordered">
-								</table>
-							</div>
-						</div>
-					</div>
-					<!-- col-lg-12 end here -->
-				</div>
+
 				<!-- Page End here -->
 			</div>
 			<!-- End .outlet -->
@@ -169,15 +111,18 @@
 		<div class="clearfix"></div>
 	</div>
 	<!-- End #content -->
+
+	<!-- 页面中的参数 -->
 	<div hidden="hidden">
-		<input id="termId" name="termId" value="${term.id }">
+		<input id="termId" value="${term.id }" hidden="hidden" type="text">
 	</div>
 
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/echart/echarts.min.js" />"></script>
-	<script src="<c:url value="/assets/js/lc/pages/scoreStaticDetail.js" />"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
+	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/pages/teacherScoreStaticWork.js" />"></script>
 </body>
 </html>

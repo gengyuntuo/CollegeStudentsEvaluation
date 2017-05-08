@@ -99,8 +99,17 @@ public class FileOperationController {
 			// 设置Content-Length
 			response.setContentLength((int) file.length());
 
-			// 判断是文件下载还是图片等资源的获取,若果是文件下载，则设置下载的文件名
+			// 判断是文件下载还是图片等资源的获取,若果是压缩包或者是Excel文档，则设置文件下载相关的属性
 			if (FileUtil.CONTENT_TYPE_ZIP.equals(contentType)
+					&& fileName != null && fileName.length() > 0) {
+				// 设置如下Header会使浏览器弹出下载提示框
+				response.setHeader(
+						"Content-Disposition",
+						"attachment;filename="
+								+ URLEncoder.encode(fileName + fileExtension,
+										"UTF-8"));
+			}
+			if (FileUtil.CONTENT_TYPE_XLS.equals(contentType)
 					&& fileName != null && fileName.length() > 0) {
 				// 设置如下Header会使浏览器弹出下载提示框
 				response.setHeader(

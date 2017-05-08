@@ -153,6 +153,12 @@
 	</select>
 	
 	<select id="getRecordWithMap" parameterType="map" resultType="map">
+		SELECT <!-- 这一层查询是为了统计成绩，仅仅是计算， 别名：lastTab -->
+			*,
+			`szjfScore` + `rcxwScore` AS `szxfhj`,
+			(`szjfScore` + `rcxwScore` - 50) /10 AS `szxfjd`,
+			(`szjfScore` + `rcxwScore` - 50) /10*0.2 + `xfjd` * 0.8 AS `zhcpScore`
+		FROM ( 
 		SELECT 
 		    `zsr`.*,
 		    `szjf`.`id` AS `szjfId`,
@@ -214,5 +220,6 @@
 				`sno` ASC
 			</otherwise>
 		</choose>
+		) lastTab
 	</select>
 </mapper>

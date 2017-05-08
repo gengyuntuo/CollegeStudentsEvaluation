@@ -431,7 +431,7 @@ $(document).ready(function() {
 		 dataType : "json",
 		 success : function(data) {
 			 if(data.result == "success") {
-				 alert(data.url);
+				 window.location.href = data.url;
 			 } else  {
 				 alert(data.tip);
 			 }

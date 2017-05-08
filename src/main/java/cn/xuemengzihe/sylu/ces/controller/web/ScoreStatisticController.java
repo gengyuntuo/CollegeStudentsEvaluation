@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,7 @@ import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
 import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.exception.InvalidParameterException;
 import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
+import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
@@ -633,6 +635,7 @@ public class ScoreStatisticController {
 	}
 
 	/**
+	 * 下载成绩表
 	 * 
 	 * @param request
 	 * @param model
@@ -655,31 +658,49 @@ public class ScoreStatisticController {
 
 		// 参数定义
 		String path = null;
+		String fileName = "";
 		String rootPath = request.getSession().getServletContext()
 				.getRealPath("/");
-		String subPath = FileUtil.DIRECTROY_TEMP_FILE + "file.xls";
+		String subPath = FileUtil.DIRECTROY_TEMP_FILE + UUID.randomUUID()
+				+ ".xls";
 		path = rootPath + subPath;
+		// 测评学期
+		Term term = termService.getTermById(Integer.parseInt(termId));
+		// 测评班级
+		Clazz clazz = null;
+		if (classId != null && classId.length() > 0)
+			clazz = classService.findClazzById(Integer.parseInt(classId));
 		try {
 			switch (tableType) {
 			case "zhcp":
 				excelService.exportExcelFileOfZHCPCJTJ(termId, classId, order,
 						false, path);
+				fileName += "综合测评成绩统计表";
 				break;
 			case "szjf":
 				excelService.exportExcelFileOfSZJYJFPF(termId, classId, order,
 						false, path);
+				fileName += "素质学分日常行为部分评分表";
 				break;
 			case "rcxw":
 				excelService.exportExcelFileOfSZXFRCXWBFPF(termId, classId,
 						order, false, path);
+				fileName += "素质教育加分评分表";
 				break;
 			default:
 				throw new RuntimeException("您指定的成绩表类型不正确");
+			}
+			// 设置文件名称
+			if (clazz != null) {
+				fileName += clazz.getClassId() + "班";
+			} else {
+				fileName += term.getName() + "年度";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
 		}
-		return "{\"result\":\"success\",\"url\":\"" + "\"}";
+		return "{\"result\":\"success\",\"url\":\"downloadFile.do?path="
+				+ Base64Util.encode(subPath) + "&fileName=" + fileName + "\"}";
 	}
 }
