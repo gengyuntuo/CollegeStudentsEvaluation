@@ -358,7 +358,7 @@ BEGIN
 		`ping_jun_xue_fen_ji_dian`,
 		`is_valid`,
 		`c_time`)
-	VALUES (sno, termId, 0.0, 'N', NOW());
+	VALUES (sno, termId, 0.0, 'M', NOW());
 	
 	SELECT LAST_INSERT_ID() INTO zhId; # 获取综合测评表ID
 
@@ -376,7 +376,7 @@ BEGIN
 	`gong_yu_jian_cha`,
 	`is_valid`,
 	`c_time`)
-	VALUES (zhId, 5, 5, 5, 5, 5, 10, 10, 10, 10, 'N', NOW());
+	VALUES (zhId, 5, 5, 5, 5, 5, 10, 10, 10, 10, 'M', NOW());
 
 	# 创建素质教育加分评分表
 	INSERT INTO `t_szjyjfpf` (
@@ -387,7 +387,7 @@ BEGIN
 	`xue_sheng_gan_bu`,
 	`is_valid`,
 	`c_time`)
-	VALUES (zhId, 0, 0, 0, 0, 'N', NOW());
+	VALUES (zhId, 0, 0, 0, 0, 'M', NOW());
 
 	# 创建成功返回综合测评表ID
 	RETURN zhId; 

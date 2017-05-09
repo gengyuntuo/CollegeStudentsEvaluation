@@ -53,35 +53,35 @@ $(document).ready( function() {
 				clickToSelect : true,
 				columns : [
 					{
-						width : "20%",
+						width : "15%",
 						field : "sno",
 						title : '学生学号',
 						halign : "center",
 						align : "center",
 						valign : "middle"
 					}, {
-						width : "20%",
+						width : "15%",
 						field : 'name',
 						title : '学生姓名',
 						halign : "center",
 						align : "center",
 						valign : "middle"
 					}, {
-						width : "8%",
+						width : "10%",
 						field : 'rcxwScore',
 						title : '①日常行为得分',
 						halign : "center",
 						align : "center",
-						valign : "middle",
+						valign : "middle"
 					}, {
-						width : "8%",
+						width : "10%",
 						field : 'szjfScore',
 						title : '②素质活动得分',
 						halign : "center",
 						align : "center",
 						valign : "middle",
 					}, {
-						width : "8%",
+						width : "10%",
 						title : '③素质学分合计<br/>③=①+②',
 						halign : "center",
 						align : "center",
@@ -93,7 +93,7 @@ $(document).ready( function() {
 									+ row["szjfScore"];
 						}
 					}, {
-						width : "8%",
+						width : "10%",
 						title : '④素质学分绩点',
 						halign : "center",
 						align : "center",
@@ -104,14 +104,16 @@ $(document).ready( function() {
 							return ((row["rcxwScore"] + row["szjfScore"] - 50) / 10).toFixed(4);
 						}
 					}, {
-						width : "8%",
+						width : "10%",
 						field : 'xfjd',
 						title : '⑤平均学分绩点',
 						halign : "center",
 						align : "center",
 						valign : "middle",
 						formatter : function(value, row, index) {
-							return value.toFixed(4);
+							return "<input id=\"editable-input-xfjd-" + row["zhId"] +
+									"\" class = \"edit\" readonly = \"readonly\" value=\""
+									+ value.toFixed(4) + "\"\\>";
 						}
 					}, {
 						width : "10%",
@@ -145,15 +147,59 @@ $(document).ready( function() {
 						}
 					}, {
 						width : "5%",
-						title : '操作',
+						title : '　　操作　　',
 						halign : "center",
 						align : "center",
 						valign : "middle",
 						formatter : function(value, row, index) {
-							return "<a href=\"studentScoreCheck.do?item="
-								+ row["zhId"]+ "\">查看</a>";
+							return "<a name=\"view\" class=\"a-btn\" id=\"info-of-id"
+								+ row["zhId"]+ "\">查看</a>&nbsp;&nbsp;"
+								+ "<a name=\"edit\" class= \"a-btn\" id=\"info-of-id"
+								+ row["zhId"]+ "\">编辑</a>";
 						}
-					} ]
+					} ],
+				onLoadSuccess : function(data) {
+					$("a[name=edit]").on("click", function() {
+						var btn = $(this); // 按钮
+						var id = btn.attr("id").substr(10); // id
+						console.info(id);
+						var input_xfjd = $("#editable-input-xfjd-" + id); // 输入框（学分绩点）
+						console.info(input_xfjd);
+						if("edit" == input_xfjd.attr("class")) {
+							input_xfjd.attr("class", "editing");
+							input_xfjd.removeAttr("readonly");
+							btn.html("保存");
+						} else {
+							// TODO数据校验
+							if(input_xfjd.val().trim() == "") {
+								alert("学分绩点内容不能为空！");
+							}
+							//TODOAJAX提交数据
+							$.ajax({
+								url : "updateTableZHCPCJTJ.do",
+								type : "post",
+								dataType : "json",
+								data : {
+									"id" : id, // 综合测评表id
+									"pingJunXueFenJiDian" : input_xfjd.val() // 学分绩点
+								},
+								success : function(data) {
+									// 恢复页面UI
+									if(data.result == "success") {
+										input_xfjd.attr("class", "edit");
+										input_xfjd.attr("readonly", "readonly");
+										btn.html("编辑");
+									} else {
+										alert(data.tip);
+									}
+								},
+								error : function() {
+									alert("请求失败，网络访问失败或者是数据异常！");
+								}
+							});
+						}
+					});
+				}
 			});
 		};
 		return TableInit;
@@ -192,8 +238,6 @@ $(document).ready( function() {
 				searchAlign : "left", // 指定 搜索框 水平方向的位置。'left'
 				// or 'right'
 				columns : [ {
-					checkbox : true
-				}, {
 					field : "sno",
 					title : '学生学号',
 					halign : "center",
@@ -207,7 +251,7 @@ $(document).ready( function() {
 					valign : "middle"
 				}, {
 					field : 'shgd',
-					title : '遵守社会公德（5、0）',
+					title : '遵守社会公德<br/>（5、0）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -219,7 +263,7 @@ $(document).ready( function() {
 					valign : "middle"
 				}, {
 					field : 'cxls',
-					title : '诚信立身 勤俭立行（5、0）',
+					title : '诚信立身 勤俭立行<br/>（5、0）',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -243,7 +287,7 @@ $(document).ready( function() {
 					valign : "middle"
 				}, {
 					field : 'cjhd',
-					title : '积极参加各项活动 (10)',
+					title : '积极参加各项活动<br/>(10)',
 					halign : "center",
 					align : "center",
 					valign : "middle"
@@ -323,8 +367,6 @@ $(document).ready( function() {
 				searchAlign : "left", // 指定 搜索框 水平方向的位置。'left'
 				// or 'right'
 				columns : [ {
-					checkbox : true
-				}, {
 					field : "sno",
 					title : '学生学号',
 					halign : "center",

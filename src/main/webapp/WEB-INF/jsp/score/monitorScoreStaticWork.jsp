@@ -28,6 +28,31 @@
 	padding-top: 3px;
 	min-height: 34px;
 }
+
+input.edit {
+	text-align: center;
+	border-width: 0px;
+	background-color: initial;
+	width: initial;
+}
+
+input.editing {
+	width: initial;
+	text-align: center;
+	line-height: initial;
+	border-width: 1px;
+	border-radius: 5px;
+	background-color: initial;
+}
+
+input.editing:focus {
+	border-color: #66afe9;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+a.a-btn {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
