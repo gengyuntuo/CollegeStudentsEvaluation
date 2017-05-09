@@ -3,7 +3,7 @@
  */
 var termId = $("#termId").val(); // 测评ID
 var table = "zhcp"; // 显示的表格
-var classId = $("#classSelect").val(); // 班级
+var classId = $("#classId").val(); // 班级
 var order = undefined; // 排序方式
 
 /**

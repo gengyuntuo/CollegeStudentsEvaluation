@@ -1,25 +1,22 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
 import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
-import cn.xuemengzihe.sylu.ces.exception.PermissionDenyException;
-import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZJYJFSQService;
 import cn.xuemengzihe.sylu.ces.service.web.TableSZXFRCXWBFPFService;
 import cn.xuemengzihe.sylu.ces.service.web.TableZHCPCJTJService;
 import cn.xuemengzihe.sylu.ces.service.web.TermService;
+import cn.xuemengzihe.sylu.ces.service.web.WebParseService;
 
 /**
- * <h1>班委可以执行的操作</h1>
+ * <h1>Score Statistic Controller</h1>
  * <p>
  * 成绩统计相关<br/>
  * 该部分的功能：显示成绩、下载成绩<br/>
@@ -29,11 +26,10 @@ import cn.xuemengzihe.sylu.ces.service.web.TermService;
  * </p>
  * 
  * @author 李春
- * @time 2017年5月4日 下午4:20:26
+ * @time 2017年1月30日 下午3:08:34
  */
 @Controller
-public class MonitorController {
-
+public class ScoreStatisticUpdateDataController {
 	@Autowired
 	private TermService termService;
 	@Autowired
@@ -49,21 +45,11 @@ public class MonitorController {
 	@Autowired
 	private TableSZXFRCXWBFPFService tableSZXFRCXWBFPFService;
 	@Autowired
+	private WebParseService webParseService;
+	@Autowired
 	private ComplexFunction compexFunction;
 	@Autowired
 	private TermClassDAO termClassDAO;
-
-	/**
-	 * 该方法检验请求本Controller的用户是否为班委，如果不是班委则抛出异常
-	 * 
-	 * @param request
-	 */
-	@ModelAttribute
-	public void verifyUserRole(HttpServletRequest request) {
-		Persion persion = (Persion) request.getSession().getAttribute("user");
-		if (persion.getRole() == null) {
-			throw new PermissionDenyException();
-		}
-	}
-
+	@Autowired
+	private ExcelService excelService;
 }
