@@ -105,7 +105,7 @@
 		ORDER BY 
 		<choose>
 			<!-- 根据成绩降序排列 -->
-			<when test="order = 'score'">
+			<when test="order == 'score'">
 				`rcxwScore` DESC, `sno` ASC
 			</when>
 			<!-- 默认为按照学号排序 -->

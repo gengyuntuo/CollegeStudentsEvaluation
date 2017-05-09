@@ -48,6 +48,8 @@
 		<property name="host" value="${mail.host}" />
 		<!-- 端口号 -->
 		<property name="port" value="${mail.port}" />
+		<!-- 邮件默认编码 -->
+		<property name="defaultEncoding" value="${mail.encoding}"/>
 		<!-- 用户名 -->
 		<property name="username" value="${mail.username}" />
 		<!-- 密码 -->
