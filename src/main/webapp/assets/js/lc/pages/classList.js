@@ -62,8 +62,8 @@ $(function() {
 					align : "center",
 					valign : "middle",
 					formatter : function(value, row, index) {
-						return "<a href=\"classDetail.do?"// 
-								+ "item=" + row.id + "\">" + value + "</a>"; //
+						return "<a href=\"teacherClassDetail.do?"// 
+								+ "id=" + row.id + "\">" + value + "</a>"; //
 					}
 				}, {
 					width : "10%",

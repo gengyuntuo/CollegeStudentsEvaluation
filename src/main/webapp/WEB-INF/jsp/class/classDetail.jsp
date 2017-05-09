@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>测评列表</title>
+<title>${clazz.classId }班级详情</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -15,6 +15,7 @@
 <![endif]-->
 <jsp:include page="../com/css.jsp" />
 <link href="<c:url value="/assets/css/lc/bootstrap-table/bootstrap-table.min.css"/>" rel="stylesheet" />
+<link href="<c:url value="/assets/css/lc/select2/select2.min.css" />" rel="stylesheet" />
 </head>
 <body>
 	<!-- Start #header -->
@@ -32,7 +33,7 @@
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-table2"></i> 测评列表
+						<i class="im-table2"></i> ${clazz.classId }班级学生录
 					</h1>
 				</div>
 			</div>
@@ -45,6 +46,17 @@
 					<div class="col-lg-12">
 						<!-- col-lg-12 start here -->
 						<div class="panel-body">
+							<div class="input-group" style="float:left;width:300px">
+								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
+									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
+								</span>
+							</div>
+							<div style="float: right">
+								<button id="btn_refresh" type="button" class="btn btn-default">
+									<span class="fa-refresh"></span> 刷新
+								</button>
+								<p></p>
+							</div>
 							<div>
 								<table id="mytable" class="table table-bordered">
 								</table>
@@ -61,12 +73,11 @@
 		<div class="clearfix"></div>
 		<!-- End #content -->
 	</div>
-	<!-- 页面参数：班委 -->
-	<input id="userRole" value="${user.role }" disabled="disabled" hidden="hidden" />
+
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/pages/scoreStatic.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/pages/classDetail.js"/>"></script>
 </body>
 </html>

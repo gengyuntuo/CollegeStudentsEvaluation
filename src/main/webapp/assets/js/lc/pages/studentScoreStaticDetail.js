@@ -215,10 +215,11 @@ $(document).ready(function() {
 						"id" : obj["id"],
 						"type" : "SZJYJFSQ"
 					},
+					dataType : "json",
 					success : function(data) {
-						var result = eval(data);
-						if (result["tip"] != undefined) {
-							alert("删除失败！" + result["tip"]);
+						
+						if (data["result"] != "success") {
+							alert(data["tip"]);
 							return;
 						}
 						// 删除成功，同时更新数据
@@ -226,7 +227,7 @@ $(document).ready(function() {
 						dialog_delete.dialog("close");
 					},
 					error : function(data) {
-						alert("删除失败！");
+						alert("删除失败！原因：请求失败或者是解析失败！");
 					}
 				});
 			},

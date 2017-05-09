@@ -112,9 +112,10 @@
 									<button id="btn_add" type="button" class="btn btn-xs btn-primary">
 										<span class="st-file-add"></span> 新增
 									</button>
-									<button id="btn_update" type="button" class="btn btn-xs btn-success">
+									<!-- 暂时去掉修改功能 -->
+									<!-- <button id="btn_update" type="button" class="btn btn-xs btn-success">
 										<span class="fa-edit"></span> 修改
-									</button>
+									</button> -->
 									<button id="btn_delete" type="button" class="btn btn-xs btn-danger">
 										<span class="im-remove2"></span> 删除
 									</button>

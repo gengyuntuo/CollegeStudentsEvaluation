@@ -74,23 +74,54 @@
 			`is_valid` = #{isValid}
 		WHERE `id` = #{id}
 	</update>
-	<select id="getRecordById" parameterType="int" resultType="tableZHCPCJTJ">
+	<select id="getRecordById" parameterType="int" resultMap="resultMap">
 		SELECT 
-			*
+			`zsr`.*,
+			`szjf`.`id` AS `szjfId`,
+			`szjf`.`she_hui_fu_wu` AS `szjfSHFW`,
+			`szjf`.`she_hui_shi_jian` AS `szjfSHSJ`,
+			`szjf`.`bi_sai_huo_jiang` AS `szjfBSHJ`,
+			`szjf`.`xue_sheng_gan_bu` AS `szjfXSGB`,
+			`szjf`.`is_valid` AS `szjfState`,
+			`szjf`.`c_time` AS `szjfCTime`,
+			`szjf`.`u_time` AS `szjfUTime`
 		FROM
 			(SELECT 
-				`zhstu`.`id`
+				`zhstu`.*,
+				`rcxw`.`id` AS `rcxwId`,
+				`rcxw`.`she_hui_gong_de` AS `rcxwSHGD`,
+				`rcxw`.`wen_ming_jiao_wang` AS `rcxwWMJW`,
+				`rcxw`.`cheng_xin_li_shen` AS `rcxwCXLS`,
+				`rcxw`.`ti_yu_duan_lian` AS `rcxwTYDL`,
+				`rcxw`.`ai_hu_gong_wu` AS `rcxwAHGW`,
+				`rcxw`.`xue_xiao_gui_ding` AS `rcxwXXGD`,
+				`rcxw`.`can_jia_huo_dong` AS `rcxwCJHD`,
+				`rcxw`.`ting_ke_ji_lu` AS `rcxwTKJL`,
+				`rcxw`.`gong_yu_jian_cha` AS `rcxwGYJC`,
+				`rcxw`.`is_valid` AS `rcxwState`,
+				`rcxw`.`c_time` AS `rcxwCTime`,
+				`rcxw`.`u_time` AS `rcxwUTime`
 			FROM
 				(SELECT 
-				`zh`.`id`
+					`stu`.`id` AS `stuId`,
+					`stu`.`sno` AS `sno`,
+					`stu`.`name` AS `name`,
+					`stu`.`class_id` AS `classId`,
+					`zh`.`id` AS `id`,
+					`zh`.`term_id` AS `termId`,
+					`zh`.`id` AS `zhId`,
+					`zh`.`ping_jun_xue_fen_ji_dian` AS `xfjd`,
+					`zh`.`is_valid` AS `zhState`,
+					`zh`.`c_time` AS `zhCTime`,
+					`zh`.`u_time` AS `zhUTime`
 				FROM
 					`t_zhcpcjtj` `zh`
 				LEFT JOIN `student` `stu` ON `zh`.`sno` = `stu`.`sno`
 				WHERE
-					`zh`.`id` = '1'
+					`zh`.`id` = #{id}
 				) `zhstu`
 			LEFT JOIN `t_szxfrcxwbfpf` `rcxw` ON `zhstu`.`id` = `rcxw`.`zong_he_id`
-		    ) `zsr`
+		) `zsr`
 		LEFT JOIN `t_szjyjfpf` `szjf` ON `zsr`.`id` = `szjf`.`zong_he_id`
 	</select>
 	<!-- 使用测评ID和学生学号查询个人详细的信息 -->

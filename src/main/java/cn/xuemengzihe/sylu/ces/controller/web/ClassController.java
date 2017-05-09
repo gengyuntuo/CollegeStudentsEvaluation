@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Major;
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.MajorService;
+import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.service.web.TeacherService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
 import com.github.pagehelper.PageInfo;
@@ -37,10 +40,50 @@ public class ClassController {
 	private ClassService classService;
 	@Autowired
 	private MajorService majorService;
+	@Autowired
+	private TeacherService teacherService;
+	@Autowired
+	private StudentService studentService;
 
 	@RequestMapping("/classInfo")
-	public String majorInfo(Model model) {
+	public String classInfo(Model model) {
 		return "/class/classInfo";
+	}
+
+	/**
+	 * 班委：班级详情
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/classDetail")
+	public String classDetail(HttpServletRequest request, Model model) {
+		// @RequestParam(required = true) Integer id) {
+		Student student = (Student) request.getSession().getAttribute("user");
+		Clazz clazz = classService.findClazzById(student.getClassId());
+		model.addAttribute("clazz", clazz);
+		return "/class/classDetail";
+	}
+
+	/**
+	 * 教师班级详情
+	 * 
+	 * @param request
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/teacherClassDetail")
+	public String teacherClassDetail(HttpServletRequest request, Model model,
+			@RequestParam(required = true) Integer id) {
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		Clazz clazz = classService.findClazzById(id);
+		if (clazz.getTeacherId() != teacher.getId()) {
+			throw new RuntimeException("非法访问，该班级不属于您！");
+		}
+		model.addAttribute("clazz", clazz);
+		return "/class/teacherClassDetail";
 	}
 
 	/**

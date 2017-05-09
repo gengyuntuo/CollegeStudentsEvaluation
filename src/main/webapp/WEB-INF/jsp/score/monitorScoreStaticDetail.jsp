@@ -121,6 +121,6 @@
 	<script src="<c:url value="/assets/js/lc/bootstrap-table/bootstrap-table-zh-CN.min.js"/>"></script>
 	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
 	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
-	<script src="<c:url value="/assets/js/lc/pages/monitorScoreStaticWork.js" />"></script>
+	<script src="<c:url value="/assets/js/lc/pages/monitorScoreStaticDetail.js" />"></script>
 </body>
 </html>

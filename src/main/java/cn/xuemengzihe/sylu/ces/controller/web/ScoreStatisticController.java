@@ -29,6 +29,7 @@ import cn.xuemengzihe.sylu.ces.exception.MissingParameterException;
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFPF;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
@@ -236,6 +237,12 @@ public class ScoreStatisticController {
 		if (term == null || teacher.getId() != term.getTeacherId()) {
 			throw new InvalidParameterException();
 		}
+
+		// 判断该测评是否已经结束，如果未结束，则跳转到工作页面
+		if (new Date().getTime() - term.getStopDate().getTime() < 0) {
+			return "redirect:/teacherScoreStaticWork.do?item=" + term.getId();
+		}
+
 		model.addAttribute("term", term); // 添加到模型中
 
 		return "/score/scoreStaticDetail";
@@ -300,22 +307,32 @@ public class ScoreStatisticController {
 	 */
 	@RequestMapping("monitorScoreStaticWork")
 	public String monitorScoreStaticWork(HttpServletRequest request,
-			Model model, Integer item) {
-		Term term = null; // 测评班级的学期信息
-
-		// 参数合法性校验
-		if (item == null)
-			throw new MissingParameterException();
-
-		// 参数有效性校验
-		term = termService.getTermById(item);
-		if (term == null) {
-			throw new InvalidParameterException();
+			Model model, @RequestParam(required = true) Integer item) {
+		Student student = (Student) request.getSession().getAttribute("user");
+		Term term = null;
+		Clazz clazz = null;
+		TableZHCPCJTJ tableZHCPCJTJ = null;
+		try {
+			if (student.getRole() == null) {
+				throw new RuntimeException("权限不足，无法访问");
+			}
+			term = termService.getTermById(item);
+			clazz = classService.findClazzById(student.getClassId());
+			tableZHCPCJTJ = tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(
+					item, null, student.getId());
+			if (term == null || tableZHCPCJTJ == null) {
+				throw new InvalidParameterException("测评ID错误，或者是访问了不属于自己的测评");
+			}
+			if (new Date().getTime() > term.getStopDate().getTime()) {
+				// 已经到截止日期，只能查看，不能修改
+				return "/score/monitorScoreStaticDetail";
+			}
+		} catch (Exception e) {
+			model.addAttribute("tip", e.getMessage());
+			throw e;
 		}
-
-		// TODO 业务
 		model.addAttribute("term", term);
-
+		model.addAttribute("clazz", clazz);
 		return "/score/monitorScoreStaticWork";
 	}
 
@@ -537,60 +554,6 @@ public class ScoreStatisticController {
 	}
 
 	/**
-	 * 根据ID删除
-	 * 
-	 * @param request
-	 * @param type
-	 *            删除的种类
-	 * @param id
-	 *            被删除的ID
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/deleteById", produces = "application/json; charset=utf-8")
-	public String deleteById(HttpServletRequest request, String type, Integer id) {
-		Persion persion = (Persion) request.getSession().getAttribute("user");
-		// TODO 执行删除前需要查询被删除的记录是否存在，
-		// 同时需要判断当前用户是否可以删除该条记录
-		persion.getId();
-		try {
-			tag: {
-				// 所有用户都可以执行的
-				switch (type.toUpperCase()) {
-				case "SZJYJFSQ":
-					tableSZJYJFSQServcie.deleteRecord(id);
-					break;
-				}
-				// 判断用户的类型
-				if (persion instanceof Teacher) {
-					// 教师执行的
-					switch (type.toUpperCase()) {
-					case "TERM":
-						Term oldTerm = termService.getTermById(id);
-						if (oldTerm == null || "N".equals(oldTerm.getIsValid())) {
-							throw new Exception();
-						}
-						termService.deleteScoreStaticTerm(id);
-						termClassDAO.deleteByTermId(id);
-						// TODO 删除相关的测评表
-						break tag;
-					}
-				} else if (persion instanceof Student) {
-					// 学生执行的
-					switch (type.toUpperCase()) {
-					}
-				}
-				// 如果上面的情况都没有执行，这里就抛异常
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "{\"tip\":\"删除失败！\"}";
-		}
-		return "{\"good\":\"删除成功！\"}";
-	}
-
-	/**
 	 * 学生：更新个人平均学分绩点
 	 * 
 	 * @param request
@@ -702,5 +665,110 @@ public class ScoreStatisticController {
 		}
 		return "{\"result\":\"success\",\"url\":\"downloadFile.do?path="
 				+ Base64Util.encode(subPath) + "&fileName=" + fileName + "\"}";
+	}
+
+	/**
+	 * 根据ID删除
+	 * 
+	 * @param request
+	 * @param type
+	 *            删除的种类
+	 * @param id
+	 *            被删除的ID
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteById", produces = "application/json; charset=utf-8")
+	public String deleteById(HttpServletRequest request, String type, Integer id) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		// TODO 执行删除前需要查询被删除的记录是否存在，
+		// 同时需要判断当前用户是否可以删除该条记录
+		try {
+			tag: {
+				// 所有用户都可以执行的
+				switch (type.toUpperCase()) {
+				}
+				// 判断用户的类型
+				if (persion instanceof Teacher) {
+					Teacher teacher = (Teacher) persion;
+					// 教师执行的
+					switch (type.toUpperCase()) {
+					case "TERM":
+						deleteTerm(id, teacher);
+						break tag;
+					}
+				} else if (persion instanceof Student) {
+					// 学生执行的
+					Student student = (Student) persion;
+					switch (type.toUpperCase()) {
+					case "SZJYJFSQ":
+						// 判断该表是否属于当前的学
+						deleteSZJYJFSQ(id, student);
+						break tag;
+					}
+				}
+				// 如果上面的情况都没有执行，这里就抛异常
+				throw new Exception("没有找到需要删除类型");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage()
+					+ "，删除失败！\"}";
+		}
+		return "{\"result\":\"success\",\"tip\":\"删除成功！\"}";
+	}
+
+	/**
+	 * 删除年度测评
+	 * 
+	 * @param id
+	 * @param teacher
+	 * @throws Exception
+	 */
+	private void deleteTerm(Integer id, Teacher teacher) {
+		Term term = termService.getTermById(id);
+		if (term == null) {
+			throw new RuntimeException("您删除的年度测评不存在");
+		}
+		if (term.getTeacherId() != teacher.getId()) {
+			throw new RuntimeException("无法删除别人的年度测评");
+		}
+		termClassDAO.deleteByTermId(id); // 删除term_class表
+		termService.deleteScoreStaticTerm(id); // 删除term表
+		// TODO 删除与之相关的测评表
+	}
+
+	/**
+	 * 删除素质教育加分申请表
+	 * 
+	 * @param id
+	 *            表的ID
+	 * @param student
+	 *            学生
+	 */
+	private void deleteSZJYJFSQ(Integer id, Student student) {
+		TableSZJYJFSQ tableSZJYJFSQ = tableSZJYJFSQServcie.getRecordById(id); // 素质学分申请表
+		if (tableSZJYJFSQ == null) {
+			throw new RuntimeException("素质教育加分申请表不存在");
+		}
+		TableSZJYJFPF tableSZJYJFPF = tableSZJYJFPFService // 素质教育加分评分表
+				.getRecordById(tableSZJYJFSQ.getSuZhiId());
+		if (tableSZJYJFPF == null) {
+			throw new RuntimeException("素质教育加分评分表不存在");
+		}
+		TableZHCPCJTJ tableZHCPCJTJ = tableZHCPCJTJServcie // 综合测评成绩统计表
+				.getRecordById(tableSZJYJFPF.getZongHeId());
+		if (tableZHCPCJTJ == null) {
+			throw new RuntimeException("综合测评成绩统计表不存在");
+		}
+		Term term = termService.getTermById(tableZHCPCJTJ.getTermId()); // 测评
+		if (term == null) {
+			throw new RuntimeException("该条记录不参考任何一次测评");
+		}
+		if (!student.getSno().equals(tableZHCPCJTJ.getSno())) {
+			throw new RuntimeException("无法删除他人的记录");
+		}
+		// TODO 清理对应的文件
+		tableSZJYJFSQServcie.deleteRecord(id); // 删除记录
 	}
 }
