@@ -101,6 +101,9 @@ a.a-btn {
 									<option value="score">排序方式：成绩</option>
 								</select>
 								<div class="panel-heading-content" style="text-align: right;float: right">
+									<button id="refreshBtn" type="button" class="btn btn-xs btn-info">
+										<span class="fa-refresh"></span> 刷新
+									</button>
 									<button id="exportBtn" type="button" class="btn btn-xs btn-info">
 										<span class="en-upload"></span> 导出
 									</button>

@@ -3,6 +3,8 @@ package cn.xuemengzihe.sylu.ces.controller.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,13 +61,15 @@ public class StudentController {
 		return "{\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "studentUpdate", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String studentUpdate(Student student) {
+	public String studentUpdate(HttpServletRequest request, Student student) {
+		Student me = (Student) request.getSession().getAttribute("user");
+
 		// TODO 数据完整性校验
-		Student oldStudent = studentService.findStudentById(student.getId());
+		Student oldStudent = studentService.findStudentById(me.getId());
+
 		if (oldStudent == null) {
-			return "{\"tip\":\"您要修改的记录不存在！\"}";
+			throw new RuntimeException("您修改的学生不存在");
 		}
 		// 赋值
 		oldStudent.setAddress(student.getAddress());
@@ -82,12 +86,12 @@ public class StudentController {
 		oldStudent.setQqNumb(student.getQqNumb());
 		oldStudent.setResident(student.getResident());
 		oldStudent.setWeChat(student.getWeChat());
-		oldStudent.setRole(student.getRole());
-		oldStudent.setUserType(student.getUserType());
+		// oldStudent.setRole(student.getRole());
+		// oldStudent.setUserType(student.getUserType());
 
 		// 学生特有的属性
 		oldStudent.setBankCard(student.getBankCard());
-		oldStudent.setClassId(student.getClassId());
+		// oldStudent.setClassId(student.getClassId());
 		oldStudent.setFatherName(student.getFatherName());
 		oldStudent.setFatherPhone(student.getFatherPhone());
 		oldStudent.setDormInfo(student.getDormInfo());
@@ -99,12 +103,11 @@ public class StudentController {
 		oldStudent.setMotherName(student.getMotherName());
 		oldStudent.setMotherPhone(student.getMotherPhone());
 
-		// 更新
-		int result = studentService.updateStudent(oldStudent);
-		if (result == 1) {
-			return "{}"; // 修改成功！
+		if (studentService.updateStudent(oldStudent) != 1) {
+			throw new RuntimeException("修改失败！");
 		}
-		return "{\"tip\":\"修改失败！\"}";
+		request.getSession().setAttribute("user", oldStudent);
+		return "/other/studentInfo";
 	}
 
 	/**

@@ -7,7 +7,6 @@
 <style type="text/css">
 .content {
 	text-align: center;
-	background-color: blue;
 	color: red;
 }
 </style>

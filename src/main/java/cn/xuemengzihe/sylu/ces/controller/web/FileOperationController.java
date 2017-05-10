@@ -44,7 +44,7 @@ public class FileOperationController {
 		// 获取项目中储存文件的文件夹的绝对路径
 		String fileLocation = request.getSession().getServletContext()
 				.getRealPath("/");
-		System.out.println(fileLocation);
+		// System.out.println(fileLocation);
 
 		try {
 			String filePathAndName = fileLocation

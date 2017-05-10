@@ -22,7 +22,7 @@ public class TableSZXFRCXWBFPF {
 	private Double canJiaHuoDong; // 参加活动
 	private Double tingKeJiLu; // 听课记录
 	private Double gongYuJianCha; // 公寓检查
-	private Character isValid;
+	private String isValid;
 	private Date cTime;
 	private Date uTime;
 
@@ -118,11 +118,11 @@ public class TableSZXFRCXWBFPF {
 		this.gongYuJianCha = gongYuJianCha;
 	}
 
-	public Character getIsValid() {
+	public String getIsValid() {
 		return isValid;
 	}
 
-	public void setIsValid(Character isValid) {
+	public void setIsValid(String isValid) {
 		this.isValid = isValid;
 	}
 

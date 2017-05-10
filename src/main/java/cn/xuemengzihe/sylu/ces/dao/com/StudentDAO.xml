@@ -185,7 +185,7 @@
 			`class_id` = #{classId},
 			`dormno` = #{dormno},
 			`dorm_info` = #{dormInfo},
-			`political_status` = #{political_status},
+			`political_status` = #{politicalStatus},
 			`bank_card` = #{bankCard},
 			`have_loan` = #{haveLoan},
 			`have_poverty_certificate` = #{havePovertyCertificate},

@@ -53,7 +53,7 @@
 		WHERE `id`=#{id}
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableSZXFRCXWBFPF">
-		SELECT * FROM
+		SELECT * FROM `t_szxfrcxwbfpf`
 		WHERE id = #{value}
 	</select>
 	<select id="getRecordWithMap" parameterType="string" resultType="map">

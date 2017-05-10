@@ -175,7 +175,7 @@ $(document).ready(function() {
 
 	// 新消息查询
 	var msgSerial = "";
-	setInterval(function() {
+	/*setInterval(function() {
 		$.ajax({
 			url : "getNewMessage.do",
 			type : "POST",
@@ -198,7 +198,7 @@ $(document).ready(function() {
 				console.info("新消息查询失败！");
 			}
 		});
-	}, 1500);
+	}, 1500);*/
 
 });
 /**

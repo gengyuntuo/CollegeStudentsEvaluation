@@ -173,6 +173,7 @@ $(document).ready( function() {
 							// TODO数据校验
 							if(input_xfjd.val().trim() == "") {
 								alert("学分绩点内容不能为空！");
+								return;
 							}
 							//TODOAJAX提交数据
 							$.ajax({
@@ -254,43 +255,78 @@ $(document).ready( function() {
 					title : '遵守社会公德<br/>（5、0）',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-shgd-" + row["rcxwId"] +
+								"\" class = \"edit\" readonly = \"readonly\" value=\""
+								+ value + "\"\\>";
+					}
 				}, {
 					field : 'wmjw',
 					title : '与他人文明交往<br/>尊重师长（5、0）',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-wmjw-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'cxls',
 					title : '诚信立身 勤俭立行<br/>（5、0）',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-cxls-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'tydl',
 					title : '加强体育锻炼<br/>提高身体素质（5、0）',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-tydl-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'ahgw',
 					title : '爱护公物<br/>爱护校园环境 （5、0）',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-ahgw-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'xxgd',
 					title : '遵守学校相关<br/>管理规定 (10)',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-xxgd-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'cjhd',
 					title : '积极参加各项活动<br/>(10)',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<input id=\"editable-input-cjhd-" + row["rcxwId"] +
+							"\" class = \"edit\" readonly = \"readonly\" value=\""
+							+ value + "\"\\>";
+					}
 				}, {
 					field : 'tkjl',
 					title : '辅导员根据听<br/>课记录及工作笔记  (15)',
@@ -328,7 +364,117 @@ $(document).ready( function() {
 							return template.replace("STYLE","badge-dark").replace("CONTENT", "未知状态");
 						}
 					}
-				} ]
+				}, {
+						title : '操作',
+						halign : "center",
+						align : "center",
+						valign : "middle",
+						formatter : function(value, row, index) {
+							return "<a name=\"edit\" class= \"a-btn\" id=\"info-of-id"
+								+ row["rcxwId"]+ "\">编辑</a>";
+						}
+				} ],
+				onLoadSuccess : function(data) {
+					$("a[name=edit]").on("click", function() {
+						var btn = $(this); // 按钮
+						var id = btn.attr("id").substr(10); // id
+						var input_shgd = $("#editable-input-shgd-" + id); // 输入框（遵守社会公德（5、0））
+						var input_wmjw = $("#editable-input-wmjw-" + id); // 输入框（与他人文明交往 尊重师长（5、0））
+						var input_cxls = $("#editable-input-cxls-" + id); // 输入框（诚信立身 勤俭立行（5、0））
+						var input_tydl = $("#editable-input-tydl-" + id); // 输入框（加强体育锻炼提高身体素质（5、0））
+						var input_ahgw = $("#editable-input-ahgw-" + id); // 输入框（爱护公物爱护校园环境（5、0））
+						var input_xxgd = $("#editable-input-xxgd-" + id); // 输入框（遵守学校相关管理规定(10)）
+						var input_cjhd = $("#editable-input-cjhd-" + id); // 输入框（积极参加各项活动(10)）
+						if("edit" == input_shgd.attr("class")) {
+							input_shgd.attr("class", "editing");
+							input_shgd.removeAttr("readonly");
+							input_wmjw.attr("class", "editing");
+							input_wmjw.removeAttr("readonly");
+							input_cxls.attr("class", "editing");
+							input_cxls.removeAttr("readonly");
+							input_tydl.attr("class", "editing");
+							input_tydl.removeAttr("readonly");
+							input_ahgw.attr("class", "editing");
+							input_ahgw.removeAttr("readonly");
+							input_xxgd.attr("class", "editing");
+							input_xxgd.removeAttr("readonly");
+							input_cjhd.attr("class", "editing");
+							input_cjhd.removeAttr("readonly");
+							btn.html("保存");
+						} else {
+							// TODO数据校验
+							if(input_shgd.val().trim() == "") {
+								alert("“遵守社会公德“内容不能为空且取值为（5、0）！");
+								return;
+							}
+							if(input_wmjw.val().trim() == "") {
+								alert("“与他人文明交往 尊重师长“内容不能为空且取值为（5、0）！");
+								return;
+							}
+							if(input_cxls.val().trim() == "") {
+								alert("“诚信立身 勤俭立行“内容不能为空且取值为（5、0）！");
+								return;
+							}
+							if(input_tydl.val().trim() == "") {
+								alert("“加强体育锻炼 提高身体素质“内容不能为空且取值为（5、0）！");
+								return;
+							}
+							if(input_ahgw.val().trim() == "") {
+								alert("“爱护公物 爱护校园环境“内容不能为空且取值为（5、0）！");
+								return;
+							}
+							if(input_xxgd.val().trim() == "") {
+								alert("“遵守学校相关管理规定“内容不能为空且取值为（10）！");
+								return;
+							}
+							if(input_cjhd.val().trim() == "") {
+								alert("“积极参加各项活动“内容不能为空且取值为（10）！");
+								return;
+							}
+							//TODOAJAX提交数据
+							$.ajax({
+								url : "updateTableSZXFRCXWBFPF.do",
+								type : "post",
+								dataType : "json",
+								data : {
+									"id" : id, // 日常行为测评表id
+									"sheHuiGongDe" : input_shgd.val(),
+									"wenMingJiaoWang" : input_wmjw.val(),
+									"chengXinLiShen" : input_cxls.val(),
+									"tiYuDuanLian" : input_tydl.val(),
+									"aiHuGongWu" : input_ahgw.val(),
+									"xueXiaoGuiDing" : input_xxgd.val(),
+									"canJiaHuoDong" : input_cjhd.val()
+								},
+								success : function(data) {
+									// 恢复页面UI
+									if(data.result == "success") {
+										input_shgd.attr("class", "edit");
+										input_shgd.attr("readonly","readonly");
+										input_wmjw.attr("class", "edit");
+										input_wmjw.attr("readonly","readonly");
+										input_cxls.attr("class", "edit");
+										input_cxls.attr("readonly","readonly");
+										input_tydl.attr("class", "edit");
+										input_tydl.attr("readonly","readonly");
+										input_ahgw.attr("class", "edit");
+										input_ahgw.attr("readonly","readonly");
+										input_xxgd.attr("class", "edit");
+										input_xxgd.attr("readonly","readonly");
+										input_cjhd.attr("class", "edit");
+										input_cjhd.attr("readonly","readonly");
+										btn.html("编辑");
+									} else {
+										alert(data.tip);
+									}
+								},
+								error : function() {
+									alert("请求失败，网络访问失败或者是数据异常！");
+								}
+							});
+						}
+					});
+				}
 			});
 		};
 		return TableInit;
@@ -475,14 +621,17 @@ $(document).ready( function() {
 		// $("#tableSZJF").bootstrapTable("destroy");
 		switch ($(this).val()) {
 		case "zhcp":
+			table = "zhcp";
 			$("#panelZHCP").removeAttr("hidden");
 			$("#tableZHCP").bootstrapTable("refresh");
 			break;
 		case "rcxw":
+			table = "rcxw";
 			$("#panelRCXW").removeAttr("hidden");
 			$("#tableRCXW").bootstrapTable("refresh");
 			break;
 		case "szjf":
+			table = "szjf";
 			$("#panelSZJF").removeAttr("hidden");
 			$("#tableSZJF").bootstrapTable("refresh");
 			break;
@@ -501,6 +650,23 @@ $(document).ready( function() {
 				console.info("更换排序方式");
 			});
 	// 4. 按钮点击事件
+	// 刷新按钮
+	$("#refreshBtn").on("click", function(value) {
+		switch (table) {
+		case "zhcp":
+			$("#tableZHCP").bootstrapTable("refresh");
+			break;
+		case "rcxw":
+			$("#tableRCXW").bootstrapTable("refresh");
+			break;
+		case "szjf":
+			$("#tableSZJF").bootstrapTable("refresh");
+			break;
+		default:
+			break;
+		}
+	});
+	// 导出按钮
 	$("#exportBtn").on("click", function(value) {
 		$.ajax({
 			url : "downloadScoreSheet.do",
