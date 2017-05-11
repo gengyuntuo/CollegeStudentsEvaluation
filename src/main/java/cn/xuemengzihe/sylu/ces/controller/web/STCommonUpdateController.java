@@ -86,7 +86,7 @@ public class STCommonUpdateController {
 	}
 
 	/**
-	 * 确认修改头像
+	 * 修改头像
 	 * 
 	 * @param request
 	 * @param model
@@ -135,12 +135,13 @@ public class STCommonUpdateController {
 			}
 
 			// 删除原有的头像
-			File oldFile = new File(projPath + Base64Util.decode(oldPath));
-			if (oldFile.exists() && oldFile.isFile()) {
-				oldFile.delete();
+			if (oldPath != null) {
+				File oldFile = new File(projPath + Base64Util.decode(oldPath));
+				if (oldFile.exists() && oldFile.isFile()) {
+					oldFile.delete();
+				}
 			}
 
-			session.setAttribute("user", persion);
 			session.removeAttribute("tempAvatarPath");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,4 +150,44 @@ public class STCommonUpdateController {
 		return "{\"result\":\"success\",\"tip\":\"" + persion.getPortrait()
 				+ "\"}";
 	}
+
+	/**
+	 * 修改密码
+	 * 
+	 * @param request
+	 * @param oldPass
+	 *            旧密码
+	 * @param newPass
+	 *            新密码
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "updatePassword", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String updatePassword(HttpServletRequest request,
+			@RequestParam(required = true) String oldPass,
+			@RequestParam(required = true) String newPass) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		try {
+			if (!persion.getPassword().equals(oldPass)) {
+				throw new RuntimeException("原始密码错误");
+			}
+			if (newPass.length() < 6) {
+				throw new RuntimeException("密码长度不足六位");
+			}
+
+			// 修改密码
+			persion.setPassword(newPass);
+			if (persion instanceof Teacher) {
+				teacherService.updateTeacher((Teacher) persion);
+			} else {
+				studentServcice.updateStudent((Student) persion);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
+		}
+		return "{\"result\":\"success\",\"tip\":\"" + persion.getPortrait()
+				+ "\"}";
+	}
+
 }

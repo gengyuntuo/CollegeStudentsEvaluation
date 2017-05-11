@@ -50,6 +50,10 @@ div.edit {
 div.editing {
 	visibility: visible;
 }
+
+.control-label {
+	margin-top: 6px;
+}
 </style>
 <!--[if lt IE 9]>
 <![endif]-->
@@ -103,10 +107,17 @@ div.editing {
 										<p>${user.motto }</p>
 									</div>
 								</div>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="margin-top: 10px;padding-top: 10px;text-align: center;">
-									<button id="edit-info-btn" type="button" class="btn btn-primary">
-										<i class="fa-edit"></i> 编辑信息
-									</button>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align: center;">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="padding-top: 10px;">
+										<button id="edit-info-btn" type="button" class="btn btn-primary">
+											<i class="fa-edit"></i> 编辑信息
+										</button>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="padding-top: 10px;">
+										<button id="edit-pass-btn" type="button" class="btn btn-primary">
+											<i class="fa-edit"></i> 修改密码
+										</button>
+									</div>
 								</div>
 							</div>
 							<div class="panel-footer white-bg">
@@ -187,6 +198,26 @@ div.editing {
 				<div style="margin-top: 25px;">
 					<span id="upload-tip-span" hidden="hidden" style="color: red;">上传中，请稍等</span>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div id="dialog-update-pass">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">原始密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-old-pass" type="password" class="form-control" placeholder="请输入原始密码">
+			</div>
+		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">新的密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-new-pass" type="password" class="form-control" placeholder="请输入新密码">
+			</div>
+		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">重复密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-new-pass-repeat" type="password" class="form-control" placeholder="请重复新密码">
 			</div>
 		</div>
 	</div>

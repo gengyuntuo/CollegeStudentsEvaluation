@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,42 @@
 .img-responsive {
 	width: 100%;
 	max-height: 150px;
+}
+
+.profile-avatar {
+	cursor: pointer;
+}
+
+input.edit {
+	width: 80%;
+	border-width: 0px;
+	background-color: inherit;
+}
+
+input.editing {
+	width: 80%;
+	border-width: 1px;
+	inline-width: initial;
+	background-color: inherit;
+	border-radius: 5px;
+	background-color: inherit;
+}
+
+input.editing:focus {
+	border-color: #66afe9;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+div.edit {
+	visibility: hidden;
+}
+
+div.editing {
+	visibility: visible;
+}
+
+.control-label {
+	margin-top: 6px;
 }
 </style>
 <!--[if lt IE 9]>
@@ -57,86 +94,63 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-									<div class="profile-avatar">
-										<img class="img-responsive" src="assets/img/avatars/132.jpg" alt="@roybarberuk">
+									<div class="profile-avatar" id="avatar-edit-div">
+										<img id="user-avatar" class="img-responsive"
+											src="<c:choose><c:when test="${not empty user.portrait }">downloadFile.do?path=${user.portrait }</c:when> <c:otherwise>assets/img/avatars/default.jpg</c:otherwise> </c:choose>" alt="头像">
 									</div>
 								</div>
-								<div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+								<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
 									<div class="profile-name">
-										${user.name }<span class="label label-success"><c:if test="${userType == 'A' }">管理员</c:if> <c:if test="${user.role == 'T' }">老师</c:if> </span>
+										${user.name }<span class="label label-success"><c:if test="${user.userType == 'T' }">老师</c:if> <c:if test="${user.userType == 'A' }">管理员</c:if> </span>
 									</div>
 									<div class="profile-quote">
 										<p>${user.motto }</p>
 									</div>
 								</div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align: center;">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="padding-top: 10px;">
+										<button id="edit-info-btn" type="button" class="btn btn-primary">
+											<i class="fa-edit"></i> 编辑信息
+										</button>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="padding-top: 10px;">
+										<button id="edit-pass-btn" type="button" class="btn btn-primary">
+											<i class="fa-edit"></i> 修改密码
+										</button>
+									</div>
+								</div>
 							</div>
 							<div class="panel-footer white-bg">
-								<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-									<ul class="profile-info">
-										<li><i class="ec-mobile"></i>昵称：${user.nick }</li>
-										<li><i class="ec-location"></i>姓名：${user.name }</li>
-										<li><i class="ec-mail"></i>性别：${user.gender }</li>
-										<li><i class="im-office"></i>民族：${user.nation }</li>
-										<li><i class="fa-bitbucket"></i>生日：${user.birthday }</li>
-										<li><i class="fa-bitbucket"></i>邮箱：${user.email }</li>
-										<li><i class="fa-bitbucket"></i>身份证：${user.idCard }</li>
-										<li><i class="fa-bitbucket"></i>微信号：${user.weChat }</li>
-										<li><i class="fa-bitbucket"></i>QQ号：${user.qqNumb }</li>
-										<li><i class="fa-bitbucket"></i>支付宝：${user.alipay }</li>
-										<li><i class="fa-bitbucket"></i>电话：${user.phone }</li>
-										<li><i class="fa-bitbucket"></i>地址：${user.address }</li>
-										<li><i class="fa-bitbucket"></i>地址：${user.resident }</li>
-									</ul>
-								</div>
-								<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-									<ul class="profile-info">
-										<li><i class="ec-mobile"></i> +234 345 887</li>
-										<li><i class="ec-location"></i> Spain, Barcelona</li>
-										<li><i class="ec-mail"></i> suggeelson@suggelson.com</li>
-										<li><i class="im-office"></i> Web developer</li>
-										<li><i class="fa-bitbucket"></i> code@suggelab.com</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<!-- End .panel -->
-					</div>
-					<!-- col-lg-4 end here -->
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-						<!-- col-lg-4 start here -->
-						<div class="panel panel-default plain">
-							<!-- Start .panel -->
-							<div class="panel-heading white-bg">
-								<h4 class="panel-title">
-									<i class="ec-user"></i> Update info
-								</h4>
-							</div>
-							<div class="panel-body">
-								<form class="form-vertical hover-stripped" role="form">
-									<div class="form-group">
-										<label class="control-label">Username</label> <input type="text" class="form-control" value="SuggeElson" disabled> <a href="#" class="help-block color-red">Request new ?</a>
+								<form id="student-info-form" action="teacherUpdate.do" method="post">
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+										<ul class="profile-info">
+											<li>昵称：<input name="nick" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.nick }"><span class="text-show">${user.nick }</span></li>
+											<li>姓名：<input name="name" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.name }"><span class="text-show">${user.name }</span></li>
+											<li>性别：<span class="text-show">${user.gender }</span>
+												<div class="edit" style="display: inline-block;">
+													<c:if test="${user.gender != '男' }">
+														<input name="gender" type="radio" value="男">男 <input name="gender" type="radio" value="${user.gender }" checked="checked">女</c:if>
+													<c:if test="${user.gender == '男' }">
+														<input name="gender" type="radio" value="男" checked="checked">男 <input name="gender" type="radio" value="${user.gender }">女</c:if>
+												</div></li>
+											<li>民族：<input name="nation" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.nation }"><span class="text-show">${user.nation }</span></li>
+											<li>生日：<input id="input-birthday" name="birthday" class="edit" hidden="hidden" readonly="readonly" type="text" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birthday }"/>"><span
+												class="text-show"><fmt:formatDate pattern="yyyy-MM-dd" value="${user.birthday }" /> </span></li>
+											<li>邮箱：<input name="email" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.email }"><span class="text-show">${user.email }</span></li>
+											<li>身份证：<input name="idCard" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.idCard }"><span class="text-show">${user.idCard }</span></li>
+										</ul>
 									</div>
-									<div class="form-group">
-										<label class="control-label">Full name</label> <input type="text" class="form-control" value="Jonh Doe">
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+										<ul class="profile-info">
+											<li>微信号：<input name="weChat" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.weChat }"><span class="text-show">${user.weChat }</span></li>
+											<li>QQ号：<input name="qqNumb" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.qqNumb }"><span class="text-show">${user.qqNumb }</span></li>
+											<li>支付宝：<input name="alipay" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.alipay }"><span class="text-show">${user.alipay }</span></li>
+											<li>电话：<input name="phone" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.phone }"><span class="text-show">${user.phone }</span></li>
+											<li>地址：<input name="address" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.address }"><span class="text-show">${user.address }</span></li>
+											<li>户口地：<input name="resident" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.resident }"><span class="text-show">${user.resident }</span></li>
+											<li>座右铭：<input name="motto" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.motto }"><span class="text-show">${user.motto }</span></li>
+										</ul>
 									</div>
-									<div class="form-group">
-										<label class="control-label">Email</label> <input type="email" class="form-control" value="suggeelson@suggeelson.com">
-									</div>
-									<div class="form-group">
-										<label class="control-label">New password</label> <input type="password" class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label">Repeat password</label> <input type="password" class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="control-label">More info</label>
-										<textarea class="form-control" rows="3"></textarea>
-									</div>
-									<!-- End .form-group  -->
-									<div class="form-group mb15">
-										<button class="btn btn-primary">Change</button>
-									</div>
-									<!-- End .form-group  -->
 								</form>
 							</div>
 						</div>
@@ -151,8 +165,56 @@
 		<!-- End .content-wrapper -->
 		<div class="clearfix"></div>
 	</div>
+
+	<div id="dialog-avatar">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 200px;">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+				<img id="preview-of-avatar" alt="头像预览"
+					src="<c:choose><c:when test="${not empty user.portrait }">downloadFile.do?path=${user.portrait }</c:when> <c:otherwise>assets/img/avatars/default.jpg</c:otherwise> </c:choose>"
+					style="width: 128px;height: 128px;margin: 35px;margin-left: 0px;">
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;padding-top: 35px;">
+				<div>
+					<form id="avatar-update-form" action="updateAvatar.do" method="post" enctype="multipart/form-data" target="submit-avatar-iframe">
+						<span class="btn btn-success fileinput-button"> <i class="en-plus3"></i> <span>选择头像</span> <input id="avatar-file" type="file" name="avatar">
+						</span>
+					</form>
+				</div>
+				<div style="text-align:left;margin-top: 25px;">
+					<span>请选择图片的128*128像素的图片，且大小不超过200Kb</span>
+				</div>
+				<div style="margin-top: 25px;">
+					<span id="upload-tip-span" hidden="hidden" style="color: red;">上传中，请稍等</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="dialog-update-pass">
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">原始密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-old-pass" type="password" class="form-control" placeholder="请输入原始密码">
+			</div>
+		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">新的密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-new-pass" type="password" class="form-control" placeholder="请输入新密码">
+			</div>
+		</div>
+		<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">重复密码</label>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+				<input id="input-new-pass-repeat" type="password" class="form-control" placeholder="请重复新密码">
+			</div>
+		</div>
+	</div>
+	<!-- 用户提交图片 -->
+	<iframe hidden="hidden" name="submit-avatar-iframe"></iframe>
+
 	<!-- End #content -->
 	<!-- Javascripts -->
 	<jsp:include page="../com/javascript.jsp" />
+	<script src="<c:url value="/assets/js/lc/pages/teacherInfo.js"/>"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@ package cn.xuemengzihe.sylu.ces.controller.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,39 +59,45 @@ public class TeacherController {
 		return "{\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 	}
 
-	@ResponseBody
+	/**
+	 * 修改教师信息
+	 * 
+	 * @param teacher
+	 * @return
+	 */
+	// @ResponseBody
 	@RequestMapping(value = "teacherUpdate", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String teacherUpdate(Teacher teacher) {
+	public String teacherUpdate(HttpServletRequest request, Teacher teacher) {
+		Teacher user = (Teacher) request.getSession().getAttribute("user");
+
 		// TODO 数据完整性校验
-		Teacher oldTeacher = teacherService.findTeacherById(teacher.getId());
-		if (oldTeacher == null) {
-			return "{\"tip\":\"您要修改的记录不存在！\"}";
+		Teacher me = teacherService.findTeacherById(user.getId());
+		if (me == null) {
+			throw new RuntimeException("不存在");
 		}
 		// 赋值
-		oldTeacher.setAddress(teacher.getAddress());
-		oldTeacher.setAlipay(teacher.getAlipay());
-		oldTeacher.setBirthday(teacher.getBirthday());
-		oldTeacher.setClazzs(teacher.getClazzs());
-		oldTeacher.setEmail(teacher.getEmail());
-		oldTeacher.setGender(teacher.getGender());
-		oldTeacher.setIdCard(teacher.getIdCard());
-		oldTeacher.setMotto(teacher.getMotto());
-		oldTeacher.setName(teacher.getName());
-		oldTeacher.setNation(teacher.getNation());
-		oldTeacher.setNick(teacher.getNick());
-		oldTeacher.setPhone(teacher.getPhone());
-		oldTeacher.setQqNumb(teacher.getQqNumb());
-		oldTeacher.setResident(teacher.getResident());
-		oldTeacher.setWeChat(teacher.getWeChat());
-		oldTeacher.setRole(teacher.getRole());
-		oldTeacher.setUserType(teacher.getUserType());
+		me.setAddress(teacher.getAddress());
+		me.setAlipay(teacher.getAlipay());
+		me.setBirthday(teacher.getBirthday());
+		// oldTeacher.setClazzs(teacher.getClazzs());
+		me.setEmail(teacher.getEmail());
+		me.setGender(teacher.getGender());
+		me.setIdCard(teacher.getIdCard());
+		me.setMotto(teacher.getMotto());
+		me.setName(teacher.getName());
+		me.setNation(teacher.getNation());
+		me.setNick(teacher.getNick());
+		me.setPhone(teacher.getPhone());
+		me.setQqNumb(teacher.getQqNumb());
+		me.setResident(teacher.getResident());
+		me.setWeChat(teacher.getWeChat());
+		// oldTeacher.setRole(teacher.getRole());
+		// oldTeacher.setUserType(teacher.getUserType());
 
 		// 更新
-		int result = teacherService.updateTeacher(oldTeacher);
-		if (result == 1) {
-			return "{}"; // 修改成功！
-		}
-		return "{\"tip\":\"修改失败！\"}";
+		teacherService.updateTeacher(me);
+		request.getSession().setAttribute("user", me);
+		return "/other/teacherInfo";
 	}
 
 	/**
