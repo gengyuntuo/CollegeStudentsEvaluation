@@ -26,6 +26,18 @@ public interface ExcelService {
 			File file);
 
 	/**
+	 * 从Excel文件中导入学生信息到数据库中
+	 * 
+	 * @param file
+	 *            Excel文件
+	 * @param classId
+	 *            班级Id
+	 * @result 返回Excel导入学生信息的结果
+	 */
+	public ImportStudentByExcelResult importStudentInfomationFromExcelFile(
+			Integer classId, File file);
+
+	/**
 	 * 导出综合测评成绩统计表
 	 * 
 	 * @param termId

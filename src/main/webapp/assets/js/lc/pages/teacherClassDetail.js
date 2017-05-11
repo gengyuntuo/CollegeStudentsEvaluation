@@ -37,11 +37,9 @@ $(function() {
 				searchOnEnterKey : true, // 设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 				searchAlign : "left", // 指定 搜索框 水平方向的位置。'left' or 'right'
 				columns : [ {
-					checkbox : true
-				}, {
 					width : "20%",
 					field : "sno",
-					title : '学号',
+					title : '学生学号',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -52,7 +50,7 @@ $(function() {
 				}, {
 					width : "10%",
 					field : "name",
-					title : '姓名',
+					title : '学生姓名',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -93,19 +91,117 @@ $(function() {
 		};
 		return oTableInit;
 	};
+	var dialog_add = null, dialog_import = null;
+	dialog_add = $("#dialog-add-student").dialog({
+		autoOpen : false,
+		title : '添加学生',
+		height : 500,
+		width : 500,
+		modal : true,
+		resizable : false, // 窗口大小不可调
+		show : { // 窗口显示
+			effect : "blind",
+			duration : 800
+		},
+		hide : { // 窗口隐藏
+			effect : "explode",
+			duration : 1000
+		},
+		overlay : {
+			opacity : 0.5
+		},
+		buttons : {
+			"添加" : function() {
+				// 获取并验证表单内容
+				var numb = $("#numb").val();
+				var name = $("#name").val();
+				var desc = $("#desc").val();
+				// TODO 数据合法性校验
+				$.ajax({
+					url : 'instituteAdd.do',
+					type : 'POST',
+					data : {
+						"iNumb" : numb,
+						"iName" : name,
+						"desc" : desc
+					},
+					success : function(data) {
+						var result = eval(data);
+						if (result["tip"] != undefined)
+							alert("添加失败！" + result["tip"]);
+						// 添加成功，同时更新数据
+						$('#mytable').bootstrapTable('refresh');
+						dialog_add.dialog("close");
+					},
+					error : function(data) {
+						alert("添加失败！");
+					}
+				});
+			},
+			"取消" : function() {
+				dialog_add.dialog("close");
+			}
+		},
+		close : function() { // 关闭窗口
+		}
+	});
+	dialog_import = $("#dialog-import-student").dialog({
+		autoOpen : false,
+		title : '导入学生',
+		height : 260,
+		width : 500,
+		modal : true,
+		resizable : false, // 窗口大小不可调
+		show : { // 窗口显示
+			effect : "blind",
+			duration : 800
+		},
+		hide : { // 窗口隐藏
+			effect : "explode",
+			duration : 1000
+		},
+		overlay : {
+			opacity : 0.5
+		},
+		buttons : {
+			"导入" : function() {
+				var excel = $("#input-excel");
+				if (excel.val().substr(-4) != ".xls") {
+					alert("请选择扩展名为.xls的文件");
+					return;
+				}
+				$("#import-student-form").submit();
+			},
+			"取消" : function() {
+				dialog_import.dialog("close");
+			}
+		}
+	});
 
 	// 1. 初始化Table
 	var oTable = new TableInit();
 	oTable.Init();
 
 	// 2. 绑定单击事件到刷新按钮
-	$('#btn_refresh').click(function() {
+	$('#btn-refresh').click(function() {
 		$("#search-input").val(""); // 清除搜索框内容
 		$('#mytable').bootstrapTable('refresh', { // 更新数据
 			query : { // 在刷新时设置记录偏移量为0，也就是从第一条记录开始查询
 				offset : 0
 			}
 		});
+	});
+
+	// 3. 绑定单击事件到添加按钮
+	$('#btn-add').click(function() {
+		console.info("添加dialog-add-student");
+		dialog_add.dialog("open");
+	});
+
+	// 4. 绑定单击事件到导入按钮
+	$('#btn-import').click(function() {
+		console.info("导入dialog-import-student");
+		dialog_import.dialog("open");
 	});
 
 });
@@ -125,4 +221,10 @@ function checkSearchText() {
 	if (search.trim() == "")
 		search = undefined;
 	return search;
+}
+/**
+ * 导入学生信息的回调函数
+ */
+function callback(result, tip) {
+	$("#result_iframe_div").modal();
 }

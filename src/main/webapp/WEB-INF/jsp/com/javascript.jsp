@@ -34,6 +34,5 @@
 <script src="<c:url value="/assets/plugins/misc/highlight/highlight.pack.js"/>"></script>
 <script src="<c:url value="/assets/plugins/misc/countTo/jquery.countTo.js"/>"></script>
 <script src="<c:url value="/assets/plugins/ui/notify/jquery.gritter.js"/>"></script>
-<script src="<c:url value="/assets/plugins/ui/calendar/fullcalendar.js"/>"></script>
 <script src="<c:url value="/assets/js/jquery.sprFlat.js"/>"></script>
 <script src="<c:url value="/assets/js/app.js"/>"></script>

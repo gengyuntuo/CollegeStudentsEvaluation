@@ -52,8 +52,14 @@
 								</span>
 							</div>
 							<div style="float: right">
-								<button id="btn_refresh" type="button" class="btn btn-default">
+								<button id="btn-refresh" type="button" class="btn btn-default">
 									<span class="fa-refresh"></span> 刷新
+								</button>
+								<button id="btn-add" type="button" class="btn btn-primary">
+									<span class="st-file-add"></span> 新增
+								</button>
+								<button id="btn-import" type="button" class="btn btn-success">
+									<span class="en-download"></span> 导入
 								</button>
 								<p></p>
 							</div>
@@ -72,6 +78,39 @@
 		<!-- End .content-wrapper -->
 		<div class="clearfix"></div>
 		<!-- End #content -->
+	</div>
+	<div id="dialog-add-student"></div>
+	<div id="dialog-import-student">
+		<form id="import-student-form" action="importStudent.do" method="post" target="iframe" enctype="multipart/form-data">
+			<input name="classId" value="${clazz.id }" hidden="hidden">
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">文件</label>
+				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+					<input id="input-excel" name="excel" type="file" class="form-control"> <span class="help-block">目前仅支持2003版本的Excel文件，即以*.xls为扩展名的Excel文件，建议使用网站提供的模板（<a href="">点此下载</a>）
+					</span>
+				</div>
+			</div>
+			<!-- End .form-group  -->
+		</form>
+	</div>
+
+	<div id="result_iframe_div" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3>导入结果</h3>
+				</div>
+				<div class="modal-body">
+					<iframe id="iframe" name="iframe" style="border-width: 0px;    width: 100%;">对不起，您的浏览器不支持内置框架</iframe>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- Javascripts -->

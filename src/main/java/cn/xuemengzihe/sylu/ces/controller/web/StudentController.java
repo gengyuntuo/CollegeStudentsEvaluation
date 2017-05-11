@@ -1,7 +1,9 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,9 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
+import cn.xuemengzihe.sylu.ces.pojo.web.ImportStudentByExcelResult;
+import cn.xuemengzihe.sylu.ces.service.web.ClassService;
+import cn.xuemengzihe.sylu.ces.service.web.ExcelService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
+import cn.xuemengzihe.sylu.ces.util.FileUtil;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
 import com.github.pagehelper.PageInfo;
@@ -31,6 +40,10 @@ import com.github.pagehelper.PageInfo;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private ExcelService excelService;
 
 	@RequestMapping("/studentInfo")
 	public String studentInfo(Model model) {
@@ -125,6 +138,51 @@ public class StudentController {
 		oldStudent.setIsValid("N"); // 设置删除标记
 		studentService.updateStudent(oldStudent); // 删除
 		return "{}";
+	}
+
+	/**
+	 * 使用Excel文件导入数据
+	 * 
+	 * @param request
+	 * @param excel
+	 *            excel 文件
+	 * @param 班级ID
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/importStudent", produces = "application/json; charset=utf-8")
+	public String importStudent(HttpServletRequest request, Model model,
+			Integer classId, @RequestParam(required = true) MultipartFile excel) {
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		Clazz clazz = classService.findClazzById(classId);
+		String projPath = request.getSession().getServletContext()
+				.getRealPath("/");
+		String fileName = excel.getOriginalFilename();
+		String subPath = FileUtil.DIRECTROY_TEMP_FILE + UUID.randomUUID()
+				+ ".jpg";
+		String path = projPath + subPath;
+		try {
+			if (clazz == null || clazz.getTeacherId() != teacher.getId()) {
+				throw new RuntimeException("班级不存在");
+			}
+			if (!".xls".equals(FileUtil.getFileExtension(fileName))) {
+				throw new RuntimeException("文件的扩展名不是 .xls");
+			}
+			FileUtil.mkdirsForFile(path); // 创建路径
+			excel.transferTo(new File(path)); // 保存文件
+			model.addAttribute("result", "success");
+			model.addAttribute("tip", "解析完毕");
+			ImportStudentByExcelResult result = excelService
+					.importStudentInfomationFromExcelFile(classId, new File(
+							path));
+			model.addAttribute("imResult", result); // 封装导入结果
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("result", "error");
+			model.addAttribute("tip", e.getMessage());
+		} finally {
+		}
+		return "/other/importStudentResult";
 	}
 
 	/**
