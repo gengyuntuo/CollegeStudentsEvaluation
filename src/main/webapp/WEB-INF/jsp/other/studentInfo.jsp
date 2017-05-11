@@ -91,7 +91,8 @@ div.editing {
 							<div class="panel-body">
 								<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
 									<div class="profile-avatar" id="avatar-edit-div">
-										<img class="img-responsive" src="assets/img/avatars/132.jpg" alt="@roybarberuk">
+										<img id="user-avatar" class="img-responsive"
+											src="<c:choose><c:when test="${not empty user.portrait }">downloadFile.do?path=${user.portrait }</c:when> <c:otherwise>assets/img/avatars/default.jpg</c:otherwise> </c:choose>" alt="头像">
 									</div>
 								</div>
 								<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
@@ -122,7 +123,7 @@ div.editing {
 														<input name="gender" type="radio" value="男" checked="checked">男 <input name="gender" type="radio" value="${user.gender }">女</c:if>
 												</div></li>
 											<li>民族：<input name="nation" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.nation }"><span class="text-show">${user.nation }</span></li>
-											<li>生日：<input id="input-birthday" name="birthday" class="edit" hidden="hidden" readonly="readonly" type="text" value="<fmt:formatDate pattern="yyyy-MM-dd" avalue="${user.birthday }"/>"><span
+											<li>生日：<input id="input-birthday" name="birthday" class="edit" hidden="hidden" readonly="readonly" type="text" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.birthday }"/>"><span
 												class="text-show"><fmt:formatDate pattern="yyyy-MM-dd" value="${user.birthday }" /> </span></li>
 											<li>职务：${user.role }</li>
 											<li>邮箱：<input name="email" class="edit" hidden="hidden" readonly="readonly" type="text" value="${user.email }"><span class="text-show">${user.email }</span></li>
@@ -169,12 +170,14 @@ div.editing {
 	<div id="dialog-avatar">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 200px;">
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-				<img id="preview-of-avatar" alt="头像" src="" style="width: 128px;height: 128px;margin: 35px;margin-left: 0px;">
+				<img id="preview-of-avatar" alt="头像预览"
+					src="<c:choose><c:when test="${not empty user.portrait }">downloadFile.do?path=${user.portrait }</c:when> <c:otherwise>assets/img/avatars/default.jpg</c:otherwise> </c:choose>"
+					style="width: 128px;height: 128px;margin: 35px;margin-left: 0px;">
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;padding-top: 35px;">
 				<div>
-					<form action="" method="post" enctype="multipart/form-data">
-						<span class="btn btn-success fileinput-button"> <i class="en-plus3"></i> <span>选择头像</span> <input id="avatar-file" type="file" name="">
+					<form id="avatar-update-form" action="updateAvatar.do" method="post" enctype="multipart/form-data" target="submit-avatar-iframe">
+						<span class="btn btn-success fileinput-button"> <i class="en-plus3"></i> <span>选择头像</span> <input id="avatar-file" type="file" name="avatar">
 						</span>
 					</form>
 				</div>
@@ -182,13 +185,13 @@ div.editing {
 					<span>请选择图片的128*128像素的图片，且大小不超过200Kb</span>
 				</div>
 				<div style="margin-top: 25px;">
-					<span style="color: red;">上传中，请稍等</span>
+					<span id="upload-tip-span" hidden="hidden" style="color: red;">上传中，请稍等</span>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 用户提交图片 -->
-	<iframe hidden="hidden" name="submit-avatar"></iframe>
+	<iframe hidden="hidden" name="submit-avatar-iframe"></iframe>
 
 	<!-- End #content -->
 	<!-- Javascripts -->
