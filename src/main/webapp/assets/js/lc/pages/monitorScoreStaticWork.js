@@ -642,12 +642,9 @@ $(document).ready( function() {
 	$("#orderSelect").on(
 			"change",
 			function(value) {
-				$(
-						"#table"
-								+ $("#tableSelect").val()
-										.toUpperCase())
+				$("#table" + $("#tableSelect").val().toUpperCase()) // 
 						.bootstrapTable("refresh");
-				console.info("更换排序方式");
+				// console.info("更换排序方式");
 			});
 	// 4. 按钮点击事件
 	// 刷新按钮

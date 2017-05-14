@@ -95,13 +95,13 @@
 			`class` ON `t_term`.`class_id` = `class`.`id`
 	</select>
 	<select id="findTermsWithMap" parameterType="map" resultType="map">
-		SELECT 
+		SELECT DISTINCT
 		    `t`.`id` AS `termId`,
 		    `t`.`name` AS `name`,
 		    DATE_FORMAT(`t`.`start_date`, '%Y-%m-%d') AS `startDate`,
 		    DATE_FORMAT(`t`.`stop_date`, '%Y-%m-%d') AS `stopDate`,
 		    `t`.`teacher_id` AS `teacherId`,
-		    `teacher`.`name` AS `teacherName`
+			`teacher`.`name` AS `teacherName`
 		FROM
 		    (SELECT  `term`.*, `term_class`.`class_id` AS `tmpCi` FROM `term`
 				LEFT JOIN `term_class` ON `term`.`id` = `term_class`.`term_id`

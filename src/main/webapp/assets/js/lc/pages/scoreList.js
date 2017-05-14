@@ -59,51 +59,50 @@ $(function() {
 						// true时，按回车触发搜索方法，否则自动触发搜索方法
 						searchAlign : "left", // 指定 搜索框 水平方向的位置。'left'
 						// or 'right'
-						columns : [
-								{
-									checkbox : true
-								},
-								{
-									field : 'termId',
-									visible : false,
-									title : 'termId'
-								},
-								{
-									field : 'teacherId',
-									visible : false,
-									title : 'teacherId'
-								},
-								{
-									field : "name",
-									title : '统计学期',
-									halign : "center",
-									align : "center",
-									valign : "middle",
-									formatter : function(value, row, index) {
-										return "<a href=\""
-												+ "scoreStaticDetail.do?item="
-												+ row["termId"] + "\">" + value
-												+ "</a>";
-									}
-								}, {
-									field : 'teacherName',
-									title : '老师',
-									halign : "center",
-									align : "center",
-									valign : "middle",
-								}, {
-									field : 'startDate',
-									title : '开始日期',
-									halign : "center",
-									align : "center",
-									valign : "middle",
-								}, {
-									field : 'stopDate',
-									title : '结束日期',
-									halign : "center",
-									align : "center",
-									valign : "middle",
-								} ]
+						columns : [ {
+							checkbox : true
+						},
+						{
+							field : 'termId',
+							visible : false,
+							title : 'termId'
+						},
+						{
+							field : 'teacherId',
+							visible : false,
+							title : 'teacherId'
+						},
+						{
+							field : "name",
+							title : '统计学期',
+							halign : "center",
+							align : "center",
+							valign : "middle",
+							formatter : function(value, row, index) {
+								return "<a href=\""
+										+ "scoreStaticDetail.do?item="
+										+ row["termId"] + "\">" + value
+										+ "</a>";
+							}
+						}, {
+							field : 'teacherName',
+							title : '老师',
+							halign : "center",
+							align : "center",
+							valign : "middle",
+						}, {
+							field : 'startDate',
+							title : '开始日期',
+							halign : "center",
+							align : "center",
+							valign : "middle",
+						}, {
+							field : 'stopDate',
+							title : '结束日期',
+							halign : "center",
+							align : "center",
+							valign : "middle",
+						} ]
 					});
 		};
 		return oTableInit;
@@ -142,8 +141,8 @@ $(function() {
 				var startDate = $("#startDate").val();
 				var stopDate = $("#stopDate").val();
 				// TODO 数据合法性校验
-				console.info("name" + name);
-				console.info("classes" + classes);
+				// console.info("name" + name);
+				// console.info("classes" + classes);
 				$.ajax({
 					url : 'createScoreStatic.do',
 					type : 'POST',
@@ -203,9 +202,9 @@ $(function() {
 						"id" : obj["termId"],
 						"type" : "TERM"
 					},
+					dataType : "json",
 					success : function(data) {
-						var result = eval(data);
-						if (result["tip"] != undefined) {
+						if (data["result"] != "success") {
 							alert("删除失败！" + result["tip"]);
 							return;
 						}
@@ -214,7 +213,7 @@ $(function() {
 						dialog_delete.dialog("close");
 					},
 					error : function(data) {
-						alert("删除失败！");
+						alert("删除失败，网络访问失败或者内容解析失败！");
 					}
 				});
 			},

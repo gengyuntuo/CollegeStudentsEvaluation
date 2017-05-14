@@ -159,7 +159,7 @@ public class StudentController {
 				.getRealPath("/");
 		String fileName = excel.getOriginalFilename();
 		String subPath = FileUtil.DIRECTROY_TEMP_FILE + UUID.randomUUID()
-				+ ".jpg";
+				+ ".xls";
 		String path = projPath + subPath;
 		try {
 			if (clazz == null || clazz.getTeacherId() != teacher.getId()) {

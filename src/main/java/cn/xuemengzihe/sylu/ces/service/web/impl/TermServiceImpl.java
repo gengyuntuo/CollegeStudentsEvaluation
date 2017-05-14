@@ -69,8 +69,6 @@ public class TermServiceImpl implements TermService {
 		termObj.setuTime(new Date());
 
 		// 创建学期
-		termObj.setName(name);
-		termObj.setDesc(name);
 		termDAO.insert(termObj);
 		for (String var : classes) {
 			// 查询班级是否存在并添加
@@ -133,7 +131,7 @@ public class TermServiceImpl implements TermService {
 		PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = termDAO.findTermsWithMap(conditions);
 		pageInfo = new PageInfo<>(list);
-		logger.debug(pageInfo.toString());
+		// logger.debug(pageInfo.toString());
 		return pageInfo;
 	}
 

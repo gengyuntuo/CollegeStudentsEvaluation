@@ -247,7 +247,7 @@ public class ScoreStatisticController {
 
 		model.addAttribute("term", term); // 添加到模型中
 
-		return "/score/scoreStaticDetail";
+		return "/score/teacherScoreStaticDetail";
 	}
 
 	/**

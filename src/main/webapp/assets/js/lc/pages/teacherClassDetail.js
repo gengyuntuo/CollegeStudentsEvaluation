@@ -8,6 +8,7 @@ $(function() {
 				method : 'GET',
 				queryParams : function(params) {
 					params["search"] = checkSearchText(); // 如果有内容，则带搜索参数请求页面
+					params["classId"] = $("#classId").val();
 					// console.info(params);
 					return params;
 				}, // 请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果

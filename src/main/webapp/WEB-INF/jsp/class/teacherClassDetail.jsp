@@ -82,7 +82,7 @@
 	<div id="dialog-add-student"></div>
 	<div id="dialog-import-student">
 		<form id="import-student-form" action="importStudent.do" method="post" target="iframe" enctype="multipart/form-data">
-			<input name="classId" value="${clazz.id }" hidden="hidden">
+			<input id = "classId" name="classId" value="${clazz.id }" hidden="hidden">
 			<div class="form-group">
 				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">文件</label>
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
