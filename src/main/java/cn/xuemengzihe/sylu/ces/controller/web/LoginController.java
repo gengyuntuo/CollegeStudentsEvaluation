@@ -1,5 +1,7 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.util.UUID;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
+import cn.xuemengzihe.sylu.ces.service.web.RedisService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TeacherService;
 
@@ -32,25 +35,24 @@ public class LoginController {
 	/**
 	 * 管理员
 	 */
-	public static final int ROLE_ADMIN = 1;
+	public static final String ROLE_ADMIN = "1";
 	/**
 	 * 教师
 	 */
-	public static final int ROLE_TEACHER = 2;
+	public static final String ROLE_TEACHER = "2";
 	/**
 	 * 学生
 	 */
-	public static final int ROLE_STUDENT = 3;
+	public static final String ROLE_STUDENT = "3";
 
 	/**
-	 * Cookie名称：记住登录状态的ID（构成：用户 id）
+	 * Cookie名称：保存登录状态信息，该值为key，实际值保存在Redis库中<br/>
+	 * Redis 库中该key对应的值为（用户ID,用户角色）<br/>
+	 * 用户角色取值:（{@link #ROLE_ADMIN},{@link #ROLE_STUDENT}, {@link #ROLE_TEACHER}）
 	 */
-	public static final String REMEMBERID_TAG_NAME = "rememberId";
-	/**
-	 * Cookie名称：记住登录状态的角色其取值（{@link #ROLE_ADMIN},{@link #ROLE_STUDENT},
-	 * {@link #ROLE_TEACHER}）
-	 */
-	public static final String REMEMBERROLE_TAG_NAME = "rememberRole";
+	public static final String REMEMBERROLE_TAG = "loginInfo";
+	@Autowired
+	private RedisService redisService;
 
 	@Autowired
 	private TeacherService teacherService;
@@ -81,7 +83,7 @@ public class LoginController {
 	@RequestMapping(value = "login")
 	public String login(HttpServletRequest request,
 			HttpServletResponse response, Model model, String userName,
-			String password, String remember, Integer role, String page) {
+			String password, String remember, String role, String reqURL) {
 		if (userName == null || password == null || userName.trim().isEmpty()
 				|| password.trim().isEmpty()) // 如果请求参数不完整将直接返回登录页面
 			return "/login/login";
@@ -108,24 +110,25 @@ public class LoginController {
 			break;
 		}
 
-		// 登录成功
+		// 登录成功，如果要保存登录状态，则设置Cookie，否则删除Cookie（必须）
 		if (user != null) {
 			session.setAttribute("user", user);
+			String loginInfo = user.getId() + "," + role;
+			try {
+				String key = session.getId()
+						+ UUID.randomUUID().toString().replace("-", "");
+				redisService.putValue(key, loginInfo, 3600 * 24 * 10);
+				loginInfo = key;
+			} catch (Exception e) {
+				logger.warn("系统连接Redis数据库失败，将采用明文保存登录状态（不推荐）");
+			}
 			if ("true".equals(remember)) { // 用户选择了记住登录状态
-				cookie = new Cookie(REMEMBERID_TAG_NAME, user.getId() + "");
-				cookie.setMaxAge(3600 * 24 * 10); // 设置10天免登录
-				cookie.setPath("/");
-				response.addCookie(cookie);
-				cookie = new Cookie(REMEMBERROLE_TAG_NAME, role + "");
+				cookie = new Cookie(REMEMBERROLE_TAG, loginInfo);
 				cookie.setMaxAge(3600 * 24 * 10); // 设置10天免登录
 				cookie.setPath("/");
 				response.addCookie(cookie);
 			} else {
-				cookie = new Cookie(REMEMBERID_TAG_NAME, user.getId() + "");
-				cookie.setMaxAge(0); // 删除Cookie
-				cookie.setPath("/");
-				response.addCookie(cookie);
-				cookie = new Cookie(REMEMBERROLE_TAG_NAME, role + "");
+				cookie = new Cookie(REMEMBERROLE_TAG, role + "");
 				cookie.setMaxAge(0); // 删除Cookie
 				cookie.setPath("/");
 				response.addCookie(cookie);
@@ -146,8 +149,19 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 使Session过期
 		request.getSession(true).invalidate();
+
+		// 删除Cookie
+		Cookie cookie = null;
+		cookie = new Cookie(REMEMBERROLE_TAG, "");
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+
+		// 跳转到登录页面
 		return "redirect:/login.do";
 	}
 }

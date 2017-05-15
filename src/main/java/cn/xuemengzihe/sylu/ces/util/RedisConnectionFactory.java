@@ -20,17 +20,17 @@ import redis.clients.jedis.JedisPoolConfig;
  * @time 2017年3月30日 上午10:35:13
  */
 public class RedisConnectionFactory {
-	private final static Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(RedisConnectionFactory.class);
 	/**
 	 * Redis连接池
 	 */
-	private volatile static JedisPool pool = null;
+	private volatile JedisPool pool = null;
 
 	/**
 	 * 初始化Redis数据库连接池
 	 */
-	private synchronized static void initPool() {
+	private synchronized void initPool() {
 		if (pool != null) { // 判断是否已经创建
 			return;
 		}
@@ -78,21 +78,15 @@ public class RedisConnectionFactory {
 
 	}
 
-	private RedisConnectionFactory() {
-	}
-
 	/**
 	 * 获取连接，归还连接请使用{@link Jedis}对象中的{@link Jedis#close()}方法（这不会真的关闭连接，而是归还给连接池）
 	 * 
 	 * @return Jedis连接
 	 * 
 	 */
-	public static Jedis getRedisConnection() {
-		if (pool != null)
-			return pool.getResource();
-		else {
+	public Jedis getRedisConnection() {
+		if (pool == null)
 			initPool();
-			return pool.getResource();
-		}
+		return pool.getResource();
 	}
 }
