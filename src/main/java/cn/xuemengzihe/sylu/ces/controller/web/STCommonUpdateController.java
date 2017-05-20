@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
+import cn.xuemengzihe.sylu.ces.service.web.ClassService;
 import cn.xuemengzihe.sylu.ces.service.web.StudentService;
 import cn.xuemengzihe.sylu.ces.service.web.TeacherService;
 import cn.xuemengzihe.sylu.ces.util.Base64Util;
@@ -43,6 +44,8 @@ public class STCommonUpdateController {
 	private TeacherService teacherService;
 	@Autowired
 	private StudentService studentServcice;
+	@Autowired
+	private ClassService classService;
 
 	/**
 	 * 上传头像
@@ -190,4 +193,43 @@ public class STCommonUpdateController {
 				+ "\"}";
 	}
 
+	/**
+	 * 重置学生密码 <br/>
+	 * 目前仅老师可以重置密码
+	 * 
+	 * @param request
+	 * @param studentId
+	 * @param newPass
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "resetPassword", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String resetPassword(HttpServletRequest request,
+			@RequestParam(required = true) Integer studentId,
+			@RequestParam(required = true) String newPass) {
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		try {
+			if (newPass.length() < 6) {
+				throw new RuntimeException("密码长度不足六位");
+			}
+			Student student = studentServcice.findStudentById(studentId);
+			if (student == null)
+				throw new RuntimeException("您修改的学生不存在");
+			int teacherIdOfThisStudent = classService.findClazzById(
+					student.getClassId()).getTeacherId();
+			if (teacher.getId() != teacherIdOfThisStudent) {
+				throw new RuntimeException("您无法访问非您本人的学生");
+			}
+
+			// 修改密码
+			student.setPassword(newPass);
+			studentServcice.updateStudent(student);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
+		}
+		return "{\"result\":\"success\",\"tip\":\"" + teacher.getPortrait()
+				+ "\"}";
+	}
 }

@@ -69,7 +69,7 @@
 			#{address},
 			#{resident},
 			#{motto},
-			#{password},
+			MD5(#{password}),
 			#{userType},
 			#{sno},
 			#{classId},
@@ -139,7 +139,7 @@
 			#{address},
 			#{resident},
 			#{motto},
-			'123456',
+			MD5('123456'),
 			'S',
 			#{sno},
 			#{classId},
@@ -179,7 +179,7 @@
 			`address`=#{address},
 			`resident`=#{resident},
 			`motto`=#{motto},
-			`password`=#{password},
+			`password`=MD5(#{password}),
 			`user_type` = #{userType},
 			`sno`=#{sno},
 			`class_id` = #{classId},
@@ -207,7 +207,7 @@
 		FROM student
 		WHERE
 			`sno` = #{userName}
-			AND `password` = #{password}
+			AND `password` = MD5(#{password})
 			AND `is_valid` = 'Y'
 	</select>
 	<select id="findStudentsOfAll" resultType="student">

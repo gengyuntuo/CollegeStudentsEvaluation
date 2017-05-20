@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.xuemengzihe.sylu.ces.pojo.com.Clazz;
+import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
 import cn.xuemengzihe.sylu.ces.pojo.com.Student;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
 import cn.xuemengzihe.sylu.ces.pojo.web.ImportStudentByExcelResult;
@@ -58,6 +59,37 @@ public class StudentController {
 	}
 
 	/**
+	 * 
+	 * @param request
+	 * @param item
+	 * @return
+	 */
+	@RequestMapping(value = "studentDetail")
+	public String studentDetail(HttpServletRequest request, Model model,
+			@RequestParam(required = true) Integer item) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		Student student = studentService.findStudentById(item);
+		if (persion instanceof Teacher) {
+			// 教师查看
+			int teacherIdOfThisStudent = classService.findClazzById(
+					student.getClassId()).getTeacherId();
+			if (persion.getId() != teacherIdOfThisStudent) {
+				throw new RuntimeException("您无法访问非您本人的学生");
+			}
+		} else if (persion instanceof Student && persion.getRole() != null) {
+			// 班委查看
+			Student me = (Student) persion;
+			if (me.getClassId() != student.getClassId()) {
+				throw new RuntimeException("您无法访问非同班同学");
+			}
+		}
+
+		model.addAttribute("student", student);
+
+		return "/student/studentDetail";
+	}
+
+	/**
 	 * 添加学生操作
 	 * 
 	 * @param student
@@ -74,12 +106,45 @@ public class StudentController {
 		return "{\"tip\":\"添加失败！\"}"; // 返回tip，包含错误信息
 	}
 
+	/**
+	 * <h1>修改学生信息</h1> <br/>
+	 * 角色：学生本人、班委、教师<br/>
+	 * 
+	 * @param request
+	 * @param student
+	 * @return
+	 */
 	@RequestMapping(value = "studentUpdate", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String studentUpdate(HttpServletRequest request, Student student) {
-		Student me = (Student) request.getSession().getAttribute("user");
+		boolean tag = true; // 标记是否为自己修改自己的信息（true自己修改）
+		Persion persion = (Persion) request.getSession().getAttribute("user");
 
 		// TODO 数据完整性校验
-		Student oldStudent = studentService.findStudentById(me.getId());
+
+		Student oldStudent = null; // 被修改人
+		// 判断是谁在修改，并根据不同的修改人做出相应的操作
+		if (student.getId() != null) {
+			tag = false;
+			// 非本人修改
+			oldStudent = studentService.findStudentById(student.getId());
+			if (persion instanceof Teacher && oldStudent != null) {
+				// 老师修改
+				int teacherIdOfThisStudent = classService.findClazzById(
+						oldStudent.getClassId()).getTeacherId();
+				if (persion.getId() != teacherIdOfThisStudent) {
+					throw new RuntimeException("您无法访问非您本人的学生");
+				}
+			} else if (persion instanceof Student && oldStudent != null
+					&& persion.getRole() != null) {
+				// 班委修改
+				if (((Student) persion).getClassId() != oldStudent.getClassId()) {
+					throw new RuntimeException("您无法访问非同班同学");
+				}
+			}
+		} else {
+			// 本人修改
+			oldStudent = studentService.findStudentById(persion.getId());
+		}
 
 		if (oldStudent == null) {
 			throw new RuntimeException("您修改的学生不存在");
@@ -116,11 +181,26 @@ public class StudentController {
 		oldStudent.setMotherName(student.getMotherName());
 		oldStudent.setMotherPhone(student.getMotherPhone());
 
+		// 老师可以修改的信息
+		if (persion instanceof Teacher) {
+			// 修改职务
+			if (student.getRole() != null && !student.getRole().isEmpty())
+				oldStudent.setRole(student.getRole());
+			else
+				oldStudent.setRole(null);
+		}
+
 		if (studentService.updateStudent(oldStudent) != 1) {
 			throw new RuntimeException("修改失败！");
 		}
-		request.getSession().setAttribute("user", oldStudent);
-		return "/other/studentInfo";
+		if (tag) {
+			// 自己修改
+			request.getSession().setAttribute("user", oldStudent);
+			return "redirect:/studentInfo.do";
+		} else {
+			// 非本人修改
+			return "redirect:/studentDetail.do?item=" + oldStudent.getId();
+		}
 	}
 
 	/**
@@ -200,6 +280,7 @@ public class StudentController {
 	// produces 参数的目的是解决中文乱码问题
 	@RequestMapping(value = "/studentData", produces = "application/json; charset=utf-8")
 	public String studentData(
+			HttpServletRequest request,
 			String classId, // 班级ID
 			String termId, // 测评统计的ID
 			String search, // 搜索条件
@@ -215,6 +296,14 @@ public class StudentController {
 		conditions.put("search", search);
 		conditions.put("termId", termId);
 		conditions.put("classId", classId);
+
+		// 如果是学生访问该方法（班委）
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		if (persion instanceof Student) {
+			conditions.put("classId", ((Student) persion).getClassId()
+					.toString());
+		}
+
 		// 分页查询记录
 		pageInfo = studentService.findStudentsOfPageWithMapSet(pageInfo,
 				conditions);

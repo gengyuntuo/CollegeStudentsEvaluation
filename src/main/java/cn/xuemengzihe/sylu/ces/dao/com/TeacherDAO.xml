@@ -46,7 +46,7 @@
 			#{address},
 			#{resident},
 			#{motto},
-			#{password},
+			MD5(#{password}),
 			#{userType},
 			#{isValid},
 			#{cTime},
@@ -75,7 +75,7 @@
 			`address`=#{address},
 			`resident`=#{resident},
 			`motto`=#{motto},
-			`password`=#{password},
+			`password`=MD5(#{password}),
 			`user_type` = #{userType},
 			`is_valid`=#{isValid}
 		WHERE
@@ -91,7 +91,7 @@
 		FROM teacher
 		WHERE
 			email = #{userName}
-			AND password = #{password}
+			AND password = MD5(#{password})
 			AND is_valid = 'Y'
 	</select>
 	<select id="findTeachersOfAll"  resultType="teacher">
