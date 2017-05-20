@@ -73,28 +73,39 @@ $(document).ready(function() {
 					visible : false,
 					title : 'id'
 				}, {
-					width : "20%",
+					width : "25%",
 					field : "name",
 					title : '名称',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "10%",
+					width : "20%",
 					field : 'type',
 					title : '类型',
 					halign : "center",
 					align : "center",
-					valign : "middle"
+					valign : "middle",
+					formatter : function(value, row, index) {
+						var result = "";
+						switch (value) {
+						case "xsgb" : result = "学生干部职务加分"; break;
+						case "bshj" : result = "参加各类比赛获奖"; break;
+						case "shsj" : result = "积极参加社会实践与志愿服务"; break;
+						case "shfw" : result = "积极为社会服务，为他人奉献"; break;
+						default : result = "无"; break;
+						}
+						return result;
+					}
 				}, {
-					width : "20%",
+					width : "15%",
 					field : 'time',
 					title : '时间',
 					halign : "center",
 					align : "center",
 					valign : "middle"
 				}, {
-					width : "10%",
+					width : "5%",
 					field : 'level',
 					title : '等级',
 					halign : "center",
@@ -109,10 +120,10 @@ $(document).ready(function() {
 					valign : "middle",
 					formatter : function(value, row, index) {
 						return "<a href=\"downloadFile.do?path=" //
-								+ row["filePath"] + "\">" + value + "</a>";
+								+ row["filePath"] + "\" target = \"blank\">" + value + "</a>";
 					}
 				}, {
-					width : "10%",
+					width : "5%",
 					field : 'score',
 					title : '分数',
 					halign : "center",
@@ -263,7 +274,7 @@ $(document).ready(function() {
 				// $(this).attr("disabled", "disabled"); // 锁定按钮，防止重复点击
 				// console.info($(this));
 				$("#progressBarDiv").removeAttr("hidden"); // 打开进度条
-				var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
+				// var obj = $('#mytable').bootstrapTable('getSelections')[0]; // 获取选择的行
 				$.ajax({
 					url : 'updateAVGScorePoint.do',
 					type : 'POST',

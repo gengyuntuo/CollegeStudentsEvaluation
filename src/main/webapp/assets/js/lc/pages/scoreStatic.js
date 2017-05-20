@@ -29,8 +29,6 @@ $(function() {
 				clickToSelect : true,
 				singleSelect : true,
 				columns : [ {
-					checkbox : true
-				}, {
 					field : 'termId',
 					visible : false,
 					title : 'termId'

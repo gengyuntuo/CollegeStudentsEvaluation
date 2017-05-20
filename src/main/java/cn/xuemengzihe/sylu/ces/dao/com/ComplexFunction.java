@@ -42,4 +42,12 @@ public interface ComplexFunction {
 	 * @return 综合测评表ID
 	 */
 	public Integer createZHCPTJ(Map<String, String> params);
+
+	/**
+	 * 重新计算素质加分评分表的成绩
+	 * 
+	 * @param szId
+	 *            素质测评表ID
+	 */
+	public void updateSZJFCPTable(Integer szId);
 }

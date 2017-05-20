@@ -417,6 +417,10 @@ public class ScoreStatisticController {
 			if (1 != tableSZJYJFSQServcie.insertRecord(record)) {
 				throw new Exception("插入数据失败！");
 			}
+
+			// 更新素质教育测评表的成绩
+			compexFunction.updateSZJFCPTable(zhRecord.getTableSZJYJF().getId());
+
 			model.addAttribute("result", "true");
 			model.addAttribute("tip", "创建成功！");
 		} catch (Exception e) {
@@ -605,5 +609,8 @@ public class ScoreStatisticController {
 		}
 		// TODO 清理对应的文件
 		tableSZJYJFSQServcie.deleteRecord(id); // 删除记录
+
+		// 更新素质教育测评表的数据
+		compexFunction.updateSZJFCPTable(tableSZJYJFPF.getId());
 	}
 }
