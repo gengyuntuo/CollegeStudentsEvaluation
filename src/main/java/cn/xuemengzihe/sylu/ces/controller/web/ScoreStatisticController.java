@@ -348,19 +348,22 @@ public class ScoreStatisticController {
 	@RequestMapping("teacherScoreStaticWork")
 	public String teacherScoreStaticWork(HttpServletRequest request,
 			Model model, Integer item) {
-		Term term = null; // 测评班级的学期信息
+		Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+		Term term = null;
+		try {
+			term = termService.getTermById(item);
 
-		// 参数合法性校验
-		if (item == null)
-			throw new MissingParameterException();
-
-		// 参数有效性校验
-		term = termService.getTermById(item);
-		if (term == null) {
-			throw new InvalidParameterException();
+			if (term == null || term.getTeacherId() != teacher.getId()) {
+				throw new InvalidParameterException("测评ID错误，或者是访问了不属于自己的测评");
+			}
+			if (new Date().getTime() > term.getStopDate().getTime()) {
+				// 已经到截止日期，只能查看，不能修改
+				return "/score/teacherScoreStaticDetail";
+			}
+		} catch (Exception e) {
+			model.addAttribute("tip", e.getMessage());
+			throw e;
 		}
-
-		// TODO 业务
 		model.addAttribute("term", term);
 		return "/score/teacherScoreStaticWork";
 	}
