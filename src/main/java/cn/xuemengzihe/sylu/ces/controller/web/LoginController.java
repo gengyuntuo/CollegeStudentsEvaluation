@@ -113,25 +113,32 @@ public class LoginController {
 		// 登录成功，如果要保存登录状态，则设置Cookie，否则删除Cookie（必须）
 		if (user != null) {
 			session.setAttribute("user", user);
-			String loginInfo = user.getId() + "," + role;
-			try {
-				String key = session.getId()
-						+ UUID.randomUUID().toString().replace("-", "");
-				redisService.putValue(key, loginInfo, 3600 * 24 * 10);
-				loginInfo = key;
-			} catch (Exception e) {
-				logger.warn("系统连接Redis数据库失败，将采用明文保存登录状态（不推荐）");
-			}
 			if ("true".equals(remember)) { // 用户选择了记住登录状态
+				String loginInfo = user.getId() + "," + role;
+				try {
+					String key = session.getId()
+							+ UUID.randomUUID().toString().replace("-", "")
+									.toUpperCase();
+					redisService.putValue(key, loginInfo, 3600 * 24 * 10);
+					loginInfo = key;
+				} catch (Exception e) {
+					logger.warn("系统连接Redis数据库失败，将采用明文保存登录状态（不推荐）");
+				}
 				cookie = new Cookie(REMEMBERROLE_TAG, loginInfo);
 				cookie.setMaxAge(3600 * 24 * 10); // 设置10天免登录
 				cookie.setPath("/");
 				response.addCookie(cookie);
 			} else {
-				cookie = new Cookie(REMEMBERROLE_TAG, role + "");
-				cookie.setMaxAge(0); // 删除Cookie
-				cookie.setPath("/");
-				response.addCookie(cookie);
+				// 删除Cookie
+				cookie = getLoginStateCookie(request);
+				// 如果有保存登录状态，则清除之
+				if (cookie != null)
+					try {
+						cookie.setMaxAge(0);
+						response.addCookie(cookie);
+						redisService.deleteValue(cookie.getValue());
+					} catch (Exception e) {
+					}
 			}
 			logger.info("Login success by userName and password!");
 			return "redirect:/index.do";
@@ -156,12 +163,36 @@ public class LoginController {
 
 		// 删除Cookie
 		Cookie cookie = null;
-		cookie = new Cookie(REMEMBERROLE_TAG, "");
-		cookie.setMaxAge(0);
-		cookie.setPath("/");
-		response.addCookie(cookie);
+		cookie = getLoginStateCookie(request);
+		// 如果有保存登录状态，则清除之
+		if (cookie != null)
+			try {
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+				redisService.deleteValue(cookie.getValue());
+			} catch (Exception e) {
+			}
 
 		// 跳转到登录页面
 		return "redirect:/login.do";
+	}
+
+	/**
+	 * 获取保存登录状态的Cookie
+	 * 
+	 * @param request
+	 * @param cookie
+	 * @return
+	 */
+	private Cookie getLoginStateCookie(HttpServletRequest request) {
+		Cookie cookie = null;
+		if (request.getCookies() != null)
+			for (Cookie var : request.getCookies()) {
+				if (LoginController.REMEMBERROLE_TAG.equals(var.getName())) {
+					cookie = var;
+					break;
+				}
+			}
+		return cookie;
 	}
 }

@@ -109,8 +109,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 			} else {
 				// 登录失败，跳转到登录页面
 				String requestUrl = request.getRequestURI(); // 保存请求的页面，登录成功后自动跳转到该页面
-				response.sendRedirect(request.getContextPath()
-						+ "/login.do?reqURL=" + Base64Util.encode(requestUrl));
+				String loginUrl = request.getContextPath();
+				response.sendRedirect(loginUrl
+						+ (loginUrl.lastIndexOf("/") == (loginUrl.length() - 1) ? ""
+								: "/") + "login.do?reqURL="
+						+ Base64Util.encode(requestUrl));
 				logger.info("Login failed because of error cookie!");
 				return false;
 			}
