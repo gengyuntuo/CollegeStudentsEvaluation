@@ -222,7 +222,8 @@
 			s.nation nation,
 			s.gender gender,
 			s.phone phone,
-			s.email email
+			s.email email,
+			s.role role
 		FROM student s
 		WHERE
 			is_valid = 'Y'

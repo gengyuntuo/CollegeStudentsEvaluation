@@ -37,11 +37,9 @@ $(function() {
 				searchOnEnterKey : true, // 设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
 				searchAlign : "left", // 指定 搜索框 水平方向的位置。'left' or 'right'
 				columns : [ {
-					checkbox : true
-				}, {
 					width : "20%",
 					field : "sno",
-					title : '学号',
+					title : '学生学号',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -52,7 +50,7 @@ $(function() {
 				}, {
 					width : "10%",
 					field : "name",
-					title : '姓名',
+					title : '学生姓名',
 					halign : "center",
 					align : "center",
 					valign : "middle",
@@ -60,6 +58,13 @@ $(function() {
 						return "<a href=\"studentDetail.do?"// 
 								+ "item=" + row.id + "\">" + value + "</a>"; //
 					}
+				}, {
+					width : "5%",
+					field : 'role',
+					title : '班级职务',
+					halign : "center",
+					align : "center",
+					valign : "middle"
 				}, {
 					width : "5%",
 					field : 'nation',
@@ -75,7 +80,7 @@ $(function() {
 					align : "center",
 					valign : "middle",
 				}, {
-					width : "30%",
+					width : "25%",
 					field : 'email',
 					title : '邮箱',
 					halign : "center",

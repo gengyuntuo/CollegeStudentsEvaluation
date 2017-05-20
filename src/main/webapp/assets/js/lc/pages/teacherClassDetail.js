@@ -61,6 +61,13 @@ $(function() {
 					}
 				}, {
 					width : "5%",
+					field : 'role',
+					title : '班级职务',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+				}, {
+					width : "5%",
 					field : 'nation',
 					title : '民族',
 					halign : "center",
@@ -74,7 +81,7 @@ $(function() {
 					align : "center",
 					valign : "middle",
 				}, {
-					width : "30%",
+					width : "25%",
 					field : 'email',
 					title : '邮箱',
 					halign : "center",
