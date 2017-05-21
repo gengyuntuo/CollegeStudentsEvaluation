@@ -387,7 +387,7 @@ BEGIN
 	`xue_sheng_gan_bu`,
 	`is_valid`,
 	`c_time`)
-	VALUES (zhId, 0, 0, 0, 0, 'M', NOW());
+	VALUES (zhId, 0, 0, 0, 0, 'Y', NOW());
 
 	# 创建成功返回综合测评表ID
 	RETURN zhId; 

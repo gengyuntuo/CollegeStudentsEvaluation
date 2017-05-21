@@ -83,7 +83,7 @@
 		    cm.*, t.name tname
 		FROM
 		    (SELECT 
-		        c.id id,c.class_id className,
+		        	c.id id,c.class_id className,
 		            c.major_id majorId,
 		            c.teacher_id teacherId,
 		            study_year study_year,
@@ -98,8 +98,8 @@
 		        LEFT JOIN
 		    teacher t ON cm.teacherId = t.id
 			<if test="value != null">
-					AND (
-						`class_id` LIKE '%${value}%'
+			WHERE (
+						`className` LIKE '%${value}%'
 					)
 			</if>
 		ORDER BY cm.c_time, cm.u_time
