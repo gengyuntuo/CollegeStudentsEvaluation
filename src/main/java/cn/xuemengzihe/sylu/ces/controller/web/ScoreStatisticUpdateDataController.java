@@ -6,12 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.xuemengzihe.sylu.ces.dao.com.ComplexFunction;
 import cn.xuemengzihe.sylu.ces.dao.com.TermClassDAO;
 import cn.xuemengzihe.sylu.ces.pojo.com.Persion;
+import cn.xuemengzihe.sylu.ces.pojo.com.Student;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFPF;
+import cn.xuemengzihe.sylu.ces.pojo.com.TableSZJYJFSQ;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableSZXFRCXWBFPF;
 import cn.xuemengzihe.sylu.ces.pojo.com.TableZHCPCJTJ;
 import cn.xuemengzihe.sylu.ces.pojo.com.Teacher;
@@ -95,15 +100,15 @@ public class ScoreStatisticUpdateDataController {
 				if (term.getTeacherId() != persion.getId()) {
 					throw new RuntimeException("您无法修改非自己创建的测评表");
 				}
+				record.setIsValid("Y");
 			} else {
 				if (persion.getRole() == null) {
 					throw new RuntimeException("您不是班委，没有修改权限");
 				}
-				// 判断与被修改人是否是同一个班级，如果是同一个班级，则肯定能通过该方法查询到自己的一条记录
-				if (null == tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(
-						term.getId(), null, persion.getId())) {
-					throw new RuntimeException("您没有权限修改其他班级的数据");
-				}
+				// 判断与被修改人是否是同一个班级
+				if (((Student) persion).getClassId() != studentServcice
+						.findStudentBySno(record.getSno()).getClassId())
+					throw new RuntimeException("无权操作非班级的测评数据");
 				// 修改状态
 				record.setIsValid("T");
 			}
@@ -111,8 +116,7 @@ public class ScoreStatisticUpdateDataController {
 			tableZHCPCJTJServcie.updateRecord(record);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage()
-					+ "，修改失败！\"}";
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
 		}
 		return "{\"result\":\"success\",\"tip\":\"修改成功！\"}";
 	}
@@ -159,15 +163,15 @@ public class ScoreStatisticUpdateDataController {
 				oldRecord.setTingKeJiLu(record.getTingKeJiLu());
 				oldRecord.setWenMingJiaoWang(record.getWenMingJiaoWang());
 				oldRecord.setXueXiaoGuiDing(record.getXueXiaoGuiDing());
+				oldRecord.setIsValid("Y");
 			} else {
 				if (persion.getRole() == null) {
 					throw new RuntimeException("您不是班委，没有修改权限");
 				}
-				// 判断与被修改人是否是同一个班级，如果是同一个班级，则肯定能通过该方法查询到自己的一条记录
-				if (null == tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(
-						term.getId(), null, persion.getId())) {
-					throw new RuntimeException("您没有权限修改其他班级的数据");
-				}
+				// 判断与被修改人是否是同一个班级
+				if (((Student) persion).getClassId() != studentServcice
+						.findStudentBySno(zhRecord.getSno()).getClassId())
+					throw new RuntimeException("无权操作非班级的测评数据");
 				// 班委可以修改的属性
 				oldRecord.setAiHuGongWu(record.getAiHuGongWu());
 				oldRecord.setCanJiaHuoDong(record.getCanJiaHuoDong());
@@ -176,18 +180,224 @@ public class ScoreStatisticUpdateDataController {
 				oldRecord.setTiYuDuanLian(record.getTiYuDuanLian());
 				oldRecord.setWenMingJiaoWang(record.getWenMingJiaoWang());
 				oldRecord.setXueXiaoGuiDing(record.getXueXiaoGuiDing());
-				if ("Y".equals(oldRecord.getIsValid()))
-					oldRecord.setIsValid("T"); // 修改这个状态
-				zhRecord.setIsValid("T");
-				tableZHCPCJTJServcie.updateRecord(zhRecord); // 标记审核状态
+				// if ("Y".equals(oldRecord.getIsValid()))
+				oldRecord.setIsValid("T"); // 修改这个状态
+				// zhRecord.setIsValid("T");
+				// tableZHCPCJTJServcie.updateRecord(zhRecord); // 标记审核状态
 			}
 			tableSZXFRCXWBFPFService.updateRecord(oldRecord);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage()
-					+ "，修改失败！\"}";
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
 		}
 		return "{\"result\":\"success\",\"tip\":\"修改成功！\"}";
 	}
 
+	/**
+	 * 更新和设置记录的状态 (M ： 班委待审核，T ：教师待审核，Y：审核通过，N ： 未通过审核）
+	 * 
+	 * @param request
+	 * @param model
+	 * @param tableType
+	 *            表名
+	 * @param state
+	 *            审核结果
+	 * @param item
+	 *            ID
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateTableState", produces = "application/json; charset=utf-8")
+	public String updateTableState(HttpServletRequest request, Model model,
+			@RequestParam(required = true) String tableType,
+			@RequestParam(required = true) boolean state,
+			@RequestParam(required = true) Integer termId,
+			@RequestParam(required = true) Integer item) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		boolean isTeacher = true;
+		String result = null;
+		Term term = null;
+		try {
+			term = termService.getTermById(termId);
+			if (term == null) {
+				throw new RuntimeException("termId参数无效");
+			}
+			if (term.getStopDate().getTime() - new Date().getTime() < 0) {
+				throw new RuntimeException("已经到达截止日期，无法修改");
+			}
+			if (persion instanceof Teacher) {
+				isTeacher = true;
+			} else {
+				isTeacher = false;
+			}
+			switch (tableType) {
+			case "szjfsq": // 素质加分申请
+				result = updateSZJFSQTableState(term, persion, isTeacher, item,
+						state);
+				break;
+			case "szjf": // 素质加分
+				// 无需操作
+				break;
+			case "rcxw": // 日常行为
+				result = updateRCXWTableState(term, persion, isTeacher, item,
+						state);
+				break;
+			case "zhcp": // 综合测评
+				result = updateZHCPTableState(term, persion, isTeacher, item,
+						state);
+				break;
+			default:
+				throw new RuntimeException("表名参数不正确");
+			}
+		} catch (Exception e) {
+			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
+		}
+		return "{\"result\":\"success\",\"tip\":\"" + result + "\"}";
+	}
+
+	/**
+	 * 修改综合成绩测评表记录的状态
+	 * 
+	 * @param term
+	 * @param persion
+	 * @param isTeacher
+	 * @param item
+	 * @param state
+	 * @return
+	 */
+	private String updateZHCPTableState(Term term, Persion persion,
+			boolean isTeacher, Integer item, boolean state) {
+		String result = null;
+		TableZHCPCJTJ tableZHCPCJTJ = null;
+		tableZHCPCJTJ = tableZHCPCJTJServcie.getRecordById(item);
+		if (tableZHCPCJTJ == null)
+			throw new RuntimeException("item参数不正确");
+		// 如果教师已经审核，无需修改
+		if ("Y".equals(tableZHCPCJTJ.getIsValid()))
+			return "Y";
+		if (isTeacher) {
+			if (term.getId() != tableZHCPCJTJ.getTermId())
+				throw new RuntimeException("item或termId参数不正确");
+			if (term.getTeacherId() != persion.getId())
+				throw new RuntimeException("无法操作非自己的数据");
+			result = "Y";
+		} else {
+			if (persion.getRole() == null)
+				throw new RuntimeException("您不是班委，无权修改");
+			if (((Student) persion).getClassId() != studentServcice
+					.findStudentBySno(tableZHCPCJTJ.getSno()).getClassId())
+				throw new RuntimeException("无权操作非班级的测评数据");
+			result = "T";
+		}
+		tableZHCPCJTJ.setIsValid(result);
+		tableZHCPCJTJServcie.updateRecord(tableZHCPCJTJ);
+		return result;
+	}
+
+	/**
+	 * 修改日常行为评分表记录的状态
+	 * 
+	 * @param term
+	 * @param persion
+	 * @param isTeacher
+	 * @param item
+	 * @param state
+	 * @return
+	 */
+	private String updateRCXWTableState(Term term, Persion persion,
+			boolean isTeacher, Integer item, boolean state) {
+		String result = null;
+		TableSZXFRCXWBFPF tableSZXFRCXWBFPF = null;
+		TableZHCPCJTJ tableZHCPCJTJ = null;
+		tableSZXFRCXWBFPF = tableSZXFRCXWBFPFService.getRecordById(item);
+		if (tableSZXFRCXWBFPF == null)
+			throw new RuntimeException("item参数不正确");
+		// 如果教师已经审核，无需修改
+		if ("Y".equals(tableSZXFRCXWBFPF.getIsValid()))
+			return "Y";
+		tableZHCPCJTJ = tableZHCPCJTJServcie.getRecordById(tableSZXFRCXWBFPF
+				.getZongHeId());
+		if (tableZHCPCJTJ == null)
+			throw new RuntimeException("该评分表对应的综合测评表不存在");
+		if (term.getId() != tableZHCPCJTJ.getTermId())
+			throw new RuntimeException("item参数不正确");
+		if (isTeacher) {
+			if (term.getTeacherId() != persion.getId())
+				throw new RuntimeException("无法操作非自己的数据");
+			result = "Y";
+		} else {
+			if (((Student) persion).getClassId() != studentServcice
+					.findStudentBySno(tableZHCPCJTJ.getSno()).getClassId())
+				throw new RuntimeException("无权操作非班级的测评数据");
+			if (persion.getRole() == null)
+				throw new RuntimeException("您不是班委，无权修改");
+			result = "T";
+		}
+		tableSZXFRCXWBFPF.setIsValid(result);
+		tableSZXFRCXWBFPFService.updateRecord(tableSZXFRCXWBFPF);
+		return result;
+	}
+
+	/**
+	 * 修改素质加分申请表记录的状态<br/>
+	 * (M ： 班委待审核，T ：教师待审核，Y：审核通过，N ： 未通过审核）
+	 * 
+	 * @param term
+	 * @param persion
+	 * @param isTeacher
+	 * @param state
+	 * @return
+	 */
+	private String updateSZJFSQTableState(Term term, Persion persion,
+			boolean isTeacher, Integer item, boolean state) {
+		TableSZJYJFSQ tableSZJYJFSQ = null;
+		TableSZJYJFPF tableSZJYJFPF = null;
+		TableZHCPCJTJ tableZHCPCJTJ = null;
+		String result = null;
+
+		tableSZJYJFSQ = tableSZJYJFSQServcie.getRecordById(item);
+		if (tableSZJYJFSQ == null)
+			throw new RuntimeException("item参数不正确");
+		tableSZJYJFPF = tableSZJYJFPFService.getRecordById(tableSZJYJFSQ
+				.getSuZhiId());
+		if (tableSZJYJFPF == null)
+			throw new RuntimeException("该记录找不到对应的素质加分评分表");
+		tableZHCPCJTJ = tableZHCPCJTJServcie.getRecordById(tableSZJYJFPF
+				.getZongHeId());
+		if (tableZHCPCJTJ == null)
+			throw new RuntimeException("该记录找不到对应的综合成绩评分表");
+		if (term.getId() != tableZHCPCJTJ.getTermId())
+			throw new RuntimeException("该记录与指定的termId参数不符");
+
+		if (isTeacher) {
+			if (term.getTeacherId() != persion.getId())
+				throw new RuntimeException("无权操作非本人的测评数据");
+			if (state) {
+				tableSZJYJFSQ.setIsValid("Y");
+				result = "Y";
+			} else {
+				tableSZJYJFSQ.setIsValid("N");
+				result = "N";
+			}
+		} else {
+			if (((Student) persion).getClassId() != studentServcice
+					.findStudentBySno(tableZHCPCJTJ.getSno()).getClassId())
+				throw new RuntimeException("无权操作非班级的测评数据");
+			if (persion.getRole() == null)
+				throw new RuntimeException("您不是班委，无权修改");
+			if ("Y".equals(tableSZJYJFSQ.getIsValid()))
+				throw new RuntimeException("已经通过老师审核，无法修改");
+			if (state) {
+				tableSZJYJFSQ.setIsValid("T");
+				result = "T";
+			} else {
+				tableSZJYJFSQ.setIsValid("N");
+				result = "N";
+			}
+			// 由于班委的改动，所以需要对综合测评表的状态进行修改
+		}
+		tableSZJYJFSQServcie.updateRecord(tableSZJYJFSQ);
+		compexFunction.updateSZJFCPTable(tableSZJYJFSQ.getSuZhiId()); // 更新素质测评评分表成绩
+		return result;
+	}
 }

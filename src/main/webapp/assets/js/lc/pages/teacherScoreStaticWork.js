@@ -24,7 +24,10 @@ function getQueryParams(params) {
 	} else {
 		params["order"] = undefined;
 	}
-	params["tableType"] = $("#tableSelect").val(); //该参数仅在下载表格时使用
+	// 该参数下载表格和请求加分申请表时时使用
+	params["tableType"] = $("#tableSelect").val();
+	// 该参数在请求加分申请表时使用
+	params["showAll"] = true;
 	return params;
 }
 /**
@@ -140,7 +143,8 @@ $(document).ready(function() {
 						align : "center",
 						valign : "middle",
 						formatter : function(value, row, index) {
-							var template = "<span class=\"badge STYLE mr10\">CONTENT</span>";
+							var template = "<span id = \"ID\" name = \"edspanZH\" class=\"span-btn badge STYLE mr10\">CONTENT</span>";
+							template = template.replace("ID","spanZH" + row["id"]);
 							switch (value) {
 							case "Y":
 								return template.replace("STYLE","badge-success").replace("CONTENT", "审核通过");
@@ -166,12 +170,48 @@ $(document).ready(function() {
 						}
 					} ],
 				onLoadSuccess : function(data) {
+					$("span[name=edspanZH]").on("click", function(row) {
+						var span = $(this);
+						var id = span.attr("id").substr(6);
+						var constCheckedText = "审核通过";
+						var constCheckedStyle = "span-btn badge badge-success mr10";
+						// console.info(id);
+						if(span.html().trim() == constCheckedText) {
+							return;
+						}
+						$.ajax({
+							url : "updateTableState.do",
+							type : "POST",
+							data : {
+								"item" : id,
+								"tableType" : table,
+								"termId" : termId,
+								"state" : true
+							},
+							dataType : "json",
+							success : function(data) {
+								// console.info();
+								if("success" == data.result) {
+									if(data.tip == "Y") {
+										span.html(constCheckedText);
+										span.attr("class", constCheckedStyle);
+									}
+								} else {
+									alert(data.tip);
+								}
+							},
+							error : function(data) {
+								// console.info();
+								alert("请求发送失败或者请求结果解析失败！");
+							}
+						});
+					});
 					$("a[name=edit]").on("click", function() {
 						var btn = $(this); // 按钮
 						var id = btn.attr("id").substr(10); // id
-						console.info(id);
+						// console.info(id);
 						var input_xfjd = $("#editable-input-xfjd-" + id); // 输入框（学分绩点）
-						console.info(input_xfjd);
+						// console.info(input_xfjd);
 						if("edit" == input_xfjd.attr("class")) {
 							input_xfjd.attr("class", "editing");
 							input_xfjd.removeAttr("readonly");
@@ -197,6 +237,12 @@ $(document).ready(function() {
 										input_xfjd.attr("class", "edit");
 										input_xfjd.attr("readonly", "readonly");
 										btn.html("编辑");
+										// 更新状态标签
+										var span = $("#spanZH" + id);
+										var constCheckedText = "审核通过";
+										var constCheckedStyle = "span-btn badge badge-success mr10";
+										span.html(constCheckedText);
+										span.attr("class", constCheckedStyle);
 									} else {
 										alert(data.tip);
 									}
@@ -369,7 +415,8 @@ $(document).ready(function() {
 					align : "center",
 					valign : "middle",
 					formatter : function(value, row, index) {
-						var template = "<span class=\"badge STYLE mr10\">CONTENT</span>";
+						var template = "<span id = \"ID\" name = \"edspanRCXW\" class=\"span-btn badge STYLE mr10\">CONTENT</span>";
+						template = template.replace("ID","spanRCXW" + row["rcxwId"]);
 						switch (value) {
 						case "Y":
 							return template.replace("STYLE","badge-success").replace("CONTENT", "审核通过");
@@ -392,6 +439,42 @@ $(document).ready(function() {
 						}
 				} ],
 				onLoadSuccess : function(data) {
+					$("span[name=edspanRCXW]").on("click", function(row ) {
+						var span = $(this);
+						var id = span.attr("id").substr(8);
+						var constCheckedText = "审核通过";
+						var constCheckedStyle = "span-btn badge badge-success mr10";
+						// console.info(id);
+						if(span.html().trim() == constCheckedText) {
+							return;
+						}
+						$.ajax({
+							url : "updateTableState.do",
+							type : "POST",
+							data : {
+								"item" : id,
+								"tableType" : table,
+								"termId" : termId,
+								"state" : true
+							},
+							dataType : "json",
+							success : function(data) {
+								// console.info();
+								if("success" == data.result) {
+									if(data.tip == "Y") {
+										span.html(constCheckedText);
+										span.attr("class", constCheckedStyle);
+									}
+								} else {
+									alert(data.tip);
+								}
+							},
+							error : function(data) {
+								// console.info();
+								alert("请求发送失败或者请求结果解析失败！");
+							}
+						});
+					});
 					$("a[name=edit]").on("click", function() {
 						var btn = $(this); // 按钮
 						var id = btn.attr("id").substr(10); // id
@@ -501,6 +584,12 @@ $(document).ready(function() {
 										input_gyjc.attr("class", "edit");
 										input_gyjc.attr("readonly","readonly");
 										btn.html("编辑");
+										// 更新状态标签
+										var span = $("#spanRCXW" + id);
+										var constCheckedText = "审核通过";
+										var constCheckedStyle = "span-btn badge badge-success mr10";
+										span.html(constCheckedText);
+										span.attr("class", constCheckedStyle);
 									} else {
 										alert(data.tip);
 									}
@@ -618,7 +707,169 @@ $(document).ready(function() {
 		};
 		return TableInit;
 	};
-
+	// 素质加分申请表
+	var TableSZJFSQInit = function() {
+		var tableInit = new Object();
+		// 初始化Table
+		tableInit.Init = function() {
+			$('#tableSZJFSQ').bootstrapTable({
+				url : 'listSZJYJFSQ.do',
+				method : 'GET',
+				queryParams : getQueryParams,
+				cache : true, // 禁用ajax缓存数据
+				striped : true, // 设置为 true 会有隔行变色效果
+				sidePagination : 'server', // 设置在哪里进行分页，可选值为 'client'
+				// 或者
+				// 'server'。设置 'server'时，必须设置
+				// 服务器数据地址（url）或者重写ajax方法
+				pagination : true, // 在表格底部显示分页条
+				onlyInfoPagination : false, // 设置为 true
+				// 只显示总数据数，而不显示分页按钮。需要
+				// pagination='True'
+				pageNumber : 1, // 如果设置了分页，首页页码
+				pageSize : 10, // 如果设置了分页，页面数据条数
+				pageList : [ 5, 10, 15, 20, 25 ], // 如果设置了分页，设置可供选择的页面数据条数。设置为All
+				// 则显示所有记录。
+				showPaginationSwitch : false, // 是否显示 数据条数选择框
+				idField : 'id', // 指定主键列
+				columns : [ {
+					field : 'id',
+					visible : false,
+					title : 'id'
+				}, {
+					field : "stuSno",
+					title : '学生学号',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : "stuName",
+					title : '学生姓名',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : "name",
+					title : '　名称　',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'type',
+					title : '　类型　',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						var result = "";
+						switch (value) {
+						case "xsgb" : result = "学生干部职务加分"; break;
+						case "bshj" : result = "参加各类比赛获奖"; break;
+						case "shsj" : result = "积极参加社会实践与志愿服务"; break;
+						case "shfw" : result = "积极为社会服务，为他人奉献"; break;
+						default : result = "无"; break;
+						}
+						return result;
+					}
+				}, {
+					field : 'time',
+					title : '时间',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'level',
+					title : '等级',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'evidence',
+					title : '　证明　',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return "<a href=\"downloadFile.do?path=" //
+								+ row["filePath"] + "\" target = \"blank\">" + value + "</a>";
+					}
+				}, {
+					field : 'score',
+					title : '分数',
+					halign : "center",
+					align : "center",
+					valign : "middle"
+				}, {
+					field : 'state',
+					title : '状态',
+					halign : "center",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						if ("M" == value) { // 
+							return "<span id = \"span" + row["id"] + //
+							"\" class=\"span-btn badge badge-info mr10" + // 
+							"\" name=\"edspan\">班委待审</span>"; // 
+						} else if ("T" == value) { // 
+							return "<span id = \"span" + row["id"] + //
+							"\" class=\"span-btn badge badge-lime mr10" + // 
+							"\" name=\"edspan\">教师待审</span>"; // 
+						} else if ("Y" == value) { // 
+							return "<span id = \"span" + row["id"] + //
+							"\" class=\"span-btn badge badge-success mr10" + // 
+							"\" name=\"edspan\">通过审核</span>"; // 
+						} else if ("N" == value) { // 
+							return "<span id = \"span" + row["id"] + //
+							"\" class=\"span-btn badge badge-dark mr10" + // 
+							"\" name=\"edspan\">审核未过</span>"; //
+						}
+						return "";
+					}
+				} ],
+				onLoadSuccess : function(data) {
+					$("span[name=edspan]").on("click", function(row ) {
+						var span = $(this);
+						var id = span.attr("id").substr(4);
+						var constCheckedText = "通过审核";
+						var constUnCheckedText = "审核未过";
+						var constCheckedStyle = "span-btn badge badge-success mr10";
+						var constUnCheckedStyle = "span-btn badge badge-dark mr10";
+						// console.info(id);
+						$.ajax({
+							url : "updateTableState.do",
+							type : "POST",
+							data : {
+								"item" : id,
+								"tableType" : table,
+								"termId" : termId,
+								"state" : span.html().trim() == constCheckedText ? false : true
+							},
+							dataType : "json",
+							success : function(data) {
+								// console.info();
+								if("success" == data.result) {
+									if(data.tip == "Y") {
+										span.html(constCheckedText);
+										span.attr("class", constCheckedStyle);
+									} else {
+										span.html(constUnCheckedText);
+										span.attr("class", constUnCheckedStyle);
+									}
+								} else {
+									alert(data.tip);
+								}
+							},
+							error : function(data) {
+								// console.info();
+								alert("请求发送失败或者请求结果解析失败！");
+							}
+						});
+					});
+				}
+			});
+		};
+		return tableInit;
+	};
 
 	/**
 	 * 页面控件及事件绑定
@@ -627,9 +878,11 @@ $(document).ready(function() {
 	var tableZHCP = new TableZHCPInit();
 	var tableRCXW = new TableRCXWInit();
 	var tableSZJF = new TableSZJFInit();
+	var tableSZJFSQ = new TableSZJFSQInit();
 	tableZHCP.Init();
 	tableRCXW.Init();
 	tableSZJF.Init();
+	tableSZJFSQ.Init();
 	// 2. 绑定Select2控件
 	$("#tableSelect").select2({
 		width : "20%",
@@ -655,35 +908,65 @@ $(document).ready(function() {
 		$("#panelZHCP").attr("hidden", "hidden");
 		$("#panelRCXW").attr("hidden", "hidden");
 		$("#panelSZJF").attr("hidden", "hidden");
+		$("#panelSZJFSQ").attr("hidden", "hidden");
 		// console.info("更换Table");
 		// $("#tableSZJF").bootstrapTable("destroy");
 		switch ($(this).val()) {
 		case "zhcp":
+			table = "zhcp";
 			$("#panelZHCP").removeAttr("hidden");
 			$("#tableZHCP").bootstrapTable("refresh");
 			break;
 		case "rcxw":
+			table = "rcxw";
 			$("#panelRCXW").removeAttr("hidden");
 			$("#tableRCXW").bootstrapTable("refresh");
 			break;
 		case "szjf":
+			table = "szjf";
 			$("#panelSZJF").removeAttr("hidden");
 			$("#tableSZJF").bootstrapTable("refresh");
+			break;
+		case "szjfsq":
+			table = "szjfsq";
+			$("#panelSZJFSQ").removeAttr("hidden");
+			$("#tableSZJFSQ").bootstrapTable("refresh");
 			break;
 		default:
 			break;
 		}
 	});
-	$("#classSelect").on("change", function(value) {
-		// $("#tableZHCP").bootstrapTable("refresh");
-		$("#table" + $("#tableSelect").val().toUpperCase()).bootstrapTable("refresh");
-		console.info("更换显示内容");
+	$("#classSelect").on( "change", function(value) {
+		$("#table" + $("#tableSelect").val().toUpperCase()) // 
+		.bootstrapTable("refresh");
 	});
-	$("#orderSelect").on("change", function(value) {
-		$("#table" + $("#tableSelect").val().toUpperCase()).bootstrapTable("refresh");
-		console.info("更换排序方式");
+	$("#orderSelect").on( "change", function(value) {
+		$("#table" + $("#tableSelect").val().toUpperCase()) // 
+				.bootstrapTable("refresh");
+		// console.info("更换排序方式");
 	});
 	// 4. 按钮点击事件
+	// 刷新按钮
+	$("#refreshBtn").on("click", function(value) {
+		switch (table) {
+		case "zhcp":
+			$("#tableZHCP").bootstrapTable("refresh");
+			break;
+		case "rcxw":
+			$("#tableRCXW").bootstrapTable("refresh");
+			break;
+		case "szjf":
+			$("#tableSZJF").bootstrapTable("refresh");
+			break;
+		case "szjfsq":
+			$("#tableSZJFSQ").bootstrapTable("refresh");
+			break;
+		default:
+			break;
+		}
+	});
+	// 5. 按钮点击事件
+	// 导出按钮
 	$("#exportBtn").on("click", function(value) {
 		 $.ajax({
 		 url : "downloadScoreSheet.do",

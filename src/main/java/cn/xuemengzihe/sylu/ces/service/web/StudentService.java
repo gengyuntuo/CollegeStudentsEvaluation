@@ -55,6 +55,14 @@ public interface StudentService {
 	 */
 	public Student findStudentById(Integer id);
 
+	/**
+	 * 查找学生，根据学号查询
+	 * 
+	 * @param sno
+	 * @return
+	 */
+	public Student findStudentBySno(String sno);
+
 	/***
 	 * 登录
 	 * 

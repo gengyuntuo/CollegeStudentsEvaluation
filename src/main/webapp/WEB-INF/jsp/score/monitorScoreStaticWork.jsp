@@ -53,6 +53,9 @@ input.editing:focus {
 a.a-btn {
 	cursor: pointer;
 }
+span.span-btn {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -96,6 +99,7 @@ a.a-btn {
 									<option value="zhcp">综合测评成绩统计表</option>
 									<option value="rcxw">素质学分日常行为部分评分表</option>
 									<option value="szjf">素质教育加分评分表</option>
+									<option value="szjfsq">素质教育加分申请表</option>
 								</select><select id="orderSelect">
 									<option value="">排序方式：无</option>
 									<option value="score">排序方式：成绩</option>
@@ -119,6 +123,10 @@ a.a-btn {
 							</div>
 							<div id="panelSZJF" class="panel-body" hidden="hidden">
 								<table id="tableSZJF" class="table table-bordered">
+								</table>
+							</div>
+							<div id="panelSZJFSQ" class="panel-body" hidden="hidden">
+								<table id="tableSZJFSQ" class="table table-bordered">
 								</table>
 							</div>
 						</div>

@@ -32,7 +32,7 @@ public class TableSZJYJFSQServiceImpl implements TableSZJYJFSQService {
 	@Override
 	public Integer insertRecord(TableSZJYJFSQ record) {
 		record.setcTime(new Date());
-		record.setIsValid("Y");
+		record.setIsValid("M");
 		record.setuTime(new Date());
 		return tableSZJYJFSQDAO.insertRecord(record);
 	}
@@ -63,6 +63,22 @@ public class TableSZJYJFSQServiceImpl implements TableSZJYJFSQService {
 			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
 		List<Map<String, String>> list = tableSZJYJFSQDAO
 				.getRecordWithMap(conditions);
+		pageInfo = new PageInfo<>(list);
+		return pageInfo;
+	}
+
+	@Override
+	public PageInfo<Map<String, String>> getTermRecordWithMap(
+			PageInfo<Map<String, String>> pageInfo, String termId,
+			String classId) {
+		Map<String, String> conditions = new HashMap<>();
+		conditions.put("termId", termId);
+		conditions.put("classId", classId);
+		// 分页查询
+		if (pageInfo != null)
+			PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
+		List<Map<String, String>> list = tableSZJYJFSQDAO
+				.getTermRecordWithMap(conditions);
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}

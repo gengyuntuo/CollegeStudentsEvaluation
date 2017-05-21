@@ -432,37 +432,6 @@ public class ScoreStatisticController {
 	}
 
 	/**
-	 * 学生,班委,教师：显示学生个人的素质教育加分申请表
-	 * 
-	 * @param request
-	 * @param termId
-	 *            学期
-	 * @param offset
-	 *            页面记录偏移量
-	 * @param limit
-	 *            每页的数量
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/listSZJYJFSQ", produces = "application/json; charset=utf-8")
-	public String listSZJYJFSQ(
-			HttpServletRequest request,
-			String termId,
-			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
-			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
-		Student student = (Student) request.getSession().getAttribute("user");
-		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
-		pageInfo.setPageSize(limit);
-		pageInfo.setPageNum(offset / limit + 1);
-		// 分页查询记录
-		pageInfo = tableSZJYJFSQServcie.getRecordWithMap(pageInfo, termId,
-				student.getSno());
-		// 将数据封装的模型中
-		// 返回页面
-		return JSONUtil.parsePageInfoToJSON(pageInfo);
-	}
-
-	/**
 	 * 学生：更新个人平均学分绩点
 	 * 
 	 * @param request

@@ -192,6 +192,65 @@ public class ScoreStatisticListDataController {
 	}
 
 	/**
+	 * 学生,班委,教师：显示学生个人的素质教育加分申请表
+	 * 
+	 * @param request
+	 * @param termId
+	 *            学期
+	 * @param offset
+	 *            页面记录偏移量
+	 * @param limit
+	 *            每页的数量
+	 * @param showAll
+	 *            （班委和教师可用，是否显示所有同学或者学生的记录）
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/listSZJYJFSQ", produces = "application/json; charset=utf-8")
+	public String listSZJYJFSQ(
+			HttpServletRequest request,
+			String classId,
+			@RequestParam(required = true) Integer termId,
+			@RequestParam(value = "showAll", required = true, defaultValue = "false") boolean showAll,
+			@RequestParam(value = "offset", required = true, defaultValue = "0") Integer offset,
+			@RequestParam(value = "limit", required = true, defaultValue = "10") Integer limit) {
+		Persion persion = (Persion) request.getSession().getAttribute("user");
+		PageInfo<Map<String, String>> pageInfo = new PageInfo<>();
+		pageInfo.setPageSize(limit);
+		pageInfo.setPageNum(offset / limit + 1);
+
+		if (showAll) {
+			// 班委和教师查询所有记录
+			Term term = termService.getTermById(termId);
+			if (term == null) {
+				throw new RuntimeException("测评ID指定错误");
+			}
+			if (persion instanceof Teacher) {
+				// 教师查看
+				if (persion.getId() != term.getTeacherId()) {
+					throw new RuntimeException("您无法访问非您本人的学生");
+				}
+			} else if (persion instanceof Student && persion.getRole() != null) {
+				// 班委查看
+				if (null == tableZHCPCJTJServcie.getRecordDetailWithTermIdSno(
+						term.getId(), null, persion.getId())) {
+					throw new RuntimeException("您没有权限查看其他班级的数据");
+				}
+				classId = ((Student) persion).getClassId().toString();
+			}
+			pageInfo = tableSZJYJFSQServcie.getTermRecordWithMap(pageInfo,
+					termId.toString(), classId);
+		} else {
+			// 学生查询自己的记录
+			pageInfo = tableSZJYJFSQServcie.getRecordWithMap(pageInfo,
+					termId.toString(), ((Student) persion).getSno());
+		}
+
+		// 返回页面
+		return JSONUtil.parsePageInfoToJSON(pageInfo);
+	}
+
+	/**
 	 * 下载成绩表
 	 * 
 	 * @param request
@@ -254,10 +313,10 @@ public class ScoreStatisticListDataController {
 				fileName += term.getName() + "年度";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "{\"result\":\"error\",\"tip\":\"" + e.getMessage() + "\"}";
 		}
 		return "{\"result\":\"success\",\"url\":\"downloadFile.do?path="
 				+ Base64Util.encode(subPath) + "&fileName=" + fileName + "\"}";
 	}
+
 }

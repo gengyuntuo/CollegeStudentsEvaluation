@@ -58,6 +58,14 @@ public interface StudentDAO {
 	public Student findStudentById(Integer id);
 
 	/**
+	 * 查找学生，根据学号查询
+	 * 
+	 * @param snoS
+	 * @return
+	 */
+	public Student findStudentBySno(String sno);
+
+	/**
 	 * 登录
 	 * 
 	 * @param params

@@ -52,7 +52,7 @@ public interface TableSZJYJFSQService {
 	public TableSZJYJFSQ getRecordById(Integer id);
 
 	/**
-	 * 分页查询记录
+	 * 分页查询记录（某个学期一位同学的记录）
 	 * 
 	 * @param pageInfo
 	 *            页面信息
@@ -64,4 +64,19 @@ public interface TableSZJYJFSQService {
 	 */
 	public PageInfo<Map<String, String>> getRecordWithMap(
 			PageInfo<Map<String, String>> pageInfo, String termId, String sno);
+
+	/**
+	 * 分页查询记录（某个学期所有同学的记录）
+	 * 
+	 * @param pageInfo
+	 *            页面信息
+	 * @param termId
+	 *            学期Id
+	 * @param classId
+	 *            班级ID
+	 * @return 结果集
+	 */
+	public PageInfo<Map<String, String>> getTermRecordWithMap(
+			PageInfo<Map<String, String>> pageInfo, String termId,
+			String classId);
 }

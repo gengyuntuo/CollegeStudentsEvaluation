@@ -202,6 +202,11 @@
 		FROM student
 		WHERE id = #{id}
 	</select>
+	<select id="findStudentBySno" parameterType="string" resultType="student">
+		SELECT *
+		FROM student
+		WHERE sno = #{sno}
+	</select>
 	<select id="findStudentByUserNameAndPassword" parameterType="map" resultType="student">
 		SELECT *
 		FROM student

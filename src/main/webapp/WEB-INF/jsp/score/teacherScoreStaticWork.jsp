@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情</title>
+<title>${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
+</title>
 <!-- 移动设备metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- Force IE9 to render in normal mode -->
@@ -28,6 +29,7 @@
 	padding-top: 3px;
 	min-height: 34px;
 }
+
 input.edit {
 	text-align: center;
 	border-width: 0px;
@@ -52,6 +54,10 @@ input.editing:focus {
 a.a-btn {
 	cursor: pointer;
 }
+
+span.span-btn {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -70,7 +76,9 @@ a.a-btn {
 				<!-- Start .page-header -->
 				<div class="col-lg-12 heading">
 					<h1 class="page-header">
-						<i class="im-screen"></i> ${term.name }学年<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach> 班测评详情
+						<i class="im-screen"></i> ${term.name }学年
+						<c:forEach var="item" items="${term.clazzes }">[${item.classId }] </c:forEach>
+						班测评详情
 					</h1>
 				</div>
 				<!-- End .page-header -->
@@ -95,6 +103,7 @@ a.a-btn {
 									<option value="zhcp">综合测评成绩统计表</option>
 									<option value="rcxw">素质学分日常行为部分评分表</option>
 									<option value="szjf">素质教育加分评分表</option>
+									<option value="szjfsq">素质教育加分申请表</option>
 								</select> <select id="classSelect">
 									<option value="">显示所有班级</option>
 									<c:forEach var="item" items="${term.clazzes }">
@@ -105,6 +114,9 @@ a.a-btn {
 									<option value="score">排序方式：成绩</option>
 								</select>
 								<div class="panel-heading-content" style="text-align: right;float: right">
+									<button id="refreshBtn" type="button" class="btn btn-xs btn-info">
+										<span class="fa-refresh"></span> 刷新
+									</button>
 									<button id="exportBtn" type="button" class="btn btn-xs btn-info">
 										<span class="en-upload"></span> 导出
 									</button>
@@ -120,6 +132,10 @@ a.a-btn {
 							</div>
 							<div id="panelSZJF" class="panel-body" hidden="hidden">
 								<table id="tableSZJF" class="table table-bordered">
+								</table>
+							</div>
+							<div id="panelSZJFSQ" class="panel-body" hidden="hidden">
+								<table id="tableSZJFSQ" class="table table-bordered">
 								</table>
 							</div>
 						</div>

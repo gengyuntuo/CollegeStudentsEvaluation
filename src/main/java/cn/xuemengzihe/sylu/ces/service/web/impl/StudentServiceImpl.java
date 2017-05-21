@@ -82,6 +82,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public Student findStudentBySno(String sno) {
+		return studentDAO.findStudentBySno(sno);
+	}
+
+	@Override
 	public Student loginVerify(String userName, String password) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userName", userName);
@@ -112,4 +117,5 @@ public class StudentServiceImpl implements StudentService {
 		pageInfo = new PageInfo<>(list);
 		return pageInfo;
 	}
+
 }

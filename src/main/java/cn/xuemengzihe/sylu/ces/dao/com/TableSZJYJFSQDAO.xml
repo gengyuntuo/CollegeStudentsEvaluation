@@ -44,7 +44,7 @@
 			`evidence` = #{evidence},
 			`file_path` = #{filePath},
 			`score` = #{score},
-			`is_valid` = #{isValid},
+			`is_valid` = #{isValid}
 		WHERE id = #{id}
 	</update>
 	<select id="getRecordById" parameterType="int" resultType="tableSZJYJFSQ">
@@ -78,5 +78,39 @@
 		    JOIN t_szjyjfpf ON zh.id = t_szjyjfpf.zong_he_id) sz
 		        JOIN
 		    t_szjyjfsq t ON sz.id = t.su_zhi_id
+	</select>
+	<!-- 获取素质教育加分申请表，参数为学期-->
+	<select id="getTermRecordWithMap" parameterType="map" resultType="map">
+		SELECT
+			termZhStuSz.*,
+			tsq.id AS id,
+			tsq.name AS name,
+			tsq.type AS type,
+			DATE_FORMAT(tsq.time, '%Y-%m-%d') AS time,
+			tsq.level AS level,
+			tsq.evidence AS evidence,
+			tsq.file_path AS filePath,
+			tsq.score AS score,
+			tsq.is_valid AS state
+		FROM
+			(SELECT
+				termZhStu.*,
+		        t_szjyjfpf.id AS szId
+			FROM
+				(SELECT 
+					termZh.*,
+					student.id AS stuId, 
+					student.name AS stuName
+				FROM 
+					(SELECT 
+						term.id AS termId,
+						t_zhcpcjtj.id AS zhId,
+						t_zhcpcjtj.sno AS stuSno
+					FROM term LEFT JOIN t_zhcpcjtj ON term.id = t_zhcpcjtj.term_id
+					WHERE term.is_valid = 'Y' AND term.id = #{termId} ) termZh
+				LEFT JOIN student ON termZh.stuSno = student.sno
+				<if test="calssId != null">WHERE student.class_id = #{classId}</if>) termZhStu 
+			LEFT JOIN t_szjyjfpf ON termZhStu.zhId = t_szjyjfpf.zong_he_id) termZhStuSz 
+		JOIN t_szjyjfsq tsq ON termZhStuSz.szId = tsq.su_zhi_id
 	</select>
 </mapper>

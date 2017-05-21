@@ -54,12 +54,21 @@ public interface TableSZJYJFSQDAO {
 	public TableSZJYJFSQ getRecordById(Integer id);
 
 	/**
-	 * 获取所有的记录，返回Map集合，支持条件查询
+	 * 获取某同学某个测评学期所有的记录，返回Map集合
 	 * 
 	 * @param conditions
 	 *            查询条件(term.id 和 student.sno)(key:id,key:sno)
 	 * @return 记录
 	 */
 	public List<Map<String, String>> getRecordWithMap(
+			Map<String, String> conditions);
+	/**
+	 * 获取某次测评的所有的记录，返回Map集合
+	 * 
+	 * @param conditions
+	 *            查询条件(term.id 和 student.sno)(key:id,key:sno)
+	 * @return 记录
+	 */
+	public List<Map<String, String>> getTermRecordWithMap(
 			Map<String, String> conditions);
 }
