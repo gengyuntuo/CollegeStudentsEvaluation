@@ -57,7 +57,12 @@ public class TeacherServiceImpl implements TeacherService {
 		teach.setRole(teacher.getUserType()); // 个人不可以修改
 		teach.setWeChat(teacher.getWeChat());
 
+		if (teacher.getPassword() != null) {
+			teacherDAO.updateTeacherPassword(teacher);
+		}
+
 		return teacherDAO.updateTeacher(teacher);
+
 	}
 
 	@Override

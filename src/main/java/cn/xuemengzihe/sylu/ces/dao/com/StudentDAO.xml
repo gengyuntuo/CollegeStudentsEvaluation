@@ -179,7 +179,6 @@
 			`address`=#{address},
 			`resident`=#{resident},
 			`motto`=#{motto},
-			`password`=MD5(#{password}),
 			`user_type` = #{userType},
 			`sno`=#{sno},
 			`class_id` = #{classId},
@@ -196,6 +195,10 @@
 			`is_valid`=#{isValid}
 		WHERE
 			id=#{id}
+	</update>
+	<update id="updateStudentPassword" parameterType="student">
+		UPDATE student SET `password`=MD5(#{password}) 
+		WHERE id=#{id}
 	</update>
 	<select id="findStudentById" parameterType="int" resultType="student">
 		SELECT *

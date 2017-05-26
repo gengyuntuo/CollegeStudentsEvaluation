@@ -93,6 +93,7 @@ public class TeacherController {
 		me.setWeChat(teacher.getWeChat());
 		// oldTeacher.setRole(teacher.getRole());
 		// oldTeacher.setUserType(teacher.getUserType());
+		me.setPassword(null); // 防止密码被修改
 
 		// 更新
 		teacherService.updateTeacher(me);

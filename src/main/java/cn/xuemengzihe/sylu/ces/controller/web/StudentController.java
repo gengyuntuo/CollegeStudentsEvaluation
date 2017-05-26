@@ -181,6 +181,8 @@ public class StudentController {
 		oldStudent.setMotherName(student.getMotherName());
 		oldStudent.setMotherPhone(student.getMotherPhone());
 
+		oldStudent.setPassword(null); // 防止密码被修改
+
 		// 老师可以修改的信息
 		if (persion instanceof Teacher) {
 			// 修改职务

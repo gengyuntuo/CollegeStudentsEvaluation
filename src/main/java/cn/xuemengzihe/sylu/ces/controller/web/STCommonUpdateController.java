@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class STCommonUpdateController {
 	@Autowired
 	private TeacherService teacherService;
 	@Autowired
-	private StudentService studentServcice;
+	private StudentService studentService;
 	@Autowired
 	private ClassService classService;
 
@@ -131,11 +132,14 @@ public class STCommonUpdateController {
 			// 更新数据库中的记录
 			String oldPath = persion.getPortrait();
 			persion.setPortrait(Base64Util.encode(destPath));
+			String passTemp = persion.getPassword();
+			persion.setPassword(null); // 防止修改密码
 			if (persion instanceof Teacher) {
 				teacherService.updateTeacher((Teacher) persion);
 			} else {
-				studentServcice.updateStudent((Student) persion);
+				studentService.updateStudent((Student) persion);
 			}
+			persion.setPassword(passTemp);
 
 			// 删除原有的头像
 			if (oldPath != null) {
@@ -171,7 +175,8 @@ public class STCommonUpdateController {
 			@RequestParam(required = true) String newPass) {
 		Persion persion = (Persion) request.getSession().getAttribute("user");
 		try {
-			if (!persion.getPassword().equals(oldPass)) {
+			if (!persion.getPassword().equals(
+					DigestUtils.md5DigestAsHex(oldPass.getBytes()))) {
 				throw new RuntimeException("原始密码错误");
 			}
 			if (newPass.length() < 6) {
@@ -183,7 +188,7 @@ public class STCommonUpdateController {
 			if (persion instanceof Teacher) {
 				teacherService.updateTeacher((Teacher) persion);
 			} else {
-				studentServcice.updateStudent((Student) persion);
+				studentService.updateStudent((Student) persion);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -212,7 +217,7 @@ public class STCommonUpdateController {
 			if (newPass.length() < 6) {
 				throw new RuntimeException("密码长度不足六位");
 			}
-			Student student = studentServcice.findStudentById(studentId);
+			Student student = studentService.findStudentById(studentId);
 			if (student == null)
 				throw new RuntimeException("您修改的学生不存在");
 			int teacherIdOfThisStudent = classService.findClazzById(
@@ -223,7 +228,7 @@ public class STCommonUpdateController {
 
 			// 修改密码
 			student.setPassword(newPass);
-			studentServcice.updateStudent(student);
+			studentService.updateStudent(student);
 
 		} catch (Exception e) {
 			e.printStackTrace();

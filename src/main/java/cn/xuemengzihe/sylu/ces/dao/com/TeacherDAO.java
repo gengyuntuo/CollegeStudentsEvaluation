@@ -42,6 +42,14 @@ public interface TeacherDAO {
 	public Integer updateTeacher(Teacher teacher);
 
 	/**
+	 * 修改教师密码
+	 * 
+	 * @param teacher
+	 * @return
+	 */
+	public Integer updateTeacherPassword(Teacher teacher);
+
+	/**
 	 * 查找老师，根据ID查询
 	 * 
 	 * @param id

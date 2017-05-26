@@ -73,6 +73,10 @@ public class StudentServiceImpl implements StudentService {
 		stu.setWeChat(student.getWeChat());
 		stu.setSno(student.getSno()); // 该字段是否可以修改待定
 
+		// 更新密码
+		if (student.getPassword() != null) {
+			studentDAO.updateStudentPassword(student);
+		}
 		return studentDAO.updateStudent(student);
 	}
 

@@ -50,6 +50,14 @@ public interface StudentDAO {
 	public Integer updateStudent(Student student);
 
 	/**
+	 * 修改学生密码
+	 * 
+	 * @param student
+	 * @return
+	 */
+	public Integer updateStudentPassword(Student student);
+
+	/**
 	 * 查找学生，根据ID查询
 	 * 
 	 * @param id
