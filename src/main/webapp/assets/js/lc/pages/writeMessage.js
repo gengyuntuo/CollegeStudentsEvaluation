@@ -95,42 +95,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	// 3. --------------- Tinymce for send email ------------------//
-	tinymce.init({
-		selector : "textarea.tinymce",
-		menubar : false,
-		plugins : [ "advlist " + // //
-		"autolink " + //
-		"lists " + //
-		"link " + //
-		"image " + //
-		"charmap " + //
-		"print " + //
-		"preview " + //
-		"anchor " + //
-		"searchreplace " + //
-		"visualblocks " + //
-		"code " + //
-		"fullscreen " + //
-		"insertdatetime " + //
-		"media table " + //
-		"contextmenu " + //
-		"paste" //
-		],
-		toolbar : "bold " + //
-		"italic " + //
-		"strikethrough " + //
-		"bullist " + //
-		"numlist " + //
-		"blockquote " + //
-		"hr " + //
-		"alignleft " + //
-		"aligncenter " + //
-		"alignright " + //
-		"alignjustify " + //
-		"link unlink " + //
-		"code " + //
-		"image " + //
-		"media | fullscreen" //
-	});
+	// 3. xheditor文本编辑器
+	$("#email-text").xheditor({tools:"full",skin:"o2007silver",html5Upload:false});
 });

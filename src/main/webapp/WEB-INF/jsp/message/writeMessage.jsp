@@ -69,8 +69,7 @@
 						<!-- End .form-group  -->
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<textarea name="email-text" id="email-text" class="form-control tinymce" rows="21" style="resize:none;">
-								单击此处，输入消息内容!</textarea>
+								<textarea name="email-text" id="email-text" class="form-control xheditor {tools:'full',skin:'o2007silver',html5Upload:false}" rows="21" style="resize:none;">单击此处，输入消息内容!</textarea>
 							</div>
 						</div>
 						<!-- End .form-group  -->
@@ -95,6 +94,7 @@
 	<jsp:include page="../com/javascript.jsp" />
 	<script src="<c:url value="/assets/plugins/forms/select2/select2.min.js"/>"></script>
 	<script src="<c:url value="/assets/plugins/forms/select2/_locale/zh-CN.js"/>"></script>
+	<script src="<c:url value="/assets/js/lc/xheditor/xheditor-1.1.14-zh-cn.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/lc/pages/writeMessage.js"/>"></script>
 </body>
 </html>

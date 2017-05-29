@@ -161,7 +161,7 @@ public class MessageController {
 				MessageService.MODE_MSG_SEND,
 				persion instanceof Teacher ? MessageService.USERTYPE_TEACHER
 						: MessageService.USERTYPE_STUDENT, persion.getId(),
-				MessageService.STATE_UNREADED);
+				null);
 		return JSONUtil.parsePageInfoToJSON(pageInfo);
 	}
 
