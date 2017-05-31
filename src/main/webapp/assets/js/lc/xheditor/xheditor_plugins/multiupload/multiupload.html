@@ -12,7 +12,7 @@
 $(window).load(pageInit);
 function pageInit()
 {
-	var uploadurl='../upload.php',ext='所有文件 (*.*)',size='2 MB',count=5,useget=0,params={}//默认值 
+	var uploadurl='../upload.php',ext='所有文件 (*.*)',size='2 MB',count=5,useget=0,params={}; //默认值 
 
 	uploadurl=getQuery('uploadurl')||uploadurl;ext=getQuery('ext')||ext;size=getQuery('size')||size;count=getQuery('count')||count;useget=getQuery('useget')||useget;
 	var tmpParams=getQuery('params');
@@ -81,7 +81,7 @@ JSON.stringify = JSON.stringify || function (obj) {
 		return String(obj);
 	}
 	else {
-		var n, v, json = [], arr = (obj && obj.constructor == Array);
+		var n = null, v, json = [], arr = (obj && obj.constructor == Array);
 		for (n in obj) {
 			v = obj[n]; t = typeof(v);
 			if (t == "string") v = '"'+v+'"';
@@ -103,7 +103,7 @@ var callback= callback || function(v){
 	<div id="upload">
 		<div id="buttonArea">
 			<div id="controlBtns" style="display:none;"><a href="javascript:void(0);" id="btnClear" onclick="removeFile();" class="btn" style="display:none;"><span><img src="img/clear.gif" /> 删除文件</span></a> <a href="javascript:void(0);" id="btnStart" onclick="startUploadFiles();" class="btn"><span><img src="img/start.gif" /> 开始上传</span></a></div>
-			<a href="javascript:void(0);" id="addFiles" class="btn"><span><div id="divAddFiles">添加文件</div></span></a>
+			<a href="javascript:void(0);" id="addFiles" class="btn"><span><!-- <div id="divAddFiles">添加文件</div> --></span></a>
 		</div>
 		<div id="listArea">
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">

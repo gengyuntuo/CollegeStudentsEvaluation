@@ -88,7 +88,7 @@
 	<div id="dialog-add">
 		<form id="form" class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">专业：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<select id="majorId" name="majorId" class="form-control">
 						<option></option>
@@ -122,7 +122,7 @@
 	<div id="dialog-update">
 		<form  class="form-horizontal group-border hover-stripped">
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">专业：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<select id="umajorId" name="majorId" class="form-control">
 						<option></option>
