@@ -4,9 +4,9 @@
 <script src="<c:url value="/assets/plugins/core/pace/pace.min.js"/>"></script>
 <!-- Important javascript libs(put in all pages) -->
 <script src="<c:url value="/assets/js/jquery-1.8.3.min.js"/>"></script>
-<script>window.jQuery || document.write('<script src="<c:url value="/assets/js/libs/jquery-2.1.1.min.js"/>">\x3C/script>')</script>
+<script>window.jQuery || document.write('<script src="<c:url value="/assets/js/libs/jquery-2.1.1.min.js"/>">\x3C/script>');</script>
 <script src="<c:url value="/assets/js/jquery-ui.js"/>"></script>
-<script>window.jQuery || document.write('<script src="<c:url value="/assets/js/libs/jquery-ui-1.10.4.min.js"/>">\x3C/script>')</script>
+<script>window.jQuery || document.write('<script src="<c:url value="/assets/js/libs/jquery-ui-1.10.4.min.js"/>">\x3C/script>');</script>
 <!--[if lt IE 9]>
   <script type="text/javascript" src="<c:url value="/assets/js/libs/excanvas.min.js"/>"></script>
   <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

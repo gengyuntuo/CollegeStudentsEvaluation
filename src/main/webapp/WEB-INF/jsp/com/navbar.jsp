@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="navbar">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.do"> <i class="im-windows8 text-logo-element animated bounceIn"></i><span class="text-logo">测评系统</span>
+				<a class="navbar-brand" href="index.do"> <img alt="" src="assets/img/ico/logo.ico"  class="text-logo-element animated bounceIn"/><span class="text-logo">测评系统</span>
 				</a>
 			</div>
 			<nav class="top-nav" role="navigation">
