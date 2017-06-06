@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.xuemengzihe.sylu.ces.pojo.com.Institute;
 import cn.xuemengzihe.sylu.ces.pojo.com.Major;
+import cn.xuemengzihe.sylu.ces.service.web.InstituteService;
 import cn.xuemengzihe.sylu.ces.service.web.MajorService;
 import cn.xuemengzihe.sylu.ces.util.JSONUtil;
 
@@ -29,6 +32,8 @@ import com.github.pagehelper.PageInfo;
 public class MajorController {
 	@Autowired
 	private MajorService majorService;
+	@Autowired
+	private InstituteService instituteService;
 
 	@RequestMapping("/majorInfo")
 	public String majorInfo(Model model) {
@@ -100,6 +105,9 @@ public class MajorController {
 	 */
 	@RequestMapping("/majorList")
 	public String majorList(Model model) {
+		List<Institute> insituteList = instituteService.findInstitutesOfPage(
+				null).getList();
+		model.addAttribute("insituteList", insituteList);
 		return "/major/majorList";
 	}
 

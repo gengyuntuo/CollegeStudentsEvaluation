@@ -57,9 +57,9 @@
 								<button id="btn_add" type="button" class="btn btn-primary">
 									<span class="st-file-add"></span> 新增
 								</button>
-								<button id="btn_update" type="button" class="btn btn-success">
+								<!-- <button id="btn_update" type="button" class="btn btn-success">
 									<span class="fa-edit"></span> 修改
-								</button>
+								</button> -->
 								<button id="btn_delete" type="button" class="btn btn-danger">
 									<span class="im-remove2"></span> 删除
 								</button>
@@ -88,25 +88,22 @@
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">姓名：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name"  type="text" class="form-control" placeholder="教师姓名">
-				</div>
-			</div>
-			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">民族：</label>
-				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="民族">
+					<input id="name" type="text" class="form-control" placeholder="教师姓名">
 				</div>
 			</div>
 			<div class="form-group">
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">性别：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="性别">
+					<select id="gender" class="form-control">
+						<option value="男" selected="selected">男</option>
+						<option value="女">女</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">密码：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">邮箱：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="name" name="name" type="text" class="form-control" placeholder="学院名称">
+					<input id="email" name="email" type="text" class="form-control" placeholder="邮箱（登录用户名）">
 				</div>
 			</div>
 		</form>
@@ -115,21 +112,26 @@
 		<form id="dialog-update" class="form-horizontal group-border hover-stripped">
 			<input id="uid" hidden="hidden" />
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">代码：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">姓名：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="unumb" name="numb" type="text" class="form-control" placeholder="学院代码">
+					<input id="uname" type="text" class="form-control" placeholder="教师姓名">
 				</div>
 			</div>
 			<div class="form-group">
-				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">名称：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">性别：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<input id="uname" name="name" type="text" class="form-control" placeholder="学院名称">
+					<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+						<select id="ugender" class="form-control">
+							<option value="男" selected="selected">男</option>
+							<option value="女">女</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">描述：</label>
+				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">邮箱：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-					<textarea id="udesc" name="desc" class="form-control" rows="6" style="resize: none"></textarea>
+					<input id="uemail" name="uemail" type="text" class="form-control" placeholder="邮箱（登录用户名）">
 				</div>
 			</div>
 		</form>

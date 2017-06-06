@@ -104,17 +104,17 @@ $(function() {
 		buttons : {
 			"添加" : function() {
 				// 获取并验证表单内容
-				var numb = $("#numb").val();
 				var name = $("#name").val();
-				var desc = $("#desc").val();
+				var email = $("#email").val();
+				var gender = $("#gender").val();
 				// TODO 数据合法性校验
 				$.ajax({
 					url : 'teacherAdd.do',
 					type : 'POST',
 					data : {
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"name" : name,
+						"email" : email,
+						"gender" : gender
 					},
 					success : function(data) {
 						var result = eval(data);
@@ -159,18 +159,18 @@ $(function() {
 		buttons : {
 			"修改" : function() {
 				var id = $('#uid').val();
-				var numb = $('#unumb').val();
-				var name = $('#uname').val();
-				var desc = $('#udesc').val();
+				var name = $("#uname").val();
+				var email = $("#uemail").val();
+				var gender = $("#ugender").val();
 				// TODO 数据合法性校验
 				$.ajax({
 					url : 'teacherUpdate.do',
 					type : 'POST',
 					data : {
 						"id" : id,
-						"iNumb" : numb,
-						"iName" : name,
-						"desc" : desc
+						"name" : name,
+						"email" : email,
+						"gender" : gender
 					},
 					success : function(data) {
 						var result = eval(data);

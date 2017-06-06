@@ -1,5 +1,6 @@
 package cn.xuemengzihe.sylu.ces.controller.web;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,13 @@ public class TeacherController {
 	@RequestMapping(value = "teacherAdd", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String teacherAdd(Teacher teacher) {
 		// 服务器校验
+
+		teacher.setNick(teacher.getName());
+		teacher.setIsValid("Y");
+		teacher.setuTime(new Date());
+		teacher.setcTime(new Date());
+		teacher.setPassword("123456");
+		teacher.setUserType("T");
 		int result = teacherService.insertTeacher(teacher);
 		if (result == 1) {
 			return "{}"; // 返回空，表示成功

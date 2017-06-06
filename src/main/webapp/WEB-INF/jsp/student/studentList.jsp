@@ -54,7 +54,7 @@
 								<button id="btn_refresh" type="button" class="btn btn-default">
 									<span class="fa-refresh"></span> 刷新
 								</button>
-								<button id="btn_add" type="button" class="btn btn-primary">
+								<!-- <button id="btn_add" type="button" class="btn btn-primary">
 									<span class="st-file-add"></span> 新增
 								</button>
 								<button id="btn_update" type="button" class="btn btn-success">
@@ -62,7 +62,7 @@
 								</button>
 								<button id="btn_delete" type="button" class="btn btn-danger">
 									<span class="im-remove2"></span> 删除
-								</button>
+								</button> -->
 								<p></p>
 							</div>
 							<div>

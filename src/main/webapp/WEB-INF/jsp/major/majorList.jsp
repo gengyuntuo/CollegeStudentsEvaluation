@@ -89,10 +89,9 @@
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学院：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<select id="institute" class="form-control">
-						<option value="1">信息学院</option>
-						<option value="2">经济管理</option>
-						<option value="3">自动化</option>
-						<option value="4">车辆工程</option>
+						<c:forEach var="item" items="${insituteList }">
+							<option value="${item.id }">${item.iName }</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
@@ -123,10 +122,9 @@
 				<label style="text-align:left;" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">学院：</label>
 				<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<select id="uinstitute" class="form-control">
-						<option value="1">信息学院</option>
-						<option value="2">经济管理</option>
-						<option value="3">自动化</option>
-						<option value="4">车辆工程</option>
+						<c:forEach var="item" items="${insituteList }">
+							<option value="${item.id }">${item.iName }</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

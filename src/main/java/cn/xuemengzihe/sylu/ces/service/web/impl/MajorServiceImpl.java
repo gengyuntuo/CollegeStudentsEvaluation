@@ -34,7 +34,7 @@ public class MajorServiceImpl implements MajorService {
 		major.setcTime(date);
 		major.setuTime(date);
 		major.setIsValid("Y");
-		major.setInstituteId(1);
+		major.setInstituteId(major.getInstituteId());
 		return majorDAO.insertMajor(major);
 	}
 
