@@ -325,6 +325,10 @@ public class ScoreStatisticController {
 			if (term == null || tableZHCPCJTJ == null) {
 				throw new InvalidParameterException("测评ID错误，或者是访问了不属于自己的测评");
 			}
+			
+			model.addAttribute("term", term);
+			model.addAttribute("clazz", clazz);
+			
 			if (new Date().getTime() > term.getStopDate().getTime()) {
 				// 已经到截止日期，只能查看，不能修改
 				return "/score/monitorScoreStaticDetail";
@@ -333,8 +337,6 @@ public class ScoreStatisticController {
 			model.addAttribute("tip", e.getMessage());
 			throw e;
 		}
-		model.addAttribute("term", term);
-		model.addAttribute("clazz", clazz);
 		return "/score/monitorScoreStaticWork";
 	}
 
