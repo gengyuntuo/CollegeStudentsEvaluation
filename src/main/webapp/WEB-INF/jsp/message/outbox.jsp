@@ -46,7 +46,7 @@
 					<div class="col-lg-12">
 						<!-- col-lg-12 start here -->
 						<div class="panel-body">
-							<div class="input-group" style="float:left;width:300px">
+							<!-- <div class="input-group" style="float:left;width:300px">
 								<input id="search-input" type="text" class="form-control" value="" placeholder="请输入搜索内容"> <span class="input-group-btn">
 									<button class="btn btn-primary" type="button" onclick="btn_search()">搜索</button>
 								</span>
@@ -65,7 +65,7 @@
 									<span class="im-remove2"></span> 删除
 								</button>
 								<p></p>
-							</div>
+							</div> -->
 							<div>
 								<table id="mytable" class="table table-bordered">
 								</table>

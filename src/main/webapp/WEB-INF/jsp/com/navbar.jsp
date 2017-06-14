@@ -19,8 +19,8 @@
 					</a>
 						<ul class="dropdown-menu right" role="menu">
 							<li><a href="persionInfo.do"><i class="st-user"></i> 个人中心</a></li>
-							<li><a href="file.html"><i class="st-cloud"></i> 我的文件</a></li>
-							<li><a href="#"><i class="st-settings"></i> 系统设置 </a></li>
+							<!-- <li><a href="file.html"><i class="st-cloud"></i> 我的文件</a></li>
+							<li><a href="#"><i class="st-settings"></i> 系统设置 </a></li> -->
 							<li><a href="logout.do"><i class="im-exit"></i> 注销登录</a></li>
 						</ul></li>
 				</ul>

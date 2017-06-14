@@ -175,7 +175,7 @@ $(document).ready(function() {
 
 	// 新消息查询
 	var msgSerial = "";
-	/*setInterval(function() {
+	setInterval(function() {
 		$.ajax({
 			url : "getNewMessage.do",
 			type : "POST",
@@ -198,7 +198,7 @@ $(document).ready(function() {
 				console.info("新消息查询失败！");
 			}
 		});
-	}, 1500);*/
+	}, 1500);
 
 });
 /**
@@ -224,7 +224,7 @@ function reloadMessageTip(data) {
 	// 提示框中消息的模板
 	msgTemplate = "<li class=\"mail-list clearfix\">"
 			+ "<a href=\"readMessage.do?item=%ITEMID%\">"
-			+ "<img src=\"assets/img/avatars/128.jpg\" "
+			+ "<img src=\"assets/img/ico/apple-touch-icon-57-precomposed.png\" "
 			+ "class=\"mail-avatar pull-left\" alt=\"avatar\">"
 			+ "<p class=\"name\"><span class=\"status\">"
 			+ "<i class=\"en-dot\"></i></span>%NAME%"
@@ -236,7 +236,7 @@ function reloadMessageTip(data) {
 		.replace("%ITEMID%", value.id)//
 		.replace("%NAME%", value.name)//
 		.replace("%TIME%", value.time)//
-		.replace("%CONTENT%", value.content);
+		.replace("%CONTENT%", value.title);
 	});
 	$("#msgTip").html(msgTipTemplate.replace("%MESSAGES%", msg));
 }
